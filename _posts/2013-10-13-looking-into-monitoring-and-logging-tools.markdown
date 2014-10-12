@@ -3,7 +3,6 @@ layout: post
 title: "Looking into monitoring and logging tools"
 date: 2013-10-13 12:00
 comments: true
-categories: logging monitoring
 ---
 
 _Originally published on [Medium](https://medium.com/p/1cbb173faa3a)._

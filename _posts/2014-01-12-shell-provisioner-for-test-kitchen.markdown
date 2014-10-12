@@ -3,7 +3,6 @@ layout: post
 title: "Shell provisioner for Test Kitchen"
 date: 2014-01-12 19:24
 comments: true
-categories: testing
 ---
 
 As of a few weeks ago [Test Kitchen](http://kitchen.ci/) has a [shell provisioner](https://github.com/test-kitchen/test-kitchen/blob/master/lib/kitchen/provisioner/shell.rb) as well as the original Chef provisioners. This opens up all sorts of interesting testing potential.

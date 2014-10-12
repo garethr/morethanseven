@@ -3,7 +3,6 @@ layout: post
 title: "Buy vs Build your Monitoring System"
 date: 2014-02-16 19:29
 comments: true
-categories: monitoring  
 ---
 
 At the excellent [London Devops meetup](http://www.theguardian.com/info/developer-blog/2014/feb/15/london-devops-meetup-held-at-the-guardian) last week I asked what was

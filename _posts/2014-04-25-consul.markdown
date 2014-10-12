@@ -3,7 +3,6 @@ layout: post
 title: "Consul, DNS and Dnsmasq"
 date: 2014-04-25 10:40
 comments: true
-categories: consul
 ---
 
 While at [Craft](http://craft-conf.com/2014) I decided to have a quick look at

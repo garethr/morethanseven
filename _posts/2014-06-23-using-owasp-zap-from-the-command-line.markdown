@@ -3,7 +3,6 @@ layout: post
 title: "Using OWASP ZAP from the command line"
 date: 2014-06-23 08:24
 comments: true
-categories: security
 ---
 
 I'm a big fan of [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) or

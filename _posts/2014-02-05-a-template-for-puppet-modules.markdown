@@ -3,7 +3,6 @@ layout: post
 title: "A template for Puppet modules"
 date: 2014-02-05 15:20
 comments: true
-categories: puppet 
 ---
 
 A little while ago I published a [template writing your own puppet modules](https://github.com/garethr/puppet-module-skeleton). It's

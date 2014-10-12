@@ -3,7 +3,6 @@ layout: post
 title: "Platform as a Service and the network gap"
 date: 2013-08-11 14:00
 comments: true
-categories: 
 ---
 
 _Originally published on [Medium](https://medium.com/p/817849715f0a)._

@@ -3,7 +3,6 @@ layout: post
 title: "Code coverage for Puppet modules"
 date: 2014-01-25 17:23
 comments: true
-categories: puppet
 ---
 
 One of my favourite topics for a while now has been *infrastructure as

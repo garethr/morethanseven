@@ -3,7 +3,6 @@ layout: post
 title: "Testing Vagrant runs with Cucumber"
 date: 2014-03-15 20:42
 comments: true
-categories: vagrant cucumber testing
 ---
 
 I've been a big fan of [Vagrant](http://www.vagrantup.com/) since it's

@@ -3,7 +3,6 @@ layout: post
 title: "Testing Packer created images with serverspec"
 date: 2014-01-01 15:24
 comments: true
-categories: packer serverspec wercker
 ---
 
 [Packer](http://www.packer.io/) provides a great way of describing the steps for creating a virtual machine image. But it doesn't have a built-in way of verifying those images.

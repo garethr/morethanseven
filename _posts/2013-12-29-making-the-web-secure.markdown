@@ -3,7 +3,6 @@ layout: post
 title: "Making the web secure, one unit test at a time"
 date: 2013-12-29 14:28
 comments: true
-categories: security sysadvent
 ---
 
 _Originally written as part of [Sysadvent 2013](http://sysadvent.blogspot.co.uk/2013/12/day-21-making-web-secure-one-unit-test.html)._
