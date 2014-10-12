@@ -1,0 +1,24 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+plugins:          plugins
+
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            More than seven
+tagline:          'Gareth Rushgrove'
+description:      'Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.'
+url:              http://www.morethanseven.net
+baseurl:          /
+
+author:
+  name:           'Gareth Rushgrove'
+  url:            https://twitter.com/garethr
+
+paginate:         5
+
+github:
+  repo:           https://github.com/garethr
