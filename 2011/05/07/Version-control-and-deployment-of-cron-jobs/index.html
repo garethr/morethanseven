@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Version Control And Deployment Of Cron Jobs &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Version Control And Deployment Of Cron Jobs</h1>
+  <span class="post-date">07 May 2011</span>
+  <p>A recent question on Twitter prompted me to write a quick blog post about managing cron jobs. As more and more people want to automate provisioning and deployment of web applications some, maybe previously manually managed, items come into the fold.</p>
+<p>Cron jobs are interesting because you may prefer to see them as part of the infrastructure (like apache or mysql) or as part of your application code. I think both are valid, sometimes at the same time. For instance you might have a cron job which deals with scheduled database backups. All that requires is the database and the script to be present. At other times your cron jobs might require your entire application stack. For instance a rake task which uses a Rails application model, or a django management command.</p>
+<h2>Configuration Management and Cron</h2>
+<p>Both <a href="http://opscode.com/chef/">Chef</a> and <a href="http://puppetlabs.com/puppet/">Puppet</a> provide a cron resource type. This is particularly handy for things like database backup scripts or ganglia gmetric scripts. You probably want these scripts and cron jobs to be installed on machines that have the related software installed, and you&#8217;re probably already describing this in your Chef recipes or Puppet manifests. If you&#8217;re not already using one of these tools using them to manage just your cron jobs is a nice way of starting out.</p>
+<p>Using the <a href="http://docs.puppetlabs.com/references/latest/type.html#cron">Puppet Cron Type</a> looks like this:</p>
+<pre><code>cron { command:
+  command =&gt; "/usr/local/sbin/command",
+  hour =&gt; 2,
+  minute =&gt; 0
+}</code></pre>
+<p>And the equivalent <a href="http://wiki.opscode.com/display/chef/Resources#Resources-Cron">Chef Reasource</a> looks like:</p>
+<pre><code>cron "describe your job" do
+  hour "2"
+  minute "0"
+  command "/usr/local/sbin/command"
+end</code></pre>
+<p>The important part is that by describing your cron jobs in code you can then version control them easily, and both Chef and Puppet have mechanisms to push these jobs out to be installed by the relevant hosts. With cron jobs you might not want all your machines to be running the same jobs for instance.</p>
+<h2>Using Whenever</h2>
+<p>An alternative, or complimentary, approach to versioning and deploying cron jobs would be to tie it in with your application code. This makes sense when those jobs are tightly coupled to your application, for instance rails specific rake tasks or django management commands. <a href="https://github.com/javan/whenever">Whenever</a> is a tool I&#8217;ve been using recently that makes this pretty simple. You describe your cron jobs in a file called schedule.rb like so:</p>
+<pre><code>every 3.hours do
+  command "/usr/local/sbin/command"
+end</code></pre>
+<p>And then running the provided whenever command line application will generate a working crontab. Whenever ships with capistrano integration and some useful shortcuts for running rake tasks or accessing Ruby code, but it&#8217;s simple to write your own command shortcuts without having to write ruby code too.</p>
+<h2>Other Approaches</h2>
+<p>I have seen some tools which replace cron completely, but I&#8217;ve never liked that idea much. Cron works pretty well, and is clever enough to deal with things like daylight saving time and leap years inteligently if needed. I know other folks who are centralising all regular jobs into something like Jenkins. I can see advantages to that, although I&#8217;ve yet to find a really nice way of automating this outside the gui interface or manually modifying configuration files.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

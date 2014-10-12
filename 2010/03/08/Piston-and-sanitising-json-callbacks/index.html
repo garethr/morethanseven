@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Piston And Sanitising Json Callbacks &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Piston And Sanitising Json Callbacks</h1>
+  <span class="post-date">08 Mar 2010</span>
+  <p>I&#8217;m a big fan of <a href="http://bitbucket.org/jespern/django-piston">Piston</a>, the django app for creating RESTful web services. As part of a project at work I ended up looking through the source code, mainly at some of the neat tricks of serialisation of objects. While poking around I came across something in my mind that wanted fixing. This being open source rather than just file a bug report I setup a <a href="http://bitbucket.org">bitbucket</a> account and got hacking.</p>
+<% syntax_colorize :python, type=:coderay do %>
+def render(self, request):
+	cb = request.GET.get('callback')
+        seria = simplejson.dumps(self.construct(),
+		cls=DateTimeAwareJSONEncoder,
+		ensure_ascii=False, indent=4)
+
+        # Callback
+        if cb:
+            return '%s(%s)' % (cb, seria)
+
+        return seria
+<% end %>
+<p>Can you spot the problem? Note the use of the callback passed in the query string arguments and then used <em>without any checking</em> in the output.</p>
+<p>What we really want to do is something like this:</p>
+<% syntax_colorize :python, type=:coderay do %>
+if is_valid_jsonp_callback_value(cb):
+<% end %>
+<p>Which is exactly what has just <a href="http://bitbucket.org/jespern/django-piston/changeset/f558b2c66dcc/">gone into the code for Piston</a>. <a href="http://tav.espians.com/sanitising-jsonp-callback-identifiers-for-security.html">This article</a> contains lots of background information about why <span class="caps">JSONP</span> callbacks can be a security hole, and helpfully provides a <a href="http://github.com/tav/scripts/blob/master/validate_jsonp.py">nice Python module</a> to help with the sanitisation. Nice to be on the authors list for something I&#8217;m using actively.</p>
+<p>Thanks to <a href="http://twitter.com/jespern">Jesper Noehr</a> for Piston, for some pointers on bitbucket and for quickly taking the patch. If you&#8217;re accepting a callback on your site or application, especially if it&#8217;s a public service, you really want to do something like this or you just might have an exploitable security hole.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

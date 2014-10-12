@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Mixing it Up - Programming Language Choice &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Mixing it Up - Programming Language Choice</h1>
+  <span class="post-date">04 Apr 2009</span>
+  <p>So the <a href="http://www.theregister.co.uk/2009/04/01/twitter_on_scala/">Register article about Twitter</a> seems to have kicked over yet another Ruby/Rails doesn&#8217;t scale debate &#8211; mainly it seems from people who haven&#8217;t read any of the back story or the real meat of the story. For anyone catching up I&#8217;d suggest reading <a href="http://www.artima.com/scalazine/articles/twitter_on_scala.html">this recent interview</a> with three of the Twitter developers. Ikai Lan made some particular good points about <a href="http://ikaisays.com/2009/04/02/twitter-ruby-on-rails-scala-and-people-who-dont-rtfa/">people who don&#8217;t <span class="caps">RTFM</span></a> and the comments are well worth reading too. Tony Arcieri, of <a href="http://wiki.reia-lang.org/">Reia</a> fame, took another approach and wondered why <a href="http://unlimitednovelty.com/2009/04/twitter-blaming-ruby-for-their-mistakes.html">non of the open source message queues every got a look in</a></p>
+<p>What it really all comes down to is that Twitter are using more than one language to write their systems in. What I don&#8217;t understand is why this is a shock to anyone, or why it&#8217;s a bad think? Google appear to use Java and Python for most things. Yahoo! use Java and <span class="caps">PHP</span> (and C and Perl I think?). Microsoft use VB and C/C++/C# and probably F#. At work we use .<span class="caps">NET</span> and Python for different things.</p>
+<p>Big companies have been using multiple languages and platforms for good and bad reasons for ever. Sometimes it&#8217;s about legacy systems, but often it&#8217;s about using the right tool for the job. I think lots of people jumping in on the debate do so from a point of view that everyone uses one language for everything, mainly because most personal projects or small agency style jobs do just that. Why overcomplicate smaller projects with the need for people to know more than one language? In a small general purpose team it&#8217;s also going to make recruiting and getting people up to speed much harder.</p>
+<p>But for startups doing interesting things it&#8217;s potentially both more efficient and more interesting to use multiple platforms. I think Dopplr might be mainly Ruby with a smattering of Erlang, all built around an ApacheMQ message queue, and <a href="http://www.hackdiary.com/">Matt</a> has talked about that architecture at various conferences without being called out on it.</p>
+<p>So for your next personal project why not pick a handy message queue (personally I like <a href="http://www.rabbitmq.com/">RabbitMQ</a> and <a href="http://stompserver.rubyforge.org/">StompServer</a>), and at least two complimentary languages and see how it changes the architecture of what you build? Mix <span class="caps">PHP</span> with an Erlang backend or go for Twitters Ruby/Scala mix. It might very well be overkill for that blog or todo list application you had in mind, but it just might  teach you more about picking the right tools for the job when you come across non-trivial problems.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

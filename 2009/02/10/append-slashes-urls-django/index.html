@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Append slashes to URLs in Django &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Append slashes to URLs in Django</h1>
+  <span class="post-date">10 Feb 2009</span>
+  <p>Quick Django pop quiz. Can anyone spot the deliberate mistake in the following url definition? We&#8217;re trying to define a view called log_viewer and instructing a specific url pattern to render it.</p>
+<pre>urlpatterns = patterns('',
+    (r'^log/?$', log_viewer),
+)</pre>
+<p>In this case our regex matches /log or /log/ using the /? optional pattern. This is because even if we only link to one format we know people will probably visit both, either by entering the <span class="caps">URL</span> manually or by linking from an external source.</p>
+<p>As far as <span class="caps">HTTP</span> is concerned though /log and /log/ are separate URLs, even if they display the same content. The main reason this matters for public facing websites is that our friendly search engine spiders are likely to index both separately, leading to splitting the page rank as well as accusations of duplicate content which might see further erosion of rankings.</p>
+<p>The solution is generally to issue a 301 redirect from one format to the other. This tells search engines and people alike that the canonical location for the requested content is elsewhere. You could specify the redirect manually, but this is going to get irritating quickly once you have a few more definitions.</p>
+<pre>urlpatterns = patterns('',
+    (r'^log$', redirect_to, {'url': '/log/'}),
+    (r'^log/$', log_viewer),
+)</pre>
+<p>Handily Django provides a mechanism to do exactly what we want to do by setting <a href="http://docs.djangoproject.com/en/dev/ref/settings/#append-slash">APPEND_SLASH</a> to True in your settings file. Even better it&#8217;s switched on by default. So if you don&#8217;t know much about the intricacies of <span class="caps">HTTP</span> you still get the correct behavior. That is unless you specify your <span class="caps">URL</span> patterns in the format above.</p>
+<p>You see APPEND_SLASH only works if the <span class="caps">URL</span> doesn&#8217;t match a specified pattern. If no pattern match is found it appends a trailing slash and checks for a match again. Because the above pattern matches the pattern without the trailing slash (/log) the desired behavior is never triggered, and the view is rendered at both URLs. So although we want to catch /log and /log/ on the front end, our urls.py definition should actually be:</p>
+<pre>urlpatterns = patterns('',
+    (r'^log/$', log_viewer),
+)</pre>
+<p>Django has lots of useful bits of magic for doing the right thing, but unless you know what they <em>actually</em> do you either end up recreating functionality yourself, or find features don&#8217;t work in quite the way you thought. It&#8217;s a good argument for keeping frameworks small whenever possible, and for developers to at least know their way around the code of their respective framework.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

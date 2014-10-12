@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Hacker Posts &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Hacker Posts</h1>
+  <span class="post-date">21 Mar 2009</span>
+  <p>I&#8217;ve been playing again with App Engine, and going back to an on/off pet project that I&#8217;ve build variations of for a while.</p>
+<p><a href="http://hackerposts.appspot.com"><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRihHww" alt="Hacker Posts"/></a></p>
+<p>It&#8217;s basically a pretty straightforward aggregation platform, taking content from a number of feeds and creating relationships between the items. It&#8217;s mainly an experiment in creating a decent size site on App Engine &#8211; it can be surprising how many urls you can get out of a good corpus of data:</p>
+<ul>
+	<li>400 items, each with a unique url</li>
+	<li>each item has a variable number of tags generated, at the moment that amounts to about 1000 unique urls</li>
+	<li>each month and year of content gets a url so that&#8217;s another 4 or so</li>
+	<li>each day for which we have items we also get a url, so that&#8217;s another 90 or so</li>
+</ul>
+<p>So starting off with 1500 or so pages isn&#8217;t bad. The site also grows over time as new items are posted or I add more feeds. Everything else I&#8217;ve done with App Engine has been more <a href="http://imified-demo.appspot.com/">application</a> <a href="http://image-host.appspot.com/">focused</a> so seeing how a content site performs is interesting in and of itself.</p>
+<p>The data in question I used for this first experiment was the feeds I could find from the <a href="http://news.ycombinator.com/leaders">top posters on Hacker News</a>. Hence the name <a href="http://hackerposts.appspot.com">Hacker Posts</a>. That left me with 35 feeds:</p>
+<ul>
+	<li>http://www.matasano.com/log/feed/</li>
+	<li>http://feeds2.feedburner.com/ThinkGene</li>
+	<li>http://www.mechanicalrobotfish.com/rss.xml</li>
+	<li>http://feeds.feedburner.com/Cloudknow</li>
+	<li>http://mark.nirv.net/rss</li>
+	<li>http://feeds.feedburner.com/seldomlogical</li>
+	<li>http://feeds.feedburner.com/mattmaroon/AAcm</li>
+	<li>http://www.swombat.com/rss.xml</li>
+	<li>http://feeds.feedburner.com/woobius</li>
+	<li>http://feeds2.feedburner.com/danieltenner</li>
+	<li>http://www.nilkanth.com/feed/</li>
+	<li>http://feeds.feedburner.com/NewCartographer</li>
+	<li>http://inthebox.webmin.com/feed</li>
+	<li>http://www.maximise.dk/blog/xml/rss.xml</li>
+	<li>http://www.pchristensen.com/blog/feed/</li>
+	<li>http://280north.com/blog/feed/</li>
+	<li>http://tlrobinson.net/blog/feed/</li>
+	<li>http://www.WhatToFix.com/atom.xml</li>
+	<li>http://alexkrupp.typepad.com/sensemaking/atom.xml</li>
+	<li>http://feeds.feedburner.com/yegg</li>
+	<li>http://scotchi.net/feed/atom/</li>
+	<li>http://paulbuchheit.blogspot.com/feeds/posts/default</li>
+	<li>http://www.owenbyrne.com/feed/</li>
+	<li>http://blog.jrock.us/feeds/articles/atom</li>
+	<li>http://www.kalzumeus.com/feed/</li>
+	<li>http://feeds.feedburner.com/gojomo</li>
+	<li>http://davidpiccione.com/blog/feed/</li>
+	<li>http://blog.blinker.net/feed/</li>
+	<li>http://dambalah.com/feed/</li>
+	<li>http://dustincurtis.com/rss.xml</li>
+	<li>http://blog.jodoro.com/feeds/posts/default</li>
+	<li>http://arantaday.com/blog/feed/</li>
+	<li>http://www.allanjosephbatac.com/blog/feed</li>
+	<li>http://feeds.feedburner.com/offbytwo</li>
+	<li>http://feeds.feedburner.com/FoundersBlog-Cluttermecom</li>
+</ul>
+<p>I have a couple of other communities or events that I&#8217;d like to do the same thing around, as well as a few features I want to add to the underlying software. The nice thing with App Engine is rolling new instances out is as simple as running a command.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

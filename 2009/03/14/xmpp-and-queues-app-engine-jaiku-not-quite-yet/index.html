@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      XMPP and Queues in App Engine via Jaiku? Not quite yet &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">XMPP and Queues in App Engine via Jaiku? Not quite yet</h1>
+  <span class="post-date">14 Mar 2009</span>
+  <p>So <a href="http://code.google.com/p/jaikuengine">JauikuEngine</a>, the open source, App Engine based, version of Jaiku is now available for everyone to look at. I <a href="http://twitter.com/garethr/status/1321372099">found the repo a couple of days ago</a> but it was restricted to project members. The main reason I want to hunt through the code is to have a look at what I&#8217;m guessing will be API&#8217;s available in a soon to be released version of App Engine &#8211; with specific interest in anything to do with <span class="caps">XMPP</span>, queues and offline processing.</p>
+<p>Well it looks like I&#8217;m out of luck for the moment at least. In the <a href="http://code.google.com/p/jaikuengine/source/browse/trunk/settings.py">settings file</a> I found the following two snippets though:</p>
+<pre>#
+# XMPP / IM
+#
+# Enabling IM will require a bit more than just making this True, please
+# read the docs at http://code.google.com/p/jaikuengine/wiki/im_support
+IM_ENABLED = False
+# This is the id (JID) of the IM bot that you will use to communicate with
+# users of the IM interface
+IM_BOT = 'root@example.com'
+# Turn on test mode for IM
+IM_TEST_ONLY = False
+# JIDs to allow when testing live XMPP so you don't spam all your users
+IM_TEST_JIDS = []</pre>
+<p>And another for queues:</p>
+<pre>#
+# Task Queue
+#
+# Enabling the queue will allow you to process posts with larger numbers
+# of followers but will require you to set up a cron job that will continuously
+# ping a special url to make sure the queue gets processed
+QUEUE_ENABLED = True
+# The secret to use for your cron job that processes your queue
+QUEUE_VENDOR_SECRET = 'SECRET'</pre>
+<p>The only problem appears to be that the page referenced, <a href="http://code.google.com/p/jaikuengine/wiki/im_support">code.google.com/p/jaikuengine/wiki/im_support</a>, currently says:</p>
+<blockquote>
+<p><acronym title="termie"><span class="caps">TODO</span></acronym>: describe how to get IM working with Jaiku Engine</p>
+</blockquote>
+<p>So <a href="http://twitter.com/termie">termie</a>, or anyone else on the inside, I&#8217;d love to know how to get this up and running?</p>
+<p>I&#8217;ll be having a better look through the code when I get a chance. This was just the first thing I jumped on before heading out the door. I love Open Source.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

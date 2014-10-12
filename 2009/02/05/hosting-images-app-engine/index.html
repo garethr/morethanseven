@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Hosting Images on App Engine &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Hosting Images on App Engine</h1>
+  <span class="post-date">05 Feb 2009</span>
+  <p>I like adding images to the occasional blog post but don&#8217;t do it as often as I want to. The reason being I can hardly ever be bothered to resize images. It means opening up a memory hogging application, fiddling around for a few minutes and then saving it out somewhere, then uploading said image to my server. All of those things bore me.</p>
+<p>Appengine to the rescue. As an excuse to play around with the <a href="http://code.google.com/appengine/docs/python/images/overview.html">image <span class="caps">API</span></a> as well as add more pictures to this here blog I decided to build myself a small image hosting application. I really only care about the two things noted above; resizing and uploading. If I can do that in one go I&#8217;m happy.</p>
+<p>A couple of train rides (all the best code gets written on train journeys, fact) later and I&#8217;ve deployed the first version of Image Host which looks a little something like this:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjtBww" alt="Image Hosting interface on Google App Engine"/></p>
+<p>(And yes that image is an image of image-host hosted on image-host. If you&#8217;re thinking <em>what image?</em> then it means this experiment isn&#8217;t working at the moment.)</p>
+<p>The application is designed in such a way as you could have as many people uploading and managing their own set of images as you want, all within one instance. The only reason I don&#8217;t just open it up to any google user account is that it would eat into my quotas if it got popular and I have no interest in policing whatever dubious images anyone might upload.</p>
+<p>I&#8217;ve been playing with App Engine quite extensively of late. I really appreciate the <span class="caps">SDK</span> and the limited, but well designed and thought out APIs and testing stubs. At the moment I&#8217;m happy with where it&#8217;s at. It&#8217;s obviously early days but in my mind all I really want are APIs for offline processing, some sort of message queuing facility, <span class="caps">XMPP</span> support and a payment model for raising the limitations. And several of those are already slated for the near future.</p>
+<p>If anyone wants to host their own version you can grab the code from <a href="http://github.com/garethr/appengine-image-host/tree/master">GtHub</a>. You&#8217;ll need your own App Engine account and your own snappy name but that&#8217;s all. If you really don&#8217;t want to do that, have a good reason to needing image hosting and ask nicely I might add more people to my version as well.</p>
+<p>Their are a few bugs I&#8217;m going to fix when I get a moment,  a few documented limitations I know about and I&#8217;m still fleshing out the test suite to cover all the functionality. But all in all a worthwhile few hours spent hacking. I&#8217;ll probably get round to writing up some pointers for testing App Engine code as well as their are a host of gotchas and the only real documentation at present is comments in the code.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

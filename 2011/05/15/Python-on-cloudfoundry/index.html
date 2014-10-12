@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Python On Cloudfoundry &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Python On Cloudfoundry</h1>
+  <span class="post-date">15 May 2011</span>
+  <p>For those that haven&#8217;t yet had a look <a href="http://cloudfoundry.com/">Cloudfoundry</a> from VMware is two things, one of which is nice, one of which is very cool indeed:</p>
+<ul>
+	<li>On one hand it&#8217;s a platform as a service, allowing you to easily deploy Ruby, Java and Node.js applications to <a href="http://cloudfoundry.com/">cloudfoundry.com</a>.</li>
+	<li>On the other hand it&#8217;s an <a href="http://cloudfoundry.org/">open source project</a> with all the code on <a href="http://github.com/cloudfoundry">Github</a> allowing you to run the entire stack wherever you like.</li>
+</ul>
+<p>I&#8217;m pretty interested in the latter. Its <span class="caps">API</span> could in theory become a defacto standard for application and service buildouts, in the same way as we&#8217;re seeing the EC2 <span class="caps">API</span> expand outside <span class="caps">AWS</span> for managing infrastructure (and arguably how we&#8217;re using Chef and Puppet for managing the things installed on that infrastructure). The really interesting bit is the fact it&#8217;s all open source. Not only does that mean you can run it on your own infrastructure (including as I&#8217;m doing on a virtual machine on my laptop), but it&#8217;s also designed so new services (like Redis, MySQL, RabbitMQ), new runtimes (like Ruby 1.8, RUby 1.9, Java) and new frameworks (like Rails, Sinatra, Spring) can be added easily.</p>
+<p>I&#8217;m running vcap on a <a href="http://vagrantup.com">vagrant</a> managed VirtualBox instance, but you could install it anywhere you like. I used <a href="https://github.com/auser/cloudfoundry-quickstart">these chef recipes</a> to get everything installed. I ran into an issue with the mysql service not starting correctly that <a href="https://github.com/auser/cloudfoundry-quickstart/pull/2">I fixed</a> and I needed to manually install chef into the rvm gemset part way through the install, but the recipes pretty much just worked.</p>
+<p>Looking for an excuse to have a route through the vcap code I decided to see if I could add rudimentary support for Python applications. After a day of noodling around I&#8217;ve forked the code and sent a few pull requests back with it basically working. This required changes to the <a href="https://github.com/cloudfoundry/vmc/pull/18">vmc client</a>, to the <a href="https://github.com/cloudfoundry/vcap/pull/57">vcap service</a> and like all good open source contributions to the <a href="https://github.com/cloudfoundry/vcap-tests/pull/4">test suite</a>.</p>
+<p>Thanks hugely to existing pull requests (mainly the one&#8217;s for <a href="https://github.com/cloudfoundry/vcap/pull/25">adding <span class="caps">PHP</span> support</a>) it&#8217;s not taken long at all. The Sinatra and Rails support which shipped with the first release from VMWare supports using Bundler to define gem dependencies that can be pulled in at deploy time. It shouldn&#8217;t be too much effort I&#8217;m hoping to do the same for using pip and virtualenv for each deployed python application. I think I can also see how to support python3 and how to add django as a supported framework.</p>
+<p>I had huge fun, but you might not at this early stage in the project. I&#8217;m relatively happy with reading and writing Ruby, futzing with rvm, debugging installation woes and hunting down service configuration problems. The best tool for working out what was happening was generally tailing the logs in /tmp/vcap-run/ and finding the code that wrote a given message. If you just want something to work I&#8217;d wait a little while, if you like the sound of the above it&#8217;s a pretty nice codebase to play around in. I&#8217;d love to eventually see some official contributor documentation and some hints and tips on things like running the tests. At the moment flicking through reported issues and pull requests on GitHub is the best place to start.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

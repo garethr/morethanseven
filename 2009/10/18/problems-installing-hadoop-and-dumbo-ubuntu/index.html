@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Problems Installing Hadoop 0.20 and Dumbo 0.21 on Ubuntu &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Problems Installing Hadoop 0.20 and Dumbo 0.21 on Ubuntu</h1>
+  <span class="post-date">18 Oct 2009</span>
+  <p>The Hadoop wiki has a great introduction to <a href="http://wiki.apache.org/hadoop/Running_Hadoop_On_Ubuntu_Linux_(Single-Node_Cluster)">installing this piece of software</a>, which I wanted to do to have a play with <a href="http://klbostee.github.com/dumbo/">Dumbo</a>. The Dumbo docs also have a good <a href="http://wiki.github.com/klbostee/dumbo/building-and-installing">getting started</a> section which includes a few patches than need to be applied.</p>
+<blockquote>
+<p>Dumbo can be considered to be a convenient Python <span class="caps">API</span> for writing MapReduce programs</p>
+</blockquote>
+<p>Unfortunately it&#8217;s not quite that simple, at least on Ubuntu Jaunty. Hadoop now uses Java6, but if you just follow the instructions on the wikis you&#8217;ll hit a problem when you run &#8216;&#8217;ant package&#8217;&#8216;, namely that a third party application (<a href="http://forrest.apache.org/">Apache Forrest</a>) requires Java 1.5. Once you fix that, the build script will complain again that you need to install Forrest. Here&#8217;s what I did to get everything working:</p>
+<pre>sudo apt-get install ant sun-java5-jdk</pre>
+<pre>su - hadoop
+wget http://mirrors.dedipower.com/ftp.apache.org/forrest/apache-forrest-0.8.tar.gz
+tar xzf apache-forrest-0.8.tar.gz
+cd /usr/local/hadoop
+patch -p0 &lt; /path/to/HADOOP-1722.patch
+patch -p0 &lt; /path/to/HADOOP-5450.patch
+patch -p0 &lt; /path/to/MAPREDUCE-764.patch
+ant package -Djava5.home=/usr/lib/jvm/java-1.5.0-sun -Dforrest.home=/home/hadoop/apache-forrest-0.8/</pre>
+<p>With all that out of the way you should be able to run the <a href="http://dumbotics.com/2009/05/31/dumbo-on-clouderas-distribution/">simple examples</a> found on the rather excellent <a href="http://dumbotics.com">dumbotics</a> blog. If you&#8217;re using the Cloudera distribution, or when the Hadoop 0.21 gets a release, these problems will disappear but in the meantime hopefully this saves someone else a bit of head scratching.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

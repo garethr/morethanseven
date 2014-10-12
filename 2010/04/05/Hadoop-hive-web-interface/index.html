@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Hadoop Hive Web Interface &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Hadoop Hive Web Interface</h1>
+  <span class="post-date">05 Apr 2010</span>
+  <p>I&#8217;ve been playing with Hive recently and liking what I&#8217;ve found. In theory at least it provides a very nice, simple way of getting into analysing large data sets. To make it even easier to show other people what you&#8217;re up to Hive has a nascent web interface with a little documentation <a href="http://wiki.apache.org/hadoop/Hive/HiveWebInterface">on the wiki</a></p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiBfQw" alt="image of hive web ui"/></p>
+<p>On the one hand it&#8217;s rather simple at this point, but that should be easily enought to prettify given a bit of time. The bigger problem was getting it working in the first place. What follows worked for me using the latest cloudera packages on debian testing. I&#8217;m assuming you already have Hive and Hadoop installed, the basic packages worked fine for me here.</p>
+<p>Next up you&#8217;ll need the <span class="caps">JDK</span> (not just the <span class="caps">JRE</span>) as their is some compilation that will go on the first time you run the web interface.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install ant sun-java6-jdk
+<% end %>
+<p>Next up I had to modify the installed <em>/etc/hive/conf/hive-site.xml</em> file as follows:</p>
+<p>I changed this:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hivevar/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>To this. Note the hivevar path doesn&#8217;t exist so I&#8217;m not sure if this was a typo in the source.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hive/var/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>I also change the following section regarding the metastore name:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/${user.name}_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>To this, with a fixed name. When using the above confirguration the file was actually called ${user.name} rather than my username being subsituted in. Elsewhere this seems to work fine.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/metastore_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>I&#8217;m not convinced the above two changes are needed but have left them here just in case. The main tricky part is making sure a load of environment variables are correctly set. The following worked for me:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+export ANT_LIB=/usr/share/ant/lib
+export HIVE_HOME=/usr/lib/hive
+export HADOOP_HOME=/usr/lib/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+<% end %>
+<p>All being well that should allow you to run the hive command with the web interface like so:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+hive --service hwi
+<% end %>
+<p>That should bring up a webserver on port 9999 where you should see something similar to the screenshot above.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

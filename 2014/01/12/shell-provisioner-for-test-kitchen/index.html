@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Shell provisioner for Test Kitchen &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Shell provisioner for Test Kitchen</h1>
+  <span class="post-date">12 Jan 2014</span>
+  <p>As of a few weeks ago <a href="http://kitchen.ci/">Test Kitchen</a> has a <a href="https://github.com/test-kitchen/test-kitchen/blob/master/lib/kitchen/provisioner/shell.rb">shell provisioner</a> as well as the original Chef provisioners. This opens up all sorts of interesting testing potential.</p>
+
+<p>If you&#39;ve not already seen Test Kitchen, probably because you&#39;re not using Chef, it&#39;s a tool for integration testing infrastructure code. Configured by a simple YAML file it will setup a matrix of virtual machines, using Virtualbox, AWS, OpenStack and more, run some setup code (normally applying Chef recipes) and then run a test suite (with support for Bats, ShUnit2, Rspec and Serverspec). It&#39;s all very pluggable. With the addition of the shell provisioner it&#39;s useful to just about anyone. To try and prove that here&#39;s a hello world style example.</p>
+
+<h2>Dependencies</h2>
+
+<p>First we need to install Test Kitchen. We&#39;ll use vagrant and virtualbox for our example too so we need a few extra dependencies. I&#39;m going to assume you have bundler installed, if not you may be able to do so with <code>gem install bundler</code> but as the number of ways of setting a ruby environment up is greater than the number of people on the planet I&#39;ll have to defer to instructions elsewhere for getting that far.</p>
+
+<p>First create a file called <code>Gemfile</code> with the following contents:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+
+<span class="n">gem</span> <span class="s2">&quot;test-kitchen&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://github.com/test-kitchen/test-kitchen.git&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;kitchen-vagrant&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;vagrant-wrapper&quot;</span>
+</code></pre></div>
+<p>Then run:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle install
+</code></pre></div>
+<p>This should install the above software. Note that the shell provisioner is not yet in an official release so where installing direct from GitHub for the moment.</p>
+
+<h2>Configuration</h2>
+
+<p>Next we&#39;ll tell Test Kitchen what we want to do. As much for demonstration purposes I&#39;m going to grab one of the Puppetlabs boxes. This is just plain <a href="http://vagrantup.com">Vagrant</a> so feel free to substitude the <code>box</code> and <code>box_url</code> for alternatives you already have installed locally. Otherwise the first run will take a little longer as it downloads a large file.</p>
+
+<p>Pull all of the following in a file called `.kitchen.yml&#39;.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">vagrant</span>
+
+<span class="l-Scalar-Plain">provisioner</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">shell</span>
+
+<span class="l-Scalar-Plain">platforms</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+    <span class="l-Scalar-Plain">driver_config</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">box</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+      <span class="l-Scalar-Plain">box_url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box</span>
+
+<span class="l-Scalar-Plain">suites</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">default</span>
+</code></pre></div>
+<p>The shell provisioner is going to look for a file called <code>bootstrap.sh</code> by default. You can overide this but we&#39;ll leave it for the moment. Our bootstrap script is going to do something very simple, install the ntp package. But the important part is it could do anything; run Salt, run Ansible, run Puppet, execute any arbitrary code we choose. In this case our script is completely self contained but if it needed some additional files we could put them in a directory called <code>data</code> and they would be copied to the newly created virtual machine under <code>/tmp/kitchen</code>.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+apt-get install ntp -y
+</code></pre></div>
+<h2>Tests</h2>
+
+<p>The last step is to write a test. I&#39;m suddently finding lots of excuses to use <a href="http://serverspec.org/">Serverspec</a> so we&#39;ll use that, but if you prefer you can use pretty much anything. The following file should be saved as  <code>test/integration/default/serverspec/ntp_spec.rb</code>. Note the <code>default</code> in the path which matches our suite above in the <code>.kitchen.yml</code> file. Test Kitchen allows for multiple suites all with separate tests based on a strong set of file path conventions.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;serverspec&#39;</span>
+
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">Exec</span>
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">DetectOS</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">before</span> <span class="ss">:all</span> <span class="k">do</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/sbin:/usr/sbin&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Running the tests</h2>
+
+<p>With all of that in place we&#39;re ready to run our tests.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle exec kitchen test
+</code></pre></div>
+<p>This should:</p>
+
+<ul>
+<li>download the virtual machine image if you don&#39;t already have it locally</li>
+<li>create a new virtual machine based on the image</li>
+<li>run the bootstrap.sh script</li>
+<li>run our serverspec test suite</li>
+</ul>
+
+<p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
+
+<p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Testing Vagrant runs with Cucumber &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Testing Vagrant runs with Cucumber</h1>
+  <span class="post-date">15 Mar 2014</span>
+  <p>I&#39;ve been a big fan of <a href="http://www.vagrantup.com/">Vagrant</a> since it&#39;s
+initial release and still find myself using it for various tasks.</p>
+
+<p>Recently I&#39;ve been using it to test collections of Puppet modules. For a
+single host
+<a href="https://github.com/jvoorhis/vagrant-serverspec">vagrant-serverspec</a> is
+excellent. Simply install the plugin, add a provisioner and write your
+<a href="http://serverspec.org/">serverspec</a> tests. The serverspec provisioner
+looks like the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:serverspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+  <span class="n">spec</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;*_spec.rb&#39;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>But I also found myself wanting to test behaviour from the host
+(serverspec tests are run on the guest), and also wanted to write tests
+that checked the behaviour of a multi-box setup. I started by simply
+writing some <a href="http://cukes.info/">Cucumber</a> tests which I ran locally,
+but I decided I wanted this integrated with vagrant. Enter
+<a href="https://github.com/garethr/vagrant-cucumber-host">vagrant-cucumber-host</a>.
+This implements a new vagrant provisioner which runs a set of cucumber
+features locally.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:cucumber</span> <span class="k">do</span> <span class="o">|</span><span class="n">cucumber</span><span class="o">|</span>
+  <span class="n">cucumber</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Just drop your features in the features folder and run <code>vagrant
+provision</code>. If you just want to run the cucumber features, without any
+of the other provisioners running you can use:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vagrant provision --provision-with cucumber
+</code></pre></div>
+<p>Another advantage of writing this as a vagrant plugin is that it uses
+the Ruby bundled with vagrant, meaning you just install the plugin
+rather than faff about with a local Ruby install. </p>
+
+<p>A couple of other vagrant plugins that I&#39;ve used to make the testing
+setup easier are <a href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a>
+and <a href="https://github.com/adrienthebo/vagrant-hosts">vagrant-hosts</a>. Both
+help with managing hosts files, which makes writing tests without
+knowing the IP addresses easier.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

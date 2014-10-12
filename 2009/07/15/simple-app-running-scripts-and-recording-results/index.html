@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Asteroid - simple app for running scripts and recording the results &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Asteroid - simple app for running scripts and recording the results</h1>
+  <span class="post-date">15 Jul 2009</span>
+  <p>Asteroid is a simple web interface for running scripts and recording the results. It&#8217;s like a much simpler and more general purpose version of something like Cruise Control. You can <a href="http://github.com/garethr/Asteroid/tree/master">get the code on Github</a>.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRj5VQw" alt="Asteroid Dashboard"/></p>
+<p>I built it to solve two main problems:</p>
+<ul>
+	<li>It&#8217;s sometimes useful to have a historical record of a scripts execution, in particular whether it passed or failed and what the output was. Just running a command line script probably doesn&#8217;t give you that. It&#8217;s also useful to have a more graphical interface for those members of the team who don&#8217;t use the command line.</li>
+	<li>When working in a team you often want to run scripts against shared infrastructure, for instance deploying a testing release or running a test suite. Seeing what is running at present helps with that.</li>
+</ul>
+<p>So it should be useful for running deployments, running test suites, running backups, etc. It currently doesn&#8217;t have scheduling or similar build in, but as everything is triggered by hitting a <span class="caps">URL</span> it would be simple enough to use cron for something like that. It should also be useful whatever language you write your scripts in; rake, ant, shell scripts, etc. At the end of the day it just executes a command at the console.</p>
+<h2>Requirements</h2>
+<p>Asteroid uses the Django Python framework under the hood.</p>
+<ul>
+	<li>Django &#8211; <a href="http://www.djangoproject.com/">http://www.djangoproject.com/</a></li>
+</ul>
+<p>You&#8217;ll also need a database. The default in the shipped settings is to use sqlite but this should work with any database supported by Django.</p>
+<p>You&#8217;ll also need a decent web browser. I&#8217;ve gone and used HTML5 as an experiment and with this being a developer tool I&#8217;m hoping to stick with it. It would be easy enough to convert the templates if this is a problem however.</p>
+<p>The application has an optional message queue backend which can be enabled in the settings file. This is used to improve the responsiveness of the application as well as allow commands to be executed on a remote machine, rather than on the box Asteroid is running.</p>
+<ul>
+	<li>AMQPlib &#8211; <a href="http://barryp.org/software/py-amqplib/">http://barryp.org/software/py-amqplib/</a></li>
+	<li>RabbitMQ &#8211; <a href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a></li>
+</ul>
+<p>Other <span class="caps">AMQP</span> compliant message queues should work but it&#8217;s currently only tested with Rabbit.</p>
+<p>If you are intending to do any development on Asteroid, or just want to look more closely at the code, I&#8217;d recommend installing</p>
+<ul>
+	<li>Clue &#8211; <a href="http://github.com/garethr/django-clue/tree/master">http://github.com/garethr/django-clue/tree/master</a></li>
+	<li>Test Extensions &#8211; <a href="http://github.com/garethr/django-test-extensions/tree/master">http://github.com/garethr/django-test-extensions/tree/master</a></li>
+</ul>
+<h2>Usage Instructions</h2>
+<p>You should be able to just download asteroid and run it from wherever you put it, once you setup the database.</p>
+<pre>cd asteroid/configs/common
+manage.py syncdb
+manage.py runserver</pre>
+<p>This should bring the local web server up on port 8000 so visit http://localhost:8000 and see.</p>
+<p>If you&#8217;re using the message queue backend you&#8217;ll need to run the listener script in order to get your commands executed. At the moment that means modifying a constant in the listener script to point at a running message queue instance at asteroid/bin/asteroid_listen.py.</p>
+<pre>cd asteroid/bin
+./asteroid_listen.py</pre>
+<p>Once you&#8217;re up and running you should be able to add commands via the admin interface at http://localhost:8000/admin/. The username and password should be those you added when creating the database via the syncdb command above.</p>
+<p>The development configs include a few additional applications (mentioned above) which I use for testing and debugging. You can run the test suite like so:</p>
+<pre>cd asteroid/configs/development
+manage.py test --coverage
+</pre>
+<h2>Todo</h2>
+<p>This is an early release that just about <em>works for me</em>. I can already see a number of areas I&#8217;d like to clean up a little or extend. For instance:</p>
+<ul>
+	<li>Other deployment options, including a <span class="caps">WSGI</span> file and a spawning startup script.</li>
+	<li>Use a database migration system to make upgrades easier.</li>
+	<li>Make the message queue listener script more robust.</li>
+	<li>Make the command entry more robust, it sometimes takes a bit of fiddling with to get something to run correctly.</li>
+	<li>Formalise running scripts on remote machines, including support for running on multiple machines.</li>
+	<li>Paging for long lists of commands or runs.</li>
+</ul>
+<h2>Notes</h2>
+<p>I&#8217;m pretty happy with how it&#8217;s shaping up so far. Under the hood it works by having the web app put a <span class="caps">JSON</span> document on the message queue. The <span class="caps">JSON</span> contains the command to be run and a callback <span class="caps">URL</span>. The script listening to the message queue picks up the message, runs the command, and posts a <span class="caps">JSON</span> document back to the webhook url. It keeps the web interface snappy, as well as meaning it can show which commands are currently in progress at any given time. It also has the side benefit of meaning you can execute commands on a remote machine, as the listener doesn&#8217;t care where it&#8217;s running.</p>
+<p>As noted above I have a few ideas of where I want to take it, but I&#8217;m going to try using it for a bit and see how that goes. If anyone else finds it useful then do let me know.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

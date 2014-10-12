@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Support for Rev=Canonical &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Support for Rev=Canonical</h1>
+  <span class="post-date">10 Apr 2009</span>
+  <p>There has been <a href="http://adactio.com/journal/1566/">lots of talk</a> recently about <span class="caps">URL</span> shortening. Services like <a href="http://tinyurl.com/">TinyURL</a> have been around for a good while, offering shortened versions of URLs like <a href="http://tinyurl.com/dd7w2m">tinyurl.com/dd7w2m</a> which are easier to put in a tweet or an email. The problem with this is that not only does the shorter version mask any information about the destination, but if TinyURL or one of the other shortening services goes away, or loses control of it&#8217;s domain name, a large number of links are going to stop working the way they should.</p>
+<p><a href="http://laughingmeme.org/">Kellan</a> in particular has been proposing some simple steps that might get us out of this hole. You can read more about the ideas behind using <a href="http://revcanonical.wordpress.com/">Rev=Canonical</a> and try out the future (maybe) of these services at <a href="http://revcanonical.appspot.com">revcanonical.appspot.com</a>.</p>
+<p>The nicest thing from my point of view about this idea is how simple it is to implement. This blog is running a custom Django based blogging engine called <a href="http://github.com/garethr/django-train/tree/master">Train</a>.</p>
+<p>The posts on this site exist at urls like the following: <a href="http://morethanseven.net/2009/04/04/mixing-it-programming-language-choice/">morethanseven.net/2009/04/04/mixing-it-programming-language-choice/</a>. With only a small view function, a change to a template and the addition of a url this blog should now work with Kellans new url shortener.</p>
+<p>I decided to use the ids for the articles on the blog as the key for the short versions. So if you were to visit <a href="http://morethanseven.net/284">morethanseven.net/284</a> you would get the article above. I decided to issue a redirect from the short version to the long version in the end rather than serve duplicate content with the canonical link, not sure which way is probably best though.</p>
+<p>The markup for each article contains the required link in the head of the document:</p>
+<pre>&lt;link rel="alternate shorter" href="http://morethanseven.net/284"&gt;&lt;/pre&gt;</pre>
+<p>And the django view looks something like this:</p>
+<pre>def tiny(request, id):
+    "Provide tiny urls based on ids for articles"
+    # get the article or throw a 404
+    article = get_object_or_404(Article, id=id, status='live')
+    url = article.get_absolute_url()
+    # redirect to the relevant
+    return HttpResponsePermanentRedirect(url)</pre>
+<p>All in all, incredible simply to implement, especially in something like Rails or Django which make this sort of wire up urls to view stuff easy. So what&#8217;s stopping you adding this to you site or current project? If enough people just do it we can make the web a slightly better place in reasonably short order.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
