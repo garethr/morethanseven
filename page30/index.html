@@ -68,6 +68,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/24/github-changelog/">
+        GitHub Changelog
+      </a>
+    </h1>
+
+    <span class="post-date">24 Feb 2009</span>
+
+    <p>It turns out the guys at GitHub publish the <a href="http://github.com/changelog">commit messages from their work on GitHub</a> itself. If you really have to keep up you can even subscribe to an <a href="http://github.com/changelog.atom">Atom feed</a>.</p>
+<p>OK, so this might not be hugely useful. But it <em>is</em> funny, and a just a nice sign of a small company being open in an interesting way. A few of my favourites:</p>
+<blockquote>
+<p>mmm pizza&#8230; guard against bad SHAs in Walker#commit</p>
+</blockquote>
+<blockquote>
+<p>really need to get a handle on this insane testing setup</p>
+</blockquote>
+<blockquote>
+<p>I guess ff3 linux is the worst browser ever made</p>
+</blockquote>
+<blockquote>
+<p>dont care</p>
+</blockquote>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/23/epydoc-ant-task/">
         Epydoc Ant task
       </a>
@@ -175,36 +200,6 @@ conn.request_delete('/items/11232344')</pre>
 </ul>
 <p>So if anyone knows of something that would be up my street I&#8217;d be grateful. Even better, if you or your company are looking for someone at the moment and don&#8217;t mind waiting a few months then I might be what you&#8217;re looking for. For those that don&#8217;t already have an email address you can find me on <a href="mailto:gareth@morethanseven.net">gareth@morethanseven.net</a></p>
 <p>(There is obviously a chance that you might be a recruiter, rather than someone who wants me to work with or for them. I won&#8217;t ignore you out of hand but please don&#8217;t try and ring me unless I ask you to. Email is both quicker and easier for me to deal with. Also if you just want my CV for your files, have only a vague job description, or you want to tell me about a job in a company you can&#8217;t tell me the name of please don&#8217;t be offended if I don&#8217;t get back to you.)</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/15/let-you-sys-admin-override-your-django-settings/">
-        Let you Sys Admin Override your Django Settings
-      </a>
-    </h1>
-
-    <span class="post-date">15 Feb 2009</span>
-
-    <p>The previous <a href="http://morethanseven.net/2009/02/11/django-settings-tip-setting-relative-paths/">Django settings tip</a> seemed to go down well so I thought I&#8217;d jot down a few more over the next few weeks. Most of these have come out of working with a decent sized Django team at <a href="http://thisisglobal.com">Global</a> so I can&#8217;t take credit for anything but writing them down for the most part. For this example I think <a href="http://alixandalex.com/obfuscated-signatures/">Alex Knowles</a> did the original version.</p>
-<p>I was talking with out friendly <a href="http://search.cpan.org/~rclamp/">sys</a> <a href="http://www.unixdaemon.net/">admins</a> on Friday about a new application and whether they were happy with some application specific logging (using the Python logging module) I&#8217;d build in. Nothing fancy, just application logging to a rotated log file for system events. Their answer was yes, as long as they could control where the log files ended up and the maximum file size, ideally without having to play around in the code or to redeploy the application if they wanted to move the files elsewhere.</p>
-<p>These things were already specified in the settings file rather than hardcode into the application but that only gets us half way. The standard Linux way of setting this sort of thing is with a configuration file stored in the /etc directory. So we ended up with the following snippet of code in our settings.py file.</p>
-<pre># we're going to allow overriding of settings via a yml file.
-# This makes live nicer for anyone managing the box
-# and means settings can be overloaded without redeploying the site
-SETTINGS_OVERIDE = "/etc/application_name.yml"
-try:
-    file = open(SETTINGS_OVERIDE)
-    for key, value in yaml.load(file).items():
-        globals()[key]=value
-except:
-    # we don't always have the file around or need the setting 
-    # defined so best to be quite if things go wrong
-    pass</pre>
-<p>Then in the yaml file you can simply clobber any of the settings using a simple name value pair approach.</p>
-<pre>LOG_FILE: "/var/log/application_name.log"</pre>
-<p>It lets us keep production paths that might change out of the developers code, at the same time as giving the sys admins a familiar way of managing the production environment.</p>
-<p>It does have one downside, if you&#8217;re not aware of it&#8217;s presence then it can make debugging settings related issues a pain. With that in mind you could wrap it so as to only work this way when <span class="caps">DEBUG</span> is False, or take the approach here which is to leave extensive comments.</p>
   </div>
   
 </div>

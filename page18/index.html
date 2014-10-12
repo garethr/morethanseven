@@ -68,6 +68,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/03/28/More-django-project-templates/">
+        More Django Project Templates
+      </a>
+    </h1>
+
+    <span class="post-date">28 Mar 2010</span>
+
+    <p>Quite a while ago I released some handy scripts for building up Django project layouts. Part of the reason behind this was to kick off discussions about ideal pproject layouts and maybe even get a few user submitted layouts into the project. Paster makes this soft of thing really easy to do and I was interested in what people might come up with.</p>
+<p>Well, the team over at <a href="http://chicagotribune.com/">The Chicargo Tribune</a> have done just that, creating a branch of the original project and <a href="http://github.com/ryanmark/django-project-templates/">adding a very rich example project to it</a></p>
+<p>I&#8217;ve finally gotten around to merging that back into <a href="http://github.com/garethr/django-project-templates/">my branch</a> and releasing a new version to <a href="http://pypi.python.org/pypi/django-project-templates/0.11">PyPi</a>. It&#8217;s got a good number of PostGreSQL commands that might be of use, as well as several Amazon S3 and EC2 examples. Even if none of these complete templates fit what you&#8217;re looking for exactly their are lots of smaller fabric recipes worth taking a look at.</p>
+<p>You can read all about what is in the project over on their <a href="http://blog.apps.chicagotribune.com/2010/03/08/advanced-django-project-layout/">developer blog</a>, which if filled with other interesting web and operations goodness.</p>
+<p>So, huge thanks to <a href="http://blog.apps.chicagotribune.com/author/cgroskopf/">Chris</a>, <a href="http://blog.apps.chicagotribune.com/author/bboyer/">Brian</a>, <a href="http://blog.apps.chicagotribune.com/author/ryanthomasmark/">Ryan</a> and <a href="http://blog.apps.chicagotribune.com/author/joegermuskact/">Joe</a> for some great work.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/03/21/Sandbox-your-ruby-gems/">
         Sandbox Your Ruby Gems
       </a>
@@ -157,39 +173,6 @@ if is_valid_jsonp_callback_value(cb):
 <p>After looking through lots of code from the <a href="http://projects.stoneship.org/trac/nanoc/wiki/Showcase">nanoc showcase</a> I had a pretty good feel for how I wanted things to work and I then used the excellent <a href="http://github.com/mgutz/nanoc3_blog">nanoc3_blog</a> template to get started. I&#8217;ve hacked around quite a bit with the code to get things how I wanted them. Using <a href="http://lesscss.org/">Less</a> to make the <span class="caps">CSS</span> more manageable, <a href="http://coderay.rubychan.de/">Coderay</a> for lovely syntax highlighting and making everything default to textile rather than markdown. I&#8217;ve also written import scripts for my old blog (in Python) and another one so I can use tumblr is I want to create items on here (in Ruby).</p>
 <p>Nanoc really is a joy to work with and I&#8217;m hoping that alone will get me back into writing more freqently than I have done for a while. The fact I can just write in Vim or WriteRoom or whatever editor I have to hand feels nice. And using Git, Rake and Rsync complete my little toolset. Everything is still served via Nginx.</p>
 <p>I&#8217;ve thrown the all the code, including all the content, up on <a href="http://github.com/garethr/morethanseven">GitHub</a> for anyone interested. Back to writing.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/07/Mysql-support-for-cucumber-nagios/">
-        Mysql Support For Cucumber Nagios
-      </a>
-    </h1>
-
-    <span class="post-date">07 Mar 2010</span>
-
-    <p>I just noticed Lindsay had <a href="http://github.com/auxesis/cucumber-nagios">committed</a> the amqp steps for cucumber-nagios and remembered I hadn&#8217;t mentioned on here some other work I&#8217;ve been doing on the same project. We use MySQL quite a bit at work and I&#8217;ve been wanting to extent our monitoring for a while. So I set about thinking how that would work with cucumber-nagios. What I&#8217;ve come up with looks something like this:</p>
-<pre>
-Feature: localhost
-  To make sure the rest of the system is in order
-  Our database server should not be overloaded
-
-  Scenario: check running processes count
-    Given I have a MySQL server on localhost
-    And I use the username root
-    Then it should have less than 10 processes
-
-  Scenario: check queries per second
-    Given I have a MySQL server on localhost
-    And I use the username root
-    Then it should have less than 200 select queries per second
-    Then it should have less than 300 queries per second
-    Then it should have less than 5 slow queries pers second
-    Then it should have at least 10 queries per second
-</pre>
-<p>The numbers, username details and host details are all variables. So you can write senarios for your specific deployments. The tests over time are based on a very short lived sampling mechanic which I&#8217;ve yet to test in anger. I&#8217;m not sure just yet is this approach will lead to too many false positives but we&#8217;ll have to see.</p>
-<p>This <a href="http://codeinthehole.com/archives/8-Monitoring-MySQL-with-Ganglia-and-gmetric.html">mysql gmetric script</a> gave me lots of the ideas for invidual steps. I&#8217;ll be writing more about some work I&#8217;ve been doing with cucumber-nagios and ganglia soon as well.</p>
-<p>For the moment if anyone want&#8217;s to try these steps out you can either check out <a href="http://github.com/garethr/cucumber-nagios">my cucumber-nagios</a> fork or just grab the steps from the <a href="http://github.com/garethr/cucumber-nagios/blob/master/lib/generators/project/features/steps/mysql_steps.rb">mysql_steps.rb</a> file. Any feedback much appreciated.</p>
   </div>
   
 </div>

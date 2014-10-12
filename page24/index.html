@@ -68,6 +68,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/06/23/ant-web-developers-ii-restart-apache/">
+        Ant for Web Developers II - Restart Apache
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jun 2009</span>
+
+    <p>Following on from <a href="http://morethanseven.net/2009/06/22/ant-web-developers-i-backup-config-file/">yesterdays first useful ant task</a>, here&#8217;s another commonly used task &#8211; restarting a remote service. I&#8217;ve used apache in this example, but it could be any service running on your remote machine and it doesn&#8217;t have to be the restart command.</p>
+<p>In order to do this we&#8217;ll use the <a href="http://ant.apache.org/manual/OptionalTasks/sshexec.html">sshexec target</a> which has a third party <a href="http://ant.apache.org/manual/install.html#librarydependencies">library dependency</a>. This is the same third party library needed for the scp task in yesterdays post</p>
+<p>You need first to download <a href="http://www.jcraft.com/jsch/index.html"><span class="caps">JSCH</span></a> and then compile the source using ant. Just run <em>ant dist</em> in the downloaded folder and you should get a .jar file in the /dist/lib folder. Save this .jar file as as jsch.jar to a folder in your home directory <em>~/.ant/lib</em> where ant can automatically load it. Alternatively you can run ant with the -lib command to load libraries from a different location.</p>
+<pre>ant -lib /tools/ant-libraries</pre>
+<p>With that out of the way lets have a look at the task.</p>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project name="example" basedir="."&gt;
+&lt;property name="host" value="{host}"/&gt;
+&lt;property name="username" value="{user}"/&gt;
+&lt;property name="password" value="{password}"/&gt;
+&lt;target name="restart-apache" description="execute a remote command to restart apache"&gt;
+        &lt;sshexec host="${host}"
+            username="${username}"
+            password="${password}"
+            command="/etc/init.d/apache2 restart"/&gt;
+&lt;/target&gt;
+&lt;/project&gt;</pre>
+<p>And running it is as simple as:</p>
+<pre>ant restart-apache</pre>
+<p>One potential issue with tasks like this is storing the password in the build file in plain text. The target we&#8217;re using can also use key authentication is you&#8217;re happy using ssh keys. Alternatively you can set properties on the command line each time you run ant like so.</p>
+<pre>ant restart-apache -Dpassword={password}
+</pre>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/06/22/ant-web-developers-i-backup-config-file/">
         Ant for Web Developers I - Backup Config File
       </a>
@@ -185,21 +218,6 @@ h2 {
 </ul>
 <p>I don&#8217;t think all of these apply to everyone or apply all the time, but it&#8217;s worth considering and rejecting them when they don&#8217;t.</p>
 <p>Feel free to disagree in the comments or, even better, add extra ones. Or alternatively just cut to the chase and tell me what I should learn next.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/06/08/garethrushgrovecom-update/">
-        garethrushgrove.com update
-      </a>
-    </h1>
-
-    <span class="post-date">08 Jun 2009</span>
-
-    <p>I&#8217;ve updated my vanity domain at <a href="http://garethrushgrove.com">garethrushgrove.com</a> with a bit of information in case anyone might be interested in my services.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjDPgw" alt="my personal site"/></p>
-<p>The short version is I&#8217;m on the lookout for future projects, probably of a freelance or contract basis but if it&#8217;s particularly interesting then maybe a full time position. Basically I&#8217;m in quite a nice position and able to wander about a bit looking for something cool to do.</p>
-<p>If you reading this site then you know what floats my boat. Python, testing, automation, system design, maybe get into Ruby or another language properly, etc. I&#8217;d particularly like to help people get started with testing, continuous integration or automated deployment and the like.</p>
   </div>
   
 </div>

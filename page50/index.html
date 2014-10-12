@@ -68,6 +68,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/08/19/html-an-alternative-to-word/">
+        HTML. An alternative to Word?
+      </a>
+    </h1>
+
+    <span class="post-date">19 Aug 2007</span>
+
+    <p>When I&#8217;m writing code, be it <span class="caps">CSS</span>, Javascript, Ruby, whatever, I don&#8217;t like big bulky IDE&#8217;s. Give me <a href="http://macromates.com/">TextMate</a> or Vim any day. Going all freelance I now have the occasional need to produce nice documents and being in charge means I get to decide what I use to produce them. I never really liked working in Microsoft Word so decided against it. But rather than sensibly going for an obviously alternative I decided to just use <span class="caps">HTML</span>, or rather more specifically, <a href="http://textism.com/tools/textile/">Textile</a>.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgOnlineDocs.png" title="An example of a current document" alt="An example of a current document" /></p>
+<p>As an old time <a href="http://textpattern.com">textpattern</a> I learned to love the simple text transformation language and it&#8217;s inclusion in the <a href="http://37signals.com">37signals</a> apps made me smile and more likely to use them. Why use it over <span class="caps">HTML</span> you may ask? For me I think about <span class="caps">HTML</span> like a browser, as a tree of nodes. I end up spending quite a bit of time writing content then going backwards and wrapping what I just wrote in markup. This is fine for your typical site, but for writing documents it&#8217;s hard to get into a flow. With textile I can flow in one direction.</p>
+<p>So far I&#8217;m liking it alot. I can seperate content from presentation (Word styles are a myth), easily repurpose my content (text, html, pdf) and write documents in anything I like, including Word if I chose to.</p>
+<p>It&#8217;s been a pretty good excuse to play with various bits of CSS3, including multi-columns, advanced layout, generated content and the various print offerings. Given I can control the rendering engine then produce a <span class="caps">PDF</span> to distribute I can use anything that the latest browser builds can deal with.</p>
+<p>I&#8217;ve not got all the workflow steps automated yet, I&#8217;m using Firefox to print documents to <span class="caps">PDF</span> (via Preview) at the moment which works fine but is still a manual process I can get rid of using something like <a href="http://www.re.be/css2xslfo/">css2xslfo</a> and <a href="http://xmlgraphics.apache.org/fop/">fop</a>. I&#8217;m also pretty sure the PDFs won&#8217;t be accessible, although the original markup certainly should be.</p>
+<p>As I produce more complex documents I&#8217;ll likely miss things like automated table of contents generation, footnotes and page numbering but, then again, I can write that in Javascript (or on the server) if I so choose. I was impressed listening to HÃ¥kon Wium Lie at <a href="http://vivabit.com/atmedia2007/">@media</a> about the process they used to format his last book using <span class="caps">CSS</span> and <a href="http://www.princexml.com/">PrinceXML</a>. I&#8217;m half tempted to spend time rolling all this together into a web app. It would be pretty good fun really; APIs, <span class="caps">XSLT</span>, <span class="caps">CSS</span>, <span class="caps">PDF</span>, some nice UI problems, etc. Only problem I see would be entering a market contested by Microsoft, Google, Sun and er, lots of others.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/07/31/some-thoughts-on-good-conferences-to-attend-uk/">
         Some Thoughts on Good Conferences to Attend - UK
       </a>
@@ -147,32 +165,6 @@
 	<li>I&#8217;ll be along to <a href="http://rubyandrails.org/usergroups/newcastle/">ncl.rb</a> tomorrow night (thursday) and in the pub afterwards if anyone is around. Their have been a few good events in Newcastle recently, only some of which I&#8217;ve managed to get along to. I&#8217;m considering getting an <a href="http://www.opencoffeeclub.org/">Open Coffee</a> do up and running in Newcastle as well. If anyone is interested let me know.</li>
 </ul>
 <p>More (interesting) work beckons&#8230;</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/06/24/targeting-on-css3/">
-        Target(ing) on CSS3
-      </a>
-    </h1>
-
-    <span class="post-date">24 Jun 2007</span>
-
-    <p>Apologies up front for the bad pun but I&#8217;ve been busy playing with another little feature found in CSS3, namely the :target pseudo-class.</p>
-<p>It&#8217;s actually pretty well described in the <a href="http://www.w3.org/TR/2001/CR-css3-selectors-20011113/#target-pseudo">CSS3 Selectors module</a>, (although given that the specs make lots of use of partial URLs the spec style sheet is crying out for use of said selector to I digress).</p>
-<p>Put simply it allows you to style elements of a page that are the target of in page anchors, ie. <code>&amp;lt;a href="#target"&amp;gt;in page link&amp;lt;/a&amp;gt;</code></p>
-<p>For example. The following <span class="caps">CSS</span> hides all div children of an element with an id of <em>example3</em>.</p>
-<pre><code>#example3 &gt;div {
-    display: none;
-}</code></pre>
-<p>The we can say &#8220;if said element has been targetted then display them all&#8221;</p>
-<pre><code>#example3:target &gt;div {
-    display: block;
-}</code></pre>
-<p>So if you visiting #example3 you would see the divs, otherwise they will be hidden away.</p>
-<p>I&#8217;ve set up a couple of examples over on <a href="http://morethanseven.net/presents/target">morethanseven.net/presents/target</a>.</p>
-<p>These examples basically remove the need for Javascript implementations but I&#8217;m not sure whether I&#8217;d actually use either of these. But you get the general idea. One thing about the examples was their simplicity compared with similar approaches though.</p>
-<p>It&#8217;s already pretty well implemented according to this handy <a href="http://www.css3.info/modules/selector-compat">compatability table</a> from <a href="http://www.css3.info/">CSS3.info</a> and I would imagine an ideal candidate for <a href="http://andybudd.com">Andy Budd&#8217;s</a> <a href="http://www.andybudd.com/archives/2007/05/css22/">CSS2.2</a>.</p>
   </div>
   
 </div>

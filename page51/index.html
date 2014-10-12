@@ -68,6 +68,32 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/06/24/targeting-on-css3/">
+        Target(ing) on CSS3
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jun 2007</span>
+
+    <p>Apologies up front for the bad pun but I&#8217;ve been busy playing with another little feature found in CSS3, namely the :target pseudo-class.</p>
+<p>It&#8217;s actually pretty well described in the <a href="http://www.w3.org/TR/2001/CR-css3-selectors-20011113/#target-pseudo">CSS3 Selectors module</a>, (although given that the specs make lots of use of partial URLs the spec style sheet is crying out for use of said selector to I digress).</p>
+<p>Put simply it allows you to style elements of a page that are the target of in page anchors, ie. <code>&amp;lt;a href="#target"&amp;gt;in page link&amp;lt;/a&amp;gt;</code></p>
+<p>For example. The following <span class="caps">CSS</span> hides all div children of an element with an id of <em>example3</em>.</p>
+<pre><code>#example3 &gt;div {
+    display: none;
+}</code></pre>
+<p>The we can say &#8220;if said element has been targetted then display them all&#8221;</p>
+<pre><code>#example3:target &gt;div {
+    display: block;
+}</code></pre>
+<p>So if you visiting #example3 you would see the divs, otherwise they will be hidden away.</p>
+<p>I&#8217;ve set up a couple of examples over on <a href="http://morethanseven.net/presents/target">morethanseven.net/presents/target</a>.</p>
+<p>These examples basically remove the need for Javascript implementations but I&#8217;m not sure whether I&#8217;d actually use either of these. But you get the general idea. One thing about the examples was their simplicity compared with similar approaches though.</p>
+<p>It&#8217;s already pretty well implemented according to this handy <a href="http://www.css3.info/modules/selector-compat">compatability table</a> from <a href="http://www.css3.info/">CSS3.info</a> and I would imagine an ideal candidate for <a href="http://andybudd.com">Andy Budd&#8217;s</a> <a href="http://www.andybudd.com/archives/2007/05/css22/">CSS2.2</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/06/22/encoded-characters-in-css3-generated-content/">
         Encoded Characters in CSS3 Generated Content
       </a>
@@ -211,21 +237,6 @@
 }</code></pre>
 <p>With something like this you want it to load as soon as the dom is ready, rather than on page load. <a href="http://www.brothercake.com">Brothercake&#8217;s</a> <a href="http://www.brothercake.com/site/resources/scripts/domready/">domFunction</a> comes to the rescue here. The namespacing is based on <a href="http://www.kryogenix.org">Stuarts</a> technique which should make it more capable of just being dropped in to any site.</p>
 <p>The only problem with this is that it&#8217;s just a little longer than the original. I think this is down to one often missed fact, at least until recently &#8211; Javascript is a programming language and should be treated as such.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/05/18/some-good-news/">
-        Some good news
-      </a>
-    </h1>
-
-    <span class="post-date">18 May 2007</span>
-
-    <p>Yeah, I just got my confirmation email for <a href="http://hackday.org">hackday</a> in a months time.</p>
-<p><a href="http://www.hackday.org" style="border: none; padding: 0px; margin: 0px"><img src="http://l.yimg.com/us.yimg.com/i/us/ydn/hackday/hack_day_pattern_four.gif" alt="Hack Day: London, June 16/17 2007" width="180" height="105" style="border: none; margin: 0; padding: 0;"/></a></p>
-<p>So, who else is going along and does anyone have any ideas they want team mates for? I&#8217;m thinking something mobile or microformats related or alternatively something I know very little about. Any ideas?</p>
-<p>Oh, and I know I&#8217;ve been quite around the place lately, more on that when I can talk about it.</p>
   </div>
   
 </div>

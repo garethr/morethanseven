@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Using Puppet with key/value config stores &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Using Puppet with key/value config stores</h1>
+  <span class="post-date">12 Oct 2014</span>
+  <p>I like the central idea behind storing configuration in something like
+<a href="https://github.com/coreos/etcd">Etcd</a> rather than lots of files on lots
+of disks, but a few challenges still remain. Things that spring to mind
+are:</p>
+
+<ul>
+<li>Are all your passwords now available to all of your nodes?</li>
+<li>How do I know when configuration changed and who changed it?</li>
+</ul>
+
+<p>I&#39;ll leave the first of those for today (although have a look at
+<a href="http://www.conjur.net/">Conjur</a> as one approach to this). For the second,
+I&#39;m quite fond of plain text, pull requests and a well tested deployment
+pipeline. Before Etcd (or <a href="http://www.consul.io/">Consul</a> or similar) you
+would probably have values in Hiera or Data Bags or similar and inject them
+into files on hosts using your configuration management tool of choice. So
+lets just do the same with our new-fangled distributed configuration store.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">key_value_config</span> <span class="p">{</span> <span class="s">&#39;/foo&#39;</span><span class="p">:</span>
+  <span class="na">ensure</span>   <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">provider</span> <span class="o">=&gt;</span> <span class="na">etcd</span><span class="p">,</span>
+  <span class="na">value</span>    <span class="o">=&gt;</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Say you wanted to switch over to using Consul instead? Just switch the provider.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">key_value_config</span> <span class="p">{</span> <span class="s">&#39;/foo&#39;</span><span class="p">:</span>
+  <span class="na">ensure</span>   <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">provider</span> <span class="o">=&gt;</span> <span class="na">consul</span><span class="p">,</span>
+  <span class="na">value</span>    <span class="o">=&gt;</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You&#39;d probably move all of that out into something like hiera, and then generate
+the above resources, but you get the idea.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">etcd_values</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bar</span>
+</code></pre></div>
+<p>The above is implemented in a very simple
+<a href="https://github.com/garethr/garethr-key_value_config">proof of concept Puppet module</a>.
+Anyone with any feedback please do let me know.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

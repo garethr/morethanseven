@@ -68,6 +68,70 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/07/15/simple-app-running-scripts-and-recording-results/">
+        Asteroid - simple app for running scripts and recording the results
+      </a>
+    </h1>
+
+    <span class="post-date">15 Jul 2009</span>
+
+    <p>Asteroid is a simple web interface for running scripts and recording the results. It&#8217;s like a much simpler and more general purpose version of something like Cruise Control. You can <a href="http://github.com/garethr/Asteroid/tree/master">get the code on Github</a>.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRj5VQw" alt="Asteroid Dashboard"/></p>
+<p>I built it to solve two main problems:</p>
+<ul>
+	<li>It&#8217;s sometimes useful to have a historical record of a scripts execution, in particular whether it passed or failed and what the output was. Just running a command line script probably doesn&#8217;t give you that. It&#8217;s also useful to have a more graphical interface for those members of the team who don&#8217;t use the command line.</li>
+	<li>When working in a team you often want to run scripts against shared infrastructure, for instance deploying a testing release or running a test suite. Seeing what is running at present helps with that.</li>
+</ul>
+<p>So it should be useful for running deployments, running test suites, running backups, etc. It currently doesn&#8217;t have scheduling or similar build in, but as everything is triggered by hitting a <span class="caps">URL</span> it would be simple enough to use cron for something like that. It should also be useful whatever language you write your scripts in; rake, ant, shell scripts, etc. At the end of the day it just executes a command at the console.</p>
+<h2>Requirements</h2>
+<p>Asteroid uses the Django Python framework under the hood.</p>
+<ul>
+	<li>Django &#8211; <a href="http://www.djangoproject.com/">http://www.djangoproject.com/</a></li>
+</ul>
+<p>You&#8217;ll also need a database. The default in the shipped settings is to use sqlite but this should work with any database supported by Django.</p>
+<p>You&#8217;ll also need a decent web browser. I&#8217;ve gone and used HTML5 as an experiment and with this being a developer tool I&#8217;m hoping to stick with it. It would be easy enough to convert the templates if this is a problem however.</p>
+<p>The application has an optional message queue backend which can be enabled in the settings file. This is used to improve the responsiveness of the application as well as allow commands to be executed on a remote machine, rather than on the box Asteroid is running.</p>
+<ul>
+	<li>AMQPlib &#8211; <a href="http://barryp.org/software/py-amqplib/">http://barryp.org/software/py-amqplib/</a></li>
+	<li>RabbitMQ &#8211; <a href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a></li>
+</ul>
+<p>Other <span class="caps">AMQP</span> compliant message queues should work but it&#8217;s currently only tested with Rabbit.</p>
+<p>If you are intending to do any development on Asteroid, or just want to look more closely at the code, I&#8217;d recommend installing</p>
+<ul>
+	<li>Clue &#8211; <a href="http://github.com/garethr/django-clue/tree/master">http://github.com/garethr/django-clue/tree/master</a></li>
+	<li>Test Extensions &#8211; <a href="http://github.com/garethr/django-test-extensions/tree/master">http://github.com/garethr/django-test-extensions/tree/master</a></li>
+</ul>
+<h2>Usage Instructions</h2>
+<p>You should be able to just download asteroid and run it from wherever you put it, once you setup the database.</p>
+<pre>cd asteroid/configs/common
+manage.py syncdb
+manage.py runserver</pre>
+<p>This should bring the local web server up on port 8000 so visit http://localhost:8000 and see.</p>
+<p>If you&#8217;re using the message queue backend you&#8217;ll need to run the listener script in order to get your commands executed. At the moment that means modifying a constant in the listener script to point at a running message queue instance at asteroid/bin/asteroid_listen.py.</p>
+<pre>cd asteroid/bin
+./asteroid_listen.py</pre>
+<p>Once you&#8217;re up and running you should be able to add commands via the admin interface at http://localhost:8000/admin/. The username and password should be those you added when creating the database via the syncdb command above.</p>
+<p>The development configs include a few additional applications (mentioned above) which I use for testing and debugging. You can run the test suite like so:</p>
+<pre>cd asteroid/configs/development
+manage.py test --coverage
+</pre>
+<h2>Todo</h2>
+<p>This is an early release that just about <em>works for me</em>. I can already see a number of areas I&#8217;d like to clean up a little or extend. For instance:</p>
+<ul>
+	<li>Other deployment options, including a <span class="caps">WSGI</span> file and a spawning startup script.</li>
+	<li>Use a database migration system to make upgrades easier.</li>
+	<li>Make the message queue listener script more robust.</li>
+	<li>Make the command entry more robust, it sometimes takes a bit of fiddling with to get something to run correctly.</li>
+	<li>Formalise running scripts on remote machines, including support for running on multiple machines.</li>
+	<li>Paging for long lists of commands or runs.</li>
+</ul>
+<h2>Notes</h2>
+<p>I&#8217;m pretty happy with how it&#8217;s shaping up so far. Under the hood it works by having the web app put a <span class="caps">JSON</span> document on the message queue. The <span class="caps">JSON</span> contains the command to be run and a callback <span class="caps">URL</span>. The script listening to the message queue picks up the message, runs the command, and posts a <span class="caps">JSON</span> document back to the webhook url. It keeps the web interface snappy, as well as meaning it can show which commands are currently in progress at any given time. It also has the side benefit of meaning you can execute commands on a remote machine, as the listener doesn&#8217;t care where it&#8217;s running.</p>
+<p>As noted above I have a few ideas of where I want to take it, but I&#8217;m going to try using it for a bit and see how that goes. If anyone else finds it useful then do let me know.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/07/13/its-data-we-want/">
         It's the Data we Want
       </a>
@@ -154,39 +218,6 @@ setup(
 <pre>python setup.py register
 python setup.py bdist_egg upload</pre>
 <p>Let me know if anyone uses this and gets it working. I&#8217;ll be adding more details and maybe even some more features when I get the chance. Once I do that I&#8217;ll probably work on a few more packages as well.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/06/23/ant-web-developers-ii-restart-apache/">
-        Ant for Web Developers II - Restart Apache
-      </a>
-    </h1>
-
-    <span class="post-date">23 Jun 2009</span>
-
-    <p>Following on from <a href="http://morethanseven.net/2009/06/22/ant-web-developers-i-backup-config-file/">yesterdays first useful ant task</a>, here&#8217;s another commonly used task &#8211; restarting a remote service. I&#8217;ve used apache in this example, but it could be any service running on your remote machine and it doesn&#8217;t have to be the restart command.</p>
-<p>In order to do this we&#8217;ll use the <a href="http://ant.apache.org/manual/OptionalTasks/sshexec.html">sshexec target</a> which has a third party <a href="http://ant.apache.org/manual/install.html#librarydependencies">library dependency</a>. This is the same third party library needed for the scp task in yesterdays post</p>
-<p>You need first to download <a href="http://www.jcraft.com/jsch/index.html"><span class="caps">JSCH</span></a> and then compile the source using ant. Just run <em>ant dist</em> in the downloaded folder and you should get a .jar file in the /dist/lib folder. Save this .jar file as as jsch.jar to a folder in your home directory <em>~/.ant/lib</em> where ant can automatically load it. Alternatively you can run ant with the -lib command to load libraries from a different location.</p>
-<pre>ant -lib /tools/ant-libraries</pre>
-<p>With that out of the way lets have a look at the task.</p>
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;project name="example" basedir="."&gt;
-&lt;property name="host" value="{host}"/&gt;
-&lt;property name="username" value="{user}"/&gt;
-&lt;property name="password" value="{password}"/&gt;
-&lt;target name="restart-apache" description="execute a remote command to restart apache"&gt;
-        &lt;sshexec host="${host}"
-            username="${username}"
-            password="${password}"
-            command="/etc/init.d/apache2 restart"/&gt;
-&lt;/target&gt;
-&lt;/project&gt;</pre>
-<p>And running it is as simple as:</p>
-<pre>ant restart-apache</pre>
-<p>One potential issue with tasks like this is storing the password in the build file in plain text. The target we&#8217;re using can also use key authentication is you&#8217;re happy using ssh keys. Alternatively you can set properties on the command line each time you run ant like so.</p>
-<pre>ant restart-apache -Dpassword={password}
-</pre>
   </div>
   
 </div>

@@ -68,6 +68,35 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/04/14/where-to-put-all-that-data-s3-resources/">
+        Where to put all that data? S3 resources
+      </a>
+    </h1>
+
+    <span class="post-date">14 Apr 2006</span>
+
+    <p>Lets face it, web apps are getting bigger. At least in terms of the amount of data they store. Take two big poster siblings, <a href="http://flickr.com">Flickr</a> and <a href="http://del.icio.us">del.icio.us</a>. All those user accounts, all that interlinking between then, all that meta data. <a href="http://technorati.com">Technorati</a> is another example &#8211; trying to keep up with all blogs everywhere in as near to real time as possible has got to be seriously data intensive. And at times this has shown through, all have had <a href="http://blog.del.icio.us/blog/2005/12/continued_hiccu.html">problems</a>  at <a href="http://www.businessweek.com/the_thread/blogspotting/archives/2005/07/why_technorati.html">some</a> <a href="http://ishavingamassage.com/">point</a> in their short histories.</p>
+ <p>If you are looking to get into the world of big, community focused, web apps then you need space. And I know I cant afford a huge outlay on storage and bandwidth, even most small web shops would probably have something of a problem with the large outlay, limited short term money making problem.</p>
+ <p>An interesting solution to this would appear to exist in the shape of <a href="http://aws.amazon.com/s3">S3</a> from <a href="http://amazon.com">Amazon</a>. It has been around a little time, and <a href="http://adactio.com/journal/1102/">others</a> have been intrigued enough to mention it, but I decided not to ramble on until I&#8217;d had a brief play. Well, it&#8217;s quite cool.</p>
+ <p>Amazon themselves provide a number of <a href="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=47">useful code examples</a><br />
+in different languages, including Perl, Python, C#, Java, Ruby and <span class="caps">PHP</span>. They also provide examples of the raw <span class="caps">HTTP</span> requests for thos that way inclined.</p>
+ <p>This openness (OK, so they dont really have a choicee, the whole product consists of an open <span class="caps">API</span>, it being closed would seem to limit it&#8217;s usage!), as always, has allowed the community to run with the idea, building up sample apps and some easy to use wrappers:</p>
+<ul>
+ <li><a href="http://townx.org/blog/elliot/s3_rails">Rails example</a></li>
+  <li><a href="http://caffo.backpackit.com/pub/502395">Another Rails example</a></li>
+  <li><a href="http://www.other10percent.com/?p=15">BitBucket for Python</a></li>
+  <li><a href="http://www.neurofuzzy.net/2006/03/17/amazon-s3-php-class/"><span class="caps">PHP</span> 4 class</a></li>
+  <li><a href="http://blog.apokalyptik.com/?p=12"><span class="caps">PHP</span> 5 example</a></li>
+  <li><a href="http://search.cpan.org/dist/Net-Amazon-S3/">Perl <span class="caps">CPAN</span> module</a></li>
+  <li><a href="http://www.carion.org/s3dav/index.html">Java based webDAV server</a></li>
+</ul>
+ <p>Nothing here feels complete as yet. Most are early hacks by people getting on board early and giving the rest of us a starting point.</p>
+ <p>Overall I like things like S3. If it works reliably and scales well then it could become something that just sits behind all sorts of <a href="http://aws.typepad.com/aws/2006/03/firefox_s3_some.html">realy</a> <a href="http://www.holovaty.com/blog/archive/2006/04/07/0927">cool</a> <a href="http://jkeyes.com/2006/03/ten_ideas_for_amazon_s3_applic.php">ideas</a>, preventing data loss and removing another potential headache for the small developer.</p>
+ <p>Any other resources, or ideas, more than welcome.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/04/07/speak-and-a-drink/">
         Speak and a Drink
       </a>
@@ -132,22 +161,6 @@ The Pragmatic Programmer</p>
  <p>Anyway, first impressions is that Python is pretty easy to pick up. I keep wanting to put in braces and semi-colons but looking at the code it looks clean, simple and readable. Arrays, string functions and flow control appear to be present and correct. They work how you would expect which is what you want really for core functionality. Objects are next on my list of things to look at.</p>
  <p>I&#8217;m building a simple log file analysis tool as I go. I&#8217;m fine with it being a command line app to be honest, but I might end up tinkering with some of the <span class="caps">GUI</span> features at a later date. One of the reasons for going for Python was it&#8217;s flexibility in this regard. Hopefully building something as I go will make it more likely that I&#8217;ll keep playing. I have a couple of other sample apps I&#8217;d like to make as well which is probably a good thing again to maintain interest.</p>
  <p>Anyway, depending on how things go some more comments or code may emerge. Anyone else taking similar advice to learn new languages? If so which ones?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/03/20/the-wisdom-of-clouds/">
-        The Wisdom of Clouds
-      </a>
-    </h1>
-
-    <span class="post-date">20 Mar 2006</span>
-
-    <p>I&#8217;m playing with a few thinks at the moment and one of those had me thinking of <a href="http://en.wikipedia.org/wiki/Tag_cloud">tag clouds</a>. For those who dont spend time on <a href="http://flickr.com">flickr</a> or similar you may not have seen then, or at least heard of the terminology. All we are really taking about here is a visually weighted list.</p>
- <p>I dont agree with <a href="http://www.zeldman.com/daily/0505a.shtml">Jeffrey here</a> unfortunately, who has issues. I can see the point, that sometimes information is better organised by one person than many (think your weekly food shopping list) but in some cases it can be nice &#8211; especially where it provides an alternative navigation method. Maybe I just missed the part where everyone had a tag cloud? I&#8217;d love to see, for instance, a tag cloud on <a href="http://last.fm">last.fm</a> of bands that I might like based on my listening habits, and those of a similar musical persuasion.</p>
- <p>An <a href="http://www.joelamantia.com/blog/archives/ideas/second_generation_tag_clouds.html">interesting article</a> on where next for tags clouds throws up a few interesting points but one thing I have not seen discussed at all is the accessibility angle. Visual prominence is one thing, but without some sort of semantic prominence those not viewing the content visually lose out. A very unscientific survery involving the <a href="http://del.icio.us/tag/">del.icio.us tag cloud</a> confirmed what I though would probably be the case &#8211; the visual effects (ie. bigger or highlighted text) are implemented purely via classes on the links.</p>
- <p>What would be the effect of using plain links, moving to <em>emphasis</em> for the next level, up to <strong>strong</strong> for the really important tags? We can style the content exactly the same as before, but we have added some sematic prominence to the content.</p>
- <p>Anyone had any experience implementing tag clouds in live projects? Even better, anyone had experience of user testing such interface devices? Real bonus points for accessibility related testing.</p>
   </div>
   
 </div>

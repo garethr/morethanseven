@@ -68,6 +68,27 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/08/14/geekout/">
+        Geekout
+      </a>
+    </h1>
+
+    <span class="post-date">14 Aug 2006</span>
+
+    <p>On occasion I even surprise myself. Sometimes you just need to geek. Rob at work was discussing his ideal device, basically something that would read text based <span class="caps">RSS</span> feeds to him while in the bath in the morning. Lazy I know.</p>
+ <p>I thought to myself <em>That cant be too difficult</em> and I&#8217;ve never played with any text to speach stuff before and off I went. A few hours later and I just got my Windows machine to read out the top story from this site.</p>
+ <p>Python is so cool to just hack in. Did I mention that before? I&#8217;ve yet to do anything <em>real</em> in it, but playing around with code is nice. Anyway, on with a solution;</p>
+ <p>Lots of things to install first. As mentioned I used Windows, in this case so I could access the Win32 Speech <span class="caps">API</span>. I looked at using <a href="http://www.cstr.ed.ac.uk/projects/festival/">Festival</a> on Unix but left that for now. Tools of choice were <a href="http://python.org">Python</a> 2.4 with the <a href="http://sourceforge.net/projects/pywin32/">Win32 extensions</a>. A couple of Python modules do most of the work. First up <a href="http://sourceforge.net/projects/uncassist">pyTTS</a> which deals with the text to speach and <span class="caps">SAPI</span> integration. Next comes the <a href="http://feedparser.org/">Feedparser</a> module. I&#8217;d heard this mentioned by <a href="http://simon.incutio.com/archive/2006/08/08/ydn">Simon</a> over on the <a href="http://developer.yahoo.com/python/python-rss.html">Yahoo Python developer network</a> and it really is nice.</p>
+ <p>The rest was easy.<code>&lt;pre&gt;import pyTTS
+import feedparser
+d = feedparser.parse("http://morethanseven.net/rss")
+tts = pyTTS.Create()
+tts.Speak(d['items'][0].description)&lt;/pre&gt;</code></p>
+ <p>Ok, so this isn&#8217;t an application. Just a proof of concept but you get the idea and I dont really want or need this app anyway. Why then? because I thought I could. Oh, and Python&#8217;s interactive prompt is so cool. I want one for everything.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/08/07/some-start-of-the-week-fun-with-yahoo/">
         Some start of the week fun with Yahoo!
       </a>
@@ -144,35 +165,6 @@ function init() {
  <p>And I&#8217;m still trying to decide what was funnier; the fact <a href="http://htmldog.com">Patrick</a> set up a bird bath in the middle of the pub, or the fact it took him and <a href="http://blog.meriwilliams.com">Meri</a> quite a while with the instructions to put it together.</p>
  <p><img src="http://static.flickr.com/72/190878254_6b8f33193f_m.jpg" alt="A bird bath with instructions" /></p>
  <p>Some people have been saying that the socialising is getting in the way of the learning and sundry at these conferences. I&#8217;ve got to disagree. You just cant ignore the socialising, not when it&#8217;s this much fun. But that doesn&#8217;t mean the message doesn&#8217;t get drilled home too.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/07/09/who-is-pushing-the-envelope-anyhow/">
-        Who is pushing the envelope anyhow?
-      </a>
-    </h1>
-
-    <span class="post-date">09 Jul 2006</span>
-
-    <p><strong>Update</strong> <span class="caps">UCAS</span> to the rescue. Here are lists of graphic design courses and their ilk. Go get em.</p>
-<ul>
- <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=1022&#38;word=GRAPHIC+DESIGN&#38;single=N">Graphic design</a></li>
-  <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=3573&#38;word=GRAPHIC+INFORMATION+DESIGN&#38;single=N">Graphic information design</a></li>
-  <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=3581&#38;word=GRAPHIC+COMMUNICATIONS+DESIGN&#38;single=N">Graphics communication design</a></li>
-</ul>
- <p><a href="http://adactio.com">Jeremy</a> posted a <a href="http://adactio.com/journal/1149">thought provoking read</a> that tapped into somethings I&#8217;ve been thinking about of late, and others that have been somewhere in my head for a while. In a nut shell:</p>
-<blockquote>
-  <p>Most designers have simply swapped the old technology (tables and font tags) for the new technology, without fully exploring whatÃ¢â‚¬â„¢s so completely <em>new</em>.</p>
-</blockquote>
- <p>I&#8217;ve got to say I tend to agree with pretty much everything Jeremy said. I could pick up on liquid layouts being <em>harder</em> (I dont think that&#8217;s completely true once you&#8217;ve done a good number, it&#8217;s like anything new, it just takes getting your head around) but that&#8217;s just nit picking.</p>
- <p>One thing I will comment on is some of what I see as the reasoning and, if I can think of anything, some things we can do to counter them.</p>
- <p>One issue is that most of the designs are not done by designers in my opinion. I&#8217;m not really sure I count as a designer here, I flit between too many disciplines to be completely comfortable with the title (or most titles to be honest). The perceived technicalities of <span class="caps">CSS</span> (it&#8217;s plain text) can put those without that bend (ie. Photoshop users) off, and at the same time attract people who thing <a href="http://www.vim.org/">vim</a> is cool. Combine this with a truly fantastic <a href="http://sitepoint.com">online</a> <a href="http://alistapart.com">community</a> full of <a href="http://www.htmldog.com/">helpful</a> <a href="http://www.w3schools.com/css/">tutorials</a> and you have a recipe for technically good, but creatively stunted, websites. Throw into the mix easily replicated techniques (rounded corners and gradients anyone?) and gallery sites with a low barrier to entry and you get to where we are now.</p>
- <p>And I dont really think all of this is bad? Anyone can put together web pages, even half decent web sites. For me that just makes it more fun/challenging to do it professionally and demonstrate real value. Everyone can paint, but how many people can say they can paint well? And I dont mean your skirting boards. Some are already sounding the <a href="http://www.collylogic.com/?/comments/the-end-of-css-showcases/">death knell for gallery sites</a>. The real gallery is and should be the web itself. If design is about communicating, unless your aim is to communicate to other web standards designers, the galleries should be the last thing on your mind.</p>
- <p>But where are the new breed of designers? The people doing the sorts of things that Jeremy wishes were happening right now (or more likely happened last year)? <a href="http://stuffandnonsense.co.uk">Malarkey&#8217;s</a> <a href="http://www.amazon.co.uk/gp/product/0321410971/">book</a> will be stunning if the bits and pieces he mentioned at <a href="http://vivabit.com/atmedia2006">@media</a> are anything to go by, but who is going to force it into the hands of the graphic design student, or the art college graduate. And beat them over the head with it until they are ready to come work with me? Or you? Or me and you if you work with me already.</p>
- <p>I&#8217;m now vaguely miffed. I thought right, I&#8217;m going to go and get myself a list of all the uk design degrees and put it up here. People could then leave comments, ring them up and try and get in to speak to these people about web design and report back. If the mountain won&#8217;t come to mohamed and all that. Except guessing and googling didn&#8217;t turn up anything useful. The <a href="http://design-council.org.uk">design council</a> had lots about education (in theory) but then the search facility broke (and the fact it appears to be a table based love child of the old <a href="http://adobe.com">adobe</a> site and <a href="http://bd4d.com">BD4D</a>). <a href="http://www.ucas.ac.uk/"><span class="caps">UCAS</span></a> are doing maintenance and are offline until midnight. I&#8217;ll post a list when I can get by hands on one. Or if you have better luck let me know. Funky logos and pithy slogans can come later, as can a big pile of presentations and materials if anyone, inlcuding me, ever does anything about it.</p>
- <p>So. Who&#8217;s with me? I dont care if your scared of public speaking (or just scared of speaking in general, or even scared of the public). You&#8217;ll know more than the students in any case and that makes you dangerous. And they might have the ideas, and enthusiasm, we need to pass beyond the limits of our current design problems.</p>
- <p><em>I know I went off in something of a straight line here. I made a bee line for design education. I could have detoured to visual design tools or photoshop designers with a loving for print and a propensity to want a 350 page website look like their comps. Both of them. Feel free to go off on a tangent yourselves, and let me know what you think.</em></p>
   </div>
   
 </div>

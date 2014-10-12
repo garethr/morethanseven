@@ -68,6 +68,47 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/10/13/unit-testing-css-looking-solution/">
+        Unit Testing CSS - Looking for a Solution
+      </a>
+    </h1>
+
+    <span class="post-date">13 Oct 2008</span>
+
+    <blockquote>
+<p>I think it&#8217;s an epic failure of web standards that <span class="caps">CSS</span> is the only essentially untestable technology invented in last decade &#8211; <a href="http://twitter.com/t_a_w/statuses/957359524">Tomasz</a></p>
+</blockquote>
+<p>Talking today on Twitter with <a href="http://twitter.com/t_a_w">Tomasz</a> got me thinking again about one of those problems that I come back to once in a while. Unit testing <span class="caps">CSS</span>. <span class="caps">CSS</span> development is a pain, even with some sort of <a href="http://natbat.net/2008/Sep/28/css-systems/">system</a>. Admit it. I actually like <span class="caps">CSS</span> most of the time but it&#8217;s still painful at times. Hopefully with that out of the way you feel better.</p>
+<blockquote>
+<p>unit testing is a method of testing that verifies the individual units of source code are working properly. A unit is the smallest testable part of an application.</p>
+</blockquote>
+<p>All testing past simple validation of <span class="caps">CSS</span> seems to be done visually at present.<br />
+Thinking about this from the point of view of <span class="caps">CSS</span> seems straight forward, but turns out not to be so for a variety of reasons. The problem lies in the cascading and compounding nature of the beast. Each individual <span class="caps">CSS</span> rule might do something which is self contained, but the chances on a real site are probably slim. For instance:</p>
+<pre>body {
+   font-size: 100%;
+}
+p {
+   font-size: 2em;
+}</pre>
+<p>What is the size of the font size of a paragraph? It turns out it depends. Not just on more than one unit of source code (we have two rules here) but also on things like the browser. And how do we get this font size from a browser in the first place? I generally dislike <a href="http://selenium.openqa.org/">Selenium</a> but does it provide a mechanism for getting at the calculated <span class="caps">DOM</span> attribute values? Do we have to interface directly with a browser at a lower level?</p>
+<p><a href="http://wxmozilla.sourceforge.net/">wxMozilla</a>, <a href="http://wxmozilla.sourceforge.net/">wxWebKit</a> or maybe <a href="http://code.google.com/p/pywebkitgtk/">pywebkitgtz</a> might prove useful, but I&#8217;m not sure at what level they operate. What I&#8217;m imagining here is maybe something like (excuse the Python, hopefully you get the idea):</p>
+<pre>def test_text_size_is_12px(self):
+    response = fetch_with_browser('http://www.google.com')
+    self.assertEquals(12, response.search("p").fontSize    </pre>
+<p>So we could use <span class="caps">CSS</span> selectors (ie. <em>p</em>) to find elements and then assert various <span class="caps">DOM</span> properties (ie. <em>fontSize</em>) are equal to values we specify. The magic is in getting access to those calculated <span class="caps">DOM</span> attribute values from an actual browser engine.</p>
+<p>Another approach would seem to be looking at visual rendering and comparing against a known good version. This seems to be something that the <a href="http://weblogs.mozillazine.org/roc/archives/2005/03/visual_regressi.html">Mozilla folks got up to a while back</a> to test different browser versions. Their are a few tools that might help us out here too; <a href="http://www.browsercam.com/">BrowserCam</a> provides a paid for service, <a href="http://www.paulhammond.org/webkit2png/">Webkit2png</a> is a handy command line script I&#8217;ve had fun with in the past and <a href="http://iecapt.sourceforge.net/">IECapt</a> appears to be a similar beast for Internet Explorer. <a href="http://cutycapt.sourceforge.net/">CutyCapt</a> is another cross platform webkit based utility. I can see a few gotchas lurking here. Animations or slow loading javascript would obviously throw this into disarray. But disabling these in the browser might get up somewhere. How to compare images  produced I&#8217;m not yet sure, but I reasons someone reading this might have a good idea?</p>
+<p>As the title would suggest this post does not contain the answer, only a few useful links and two possible approaches to the problem. The questions at this stage are:</p>
+<ul>
+	<li>Does any of this exist already? If so who do we need to cuddle up to to get access to it?</li>
+	<li>Are any of the technical hurdles to either of the approaches mentioned above insurmountable? If not what is the best solution?</li>
+	<li>Does anyone except me and Tomasz even want this?</li>
+</ul>
+<p>I reason their are a fair few things that would be needed to make this first practical and later standard; nice APIs, run times in various languages, and working out whether or not it actually helps <span class="caps">CSS</span> development to name but a few. But right now I&#8217;d go for a limited proof of concept that works on my machine. If anyone has any links to thinks that might be good starting points please let me know. Other ideas welcome as well.</p>
+<p>One last thing; <a href="http://ajaxian.com/archives/ajaxians-join-mozilla-creating-developer-tools">Mozilla&#8217;s latest employees</a> are looking at the whole spectrum of developer tools. I&#8217;d love for them to start with something like this.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/10/11/google-app-engine-pyunit-test-runner/">
         Google App Engine PyUnit Test Runner
       </a>
@@ -126,118 +167,6 @@
     <span class="post-date">27 Sep 2008</span>
 
     <p>The latest version of <a href="http://www.vmware.com/products/fusion/">VMWare Fusion</a> lets you run virtual machines in headless mode. Which is pretty handy if you&#8217;re using a Linux VM to mirror your live environment. The strange thing is that it&#8217;s not enabled by default. To enable it you need to run the following on your console: <code>defaults write com.vmware.fusion fluxCapacitor -bool YES</code></p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/09/20/django-admin-options/">
-        Django Admin Options 
-      </a>
-    </h1>
-
-    <span class="post-date">20 Sep 2008</span>
-
-    <p>Working on a decent sized Django project at work means I&#8217;ve found myself delving into Django&#8217;s admin interface more than a few times. Although it&#8217;s always possible to just use a custom template and do everything yourself it&#8217;s nearly always easier and often quicker to use the generated admin views. One of the problems with that is, even with therecent 1.0 release, some of the options are not that well documented outside the source code or in posts buried on mailing lists.</p>
-<p>I&#8217;ll assume a little bit of familiarity with the new-forms-admin way of doing things which is now the default in Django 1.0. If you&#8217;re just getting started with building Django sites then you might want to first have a look at a tutorial or two. It&#8217;s quite different to the examples found in the original Django book or older online tutorials but it&#8217;s also much more powerful and flexible with a better separation of concerns.</p>
-<p>We&#8217;ll start off with a very simple model in models.py which defines a simple Article class with a couple of fields.</p>
-<pre>from django.db import models
-class Article(models.Model):    
-    	title = models.CharField(max_length=200)
-	content = models.TextField()
-	publish_date = models.DateTimeField(default=datetime.today)</pre>
-<p>Django 1.0 introduced the concept of admin autodiscovery. By playing your admin declarations in admin.py in an application (most likely next to models.py and views.py) you can tell django to find these automatically. To enable auto loading of admin modules you can add the following to your urls.py.</p>
-<p>.pre from django.contrib import admin<br />
-admin.autodiscover()</p>
-<p>This will load the module admin.py for each of the apps in the installed apps list. Now Lets add an admin class in your admin.py to go with the above models.py. We&#8217;ll call it ArticleAdmin:</p>
-<pre>from django.contrib import admin
-from models import Article
-class ArticleAdmin(admin.ModelAdmin):
-	pass
-admin.site.register(Article, ArticleAdmin)</pre>
-<p>The important line is the last one, in which we register the admin for the Article class. This will display the relevant admin views in the Django admin for that model &#8211; allowing us to add new articles, list existing ones and delete old ones. But by default the admin is quite sparse.</p>
-<p>Once we have a few articles in the system we&#8217;ll find it hard to find them again. Lets add a few more lines to our admin.py file:</p>
-<pre>class ArticleAdmin(admin.ModelAdmin):
-	list_display=('title', 'publish_date')
-	ordering = ['-publish_date']
-	list_per_page = 25
-	search_fields = ['title','content']
-	date_hierarchy = 'publish_date'</pre>
-<p>Lets step though each of these statements and see what we&#8217;ve done:</p>
-<ul>
-	<li>setting <em>list_display</em> for the title and publish_date means these two fields will appear in the changelist. This is the view you get when you hit Articles in the admin and allows you to find the article you are looking for.</li>
-	<li><em>ordering</em> is self explanatory, in that we choose to order the items in the changelist by the publish_date rather than the auto generated numeric id.</li>
-	<li><em>list_per_page</em> is another straightforward option, setting the maximum number of articles to show in the changelist before the list starts paging over multiple pages.</li>
-	<li><em>search_fields</em> adds a simple search to the changelist, the fields specified set which fields to search; title and content in this case.</li>
-	<li><em>date_hierarchy</em> is great when you have a date associated with an object. This outputs a separate filter list which displays the years by which to filter. The option you pass to this setting is the field name which stores the date.</li>
-</ul>
-<p>The simple example above hopefully demonstrates the ease of which the admin can be configured. Knowing about these capabilities already built into Django can save you quite a bit of time when it comes to producing production ready admin interfaces. Except for more complex systems this should suffice. Below is a table of the Django admin options I&#8217;ve been using. If anyone has any more let me know and I&#8217;ll add them here, along with a brief description.</p>
-<table>
-	<tr>
-		<td>Option</td>
-		<td>Description</td>
-	</tr>
-	<tr>
-		<td>model</td>
-		<td> Set the model for which this is the admin </td>
-	</tr>
-	<tr>
-		<td>form</td>
-		<td> Set the form class if one has been created </td>
-	</tr>
-	<tr>
-		<td>list_display</td>
-		<td> Set which fields should appear in the changelist view </td>
-	</tr>
-	<tr>
-		<td>list_filter</td>
-		<td> Se which fields should be used to provide a filter in the changelist view </td>
-	</tr>
-	<tr>
-		<td>raw_id_field</td>
-		<td> Useful when you have a Foreign Key on another model with lots of records. This changes the default interface from the a select box to a custom widget</td>
-	</tr>
-	<tr>
-		<td>ordering</td>
-		<td> Specify the order of the objects in the changelist </td>
-	</tr>
-	<tr>
-		<td>fieldset</td>
-		<td> Fieldsets allow for control over the changeform view, setting which fields to display and whether to separate them out into individual fieldsets. Worth investigating </td>
-	</tr>
-	<tr>
-		<td>save_on_top</td>
-		<td> If you have a long form it&#8217;s useful to be able to display the save buttons at the top as well as the bottom </td>
-	</tr>
-	<tr>
-		<td>date_hierachy</td>
-		<td> Add date based filtering to the chaneglist view </td>
-	</tr>
-	<tr>
-		<td>radio_fields</td>
-		<td> Another alternative widget for Foreign key fields, this time using radio buttons. Useful for fixed small lists of objects </td>
-	</tr>
-	<tr>
-		<td>list_per_page</td>
-		<td> How may objects to list per page on the changelist view </td>
-	</tr>
-	<tr>
-		<td>search_fields</td>
-		<td> Enable search for the model and specify which fields to search </td>
-	</tr>
-	<tr>
-		<td>prepopulated_fields</td>
-		<td> Some fields might be prepopulated based on the user entering text into another field. This is often used to prepopulate slugs based on the title of an object </td>
-	</tr>
-	<tr>
-		<td>filter_horizontal</td>
-		<td> The default widget for many to many fields is the rather shoddy multiple select box. Filter horizontal enhances this with some super javascript, making it much more usable. Never use many to many fields without this or filter_vertical </td>
-	</tr>
-	<tr>
-		<td>filter_vertical</td>
-		<td> Does exactly the same as filter_horizontal, except the filter lists appear one above the other rather than side to side. Useful for thinner admin views</td>
-	</tr>
-</table>
-<p>As you can see you can customise the default admin views a great deal even without creating your own templates and defining custom admin views. The best part is still that as well as being useful for demonstrations and prototypes these interfaces are useful on a live production site. Quite an achievement I think.</p>
   </div>
   
 </div>

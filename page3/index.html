@@ -68,6 +68,186 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2013/12/29/making-the-web-secure/">
+        Making the web secure, one unit test at a time
+      </a>
+    </h1>
+
+    <span class="post-date">29 Dec 2013</span>
+
+    <p><em>Originally written as part of <a href="http://sysadvent.blogspot.co.uk/2013/12/day-21-making-web-secure-one-unit-test.html">Sysadvent 2013</a>.</em></p>
+
+<p>Writing automated tests for your code is one of those things that,
+once you have gotten into it, you never want to see code without tests
+ever again. Why write pages and pages of documentation about how
+something should work when you can write tests to show exactly how something does work? Looking at the number and quality of testing tools and frameworks (like cucumber,
+rspec, <a href="https://github.com/test-kitchen/test-kitchen">Test Kitchen</a>,
+<a href="http://serverspec.org/">Server Spec</a>,
+<a href="https://github.com/puppetlabs/beaker">Beaker</a>,
+<a href="http://casperjs.org/">Casper</a> and
+<a href="http://pivotal.github.io/jasmine/">Jasmine</a> to name a few) that have
+popped up in the last year or so I&#39;m obviously not the only person who
+has a thing for testing utilities.</p>
+
+<p>One of the other things I am interested in is web application
+security, so this post is all about using the tools and techniques
+from unit testing to avoid common web application security issues. I&#39;m
+using Ruby in the examples but you could quickly convert these to other languages if you desire.</p>
+
+<h2>Any port in a storm</h2>
+
+<p>Lets start out with something simple. Accidentally exposing
+applications on TCP ports can lead to data loss or introduce a vector
+for attack. Maybe your main website is super secure, but you left the
+port for your database open to the internet. It&#39;s the server configuration equivalent of forgetting to lock the back door.</p>
+
+<p>Nmap is a tool lots of people will be familiar with for spanning for
+open ports. As well as a command line interface Nmap also has good
+library support in lots of languages so lets try and write a simple
+tests suite around it.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">require &quot;tempfile&quot;
+require &quot;nmap/program&quot;
+require &quot;nmap/xml&quot;
+
+describe &quot;the scanme.nmap.org website&quot; do
+  file = Tempfile.new(&quot;nmap.xml&quot;)
+  before(:all) do
+    Nmap::Program.scan do |nmap|
+      nmap.xml = file.path
+      nmap.targets = &quot;scanme.nmap.org&quot;
+    end
+  end
+
+  @open_ports = []
+  Nmap::XML.new(&quot;scan.xml&quot;) do |xml|
+    xml.each_host do |host|
+      host.each_port do |port|
+        @open_ports &lt;&lt; port.number if port.state == :open
+      end
+    end
+  end
+end
+</code></pre></div>
+<p>With the above code in place we can then write tests like:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">it &quot;should have two ports open&quot; do
+ @open_ports.should have(2).items
+end
+
+it &quot;should have port 80 open&quot; do
+ @open_ports.should include(80)
+end
+
+it &quot;should have port 22 closed&quot; do
+ @open_ports.should_not include(22)
+end
+</code></pre></div>
+<p>We can run these manually, but also potentially as part of a
+continuous integration build or constantly as part of a monitoring
+suite.</p>
+
+<h2>Run the Guantlt</h2>
+
+<p>We had to do quite a bit of work wrapping Nmap before we could write
+the tests above. Wouldn&#39;t it be nice if someone had already wrapped
+lots of useful security minded tools for us? <a href="http://gauntlt.org/">Gauntlt</a> is pretty much just that, it&#39;s a security testing framework based on cucumber which currently supports curl, nmap, sslyze, sqlmap, garmr and a bunch more tools in master. Lets do something more advanced than our port scanning test above by testing a URL for a SQL injection vulnerability.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">@slow
+Feature: Run sqlmap against a target
+  Scenario: Identify SQL injection vulnerabilities
+    Given &quot;sqlmap&quot; is installed
+    And the following profile:
+      | name       | value                                      |
+      | target_url | http://localhost/sql-injection?number_id=1 |
+    When I launch a &quot;sqlmap&quot; attack with:
+      &quot;&quot;&quot;
+      python &lt;sqlmap_path&gt; -u &lt;target_url&gt; —dbms sqlite —batch -v 0 —tables
+      &quot;&quot;&quot;
+    Then the output should contain:
+      &quot;&quot;&quot;
+      sqlmap identified the following injection points
+      &quot;&quot;&quot;
+    And the output should contain:
+      &quot;&quot;&quot;
+      [2 tables]
+      +-----------------+
+      | numbers         |
+      | sqlite_sequence |
+      +-----------------+
+      &quot;&quot;&quot;
+</code></pre></div>
+<p>The Gauntlt team publish <a href="https://github.com/gauntlt/gauntlt/tree/master/examples">lots of examples</a> like this one alongside the source code, so getting started is easy. Gauntlt is very powerful, but as you&#39;ll see from the example above you need to know quite a bit about the underlying tools it is using. In the case above you need to know the various arguments to sqlmap and also how to interpret the output.</p>
+
+<h2>Enter Prodder</h2>
+
+<p><a href="https://github.com/garethr/prodder">Prodder</a> is a tool I put together
+to automate a few specific types of security testing. In many ways
+it&#39;s very similar to Gauntlt; it uses the cucumber testing framework
+and uses some of the same tools (like nmap and sslyze) under the hood.
+However rather than a general purpose security framework like Gauntlt,
+Prodder is higher level and very opinionated. Here&#39;s an example:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Feature: SSL
+  In order to ensure secure connections
+  I want to check the SSL configuration of my servers
+  Background:
+    Given &quot;sslyze.py&quot; is installed
+    Scenario: Check SSLv2 is disabled
+      When we test using the &quot;sslv2&quot; protocol
+      Then the exit status should be 0
+      And the output should contain &quot;SSLv2 disabled&quot;
+
+    Scenario: Check certificate is trusted
+      When we check the certificate
+      Then the output should contain &quot;Certificate is Trusted&quot;
+      And the output should match /OK — (Common|Subject
+</code></pre></div>
+<p>Alternative) Name Matches/
+          And the output should not contain &quot;Signature Algorithm: md5&quot;
+          And the output should not contain &quot;Signature Algorithm: md2&quot;
+          And the output should contain &quot;Key Size: 2048&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check certificate renegotiations
+      When we test certificate renegotiation
+      Then the output should contain &quot;Client-initiated
+</code></pre></div>
+<p>Renegotiations: Rejected&quot;
+          And the output should contain &quot;Secure Renegotiation: Supported&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check SSLv3 is not using weak ciphers
+      When we test using the &quot;sslv3&quot; protocol
+      Then the output should not contain &quot;Anon&quot;
+      And the output should not contain &quot;96bits&quot;
+      And the output should not contain &quot;40bits&quot;
+      And the output should not contain &quot; 0bits&quot;
+</code></pre></div>
+<p>This is a little higher level than the Gauntlt example — it&#39;s not
+exposing the workings of sslyze that is doing the actual testing. All
+you need is an understanding of SSL certifcates. Even if you&#39;re not an
+expert on SSL you can accept the aforementioned opinions of Prodder
+about what good looks like. Prodder currently contains steps and
+exampes for port scanning, SSL certificates and security minded HTTP
+headers. If you already have a cucumber based test suite (including
+one based on Gauntlt) you can reuse the step definitions in that too.</p>
+
+<p>I&#39;m hoping to build upon Prodder, adding more types of tests and
+getting agreement on the included opinions from the wider systems
+administration community. By having a default set of shared assertions
+about the expected security of out system we can more easily move onto
+new projects, safe in the knowledge that a test will fail if someone
+messes up our once secure configuration.</p>
+
+<h2>I&#39;m convinced, what should I do next?</h2>
+
+<p>As well as trying out some of the above tools and techniques for
+yourself I&#39;d recommend encouraging more security conversations in your
+development and operations teams. Here&#39;s a few  places to start with:</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/beehooze/devopsday-london-ben-hughes-security">Ben Hughes from Etsy talking about security culture at Devopsdays London</a></li>
+<li><a href="https://speakerdeck.com/garethr/security-monitoring-with-open-source-penetration-testing-tools">A presentation I gave at Velocity about using penetration testing tools for monitoring purposes</a></li>
+<li><a href="http://www.slideshare.net/wickett/gauntlt-velocity-eu2013">A workshop, again from Velocity all about getting started with Gauntlt</a></li>
+</ul>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2013/12/28/introducing-hyde/">
         Introducing Hyde
       </a>
@@ -343,33 +523,6 @@ not maybe this post will prompt someone to do so.</p>
 <h2>Future plans</h2>
 <p>As mentioned I&#8217;d like to expand how some of these tools are used to include automated monitoring of applications, maybe look at ways of extracting data for metrics or possibily writing a Sensu plugin or two. The first step to that is probably breaking down the monolithic puppet manifest into separate modules for each tool. Along the way I can add support for more operating systems as required. I&#8217;ve already done that for the <a href="http://forge.puppetlabs.com/garethr/wackopicko">wackopicko module which is up on the Forge</a>.</p>
 <p>I&#8217;m also soliciting any and all feedback, especially from developers who don&#8217;t do any security related testing but feel like they should.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/03/23/government-service-design-manual/">
-        Government Service Design Manual
-      </a>
-    </h1>
-
-    <span class="post-date">23 Mar 2013</span>
-
-    <p>I&#8217;ve not been writing many blog posts lately, but I have been doing quite a bit of writing elsewhere. One of the things I&#8217;ve had a hand in at work is the new <a href="https://www.gov.uk/service-manual">Government Service Design Manual</a>. This is the work of many people I work with as well as further afield. It&#8217;s intended to be a good starting place to find information about building high quality digital services.</p>
-<p>The manual is in beta and we&#8217;re looking for as much feedback as possible on the whole thing. It&#8217;s already proving useful and a good way of framing the scope of discussions, but it has lots of room for improvement.</p>
-<p>If you&#8217;re reading this post I&#8217;m going to wager you&#8217;re interest lies in or around devops flavoured content. The following are guides I&#8217;ve written in this area that I&#8217;d love any and all feedback on.</p>
-<ul>
-	<li><a href="https://www.gov.uk/service-manual/the-team/web-operations.html">Web Operations</a></li>
-	<li><a href="https://www.gov.uk/service-manual/making-software/configuration-management.html">Configuration Management</a></li>
-	<li><a href="https://www.gov.uk/service-manual/operations/hosting.html">Hosting</a></li>
-	<li><a href="https://www.gov.uk/service-manual/making-software/information-security.html">Information Security</a></li>
-	<li><a href="https://www.gov.uk/service-manual/operations/monitoring.html">Monitoring</a></li>
-	<li><a href="https://www.gov.uk/service-manual/operations/load-and-performance-testing.html">Load and Performance Testing</a></li>
-	<li><a href="https://www.gov.uk/service-manual/making-software/release-strategies.html">Releasing Software</a></li>
-	<li><a href="https://www.gov.uk/service-manual/operations/penetration-testing.html">Vulnerability and Penetration Testing</a></li>
-	<li><a href="https://www.gov.uk/service-manual/making-software/choosing-technology.html">Choosing Technology</a></li>
-</ul>
-<p>If you&#8217;re interested in the background to this endeavour then a couple of blog posts from some of my colleagues might be of interest too. First Richard Pope talks about <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">how the manual came about</a> and here&#8217;s a post from Andrew Greenway about this <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">beta testing of the service standard</a>.</p>
-<p>The source for all this is on <a href="https://github.com/alphagov/government-service-design-manual">GitHub</a> so if you prefer you can just sent a pull request. Or I&#8217;m happy to get emails or comments on this post. In particular if people have good references or next steps for these guides then let me know as several of them in particular are lacking in that area.</p>
   </div>
   
 </div>

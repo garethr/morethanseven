@@ -4,13 +4,59 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2014-10-12T18:59:12+01:00</updated>
+ <updated>2014-10-12T19:22:02+01:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Using Puppet with key/value config stores</title>
+   <link href="http://www.morethanseven.net/2014/10/12/using-puppet-with-key-value-config-stores/"/>
+   <updated>2014-10-12T00:00:00+01:00</updated>
+   <id>http://www.morethanseven.net/2014/10/12/using-puppet-with-key-value-config-stores</id>
+   <content type="html">&lt;p&gt;I like the central idea behind storing configuration in something like
+&lt;a href=&quot;https://github.com/coreos/etcd&quot;&gt;Etcd&lt;/a&gt; rather than lots of files on lots
+of disks, but a few challenges still remain. Things that spring to mind
+are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Are all your passwords now available to all of your nodes?&lt;/li&gt;
+&lt;li&gt;How do I know when configuration changed and who changed it?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I&amp;#39;ll leave the first of those for today (although have a look at
+&lt;a href=&quot;http://www.conjur.net/&quot;&gt;Conjur&lt;/a&gt; as one approach to this). For the second,
+I&amp;#39;m quite fond of plain text, pull requests and a well tested deployment
+pipeline. Before Etcd (or &lt;a href=&quot;http://www.consul.io/&quot;&gt;Consul&lt;/a&gt; or similar) you
+would probably have values in Hiera or Data Bags or similar and inject them
+into files on hosts using your configuration management tool of choice. So
+lets just do the same with our new-fangled distributed configuration store.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-puppet&quot; data-lang=&quot;puppet&quot;&gt;&lt;span class=&quot;na&quot;&gt;key_value_config&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;/foo&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ensure&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;present&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;etcd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;bar&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Say you wanted to switch over to using Consul instead? Just switch the provider.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-puppet&quot; data-lang=&quot;puppet&quot;&gt;&lt;span class=&quot;na&quot;&gt;key_value_config&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;/foo&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ensure&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;present&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;consul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;bar&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You&amp;#39;d probably move all of that out into something like hiera, and then generate
+the above resources, but you get the idea.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;etcd_values&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;l-Scalar-Plain&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;bar&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above is implemented in a very simple
+&lt;a href=&quot;https://github.com/garethr/garethr-key_value_config&quot;&gt;proof of concept Puppet module&lt;/a&gt;.
+Anyone with any feedback please do let me know.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Leaving GDS never easy</title>
