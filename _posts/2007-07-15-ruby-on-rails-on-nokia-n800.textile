@@ -2,7 +2,6 @@
 created_at: 2007/07/15}
 layout: post
 comments: true
-categories: []
 title: "Ruby on Rails on Nokia N800"
 ---
 

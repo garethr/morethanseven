@@ -3,7 +3,6 @@ layout: post
 title: "Leaving GDS never easy"
 date: 2014-07-20 20:10
 comments: true
-categories: work gds
 ---
 
 _The following is the email I sent to lots of my colleagues at the 

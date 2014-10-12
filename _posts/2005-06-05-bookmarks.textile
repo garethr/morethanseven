@@ -2,7 +2,6 @@
 created_at: 2005/06/05}
 layout: post
 comments: true
-categories: []
 title: "Bookmarks"
 ---
 

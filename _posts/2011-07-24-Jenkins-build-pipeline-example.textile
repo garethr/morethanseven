@@ -3,7 +3,6 @@ created_at: 2011/07/24
 excerpt: 
 layout: post
 comments: true
-categories: [jenkins]
 title: "Jenkins Build Pipeline Example"
 ---
 

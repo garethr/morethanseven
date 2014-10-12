@@ -2,7 +2,6 @@
 created_at: 2008/02/13}
 layout: post
 comments: true
-categories: []
 title: "Example of the Yahoo Live Api"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2007/03/18}
 layout: post
 comments: true
-categories: []
 title: "Semantic Web acronym links primer"
 ---
 

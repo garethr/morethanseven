@@ -2,7 +2,6 @@
 created_at: 2005/06/12}
 layout: post
 comments: true
-categories: []
 title: "@media 2005"
 ---
 

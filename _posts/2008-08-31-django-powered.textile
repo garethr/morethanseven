@@ -2,7 +2,6 @@
 created_at: 2008/08/31}
 layout: post
 comments: true
-categories: [django]
 title: "Django Powered"
 ---
 

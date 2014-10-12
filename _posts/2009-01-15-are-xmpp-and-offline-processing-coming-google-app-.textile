@@ -2,7 +2,6 @@
 created_at: 2009/01/15}
 layout: post
 comments: true
-categories: [appengine, xmpp, jaiku]
 title: "Are XMPP and offline processing coming to Google App Engine?"
 ---
 

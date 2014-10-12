@@ -2,7 +2,6 @@
 created_at: 2006/03/08}
 layout: post
 comments: true
-categories: []
 title: "Apples and PEARs"
 ---
 

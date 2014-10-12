@@ -2,7 +2,6 @@
 created_at: 2008/09/20}
 layout: post
 comments: true
-categories: [django]
 title: "Django Admin Options "
 ---
 

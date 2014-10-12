@@ -3,7 +3,6 @@ created_at: 2011/10/10
 excerpt: 
 layout: post
 comments: true
-categories: [mongodb, javascript, mongoid, ruby]
 title: "Javascript In Your Ruby: Mongoid Map Reduce"
 ---
 

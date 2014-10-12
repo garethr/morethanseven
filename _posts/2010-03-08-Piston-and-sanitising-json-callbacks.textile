@@ -3,7 +3,6 @@ created_at: 2010/03/08
 excerpt: 
 layout: post
 comments: true
-categories: [piston, django, json, security]
 title: "Piston And Sanitising Json Callbacks"
 ---
 

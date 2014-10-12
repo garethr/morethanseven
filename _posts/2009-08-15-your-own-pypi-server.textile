@@ -2,7 +2,6 @@
 created_at: 2009/08/15}
 layout: post
 comments: true
-categories: [pypi, python, django]
 title: "Your Own PyPi server"
 ---
 

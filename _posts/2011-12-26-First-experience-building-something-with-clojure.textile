@@ -3,7 +3,6 @@ created_at: 2011/12/26
 excerpt: 
 layout: post
 comments: true
-categories: [jenkins, clojure, noir]
 title: "First Experience Building Something With Clojure"
 ---
 

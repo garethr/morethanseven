@@ -2,7 +2,6 @@
 created_at: 2009/05/21}
 layout: post
 comments: true
-categories: [ie6, universal, css, malarkey]
 title: "Universal Internet Explorer 6 CSS and different types of sites"
 ---
 

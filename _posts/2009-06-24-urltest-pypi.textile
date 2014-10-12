@@ -2,7 +2,6 @@
 created_at: 2009/06/24}
 layout: post
 comments: true
-categories: [urltest, wsgi, pypi]
 title: "Urltest on PyPi"
 ---
 

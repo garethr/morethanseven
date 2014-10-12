@@ -2,7 +2,6 @@
 created_at: 2009/03/04}
 layout: post
 comments: true
-categories: [campug, cambridge]
 title: "App Engine for Python Developers"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2009/09/06}
 layout: post
 comments: true
-categories: [bcb4, deployment]
 title: "Automating web site deployment at Barcamp Brighton"
 ---
 

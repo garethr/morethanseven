@@ -2,7 +2,6 @@
 created_at: 2005/09/27}
 layout: post
 comments: true
-categories: []
 title: "Are kids being taught web standards? II"
 ---
 

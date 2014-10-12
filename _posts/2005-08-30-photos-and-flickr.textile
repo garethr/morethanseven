@@ -2,7 +2,6 @@
 created_at: 2005/08/30}
 layout: post
 comments: true
-categories: []
 title: "Photos and Flickr"
 ---
 

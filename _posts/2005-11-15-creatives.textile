@@ -2,7 +2,6 @@
 created_at: 2005/11/15}
 layout: post
 comments: true
-categories: []
 title: "&#39;Creatives&#39;"
 ---
 

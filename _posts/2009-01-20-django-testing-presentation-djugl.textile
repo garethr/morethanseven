@@ -2,7 +2,6 @@
 created_at: 2009/01/20}
 layout: post
 comments: true
-categories: [djugl, python, django]
 title: "Django Testing Presentation at DJUGL"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2007/11/23
 layout: post
 comments: true
-categories: [python, twitter]
 title: "Archiving Twitter data with Python"
 ---
 

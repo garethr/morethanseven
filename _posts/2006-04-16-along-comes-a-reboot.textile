@@ -2,7 +2,6 @@
 created_at: 2006/04/16}
 layout: post
 comments: true
-categories: []
 title: "Along comes a reboot"
 ---
 

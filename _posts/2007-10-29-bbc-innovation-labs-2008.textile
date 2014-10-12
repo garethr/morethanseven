@@ -2,7 +2,6 @@
 created_at: 2007/10/29}
 layout: post
 comments: true
-categories: []
 title: "BBC Innovation Labs 2008"
 ---
 

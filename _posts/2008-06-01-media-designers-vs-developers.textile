@@ -2,7 +2,6 @@
 created_at: 2008/06/01}
 layout: post
 comments: true
-categories: []
 title: "@media: Designers Vs Developers"
 ---
 

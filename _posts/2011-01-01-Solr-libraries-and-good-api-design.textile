@@ -3,7 +3,6 @@ created_at: 2011/01/01
 excerpt: 
 layout: post
 comments: true
-categories: [solr, ruby, python]
 title: "Solr Libraries and Good API Design"
 ---
 

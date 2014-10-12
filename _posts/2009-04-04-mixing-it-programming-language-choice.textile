@@ -2,7 +2,6 @@
 created_at: 2009/04/04}
 layout: post
 comments: true
-categories: [architecture, twitter]
 title: "Mixing it Up - Programming Language Choice"
 ---
 

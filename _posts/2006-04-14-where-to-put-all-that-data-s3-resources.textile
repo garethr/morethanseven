@@ -2,7 +2,6 @@
 created_at: 2006/04/14}
 layout: post
 comments: true
-categories: []
 title: "Where to put all that data? S3 resources"
 ---
 

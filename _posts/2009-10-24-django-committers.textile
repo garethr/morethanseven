@@ -2,7 +2,6 @@
 created_at: 2009/10/24}
 layout: post
 comments: true
-categories: [django]
 title: "Django Committers"
 ---
 

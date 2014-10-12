@@ -3,7 +3,6 @@ layout: post
 title: "March madness"
 date: 2013-02-17 17:17
 comments: true
-categories: personal devops qcon
 ---
 
 With only a week or so to go before the end of February, it's looking like March might be a little busy.

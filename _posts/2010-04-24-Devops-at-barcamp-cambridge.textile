@@ -3,7 +3,6 @@ created_at: 2010/04/24
 excerpt: 
 layout: post
 comments: true
-categories: [devops, barcamp, barcamb3]
 title: "Devops At Barcamp Cambridge"
 ---
 

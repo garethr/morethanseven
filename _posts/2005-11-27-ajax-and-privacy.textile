@@ -2,7 +2,6 @@
 created_at: 2005/11/27}
 layout: post
 comments: true
-categories: []
 title: "AJAX and Privacy"
 ---
 

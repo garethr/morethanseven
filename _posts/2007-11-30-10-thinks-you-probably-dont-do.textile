@@ -2,7 +2,6 @@
 created_at: 2007/11/30}
 layout: post
 comments: true
-categories: []
 title: "10 Thinks you probably don&#39;t do"
 ---
 

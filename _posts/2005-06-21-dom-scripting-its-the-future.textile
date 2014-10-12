@@ -2,7 +2,6 @@
 created_at: 2005/06/21}
 layout: post
 comments: true
-categories: []
 title: "DOM Scripting. Its the future?"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2008/11/09}
 layout: post
 comments: true
-categories: [django, python, profiling, morethanseven]
 title: "Django Performance Tip - Profile Your Filters"
 ---
 

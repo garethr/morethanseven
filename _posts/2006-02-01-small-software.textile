@@ -2,7 +2,6 @@
 created_at: 2006/02/01}
 layout: post
 comments: true
-categories: []
 title: "Small Software"
 ---
 

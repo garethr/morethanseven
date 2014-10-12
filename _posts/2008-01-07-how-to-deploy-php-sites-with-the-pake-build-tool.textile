@@ -2,7 +2,6 @@
 created_at: 2008/01/07}
 layout: post
 comments: true
-categories: []
 title: "How to deploy PHP sites with the Pake build tool"
 ---
 

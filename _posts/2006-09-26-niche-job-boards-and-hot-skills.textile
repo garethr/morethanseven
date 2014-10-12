@@ -2,7 +2,6 @@
 created_at: 2006/09/26}
 layout: post
 comments: true
-categories: []
 title: "Niche job boards and hot skills"
 ---
 

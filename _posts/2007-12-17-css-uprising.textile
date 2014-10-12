@@ -2,7 +2,6 @@
 created_at: 2007/12/17}
 layout: post
 comments: true
-categories: []
 title: "CSS Uprising"
 ---
 

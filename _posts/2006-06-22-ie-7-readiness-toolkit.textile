@@ -2,7 +2,6 @@
 created_at: 2006/06/22}
 layout: post
 comments: true
-categories: []
 title: "IE 7 Readiness toolkit"
 ---
 

@@ -3,7 +3,6 @@ created_at: 2010/07/11
 excerpt: 
 layout: post
 comments: true
-categories: [deployment, integrity, devops, git, ruby]
 title: "Git Pre Recieve Hook For Integrity"
 ---
 

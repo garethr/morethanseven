@@ -2,7 +2,6 @@
 created_at: 2009/06/22}
 layout: post
 comments: true
-categories: [ant, apache]
 title: "Ant for Web Developers I - Backup Config File"
 ---
 

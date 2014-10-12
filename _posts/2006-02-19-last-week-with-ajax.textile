@@ -2,7 +2,6 @@
 created_at: 2006/02/19}
 layout: post
 comments: true
-categories: []
 title: "Last Week with Ajax"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2006/09/02}
 layout: post
 comments: true
-categories: []
 title: "Install Fun"
 ---
 

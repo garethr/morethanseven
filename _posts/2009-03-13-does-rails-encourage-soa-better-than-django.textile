@@ -2,7 +2,6 @@
 created_at: 2009/03/13}
 layout: post
 comments: true
-categories: [rails, django, soa]
 title: "Services Vs Applications: Does Rails Encourage SOA Better Than Django?"
 ---
 

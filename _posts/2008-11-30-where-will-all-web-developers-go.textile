@@ -2,7 +2,6 @@
 created_at: 2008/11/30}
 layout: post
 comments: true
-categories: [rambling, musing]
 title: "Where will all the web developers go?"
 ---
 

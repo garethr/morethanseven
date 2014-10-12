@@ -2,7 +2,6 @@
 created_at: 2007/01/03}
 layout: post
 comments: true
-categories: []
 title: "Web.php"
 ---
 

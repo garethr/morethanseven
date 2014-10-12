@@ -2,7 +2,6 @@
 created_at: 2009/11/01}
 layout: post
 comments: true
-categories: [erlang, pragprog, screencasts]
 title: "Erlang Screencasts"
 ---
 

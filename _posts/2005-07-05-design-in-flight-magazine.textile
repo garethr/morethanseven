@@ -2,7 +2,6 @@
 created_at: 2005/07/05}
 layout: post
 comments: true
-categories: []
 title: "Design in Flight Magazine"
 ---
 

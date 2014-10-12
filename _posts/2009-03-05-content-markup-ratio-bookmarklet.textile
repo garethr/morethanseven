@@ -2,7 +2,6 @@
 created_at: 2009/03/05}
 layout: post
 comments: true
-categories: [javascript, html]
 title: "Content to Markup ratio bookmarklet"
 ---
 

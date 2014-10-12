@@ -3,7 +3,6 @@ created_at: 2011/01/16
 excerpt: 
 layout: post
 comments: true
-categories: [packaging, github, rant, devops]
 title: "Why Developers Should Care About System Packages"
 ---
 

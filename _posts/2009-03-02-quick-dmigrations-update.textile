@@ -2,7 +2,6 @@
 created_at: 2009/03/02}
 layout: post
 comments: true
-categories: [dmigrations]
 title: "Quick dmigrations Update"
 ---
 

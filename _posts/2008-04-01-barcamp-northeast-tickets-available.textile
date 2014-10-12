@@ -2,7 +2,6 @@
 created_at: 2008/04/01}
 layout: post
 comments: true
-categories: []
 title: "Barcamp NorthEast tickets available"
 ---
 

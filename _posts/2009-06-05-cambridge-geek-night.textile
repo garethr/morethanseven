@@ -2,7 +2,6 @@
 created_at: 2009/06/05}
 layout: post
 comments: true
-categories: [camgeeknights]
 title: "Cambridge Geek Night"
 ---
 

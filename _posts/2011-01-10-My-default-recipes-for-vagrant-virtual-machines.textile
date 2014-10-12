@@ -3,7 +3,6 @@ created_at: 2011/01/10
 excerpt: 
 layout: post
 comments: true
-categories: [vagrant, chef]
 title: "My Default Recipes For Vagrant Virtual Machines"
 ---
 

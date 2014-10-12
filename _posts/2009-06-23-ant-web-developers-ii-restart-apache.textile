@@ -2,7 +2,6 @@
 created_at: 2009/06/23}
 layout: post
 comments: true
-categories: [ant]
 title: "Ant for Web Developers II - Restart Apache"
 ---
 

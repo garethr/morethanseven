@@ -2,7 +2,6 @@
 created_at: 2006/06/29}
 layout: post
 comments: true
-categories: []
 title: "Making things better"
 ---
 

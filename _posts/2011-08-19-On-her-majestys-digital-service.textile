@@ -3,7 +3,6 @@ created_at: 2011/08/19
 excerpt: 
 layout: post
 comments: true
-categories: [personal, gds]
 title: "On Her Majesty's Digital Service"
 ---
 

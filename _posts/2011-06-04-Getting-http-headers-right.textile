@@ -3,7 +3,6 @@ created_at: 2011/06/04
 excerpt: 
 layout: post
 comments: true
-categories: [http]
 title: "Debugging HTTP Headers with RedBot"
 ---
 

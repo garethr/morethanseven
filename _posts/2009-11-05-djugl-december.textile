@@ -2,7 +2,6 @@
 created_at: 2009/11/05}
 layout: post
 comments: true
-categories: [django, djugl]
 title: "DJUGL December"
 ---
 

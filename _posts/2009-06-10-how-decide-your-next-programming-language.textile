@@ -2,7 +2,6 @@
 created_at: 2009/06/10}
 layout: post
 comments: true
-categories: [programming]
 title: "How to Decide on Your Next Programming Language"
 ---
 

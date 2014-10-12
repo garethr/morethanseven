@@ -2,7 +2,6 @@
 created_at: 2006/01/14}
 layout: post
 comments: true
-categories: []
 title: "More to come/statement of intent"
 ---
 

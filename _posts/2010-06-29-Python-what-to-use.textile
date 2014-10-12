@@ -3,7 +3,6 @@ created_at: 2010/06/29
 excerpt: 
 layout: post
 comments: true
-categories: [python, django]
 title: "Python: What To Use?"
 ---
 

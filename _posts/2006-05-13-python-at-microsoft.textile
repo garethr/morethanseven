@@ -2,7 +2,6 @@
 created_at: 2006/05/13}
 layout: post
 comments: true
-categories: []
 title: "Python at Microsoft"
 ---
 

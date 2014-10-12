@@ -2,7 +2,6 @@
 created_at: 2010/02/01}
 layout: post
 comments: true
-categories: [industry]
 title: "The rise of the in-house team?"
 ---
 

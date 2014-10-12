@@ -2,7 +2,6 @@
 created_at: 2008/12/21}
 layout: post
 comments: true
-categories: [tools, programming, development]
 title: "Web developers and Tools Programmers"
 ---
 

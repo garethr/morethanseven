@@ -2,7 +2,6 @@
 created_at: 2007/09/10}
 layout: post
 comments: true
-categories: []
 title: "Brighton Rock(s)"
 ---
 

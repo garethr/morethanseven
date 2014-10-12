@@ -2,7 +2,6 @@
 created_at: 2009/01/29}
 layout: post
 comments: true
-categories: [json, python]
 title: "Jsonpickle"
 ---
 

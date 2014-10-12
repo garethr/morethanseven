@@ -2,7 +2,6 @@
 created_at: 2006/08/29}
 layout: post
 comments: true
-categories: []
 title: "Learning Modern Web Design"
 ---
 

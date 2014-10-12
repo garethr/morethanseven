@@ -2,7 +2,6 @@
 created_at: 2005/08/02}
 layout: post
 comments: true
-categories: []
 title: "fluid flash v0.1"
 ---
 

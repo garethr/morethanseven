@@ -3,7 +3,6 @@ created_at: 2010/05/18
 excerpt: 
 layout: post
 comments: true
-categories: [debian, ubuntu]
 title: "Installing Integrity On Debian/Ubuntu"
 ---
 

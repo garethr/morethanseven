@@ -2,7 +2,6 @@
 created_at: 2009/10/18}
 layout: post
 comments: true
-categories: [hadoop, dumbo]
 title: "Problems Installing Hadoop 0.20 and Dumbo 0.21 on Ubuntu"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2009/01/02}
 layout: post
 comments: true
-categories: [api, webhook, xmpp]
 title: "APIs in 2009 - XMPP and WebHooks"
 ---
 

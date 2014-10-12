@@ -2,7 +2,6 @@
 created_at: 2008/11/11}
 layout: post
 comments: true
-categories: [css, cssdoc]
 title: "CSSDoc"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2010/01/30}
 layout: post
 comments: true
-categories: [cucumber, nagios, rabbitmq, amqp]
 title: "RabbitMQ support for Cucumber-nagios"
 ---
 

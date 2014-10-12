@@ -2,7 +2,6 @@
 created_at: 2008/02/19}
 layout: post
 comments: true
-categories: []
 title: "Invited to Join WaSP"
 ---
 

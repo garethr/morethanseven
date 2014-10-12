@@ -3,7 +3,6 @@ created_at: 2010/11/07
 excerpt: 
 layout: post
 comments: true
-categories: [amazon, heroku, devops]
 title: "Books For People Interested In Devops"
 ---
 

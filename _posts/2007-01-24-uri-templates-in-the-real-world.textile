@@ -2,7 +2,6 @@
 created_at: 2007/01/24}
 layout: post
 comments: true
-categories: []
 title: "URI Templates in the Real World"
 ---
 

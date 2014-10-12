@@ -3,7 +3,6 @@ created_at: 2012/07/01
 excerpt: 
 layout: post
 comments: true
-categories: [vagrant, github, heroku]
 title: "The Vagrantbox.es Story"
 ---
 

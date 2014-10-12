@@ -2,7 +2,6 @@
 created_at: 2009/01/14}
 layout: post
 comments: true
-categories: [python, github, localbuilder]
 title: "Localbuilder on GitHub"
 ---
 

@@ -3,7 +3,6 @@ created_at: 2011/03/12
 excerpt: 
 layout: post
 comments: true
-categories: [vagrant, brightbox]
 title: "Site For Vagrant Base Boxes"
 ---
 

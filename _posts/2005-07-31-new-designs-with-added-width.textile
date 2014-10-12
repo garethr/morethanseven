@@ -2,7 +2,6 @@
 created_at: 2005/07/31}
 layout: post
 comments: true
-categories: []
 title: "new designs with added width"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2007/12/26}
 layout: post
 comments: true
-categories: []
 title: "Nice bits of symfony: Web Debug Toolbar"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2007/09/16}
 layout: post
 comments: true
-categories: []
 title: "Getting going with Symfony"
 ---
 

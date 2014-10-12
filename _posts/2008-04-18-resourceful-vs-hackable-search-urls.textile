@@ -2,7 +2,6 @@
 created_at: 2008/04/18}
 layout: post
 comments: true
-categories: []
 title: "Resourceful Vs Hackable Search URLs"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2005/10/11}
 layout: post
 comments: true
-categories: []
 title: "Textpattern!"
 ---
 

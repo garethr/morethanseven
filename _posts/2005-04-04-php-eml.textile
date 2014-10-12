@@ -2,7 +2,6 @@
 created_at: 2005/04/04}
 layout: post
 comments: true
-categories: []
 title: "php-eml"
 ---
 

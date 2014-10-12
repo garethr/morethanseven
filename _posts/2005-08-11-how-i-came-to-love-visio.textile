@@ -2,7 +2,6 @@
 created_at: 2005/08/11}
 layout: post
 comments: true
-categories: []
 title: "How i came to love visio"
 ---
 

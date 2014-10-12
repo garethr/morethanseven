@@ -2,7 +2,6 @@
 created_at: 2008/11/22}
 layout: post
 comments: true
-categories: [css, unitesting, github]
 title: "CSS Test on GitHub"
 ---
 

@@ -2,7 +2,6 @@
 created_at: 2009/01/18}
 layout: post
 comments: true
-categories: [lastfm, xmpp, python, apis]
 title: "A Simple Python Jabber Bot"
 ---
 

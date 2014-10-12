@@ -2,7 +2,6 @@
 created_at: 2009/02/10}
 layout: post
 comments: true
-categories: [django]
 title: "Append slashes to URLs in Django"
 ---
 

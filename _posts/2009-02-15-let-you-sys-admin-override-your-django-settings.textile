@@ -2,7 +2,6 @@
 created_at: 2009/02/15}
 layout: post
 comments: true
-categories: [django, settings]
 title: "Let you Sys Admin Override your Django Settings"
 ---
 

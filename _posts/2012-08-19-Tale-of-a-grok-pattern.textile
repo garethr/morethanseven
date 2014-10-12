@@ -3,7 +3,6 @@ created_at: 2012/08/19
 excerpt: 
 layout: post
 comments: true
-categories: [logstash, grok, rspec]
 title: "Tale Of A Grok Pattern"
 ---
 

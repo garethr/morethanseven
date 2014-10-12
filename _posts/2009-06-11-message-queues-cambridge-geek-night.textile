@@ -2,7 +2,6 @@
 created_at: 2009/06/11}
 layout: post
 comments: true
-categories: [camgeeknights, cambridge, messagequeues]
 title: "Message Queues at Cambridge Geek Night"
 ---
 

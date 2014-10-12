@@ -2,7 +2,6 @@
 created_at: 2006/12/19}
 layout: post
 comments: true
-categories: []
 title: "Food 2.0"
 ---
 

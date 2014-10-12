@@ -2,7 +2,6 @@
 created_at: 2009/02/15}
 layout: post
 comments: true
-categories: [personal]
 title: "Looking for a New Job in June"
 ---
 

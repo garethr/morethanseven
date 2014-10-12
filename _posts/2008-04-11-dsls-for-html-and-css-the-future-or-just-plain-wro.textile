@@ -2,7 +2,6 @@
 created_at: 2008/04/11}
 layout: post
 comments: true
-categories: []
 title: "DSLs for HTML and CSS - The Future, or Just Plain Wrong? "
 ---
 

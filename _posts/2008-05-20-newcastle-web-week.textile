@@ -2,7 +2,6 @@
 created_at: 2008/05/20}
 layout: post
 comments: true
-categories: []
 title: "Newcastle Web Week"
 ---
 

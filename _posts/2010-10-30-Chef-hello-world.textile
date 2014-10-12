@@ -3,7 +3,6 @@ created_at: 2010/10/30
 excerpt: "A very simple Chef example"
 layout: post
 comments: true
-categories: [chef]
 title: "Chef Hello World"
 ---
 

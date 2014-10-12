@@ -3,7 +3,6 @@ layout: post
 title: "Web application security tools"
 date: 2013-04-23 07:57
 comments: true
-categories: security vagrant puppet
 ---
 
 I've become increasingly interested in web application security issues over the last year or so. Working in Government will do that to you. And I've come to the conclusion that a) there are lots of good open source security tools, b) many of them are terribly packaged and c) most developers don't use any of them.

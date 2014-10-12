@@ -2,7 +2,6 @@
 created_at: 2005/06/26}
 layout: post
 comments: true
-categories: []
 title: "more from @media"
 ---
 

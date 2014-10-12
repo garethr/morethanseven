@@ -2,7 +2,6 @@
 created_at: 2007/11/07}
 layout: post
 comments: true
-categories: []
 title: "Some useful mobile web design links"
 ---
 

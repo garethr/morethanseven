@@ -2,7 +2,6 @@
 created_at: 2008/11/16}
 layout: post
 comments: true
-categories: [git, github]
 title: "I Love GitHub Two"
 ---
 

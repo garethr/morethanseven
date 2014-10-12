@@ -2,7 +2,6 @@
 created_at: 2007/11/21}
 layout: post
 comments: true
-categories: []
 title: "Should we just learn Java?"
 ---
 

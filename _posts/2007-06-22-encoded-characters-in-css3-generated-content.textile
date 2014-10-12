@@ -2,7 +2,6 @@
 created_at: 2007/06/22}
 layout: post
 comments: true
-categories: []
 title: "Encoded Characters in CSS3 Generated Content"
 ---
 

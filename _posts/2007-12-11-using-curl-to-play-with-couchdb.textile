@@ -2,7 +2,6 @@
 created_at: 2007/12/11}
 layout: post
 comments: true
-categories: []
 title: "Using Curl to play with CouchDB"
 ---
 

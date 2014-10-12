@@ -2,7 +2,6 @@
 created_at: 2008/02/04}
 layout: post
 comments: true
-categories: []
 title: "Continuous Integration for Front End Developers"
 ---
 

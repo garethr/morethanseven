@@ -2,7 +2,6 @@
 created_at: 2006/06/14}
 layout: post
 comments: true
-categories: []
 title: "Internet? Check. @media. Check!"
 ---
 

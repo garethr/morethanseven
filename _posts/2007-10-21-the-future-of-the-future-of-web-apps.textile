@@ -2,7 +2,6 @@
 created_at: 2007/10/21}
 layout: post
 comments: true
-categories: []
 title: "The Future of The Future of Web Apps"
 ---
 

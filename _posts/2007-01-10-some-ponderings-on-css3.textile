@@ -2,7 +2,6 @@
 created_at: 2007/01/10}
 layout: post
 comments: true
-categories: []
 title: "Some ponderings on CSS3"
 ---
 

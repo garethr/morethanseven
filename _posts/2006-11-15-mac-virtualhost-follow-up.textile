@@ -2,7 +2,6 @@
 created_at: 2006/11/15}
 layout: post
 comments: true
-categories: []
 title: "Mac Virtualhost follow up"
 ---
 

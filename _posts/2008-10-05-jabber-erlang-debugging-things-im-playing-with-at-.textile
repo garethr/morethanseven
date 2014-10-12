@@ -2,7 +2,6 @@
 created_at: 2008/10/05}
 layout: post
 comments: true
-categories: [sphinx, morbid, xmpp, jabber, barcampbrighton3, erlang, restructuredtext]
 title: "Jabber, Erlang, Debugging. Things I'm playing with at the moment"
 ---
 
