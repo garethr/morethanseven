@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      unobtrusive javascript &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">unobtrusive javascript</h1>
+  <span class="post-date">13 Aug 2005</span>
+  <p>Lots of talk around at the moment about <a href="http://adactio.com/atmedia2005/">unobtrusive</a>  <a href="http://www.bobbyvandersluis.com/articles/goodpractices.php">javascript</a> on the usual websites and <a href="http://designersinhouse.com">discussion</a> <a href="http://www.quirksmode.org/dom/list.html ">lists</a>. However alot of people, maybe outside the inner circles, are still finding old school examples of inline code on out of date pages.</p>
+ <p>So here&#8217;s my tuppence. I guess the more websites that post new, up to date, examples and reasoning the better?</p>
+ <p>The premise is pretty simple. In the same way as controlling formating with tables and having everything being mixed up in one .htm file is frowned upon as simply being too much work &#8211; dealing with lots of inline snippets of javascript raises the same problems. Namely being time consuming to update and maintain.</p>
+ <p>The solution is to keep <span class="caps">ALL</span> your javascript in separate .js files, and that includes removing things like <code>href="javascript:"</code> or <code>onclick=</code>. The first question is therefor how &#8211; when I started looking down this route I found a simple answer hard to come by, having to look at more complex examples and reverse engineer them.</p>
+ <p>The following is the method I&#8217;m using at the moment. It may have issues I&#8217;m unaware &#8211; if your a javascript guru let me know. The examples are from the fluidflash page on this site, see it in action at <a href="http://www.morethanseven.net/fluidflash">www.morethanseven.net/fluidflash</a></p>
+ <p>We first I set up an initialisation function:</p>
+
+
+<pre><code>
+function init() {
+    if (!document.getElementById) return false;
+
+    liquid = document.getElementById("iNavLiquid");
+
+    liquid.onclick = liquidChangeClass;
+}
+</code></pre>
+ <p>This sets the onclick event on the element with the id <code>iNavLiquid</code> that will trigger the function <code>liquidChangeClass</code>. Next we define that function:</p>
+
+
+<pre><code>
+function changeClass( targetId, newClass ) {
+    if (document.getElementById){
+        target = document.getElementById( targetId );
+        target.className = newClass;
+    }
+}
+
+function liquidChangeClass() {
+    changeClass("iBody","liquid");
+}
+</code></pre>
+ <p>The specifics aren&#8217;t too important to this example but you can see the <code>liquidChangeClass</code> function which is triggered by the onclick event handler.</p>
+ <p>And finally we need to trigger the <code>init</code> function when the page loads. Their are lots of ways of doing this which is probably a conversation for another time &#8211; I used a <code>schedule</code> function from <a href="http://themaninblue.com">themaninblue.com</a> which you can find below:</p>
+
+
+<pre><code>
+function schedule(objectID, functionCall, iteration) {
+   if (iteration == null){
+   iteration = 0;
+   }
+
+   if (objectID == "window") {
+   var oldonload = window.onload;
+
+   if (typeof window.onload != "function") {
+   window.onload = functionCall;
+   } else {
+   window.onload = function() {
+   oldonload();
+   functionCall();
+   }
+   }
+   } else if (document.getElementById(objectID)) {
+   functionCall();
+   } else if (iteration &amp;lt; 300) {
+   setTimeout(function(){schedule(objectID, 
+           functionCall, iteration + 1)}, 10);
+   }
+
+   return true;
+}  
+
+schedule("window", init);
+</code></pre>
+ <p>So their we have it, hopefully a simple enough example of how to move to unobtrusive javascript. As most of this is generic and used all the time it&#8217;s far simpler that it first appears.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Setting Puppet Class Using Environment Variables &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Setting Puppet Class Using Environment Variables</h1>
+  <span class="post-date">13 Dec 2011</span>
+  <p>I&#8217;m not sure how novel this approach is but a few folks at work hadn&#8217;t seen it before so I thought it worth jotting down.</p>
+<p>If you have even a small but dynamic set of servers then a problem arises with how those nodes are defined in puppet. A node remember is defined in puppet like so:</p>
+<pre>node web3.example.com {
+  include web_server
+}</pre>
+<p>The problem is twofold. If you have a growing infrastructure, that list of nodes is going to get quickly out of hand. The other problem is around provisioning new hosts, the obvious approach to which is something like:</p>
+<p>1. Summon new EC2 instance<br />
+2. Change the node definition to include the new hostname<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Step 2 stands out. The others are easily automated, but do you want to automate a change to your puppet manifests and a redeploy to the puppetmaster for a new instance? Probably not.<br />
+Puppet has the concept of an external node classifier which can be used to solve this problem, but another simpler approach is to use an environment variable on the new machine.</p>
+<p>Lets say we define our nodes something like this instead:</p>
+<div class='bogus-wrapper'><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span><br />
+<span class='line-number'>2</span><br />
+<span class='line-number'>3</span><br />
+<span class='line-number'>4</span><br />
+<span class='line-number'>5</span><br />
+<span class='line-number'>6</span><br />
+<span class='line-number'>7</span><br />
+<span class='line-number'>8</span><br />
+<span class='line-number'>9</span><br />
+<span class='line-number'>10</span><br />
+</pre></td><td class='code'><pre><code class=''>&lt;span class='line'&gt;node default {
+&lt;/span&gt;&lt;span class='line'&gt;  case $machine_role {
+&lt;/span&gt;&lt;span class='line'&gt;    frontend:           { include web_server }
+&lt;/span&gt;&lt;span class='line'&gt;    backend:            { include app_server }
+&lt;/span&gt;&lt;span class='line'&gt;    data:               { include db_server }
+&lt;/span&gt;&lt;span class='line'&gt;    monitoring:         { include monitoring_server }
+&lt;/span&gt;&lt;span class='line'&gt;    development:        { include development }
+&lt;/span&gt;&lt;span class='line'&gt;    default:            { include base }
+&lt;/span&gt;&lt;span class='line'&gt;  }
+&lt;/span&gt;&lt;span class='line'&gt;}&lt;/span&gt;</code></pre></td><p></tr></table></div></figure></notextile></div></p>
+<p>If a machine runs and sets the $machine_role variable to frontend it includes the web_server class, if that variable equals &#8216;data&#8217; it&#8217;s going to include the db_server class instead. Much cleaner and more maintainable in my view. Now to set that variable.</p>
+<p>Facter is the tool used by Puppet to get system information like the operating system or processor count. You can use these facter provided variables anywhere in your manifests. And one way of adding a new fact is via an environment variable on the client. Any environment variable prefixed with FACTER_ will be available in Puppet manifests. So in this case we can:</p>
+<pre>export FACTER_machine_role=frontend</pre>
+<p>So our steps from above become something like:</p>
+<p>1. Summon new machine<br />
+2. echo &#8220;export FACTER_machine_role=backend&#8221; &gt;&gt; /etc/environment<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Much easier to automate. And if you&#8217;re looking at a box and want to know what it&#8217;s role is you can check the relevant environment variable.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

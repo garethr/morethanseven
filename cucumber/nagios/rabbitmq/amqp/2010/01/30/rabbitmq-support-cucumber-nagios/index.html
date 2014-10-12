@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      RabbitMQ support for Cucumber-nagios &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">RabbitMQ support for Cucumber-nagios</h1>
+  <span class="post-date">30 Jan 2010</span>
+  <p>I&#8217;ve been doing more operations related work of late and am starting to use <a href="http://auxesis.github.com/cucumber-nagios/">Cucumber-nagios</a> for various monitoring tasks. <a href="http://www.nagios.org/">Nagios</a> might not be the most attractive of web interfaces but it&#8217;s so simple to get clients up and running and extend to do what you need. Cucumber however has a lovely, text based, user interface. And although I&#8217;m mainly working with Python at the moment cucumber-nagios (written in Ruby) really is the easiest way I&#8217;ve found of writing simple functional tests.</p>
+<p>Cucumber-nagios is the creation of <a href="http://holmwood.id.au/~lindsay/">Lindsay Holmwood</a> and after several brief conversations over Twitter I set about adding a feature I wanted for my own monitoring setup. Namely support for keeping an eye on RabbitMQ.</p>
+<p>At the moment the code is in a <a href="http://github.com/garethr/cucumber-nagios">fork on GitHub</a> but I&#8217;m hoping that once any rough edges have been ironed out and a few people have kicked the tyres then it will make it&#8217;s way into trunk. If you want to use this with an existing project straight away you can always drop the contents of <a href="http://github.com/garethr/cucumber-nagios/blob/master/lib/generators/project/features/steps/amqp_steps.rb">amqp_steps.rb</a> into your feature steps file after installing the <a href="http://gems.rubyforge.org/gems/amqp">amqp gem</a>.</p>
+<p>I&#8217;ve included a little documentation in the fork as well with a quick example:</p>
+<pre>Feature: github.com
+  To make sure the rest of the system is in order
+  All our message queues must not be backed up
+  Scenario: test queue
+    Given I have a AMQP server on rabbit.github.com
+    And I want to check on the fork queue
+    Then it should have less than 400 messages
+    Then it should have at least 5 consumers
+    Then it should have less than 50 messages per consumer</pre>
+<p>My main usecase was to keep an eye on a known queue size and number of consumers. I&#8217;m sure I&#8217;m missing some features at the moment so any feedback much appreciated.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

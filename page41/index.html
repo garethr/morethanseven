@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/01/barcamp-northeast-tickets-available/">
+        Barcamp NorthEast tickets available
+      </a>
+    </h1>
+
+    <span class="post-date">01 Apr 2008</span>
+
+    <p>Quick post to say BarCampNorthEast tickets are now available. We&#8217;re starting off releasing 50 tickets and we&#8217;ll see how that goes. We&#8217;re really not sure how quickly these will disappear so get them while they&#8217;re hot. More tickets will be available later as well.</p>
+<p><a href="http://barcampnortheast.eventwax.com/barcampnortheast/register">barcampnortheast.eventwax.com/barcampnortheast/register</a></p>
+<p>The event is looking like its going to be great. I&#8217;m really happy we managed to find a venue that would let us do the whole sleeping over thing. And with <a href="http://www.thinkingdigital.co.uk/">Thinking Digital</a> the week before and rumours of a geekdinner on the friday night it&#8217;s going to be busy few days in Newcastle.</p>
+<p>We&#8217;re still on the lookout for a few sponsors as well so if anyone is interested in sponsorship opportunities, or just has a few questions feel free to <a href="mailto:gareth@morethanseven.net">drop me a line</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/03/29/why-the-webstandards-world-appears-to-be-choosing-/">
+        Why the webstandards world appears to be choosing Django
+      </a>
+    </h1>
+
+    <span class="post-date">29 Mar 2008</span>
+
+    <p>I&#8217;ve been noticing an interesting trend recently, not one I have any empirical evidence for mind, but one I though interesting non-the-less. Parts of the webstandards world appear to all be playing with <a href="http://djangoproject.com">Django</a>. Part of this has been the odd mention down the pub, at barcamps or at <span class="caps">SXSW</span> this year. But the main source of information on the topic has been <a href="http://twitter.com">twitter</a>. To name but a few I&#8217;ve seen tweets from <a href="http://nascentguruism.com">Steve</a>, <a href="http://thecssdiv.co.uk">Ross</a> and <a href="http://aralbalkan.com">Aral</a> recently and <a href="http://muffinresearch.co.uk/">Stuart</a> and <a href="http://cyril.doussin.name/thoughts/">Cyril</a> literally wont shut up about it.</p>
+<p>What&#8217;s interesting is that this didn&#8217;t happen with Rails, not in the corner of the pub that generally talks more about markup, javascript and <span class="caps">CSS</span> anyway. I&#8217;ve worked on a couple of Rails projects both personally and commercially, and I&#8217;ve just launched a little pet project build with django called <a href="http://doesyourapi.com">doesyourapi</a>. What follows is, to my mind, a few reasons why I think this trend exists and also why I think it will continue, at least for the time being.</p>
+<h3>People</h3>
+<p>You can&#8217;t ignore the personal touch, and in <a href="http://simonwillison.com">Simon Willison</a> and <a href="http://www.kryogenix.org/">Stuart Langridge</a> we already have two people who bridge the Python/Django community and the web standards crowd, at least in the UK. Personal technology choices at least are often driven by personal correspondence.</p>
+<h3>Templating</h3>
+<p>Django&#8217;s templating introduces a very simple syntax <em>and nothing else</em>. Rails lets you have the full power of Ruby to do with as you will within your views. Rails also makes heavy use of helpers, further adding to the complexity of views. Now I have mixed views here, based on my own skills more than anything. I know I&#8217;d feel much more comfortable throwing someone with good markup skills at a project using Django than Rails. For the most part with Django you use the html you&#8217;re used to, Rails often wants you to change this to helpers &#8211; in much the same way as <span class="caps">ASP</span>.<span class="caps">NET</span> does in fact. I think some of this comes from the Rails <em>don&#8217;t repeat yourself</em> <del>philosophy</del> <ins>obsession</ins>. Sometimes this leads to programmatic complexity which makes working with templates more akin to programming, even if it means less duplication. I&#8217;ve yet to work on a particularly complex Django project so maybe this simplicity might become a limitation to work around? Always a possibility.</p>
+<h3>Default craziness</h3>
+<p>Some of the bits and pieces that come bundled with Rails are just plain wrong, the Javascript helpers being one example. The abuse of <span class="caps">HTTP</span> by default in some of the scaffolding code being another. Oh, and the markup coming out of various helpers as well. In trying to help the application developer Rails gets in the way of the professional webstandards types. Django does next to none of this for you. Programmers coming from Rails might see this as missing features. Frontend types prefer this clean slate approach because it means you don&#8217;t have to fight the backend (sometimes including people) for control of the output. Note that you can work around much of this (in the same way as you can work <em>around</em> <span class="caps">ASP</span>.<span class="caps">NET</span> if you have to), it&#8217;s just nicer to not have to.</p>
+<h3>Other craziness</h3>
+<p>Rails people love Ruby. After all it&#8217;s better than Java (it&#8217;s also a pretty loveable programming language too). But like computer science departments everywhere many Rails people also dislike or simply put up with <span class="caps">HTML</span>, <span class="caps">CSS</span> and Javascript. If they can find a way of not having to write these and write something else (Rails people are also obsessed with domain specific languages) instead. Hence we have the likes of <a href="http://haml.hamptoncatlin.com/"><span class="caps">HAML</span></a> and <a href="http://lab.hamptoncatlin.com/play/with/sass"><span class="caps">SASS</span></a>. The problem is that us frontend loving folk quite like writing <span class="caps">CSS</span> (well, sometimes) and absolutely love writing <span class="caps">HTML</span>. Most of the time for good reasons too &#8211; just look at microformats for an example. Frontend developers tend to like using a mix of tools, predominantly backend developers not so much it seems.</p>
+<p>Personally I find it interesting. You could quite easily flip many of these arguments around to support why so many people are using Rails. For two frameworks with similar goals and uses it&#8217;s interesting to see the early philosophical differences playing out in the real world. It might be interesting to see what happens with frameworks like <a href="http://merbivore.com/">Merb</a> as well which seems to be set out to avoid many of these perceived issues with Rails. So, have anyone else noticed anything similar? Or even the complete opposite?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/03/25/barcamp-northeast/">
+        BarCamp NorthEast
+      </a>
+    </h1>
+
+    <span class="post-date">25 Mar 2008</span>
+
+    <p>BarCampNorthEast is go. <a href="http://www.codeworks.net">A</a> <a href="http://blog.meriwilliams.com/">few</a> &#8220;people&#8221;:&quot;http://www.agm.me.uk/blog/ have finally got together and sorted out the long promised barcamp in Newcastle upon Tyne.</p>
+<p>We&#8217;re going to be holding the event in the middle of Newcastle, at <a href="http://theartworksgalleries.com/">The Art Works</a> on the weekend of the 24th/25th of May. That&#8217;s a whole two months away, ample time for everyone to make arrangements hopefully. From the early discussions we were always set upon going the whole hog and having a two day event. The venue is big enough for people to sleep over as well if they want which is great. It keeps the cost down for anyone visiting as well as meaning we can play Werewolf all night. We&#8217;re piggy backing on the <a href="http://www.thinkingdigital.co.uk">Thinking Digital conference</a> as well so hopefully some of the people from that will stick around for the barcamp.</p>
+<p>We have the requisite <a href="http://barcamp.org/BarCampNorthEast">Barcamp wiki</a> page as well as a listing on <a href="http://upcoming.yahoo.com/event/462291/">Upcoming</a>. Feel free to indicate your interest on either of these. Registration isn&#8217;t open just yet, but we should be opening that up next week on <strong>Tuesday 1st April at 11:00am</strong>. Look for the link on here, on <a href="http://twitter.com/garethr">twitter</a>, on the upcoming and barcamp wiki pages and anywhere else I can think of to shout about it.</p>
+<p>Feel free to contact me with any questions. If you&#8217;re not sure what all the fuss is about then have a look at the <a href="http://barcamp.org/">barcamp</a> site. And if you&#8217;ve never been outside London before then maybe this is your chance. Newcastle is only two and a half hours away by a train with free wifi. We&#8217;re also on the lookout for a few sponsors; if your interested drop me a line.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/03/22/testing-websites-with-twill/">
+        Testing Websites with Twill
+      </a>
+    </h1>
+
+    <span class="post-date">22 Mar 2008</span>
+
+    <p>I&#8217;ve been playing with <a href="http://twill.idyll.org/">Twill</a> a little recently. It&#8217;s a Python based <span class="caps">DSL</span> used for functional testing of websites. From the official website:</p>
+<blockquote>
+<p>Twill is a simple language that allows users to browse the Web from a command-line interface. With twill, you can navigate through Web sites that use forms, cookies, and most standard Web features.</p>
+</blockquote>
+<p>A simple example might make things clearer. You&#8217;ll need to install twill first &#8211; the instructions are available on <a href="http://twill.idyll.org/">the site</a>. We can write tests directly into the shell so we&#8217;ll start their. For our first test we&#8217;ll write one that will hopefully fail &#8211; a test to check whether this website is down.</p>
+<pre><code>twill-sh
+&gt;&gt; go http://morethanseven.net
+&gt;&gt; code 404</code></pre>
+<p>First we fire up the twill shell then enter two simple commands. The first command, <em>go</em>, sends the browser to the specified <span class="caps">URL</span>. The second command is an assertion, in this case a check on the <span class="caps">HTTP</span> status code. If this website is available then it should return the <span class="caps">HTTP</span> code 200, if it&#8217;s unavailable then it will probably return a 404 Not Found. This test will hopefully fail, indicating that this website is up and running. In reality you&#8217;re more likely to test for the 200 status code and fail on anything else but for this example it&#8217;s useful to see what a failing test looks like.</p>
+<p>Although pretty powerful the twill scripting language is nice and small. I&#8217;ve listed most of the commands below just to give you an idea of the sort of things that you can get up to. You can type <em>help</em> at the twill shell to get more information on the available commands and the individual commands themselves.</p>
+<ul>
+	<li>twill-sh</li>
+	<li>twill-sh {filename}</li>
+	<li>twill-sh {filename1} {filename2}</li>
+	<li>twill-sh -u {url} {filename}</li>
+	<li>twill-sh -n {filename}</li>
+	<li>go {url}</li>
+	<li>show</li>
+	<li>save_html {file-name}</li>
+	<li>showlinks</li>
+	<li>showforms</li>
+	<li>follow {url|url-name}</li>
+	<li>back</li>
+	<li>reload</li>
+	<li>showhistory</li>
+	<li>echo {variable}</li>
+	<li>formvalue {form} {input} {value}</li>
+	<li>submit {input}</li>
+	<li>show_cookies</li>
+	<li>save_cookies {file-name}</li>
+	<li>load_cookies {file-name}</li>
+	<li>clear_cookies</li>
+	<li>code {code}</li>
+	<li>url {text}</li>
+	<li>title {text}</li>
+	<li>find {text}</li>
+	<li>setglobal {name} {value}</li>
+	<li>setlocal {name} {value}</li>
+	<li>debug http 1</li>
+	<li>redirect_output {file}</li>
+	<li>redirect_error {file}</li>
+	<li>agent {ie5|ie55|ie6|opera7|konq32|saf11|aol9}</li>
+	<li>add_auth {realm} {url} {user} {password}</li>
+	<li>runfile {file-name}</li>
+	<li>extend_with check_links</li>
+	<li>check_links</li>
+	<li>check_links {regex}</li>
+	<li>twill-fork -n {number} -p {processes} {script}</li>
+</ul>
+<p>You can also store tests in individual files as well as run a batch of tests at once. I have a couple of tests that I can run against any <span class="caps">URL</span> which might be a useful starting point for anyone else starting to look at testing their sites or applications. You can <a href="http://morethanseven.net/_assets/downloads/twill/twill.zip">download these tests here</a>.</p>
+<p>If you unpack the zip archive and then open the folder in a terminal or console. You can then run all of the tests like so, note we&#8217;re passing the starting <span class="caps">URL</span> into the scripts which makes using the same scripts for multiple sites easier.</p>
+<pre><code>twill-sh * -u http://morethanseven.net</code></pre>
+<p>The tests included do a few things; from checking for the presence of several required markup elements and checking for an <span class="caps">XHTML</span> doctype to checking that all the links on the page are working.</p>
+<p>All these examples are pretty simple and non-site-specific. For more complex form based applications you can write application browsers which fill out forms, create user sessions and do everything a user might do. Twill is also particularly useful when it comes to testing RESTful webservices with all the URLs and <span class="caps">HTTP</span> status codes floating about.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/03/19/own-your-endpoints/">
+        Own your endpoints
+      </a>
+    </h1>
+
+    <span class="post-date">19 Mar 2008</span>
+
+    <p>If <a href="http://google-code-updates.blogspot.com/2008/02/urls-are-people-too.html">URLs are people too</a> then you better make sure you control your URLs.</p>
+<p>Although some people use blog hosting services like <a href="http://www.blogger.com">blogger</a> the majority of serious bloggers, web designers or companies generally use their own domain name to host their site. Controlling your own domain name is increasingly important when that <span class="caps">URL</span> is a representation of you on the internet.</p>
+<p>With all these social networks we&#8217;re starting to have pieces of us scattered all over the place. I&#8217;ve joked previously about the utility of domain names over real names for interpersonal communication but this breaks down a little when not all the urls that represent me are owned by me. I control morethanseven.net/photos but I only have some influence over <a href="http://flickr.com/photos/garethr">flickr.com/photos/garethr</a>. With external hosts you also need to be aware of cybersquatting. I own morethanseven.net so no one else can use it. However with services that give you your own <span class="caps">URL</span> as part of registration everywhere people can cybersquat in hundreds of new domains that you might not even know about.</p>
+<p>It&#8217;s not just web pages you have to worry about. Feeds are another example of URLs you just might want to keep control over. This last one is also something I see lots of people handing off to others &#8211; specifically <a href="http://feedburner.com">Feedburner</a>. Now I&#8217;m a big fan of feedburner and use it for the feeds on this site. But I don&#8217;t use the feedburner <span class="caps">URL</span>, anyone subscribing to the feeds here does so using morethanseven.net/feed/. If I decide to stop using feedburner I can, without having to upset the few people who subscribe to it by moving my feed address. It&#8217;s the same with email addresses; I love gmail but rarely actually give my gmail email address out.</p>
+<p>So, start looking after your domain names a little more carefully. They are pieces of you scattered around the internet, and losing control of them is going to become increasingly socially painful.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page42">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page40">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      My Default Recipes For Vagrant Virtual Machines &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">My Default Recipes For Vagrant Virtual Machines</h1>
+  <span class="post-date">10 Jan 2011</span>
+  <p>I&#8217;ve written about <a href="http://morethanseven.net/2010/11/04/Why-you-should-be-using-virtualisation.html">Vagrant previously</a> and the more I use it the more it impresses me and the more it changes how I work. For those that haven&#8217;t yet used <a href="http://vagrantup.com">vagrant</a> the brief summary is, it&#8217;s a way of managing, creating and destroying headless virtualbox virtual machines. So when I&#8217;m sat at my computer and I want a new 32 bit virtual machine based on Maverick I just type.</p>
+<pre>vagrant init maverick32
+vagrant up</pre>
+<p>It has some other magic tricks as well, like automatically setting up <span class="caps">NFS</span> shares between the host and guest and allowing you to specify ports to forward in the configuration file. You access the machine via ssh, either using the handy <em>vagrant ssh</em> command or by using <em>vagrant ssh-config</em> to dump the relevant configuration to place in ~/.ssh/config.</p>
+<p>I&#8217;ve been using virtualisation for a few years, initially purely for testing and experimentation, and then eventually for all my development. I&#8217;d have a few VMware images, I&#8217;d use snapshots and occasionally rollback, but I very rarely created new virtual machines. It was quite a manual process. With vagrant that&#8217;s changing. Everytime I start investigating a new tool or new technology or work on a pet project I create a new virtual machine. That way I know exactly what I&#8217;m dealing with, and with vagrant the cost of doing that is the 30s waiting for the new machine to boot.</p>
+<p>Or rather it would be if I didn&#8217;t then have to install and configure the same few things on every machine. Pretty much whatever I might be doing I found myself installing the same things, namely zsh, vim, git and utils like ack, wget, curl and lynx. This is exactly what the provisioning support in vagrant is for, so I set out to use chef to do this for me.</p>
+<p>I decided to use a remote tar file for the recipes. I&#8217;m not really bothered about managing a chef server just for my personal virtual machines, but I did want to have a canonical source of the cookbooks that wasn&#8217;t local to just one of my machines. Plus this means anyone else who shares my opinions about what you want on a new virtual machine can use them too.</p>
+<p>My Vagrantfile now looks like this:</p>
+<pre>Vagrant::Config.run do |config|
+  config.vm.box = "maverick32"
+  config.vm.provisioner = :chef_solo
+  config.chef.recipe_url = "http://cloud.github.com/downloads/garethr/chef-repo/cookbooks.tar.gz"
+  config.chef.add_recipe "garethr"
+  config.chef.cookbooks_path = [:vm, "cookbooks"]
+  config.chef.json.merge!({ :garethr =&gt; {
+      :ohmyzsh =&gt; "https://github.com/garethr/oh-my-zsh.git",
+      :dotvim =&gt; "https://github.com/garethr/dotvim.git"
+    }})
+end</pre>
+<p>You can see the cookbook on GitHub at <a href="https://github.com/garethr/chef-repo/">github.com/garethr/chef-repo</a>. By default it uses the <a href="https://github.com/robbyrussell/oh-my-zsh.git">official oh-my-zsh repo</a> and the <a href="https://github.com/jtimberman/dotvim.git">vim configuration from jtimberman</a>. My own versions are very minor personal preference modifications of those. The Vagrantfile example above shows how you can override the defaults and use your own configs instead if you choose.</p>
+<p>One question I was asked about this approach was why I didn&#8217;t just create a basebox with all these things installed by default, this would reduce the time taken on first boot as software wouldn&#8217;t have to be installed each time. However it would also mean maintaining the basebox&#8217;s myself, and as I use different Linux distributions or versions this would be a headache. While doing this and working with vagrant I&#8217;ve been thinking about the ecosystem around the tool and I&#8217;m planning on writing my thoughts on that subject over the next week or so.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

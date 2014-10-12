@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/puppet/2014/02/05/a-template-for-puppet-modules/">
+        A template for Puppet modules
+      </a>
+    </h1>
+
+    <span class="post-date">05 Feb 2014</span>
+
+    <p>A little while ago I published a <a href="https://github.com/garethr/puppet-module-skeleton">template writing your own puppet modules</a>. It&#39;s
+very opinionated but comes out of the box with lots of the tools you
+eventually find and add to your tool box. I&#39;m posting this as it came
+up at the recent <a href="http://cfgmgmtcamp.eu">Configuration Management Camp</a>
+and after discussing it I realised I hadn&#39;t actually wrote anything
+about it anywhere.</p>
+
+<h2>What do you get?</h2>
+
+<ul>
+<li>A simple install, config, service class pattern</li>
+<li>Unit tests with <a href="https://github.com/rodjek/rspec-puppet">rspec-puppet</a></li>
+<li>Rake tasks for <a href="https://github.com/rodjek/puppet-lint">linting</a> and <a href="https://github.com/gds-operations/puppet-syntax">syntax checking</a></li>
+<li>Integration tests using <a href="https://github.com/puppetlabs/beaker">Beaker</a></li>
+<li>A Modulefile to provide Forge metadata</li>
+<li>Command line tools to upload to the Forge with <a href="https://github.com/maestrodev/puppet-blacksmith">blacksmith</a></li>
+<li>A README based on the Puppetlabs documentation standards</li>
+<li><a href="https://travis-ci.org">Travis CI</a> configuration based on the official
+Puppetlabs support matrix</li>
+<li>A Guardfile which can run all the tests when you change manifests</li>
+</ul>
+
+<p>Obviously you can choose not to use parts of this, or even delete
+aspects, but I find that approach much quicker than starting from scratch
+or copying files from previous modules and changing names.</p>
+
+<h2>How can I use it?</h2>
+
+<p>Simple. The following will install the module skeleton to
+<code>~/.puppet/var/puppet-module/skeleton</code>. This turns out to be picked up
+by the Puppet module tool.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/garethr/puppet-module-skeleton 
+<span class="nb">cd </span>puppet-module-skeleton
+find skeleton -type f <span class="p">|</span> git checkout-index --stdin --force --prefix<span class="o">=</span><span class="s2">&quot;$HOME/.puppet/var/puppet-module/&quot;</span> --
+</code></pre></div>
+<p>With that in place you can then just run the following to create a new
+module, where puppet-ntp is the name of our new module.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">puppet module generate puppet-ntp
+</code></pre></div>
+<p>We use <code>puppet module</code> like this rather than just copying the files
+because otherwise you would have to rename everything from class names
+to test assertions. The skeleton actually contains erb templates in
+places, and running <code>puppet module generate</code> results in the module name
+being available to those templates.</p>
+
+<h2>Now what?</h2>
+
+<p>Assuming you have run the above commands you should have a folder called
+<code>puppet-ntp</code> in your current directory. <code>cd</code> into that and then install
+the dependencies:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle install
+</code></pre></div>
+<p><a href="http://bundler.io/">Bundler </a>is a dependency manager for Ruby. If you
+don&#39;t already have it installed you should be able to do so with the
+following:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install bundler
+</code></pre></div>
+<p>Now you have the dependencies why not run the full test suite? This
+checks syntax, lints the Puppet code and runs the unit tests.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>rake <span class="nb">test</span>
+</code></pre></div>
+<p>Unit tests give fast feedback and help make sure the code you write is
+going to do what you intend, but they aren&#39;t actually applying the
+manifests to a real machine. For that you want an integration test.
+You&#39;ll need <a href="http://vagrantup.com">Vagrant</a> installed for this next
+step. Lets run those as well with:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>rspec spec/acceptance
+</code></pre></div>
+<p>This will take a while, especially the first time. This uses Beaker to
+download a virtual machine from Puppetlabs (if you don&#39;t already have
+it) and then brings up a new machine, applies a simple manifest, runs
+the acceptance tests and then destroys the machine.</p>
+
+<p>The <code>CONTRIBUTING.md</code> file has more information for running the test
+suite.</p>
+
+<h2>What&#39;s new?</h2>
+
+<p>I&#39;ve recently added a <a href="https://github.com/guard/guard">Guardfile</a> to
+help with testing. You can run this with:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>guard
+</code></pre></div>
+<p>Now in a separate tab or pane make a change to any of the manifests. The
+tests should run automatically in the tab or pane where guard is
+running.</p>
+
+<h2>Can you add this new tool?</h2>
+
+<p>Probably. Although I started the repo a few other people have
+contributed code or made improvements already. Just sent a pull request
+or open an issue.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/puppet/2014/01/25/code-coverage-for-puppet-modules/">
+        Code coverage for Puppet modules
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jan 2014</span>
+
+    <p>One of my favourite topics for a while now has been <em>infrastructure as
+code</em>. Part of that involves introducing well understood programming
+techniques to infrastructure - from test driven design, to refactoring
+and version control. One tool I&#39;m fond of (even with it&#39;s potential to
+be misused) is <a href="http://en.wikipedia.org/wiki/Code_coverage">code coverage</a>. I&#39;d been meaning
+to go code spelunking to see if this could be done for testing Puppet
+modules. </p>
+
+<p>The functionality is now in <a href="https://github.com/rodjek/rspec-puppet#producing-coverage-reports">master for rspec-puppet</a>
+and so anyone feeling brave can use it now, or if you must wait for the
+2.0.0 release. The actual implementation is inspired by the same functionality in
+<a href="https://github.com/sethvargo/chefspec#reporting">ChefSpec</a>
+written by <a href="https://sethvargo.com/">Seth Vargo</a>. Lots of the how came
+from here, and the usage is very similar.</p>
+
+<h2>How to use it?</h2>
+
+<p>First add (or hopefully change) your Gemfile line item for rspec-puppet
+to the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s2">&quot;rspec-puppet&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/rodjek/rspec-puppet.git&#39;</span>
+</code></pre></div>
+<p>Then all you need to do is include the following line anywhere in a
+spec.rb file in your spec directory.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">at_exit</span> <span class="p">{</span> <span class="na">RSpec</span><span class="p">::</span><span class="na">Puppet</span><span class="p">::</span><span class="na">Coverage</span><span class="err">.</span><span class="na">report</span><span class="o">!</span> <span class="p">}</span>
+</code></pre></div>
+<h2>What do I get?</h2>
+
+<p>Here&#39;s an <a href="https://github.com/garethr/garethr-nginx">example module</a>,
+including a file called
+<a href="https://github.com/garethr/garethr-nginx/blob/master/spec/classes/coverage_spec.rb">coverage_spec.rb</a>.
+When running the test suite with <code>rake spec</code> you now get coverage
+details like so:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Total resources:   24
+Touched resources: 8
+Resource coverage: 33.33%
+
+Untouched resources:
+  Class[Nginx]
+  File[preferences.d]
+  Anchor[apt::update]
+  Class[Apt::Params]
+  File[sources.list]
+  Exec[Required packages: &#39;debian-keyring debian-archive-keyring&#39; for nginx]
+  Anchor[apt::source::nginx]
+  Class[Apt::Update]
+  File[configure-apt-proxy]
+  Apt::Key[Add key: 7BD9BF62 from Apt::Source nginx]
+  Anchor[apt::key/Add key: 7BD9BF62 from Apt::Source nginx]
+  Anchor[apt::key 7BD9BF62 present]
+  File[nginx.list]
+  Exec[apt_update]
+  File[sources.list.d]
+  Exec[e407f76c6e349fc397947a4a49260a9320196cb1]
+</code></pre></div>
+<p>Here&#39;s the output on <a href="https://travis-ci.org/garethr/garethr-nginx/jobs/17597307#L105">Travis CI</a> as
+well for a recent build.</p>
+
+<h2>Why is this useful?</h2>
+
+<p>I&#39;ve already found coverage useful when writing tests for a few of my
+puppet modules. The information about the total number of resouces is
+interesting (and potentially an indicator of complexity) but the list of
+untouched resources is the main useful part. These represent both
+information about what your module is doing, and potential things you
+might want to test.</p>
+
+<p>I&#39;m hoping to find some more time to make this even better, providing
+more information about untouched resources, adding some configuration
+options and hopefully to integrate with the <a href="https://coveralls.io/docs/api">Coveralls API</a>.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/testing/2014/01/12/shell-provisioner-for-test-kitchen/">
+        Shell provisioner for Test Kitchen
+      </a>
+    </h1>
+
+    <span class="post-date">12 Jan 2014</span>
+
+    <p>As of a few weeks ago <a href="http://kitchen.ci/">Test Kitchen</a> has a <a href="https://github.com/test-kitchen/test-kitchen/blob/master/lib/kitchen/provisioner/shell.rb">shell provisioner</a> as well as the original Chef provisioners. This opens up all sorts of interesting testing potential.</p>
+
+<p>If you&#39;ve not already seen Test Kitchen, probably because you&#39;re not using Chef, it&#39;s a tool for integration testing infrastructure code. Configured by a simple YAML file it will setup a matrix of virtual machines, using Virtualbox, AWS, OpenStack and more, run some setup code (normally applying Chef recipes) and then run a test suite (with support for Bats, ShUnit2, Rspec and Serverspec). It&#39;s all very pluggable. With the addition of the shell provisioner it&#39;s useful to just about anyone. To try and prove that here&#39;s a hello world style example.</p>
+
+<h2>Dependencies</h2>
+
+<p>First we need to install Test Kitchen. We&#39;ll use vagrant and virtualbox for our example too so we need a few extra dependencies. I&#39;m going to assume you have bundler installed, if not you may be able to do so with <code>gem install bundler</code> but as the number of ways of setting a ruby environment up is greater than the number of people on the planet I&#39;ll have to defer to instructions elsewhere for getting that far.</p>
+
+<p>First create a file called <code>Gemfile</code> with the following contents:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+
+<span class="n">gem</span> <span class="s2">&quot;test-kitchen&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://github.com/test-kitchen/test-kitchen.git&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;kitchen-vagrant&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;vagrant-wrapper&quot;</span>
+</code></pre></div>
+<p>Then run:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle install
+</code></pre></div>
+<p>This should install the above software. Note that the shell provisioner is not yet in an official release so where installing direct from GitHub for the moment.</p>
+
+<h2>Configuration</h2>
+
+<p>Next we&#39;ll tell Test Kitchen what we want to do. As much for demonstration purposes I&#39;m going to grab one of the Puppetlabs boxes. This is just plain <a href="http://vagrantup.com">Vagrant</a> so feel free to substitude the <code>box</code> and <code>box_url</code> for alternatives you already have installed locally. Otherwise the first run will take a little longer as it downloads a large file.</p>
+
+<p>Pull all of the following in a file called `.kitchen.yml&#39;.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">vagrant</span>
+
+<span class="l-Scalar-Plain">provisioner</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">shell</span>
+
+<span class="l-Scalar-Plain">platforms</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+    <span class="l-Scalar-Plain">driver_config</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">box</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+      <span class="l-Scalar-Plain">box_url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box</span>
+
+<span class="l-Scalar-Plain">suites</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">default</span>
+</code></pre></div>
+<p>The shell provisioner is going to look for a file called <code>bootstrap.sh</code> by default. You can overide this but we&#39;ll leave it for the moment. Our bootstrap script is going to do something very simple, install the ntp package. But the important part is it could do anything; run Salt, run Ansible, run Puppet, execute any arbitrary code we choose. In this case our script is completely self contained but if it needed some additional files we could put them in a directory called <code>data</code> and they would be copied to the newly created virtual machine under <code>/tmp/kitchen</code>.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+apt-get install ntp -y
+</code></pre></div>
+<h2>Tests</h2>
+
+<p>The last step is to write a test. I&#39;m suddently finding lots of excuses to use <a href="http://serverspec.org/">Serverspec</a> so we&#39;ll use that, but if you prefer you can use pretty much anything. The following file should be saved as  <code>test/integration/default/serverspec/ntp_spec.rb</code>. Note the <code>default</code> in the path which matches our suite above in the <code>.kitchen.yml</code> file. Test Kitchen allows for multiple suites all with separate tests based on a strong set of file path conventions.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;serverspec&#39;</span>
+
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">Exec</span>
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">DetectOS</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">before</span> <span class="ss">:all</span> <span class="k">do</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/sbin:/usr/sbin&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Running the tests</h2>
+
+<p>With all of that in place we&#39;re ready to run our tests.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle exec kitchen test
+</code></pre></div>
+<p>This should:</p>
+
+<ul>
+<li>download the virtual machine image if you don&#39;t already have it locally</li>
+<li>create a new virtual machine based on the image</li>
+<li>run the bootstrap.sh script</li>
+<li>run our serverspec test suite</li>
+</ul>
+
+<p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
+
+<p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/packer/serverspec/wercker/2014/01/01/testing-packer-created-images-with-serverspec/">
+        Testing Packer created images with serverspec
+      </a>
+    </h1>
+
+    <span class="post-date">01 Jan 2014</span>
+
+    <p><a href="http://www.packer.io/">Packer</a> provides a great way of describing the steps for creating a virtual machine image. But it doesn&#39;t have a built-in way of verifying those images.</p>
+
+<p><a href="http://serverspec.org/">Serverspec</a> provides a nice framework for writing tests against infrastructure, asserting the operation of services or the installation of packages.</p>
+
+<p>I&#39;m interested at the moment in building continous delivery pipelines for infrastructure components and have a simple working example of <a href="https://github.com/garethr/packer-serverspec-example">testing Packer with Serverspec</a> on
+Github. The example uses the AWS builder and the Puppet provisioner but the approach should work with other combinations.</p>
+
+<p>This doesn&#39;t represent a complete infrastructure pipeline, but it does demonstrate an approach to automating one particular component - building base images.</p>
+
+<h2>Testing</h2>
+
+<p>In our example I&#39;m using the <a href="https://github.com/puppetlabs/puppetlabs-ntp">Puppetlabs NTP</a> module to install and configure NTP. Once the Puppet provisioner has run, but before we build the AMI (or other virtal machine image) we run a test suite. For our example the tests are pretty simple:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">describe package(&#39;ntp&#39;) do
+  it { should be_installed }
+end
+
+describe service(&#39;ntp&#39;) do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+</code></pre></div>
+<p>If the tests fail, Packer will stop and the AMI won&#39;t be built. The combination of storing the code (Packer template) alongside a test suite (Serverspec) and building a new AMI whenever you change the code, makes this setup perfect for continuous integration. </p>
+
+<h2>Wercker builds</h2>
+
+<p>As an example of a continuous integration setup the repository contains a <a href="https://github.com/garethr/packer-serverspec-example/blob/master/wercker.yml">wercker.yml</a> configuration file for the excellent <a href="http://devcenter.wercker.com/">Wercker</a> service. Wercker makes setting up multi-step built pipelines easy and nicely configurable via a simple text file in your repository.</p>
+
+<p>The Wercker <a href="https://app.wercker.com/#applications/52c450e489daaf145f001ad8">build for this project is public</a>. Currently the build involves downloading Packer, running <code>packer validate</code> to check the template and eventually running <code>packer build</code> to boot an instance and run our serverspec tests. </p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/security/sysadvent/2013/12/29/making-the-web-secure/">
+        Making the web secure, one unit test at a time
+      </a>
+    </h1>
+
+    <span class="post-date">29 Dec 2013</span>
+
+    <p><em>Originally written as part of <a href="http://sysadvent.blogspot.co.uk/2013/12/day-21-making-web-secure-one-unit-test.html">Sysadvent 2013</a>.</em></p>
+
+<p>Writing automated tests for your code is one of those things that,
+once you have gotten into it, you never want to see code without tests
+ever again. Why write pages and pages of documentation about how
+something should work when you can write tests to show exactly how something does work? Looking at the number and quality of testing tools and frameworks (like cucumber,
+rspec, <a href="https://github.com/test-kitchen/test-kitchen">Test Kitchen</a>,
+<a href="http://serverspec.org/">Server Spec</a>,
+<a href="https://github.com/puppetlabs/beaker">Beaker</a>,
+<a href="http://casperjs.org/">Casper</a> and
+<a href="http://pivotal.github.io/jasmine/">Jasmine</a> to name a few) that have
+popped up in the last year or so I&#39;m obviously not the only person who
+has a thing for testing utilities.</p>
+
+<p>One of the other things I am interested in is web application
+security, so this post is all about using the tools and techniques
+from unit testing to avoid common web application security issues. I&#39;m
+using Ruby in the examples but you could quickly convert these to other languages if you desire.</p>
+
+<h2>Any port in a storm</h2>
+
+<p>Lets start out with something simple. Accidentally exposing
+applications on TCP ports can lead to data loss or introduce a vector
+for attack. Maybe your main website is super secure, but you left the
+port for your database open to the internet. It&#39;s the server configuration equivalent of forgetting to lock the back door.</p>
+
+<p>Nmap is a tool lots of people will be familiar with for spanning for
+open ports. As well as a command line interface Nmap also has good
+library support in lots of languages so lets try and write a simple
+tests suite around it.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">require &quot;tempfile&quot;
+require &quot;nmap/program&quot;
+require &quot;nmap/xml&quot;
+
+describe &quot;the scanme.nmap.org website&quot; do
+  file = Tempfile.new(&quot;nmap.xml&quot;)
+  before(:all) do
+    Nmap::Program.scan do |nmap|
+      nmap.xml = file.path
+      nmap.targets = &quot;scanme.nmap.org&quot;
+    end
+  end
+
+  @open_ports = []
+  Nmap::XML.new(&quot;scan.xml&quot;) do |xml|
+    xml.each_host do |host|
+      host.each_port do |port|
+        @open_ports &lt;&lt; port.number if port.state == :open
+      end
+    end
+  end
+end
+</code></pre></div>
+<p>With the above code in place we can then write tests like:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">it &quot;should have two ports open&quot; do
+ @open_ports.should have(2).items
+end
+
+it &quot;should have port 80 open&quot; do
+ @open_ports.should include(80)
+end
+
+it &quot;should have port 22 closed&quot; do
+ @open_ports.should_not include(22)
+end
+</code></pre></div>
+<p>We can run these manually, but also potentially as part of a
+continuous integration build or constantly as part of a monitoring
+suite.</p>
+
+<h2>Run the Guantlt</h2>
+
+<p>We had to do quite a bit of work wrapping Nmap before we could write
+the tests above. Wouldn&#39;t it be nice if someone had already wrapped
+lots of useful security minded tools for us? <a href="http://gauntlt.org/">Gauntlt</a> is pretty much just that, it&#39;s a security testing framework based on cucumber which currently supports curl, nmap, sslyze, sqlmap, garmr and a bunch more tools in master. Lets do something more advanced than our port scanning test above by testing a URL for a SQL injection vulnerability.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">@slow
+Feature: Run sqlmap against a target
+  Scenario: Identify SQL injection vulnerabilities
+    Given &quot;sqlmap&quot; is installed
+    And the following profile:
+      | name       | value                                      |
+      | target_url | http://localhost/sql-injection?number_id=1 |
+    When I launch a &quot;sqlmap&quot; attack with:
+      &quot;&quot;&quot;
+      python &lt;sqlmap_path&gt; -u &lt;target_url&gt; —dbms sqlite —batch -v 0 —tables
+      &quot;&quot;&quot;
+    Then the output should contain:
+      &quot;&quot;&quot;
+      sqlmap identified the following injection points
+      &quot;&quot;&quot;
+    And the output should contain:
+      &quot;&quot;&quot;
+      [2 tables]
+      +-----------------+
+      | numbers         |
+      | sqlite_sequence |
+      +-----------------+
+      &quot;&quot;&quot;
+</code></pre></div>
+<p>The Gauntlt team publish <a href="https://github.com/gauntlt/gauntlt/tree/master/examples">lots of examples</a> like this one alongside the source code, so getting started is easy. Gauntlt is very powerful, but as you&#39;ll see from the example above you need to know quite a bit about the underlying tools it is using. In the case above you need to know the various arguments to sqlmap and also how to interpret the output.</p>
+
+<h2>Enter Prodder</h2>
+
+<p><a href="https://github.com/garethr/prodder">Prodder</a> is a tool I put together
+to automate a few specific types of security testing. In many ways
+it&#39;s very similar to Gauntlt; it uses the cucumber testing framework
+and uses some of the same tools (like nmap and sslyze) under the hood.
+However rather than a general purpose security framework like Gauntlt,
+Prodder is higher level and very opinionated. Here&#39;s an example:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Feature: SSL
+  In order to ensure secure connections
+  I want to check the SSL configuration of my servers
+  Background:
+    Given &quot;sslyze.py&quot; is installed
+    Scenario: Check SSLv2 is disabled
+      When we test using the &quot;sslv2&quot; protocol
+      Then the exit status should be 0
+      And the output should contain &quot;SSLv2 disabled&quot;
+
+    Scenario: Check certificate is trusted
+      When we check the certificate
+      Then the output should contain &quot;Certificate is Trusted&quot;
+      And the output should match /OK — (Common|Subject
+</code></pre></div>
+<p>Alternative) Name Matches/
+          And the output should not contain &quot;Signature Algorithm: md5&quot;
+          And the output should not contain &quot;Signature Algorithm: md2&quot;
+          And the output should contain &quot;Key Size: 2048&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check certificate renegotiations
+      When we test certificate renegotiation
+      Then the output should contain &quot;Client-initiated
+</code></pre></div>
+<p>Renegotiations: Rejected&quot;
+          And the output should contain &quot;Secure Renegotiation: Supported&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check SSLv3 is not using weak ciphers
+      When we test using the &quot;sslv3&quot; protocol
+      Then the output should not contain &quot;Anon&quot;
+      And the output should not contain &quot;96bits&quot;
+      And the output should not contain &quot;40bits&quot;
+      And the output should not contain &quot; 0bits&quot;
+</code></pre></div>
+<p>This is a little higher level than the Gauntlt example — it&#39;s not
+exposing the workings of sslyze that is doing the actual testing. All
+you need is an understanding of SSL certifcates. Even if you&#39;re not an
+expert on SSL you can accept the aforementioned opinions of Prodder
+about what good looks like. Prodder currently contains steps and
+exampes for port scanning, SSL certificates and security minded HTTP
+headers. If you already have a cucumber based test suite (including
+one based on Gauntlt) you can reuse the step definitions in that too.</p>
+
+<p>I&#39;m hoping to build upon Prodder, adding more types of tests and
+getting agreement on the included opinions from the wider systems
+administration community. By having a default set of shared assertions
+about the expected security of out system we can more easily move onto
+new projects, safe in the knowledge that a test will fail if someone
+messes up our once secure configuration.</p>
+
+<h2>I&#39;m convinced, what should I do next?</h2>
+
+<p>As well as trying out some of the above tools and techniques for
+yourself I&#39;d recommend encouraging more security conversations in your
+development and operations teams. Here&#39;s a few  places to start with:</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/beehooze/devopsday-london-ben-hughes-security">Ben Hughes from Etsy talking about security culture at Devopsdays London</a></li>
+<li><a href="https://speakerdeck.com/garethr/security-monitoring-with-open-source-penetration-testing-tools">A presentation I gave at Velocity about using penetration testing tools for monitoring purposes</a></li>
+<li><a href="http://www.slideshare.net/wickett/gauntlt-velocity-eu2013">A workshop, again from Velocity all about getting started with Gauntlt</a></li>
+</ul>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page3">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

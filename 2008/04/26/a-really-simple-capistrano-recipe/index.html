@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      A Really Simple Capistrano Recipe &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">A Really Simple Capistrano Recipe</h1>
+  <span class="post-date">26 Apr 2008</span>
+  <p>Build scripts. I think I&#8217;ve probably mentioned before; everyone knows they should but not many actually do. I&#8217;m not talking about your large in-house development teams or your sexy web startups; both probably have a good-enough build process for different reasons. But smaller teams, web design agencies or freelancers often rely on <span class="caps">FTP</span> and a prayer. One of the problems is definitely finding <em>suitable</em> documentation. It&#8217;s not that their isn&#8217;t a lot of good quality documentation &#8211; it&#8217;s the suitability of it for those with only a passing interest and a limited systems administration experience.</p>
+<p><a href="http://capify.org/">Capistrano</a> is a tool for automating tasks on remote servers. It can be used for all sorts of useful things but we&#8217;ll concentrate on it&#8217;s utility for web site deployment. It&#8217;s been popular with the <a href="http://rubyonrails.com/">Rails</a> crowd for a while and is written in Ruby, but it can be used for deploying sites in Python, <span class="caps">PHP</span>, Django, whatever you happen to be using at the time.</p>
+<p>You&#8217;ll first need to install Ruby and Capistrano. The Capistrano site has <a href="http://capify.org/install">installation instructions</a> which should get you up and running. You&#8217;ll need to be able to use a console on your machine and have a passing acquaintance with your webserver. I&#8217;ve also assumed that you&#8217;re using source control, mainly because if you&#8217;re not you should start their. Automation becomes much more useful and practical on the back of a good source control system.</p>
+<p>Right, lets get started. Create a file called <em>capfile</em> somewhere on your local machine. The following two code snippets should go in that file.</p>
+<pre><code>set :username, "&lt;username&gt;"
+set :host, "&lt;host&gt;"
+set :path, "&lt;path&gt;"
+set :restart, "/etc/init.d/apache2 restart"
+set :checkout, "svn export --force"
+set :repo, "&lt;repository address&gt;"</code></pre>
+<p>Just replace the variables (marked with angle brackets) with your own values. The path is the full path on the remote server where you want to deploy your files to. Note that I&#8217;ve abstracted out the webserver restart command and the source control checkout command. The above example values assume you&#8217;re using apache and subversion (and want to do a subversion export). It should be easy enough to change these for your preferred combination of source control system and webserver.</p>
+<pre><code>desc "Remote checkout and restart of webserver"
+task :deploy, :hosts =&gt; "#{username}@#{host}" do
+  run "#{checkout} #{repo} #{path}; #{restart}"
+end</code></pre>
+<p>If your platform of choice doesn&#8217;t require a server restart (say <span class="caps">PHP</span>) you can always remove the <em>; #{restart}</em> portion of the command.</p>
+<p>Now we&#8217;re all set up just bring up a console in the folder containing the <em>capfile</em> and run the following command:</p>
+<pre><code>cap deploy</code></pre>
+<p>After prompting for a password to access the remote machine this should display the output from the commands being run. Depending on the size of the repository you&#8217;re checking out</p>
+<p>Of course for most projects you would want to expand this basic recipe. Maybe you have database updates to run or need to deploy to multiple machines at once? You&#8217;ll might have machine specific configuration files which aren&#8217;t in the source control system. You will also probably want to be able to revert back if something goes wrong and you might want to only change files that have been altered. Capistrano has lots of powerful features built in that will let you do just that, and once you get started with this sort of build scripting you&#8217;ll find lots of areas to improve. And you&#8217;ll find lots of good tutorials online that will take you further.</p>
+<p>The difficult part with project automation and build scripts is often the <em>getting started</em> in the first place; especially if you&#8217;re not the server admin type. Unfortunately the documentation and articles written on the subject tend to be somewhat arcane and aimed at the more hardcore developer. Hopefully this simple, usable, example convinces someone else to give it a try.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

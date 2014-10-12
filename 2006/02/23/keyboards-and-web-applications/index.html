@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      keyboards and web applications &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">keyboards and web applications</h1>
+  <span class="post-date">23 Feb 2006</span>
+  <p>Web applications are still evolving. This we know. One thing any power user tends to pick up on pretty quickly in desktop applications is the keyboard shortcuts. We just cant get enought of them. Why dont we see them more in web applications? Well a couple of reasons as it happens:</p>
+<ul>
+ <li>Potential clashes with browser or OS shortcuts</li>
+  <li>Many web applications are still evolving from more promotional websites. The learning curve for a website <em>needs</em> to be instantaneous, otherwise your potential customer just left. But what about a web application? The users may <em>have</em> to use it, as well as having documentation and maybe even training.</li>
+  <li>Because we dont see them in web applications? The circular argument.</li>
+</ul>
+ <p>Personally I think in some cases keyboard shortcuts would be nice, I have a little plan for something in mind as well so started experimenting. The clash issue I&#8217;m going to leave for another post as it will take a bit of brute force experimenting but I did start playing with a simple way of assigning functions to keys.</p>
+ <p>The following code creates an object to store the lookup/hash/two dimensional array (pick one you like). This is a simple associate between a key, and a function to run when it&#8217;s pressed. A function is then assigned to the onkeyup and onkeydown events which monitors them, checks for one of the keys in the lookup to be pressed (in this case along with the ctrl key) and runs the assigned function.</p>
+<div>
+<p><code>
+&lt;pre&gt;
+&amp;lt;txp:php&amp;gt;
+include('/www/htdocs/morethanseven/scripts/sample/keyPress.js');
+&amp;lt;/txp:php&amp;gt;
+&lt;/pre&gt;
+</code></p>
+</div>
+ <p>A simple library function is used to add the event to the document onload. My library obviously includes other helper functions but we dont need any of those for this example.</p>
+<div>
+<p><code>
+&lt;pre&gt;
+&amp;lt;txp:php&amp;gt;
+include('/www/htdocs/morethanseven/scripts/sample/lib.js'); 
+&amp;lt;/txp:php&amp;gt;
+&lt;/pre&gt;
+</code></p>
+</div>
+ <p>Some improvements I can spot from here which I&#8217;ll implement as I actually take this out of the lab and into something production like.</p>
+<ul>
+ <li><span class="caps">JSON</span> (or <span class="caps">YAML</span>) data storage. Either one makes configuration simpler and scores geek points. It&#8217;s a win win.</li>
+  <li>Abstract the use of the ctrl key from the function and allow other modifiers to be set when used.</li>
+</ul>
+ <p>I&#8217;ll try get round to the look at keyboard shortcut clashes, or link to someone who already has, as I get round to it. In the mean time, what do people think about the use of keyboard shortcuts in web applications? Any good or bad examples welcome.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

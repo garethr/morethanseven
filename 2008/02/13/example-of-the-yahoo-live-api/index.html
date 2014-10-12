@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Example of the Yahoo Live Api &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Example of the Yahoo Live Api</h1>
+  <span class="post-date">13 Feb 2008</span>
+  <p><a href="http://live.yahoo.com/">Yahoo! Live</a> launched recently along with a nice <a href="http://developer.yahoo.com/ylive/rest_api/">RESTful <span class="caps">API</span></a>. I&#8217;ve spoken before about the beauty of <span class="caps">REST</span> being in lowering the barrier to hacking and when I wanted a quick feature for Live it was simplicity itself to put together.</p>
+<p>A few friends are using it far too much it seems, <a href="http://ben-ward.co.uk/">Ben</a> has 7.6 hours and <a href="http://simonjobling.com">Si</a> has already clocked up 15 hours. But for the most part I keep missing their no-doubt highly entertaining antics. One thing that Live misses I feel is a favourite users or previously viewed channels list. Basically I want to see which of my friends who use the service are broadcasting right now. Something like:</p>
+<p><a href="http://morethanseven.net/presents/yahoolive/"><img src="http://img.skitch.com/20080213-q7ntrbip3rhwbkdbykuwt4an5.render.png" alt="Yahoo! Live Online"/></a></p>
+<p>The <span class="caps">API</span> request we&#8217;re interested in is the <a href="http://developer.yahoo.com/ylive/rest_api/channel.html">/channel/<span class="caps">PERMALINK</span></a> method. This lets us get information about whether the user is broadcasting at the moment.</p>
+<pre><code>&lt;?php
+$api = 'http://api.live.yahoo.com/api/v1/channel';
+$friends = array(
+  'garethr',
+  'benward',
+  'sijobling'
+);
+$statuses = array();
+foreach ($friends as $friend) { 
+  $response = simplexml_load_file($api . '/' . $friend);
+  $name = $response-&gt;name; 
+  if ($response-&gt;broadcast) {
+    $status = 'live';
+  } else {
+    $status = 'offline';
+  }
+  $statuses["$name"] = $status;
+}
+function displaylist($array) {
+  $output = '';
+  if (count($array) &gt;= 0) {
+    $output .= '&lt;ul&gt;';
+    foreach ($array as $key =&gt; $value) {
+      $output .= "&lt;li class=\"$value\"&gt;";
+      $output .= "&lt;a href=\"http://live.yahoo.com/$key\"&gt;";
+      $output .= "$key&lt;/a&gt;";
+      $output .= "&lt;span&gt;$value&lt;/span&gt;&lt;/li&gt;";
+    }
+    $output .= '&lt;/ul&gt;';
+  }
+  return $output;
+}
+echo displaylist($statuses);
+?&gt;</code></pre>
+<p>I&#8217;ll add a few more people to <a href="http://morethanseven.net/presents/yahoolive/">my list</a> when I discover other people using the service. If you have an account leave a comment. I&#8217;ve added a touch of javascript as well so as to avoid having to reload the page manually. This way I can loiter on my little aggregator until someone I know starts broadcasting and head over to Live for whatever Si has been spending 15 hours doing.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

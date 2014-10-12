@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      YUI lovin &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">YUI lovin</h1>
+  <span class="post-date">25 Jul 2006</span>
+  <p>I&#8217;m working on some redesign work for one of my under maintained sites at the moment, with something of a redesign in the works. It seemed a good opportunity to play more with <a href="http://developer.yahoo.com/yui/"><span class="caps">YUI</span></a>, the Yahoo User Interface Library, which I&#8217;d had a peak at before and heard nice things about (sorry, I like the long namespaces).</p>
+ <p>I&#8217;ve nothing finished yet past a proof of concept, but I thought a couple of lines of javascript wouldn&#8217;t go a miss. Nothing fancy mind, just some nice bits I like so far.</p>
+ <p>The case in point was wanting to add event handlers to an unknown number of links within an unordered list.</p>
+ <p>First off a quick, clever, one liner. <em>onAvailable</em> checks for the availability of the object (if you remove the quotes) or an object with a specified id in this case. It executes the callback function, <em>init</em> in this case, when the condition is true.</p>
+<div><code>YAHOO.util.Event.onAvailable("iList", init);</code></div>
+ <p>Moments later we have events added to all the links.</p>
+<div><code>&lt;pre&gt;
+function init() {
+   var links = document.getElementById("iList").getElementsByTagName("A");
+   YAHOO.util.Event.addListener(links, "click", clickCallback);
+}&lt;/pre&gt;</code></div>
+ <p>Again you just throw in whatever you happen to be working with (in this case an array returned by <em>getElementsByTagName</em>) and everything just gets dealt with. I originally had a <em>for</em> loop, iterating over the links and adding events, then I worked out <span class="caps">YUI</span> just did it all for me if I let it. I like that. I <strong>could</strong> have done it myself. <span class="caps">YUI</span> would have let me and not complained. But if I want to delve a bit I can find cool, quick, clean ways of doing the same thing. I refactored my code, with the help of <span class="caps">YUI</span> in ten minutes. I like that, but I think I said that.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

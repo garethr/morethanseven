@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Tips for fluid design &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Tips for fluid design</h1>
+  <span class="post-date">08 Nov 2005</span>
+  <p>After getting a few comments about the site design, and in particular a few of the fluid nature comments about it being tricky to get right. I&#8217;ve found myself tending to develop fluid designs more often that not over the <a href="http://thebgroup.co.uk">last</a> <a href="http://newcastlenewmedia.org">few</a> <a href="http://www.cravens.co.uk">years</a> and thought I&#8217;d do a short series of posts about some of the techniques I use. I&#8217;ve generally found it pretty easier to find <a href="http://www.boagworld.com/archives/2005/06/liquid_vs_fixed.html">discussions</a> about the <a href="http://www.digital-web.com/articles/fluid_thinking/">pro&#8217;s</a> and <a href="http://9rules.com/whitespace/design/death_of_liquid_layouts.php">cons</a> and the basic principles but less so on actual techniques. I&#8217;ll try cover some or all of the following over the next few weeks or so:</p>
+<ul>
+ <li>extendable background images</li>
+  <li>using overflow hidden</li>
+  <li>use of fluid flash banners</li>
+  <li>min-width and max-width (and javascript)</li>
+</ul>
+ <p>I&#8217;ll kick off with tricks for background images.</p>
+ <p>This techniques makes extensive use of the <em>background</em> <acronym title="Cascading Style Sheets"><span class="caps">CSS</span></acronym> property which is used as following: <em>div#iBackground { background: url(path/to/image) center top no-repeat; }</em></p>
+ <p>I&#8217;ll assume some familiarity with this and <span class="caps">CSS</span> in general, basically all we are doing is setting a background image to the div with an id of iBackground which is set to align to the top vertically and centered horizontally.</p>
+ <p>Moving the image to the background has a couple of interesting effects, the one that we are interested in here is that the the size of the div is not affected by the size of the image (as it would be if the image was placed inside it). It acts as a kind of viewport into the world of the image. By specifying the width of the div in percentages (or em&#8217;s if you are dealing with an elastic design) the size of the viewport can change dependent on the size of the browser window. An example is inorder:</p>
+ <p><a href="http://joshuaink.com">joshuaink.com</a> makes use of a large background graphic that stretches the full width of the site. This means the space can be used for pretty large imagery but without breaking the experience (sideways scrolling!) for those with lower resolution displays. Note that the flower background is 2000px wide.</p>
+ <p>The only problem with this technique that I have come across is generating the images in such a way that they degrade gracefully. You need to make sure real <em>content</em> (logos or text) appear in a smaller area that the whole image and live with the fact that not everyone is going to see the whole thing. In my mind this is a small price to pay for asthetically interesting fluid layouts.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Testing Websites with Twill &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Testing Websites with Twill</h1>
+  <span class="post-date">22 Mar 2008</span>
+  <p>I&#8217;ve been playing with <a href="http://twill.idyll.org/">Twill</a> a little recently. It&#8217;s a Python based <span class="caps">DSL</span> used for functional testing of websites. From the official website:</p>
+<blockquote>
+<p>Twill is a simple language that allows users to browse the Web from a command-line interface. With twill, you can navigate through Web sites that use forms, cookies, and most standard Web features.</p>
+</blockquote>
+<p>A simple example might make things clearer. You&#8217;ll need to install twill first &#8211; the instructions are available on <a href="http://twill.idyll.org/">the site</a>. We can write tests directly into the shell so we&#8217;ll start their. For our first test we&#8217;ll write one that will hopefully fail &#8211; a test to check whether this website is down.</p>
+<pre><code>twill-sh
+&gt;&gt; go http://morethanseven.net
+&gt;&gt; code 404</code></pre>
+<p>First we fire up the twill shell then enter two simple commands. The first command, <em>go</em>, sends the browser to the specified <span class="caps">URL</span>. The second command is an assertion, in this case a check on the <span class="caps">HTTP</span> status code. If this website is available then it should return the <span class="caps">HTTP</span> code 200, if it&#8217;s unavailable then it will probably return a 404 Not Found. This test will hopefully fail, indicating that this website is up and running. In reality you&#8217;re more likely to test for the 200 status code and fail on anything else but for this example it&#8217;s useful to see what a failing test looks like.</p>
+<p>Although pretty powerful the twill scripting language is nice and small. I&#8217;ve listed most of the commands below just to give you an idea of the sort of things that you can get up to. You can type <em>help</em> at the twill shell to get more information on the available commands and the individual commands themselves.</p>
+<ul>
+	<li>twill-sh</li>
+	<li>twill-sh {filename}</li>
+	<li>twill-sh {filename1} {filename2}</li>
+	<li>twill-sh -u {url} {filename}</li>
+	<li>twill-sh -n {filename}</li>
+	<li>go {url}</li>
+	<li>show</li>
+	<li>save_html {file-name}</li>
+	<li>showlinks</li>
+	<li>showforms</li>
+	<li>follow {url|url-name}</li>
+	<li>back</li>
+	<li>reload</li>
+	<li>showhistory</li>
+	<li>echo {variable}</li>
+	<li>formvalue {form} {input} {value}</li>
+	<li>submit {input}</li>
+	<li>show_cookies</li>
+	<li>save_cookies {file-name}</li>
+	<li>load_cookies {file-name}</li>
+	<li>clear_cookies</li>
+	<li>code {code}</li>
+	<li>url {text}</li>
+	<li>title {text}</li>
+	<li>find {text}</li>
+	<li>setglobal {name} {value}</li>
+	<li>setlocal {name} {value}</li>
+	<li>debug http 1</li>
+	<li>redirect_output {file}</li>
+	<li>redirect_error {file}</li>
+	<li>agent {ie5|ie55|ie6|opera7|konq32|saf11|aol9}</li>
+	<li>add_auth {realm} {url} {user} {password}</li>
+	<li>runfile {file-name}</li>
+	<li>extend_with check_links</li>
+	<li>check_links</li>
+	<li>check_links {regex}</li>
+	<li>twill-fork -n {number} -p {processes} {script}</li>
+</ul>
+<p>You can also store tests in individual files as well as run a batch of tests at once. I have a couple of tests that I can run against any <span class="caps">URL</span> which might be a useful starting point for anyone else starting to look at testing their sites or applications. You can <a href="http://morethanseven.net/_assets/downloads/twill/twill.zip">download these tests here</a>.</p>
+<p>If you unpack the zip archive and then open the folder in a terminal or console. You can then run all of the tests like so, note we&#8217;re passing the starting <span class="caps">URL</span> into the scripts which makes using the same scripts for multiple sites easier.</p>
+<pre><code>twill-sh * -u http://morethanseven.net</code></pre>
+<p>The tests included do a few things; from checking for the presence of several required markup elements and checking for an <span class="caps">XHTML</span> doctype to checking that all the links on the page are working.</p>
+<p>All these examples are pretty simple and non-site-specific. For more complex form based applications you can write application browsers which fill out forms, create user sessions and do everything a user might do. Twill is also particularly useful when it comes to testing RESTful webservices with all the URLs and <span class="caps">HTTP</span> status codes floating about.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

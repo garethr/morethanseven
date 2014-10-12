@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Django and WSGI deployment on Solaris &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Django and WSGI deployment on Solaris</h1>
+  <span class="post-date">21 Aug 2009</span>
+  <p>Now I&#8217;m generally an Ubuntu guy, but I&#8217;ve just had the need to setup some boxes running Solaris for Django and a handful of <span class="caps">WSGI</span> applications. I know my way around Ubuntu pretty well. I know all the packages I need to install and in what order. Hell, I even have all that scripted so I can just run a command and it works by magic. I&#8217;ll script the following steps if I can do when I get round to it but here, in one list, are the installation instructions for Apache, mod_wsgi, Mysql, MySQLdb, setuptools and memcached that worked for me on the latest version of <a href="http://www.opensolaris.com/">Open Solaris</a> (2009.06 at the time of writing).</p>
+<p>First up I needed to install Apache and start the service running.</p>
+<pre>pfexec pkg install SUNWapch22
+svcadm enable http:apache22</pre>
+<p>You should be able to test that&#8217;s running by hitting localhost on a browser running on the same box. Now for MySQL.</p>
+<pre>pfexec pkg install SUNWmysql5
+svcadm enable mysql:version_50</pre>
+<p>This installs the mysql binary into /usr/mysql/5.0/bin/mysql on the system I&#8217;m working on. As I want to talk to the MySQL database server using Python I need to install MySQLdb.</p>
+<pre>pfexec pkg install SUNWmysql-python
+ln -s /usr/mysql/5.0/lib/mysql/libmysqlclient_r.so.15 /usr/lib/libmysqlclient_r.so.15</pre>
+<p>This installs the library files into /usr/mysql/5.0/lib and Python doesn&#8217;t know were to find them. The above command links them into the more standard /usr/lib folder were Python will pick it up nicely.</p>
+<p>I tend to use <a href="http://code.google.com/p/modwsgi/">mod_wsgi</a> for serving Python apps behind Apache,  however a mod_wsgi package isn&#8217;t part of the default package list. It is however available in the pending list so first you need to add that list of packages.</p>
+<pre>pfexec pkg set-authority -O http://pkg.opensolaris.org/pending pending
+pfexec pkg refresh
+pfexec pkg install mod-wsgi</pre>
+
+<p>This installs the module but you then need to tell Apache to load it. Add the following line to /etc/apache2/2.2/conf.d/modules-32.load or /etc/apache2/2.2/conf.d/modules-64.load depending on your architecture.</p>
+<pre>LoadModule wsgi_module    libexec/mod_wsgi.so</pre>
+<p>To get Apache to load that module you need to restart it like so:</p>
+<pre>svcadm restart http:apache22</pre>
+<p>I use <a href="http://pypi.python.org/pypi/pip">Pip</a> for installing Python code, but tend to install setuptools to make installing Pip easier. I don&#8217;t know if an up to date Pip package exists.</p>
+<pre>pfexec pkg install python-setuptools</pre>
+<p>This should leave you with easy_install on your path so installing Pip, then virtualenv should be a breeze.</p>
+<p>As an added bonus I also installed memcached for some snappy caching.</p>
+<pre>pfexec pkg install SUNWmemcached</pre>
+<p>This won&#8217;t start up by default and needs a little configuration. The first command will launch you into a prompt where you can type the rest of the commands.</p>
+<pre>svccfg
+svc:&gt; select memcached
+svc:/application/database/memcached&gt; setprop memcached/options=("-u" "nobody")
+svc:/application/database/memcached&gt; quit</pre>
+<p>Once you&#8217;d done that you should be able to start memcache on the standard port.</p>
+<pre>svcadm refresh memcached
+svcadm enable memcached</pre>
+<p>Et voila. The internet helped massively on my quest to track down this information. Not all of the following links turned out to work for me but all of them led me in the right direction. Thanks everyone.</p>
+<ul>
+	<li>http://blogs.sun.com/quenelle/entry/jazz_guitar_and_rpath</li>
+	<li>http://blogs.sun.com/natarajan/entry/installing_amp_stack_within_glassfish</li>
+	<li>http://blogs.sun.com/overstre/entry/django_on_solaris10_with_the</li>
+	<li>https://cds.sun.com/is-bin/<span class="caps">INTERSHOP</span>.enfinity/<span class="caps">WFS</span>/<span class="caps">CDS</span>-CDS_SMI-Site/en_US/-/<span class="caps">USD</span>/ViewProductDetail-Start?ProductRef=Web-Stack-1.5-<span class="caps">OTH</span>-G-F@CDS-CDS_SMI</li>
+	<li>http://wiki.joyent.com/mod_wsgi</li>
+	<li>http://textusers.com/wiki/AcceleratorDjango</li>
+	<li>http://wiki.joyent.com/accelerators:kb:django</li>
+	<li>http://www.b-list.org/weblog/2007/sep/04/django-accelerated/</li>
+	<li>http://blogs.sun.com/natarajan/entry/getting_ruby_or_amp_apache</li>
+	<li>http://blogs.sun.com/overstre/entry/opensolaris_with_mod_wsgi</li>
+	<li>http://branesks.blogspot.com/2009/01/installing-modwsgi-on-opensolaris.html</li>
+	<li>http://blogs.sun.com/overstre/entry/django_on_opensolaris</li>
+	<li>http://code.google.com/p/modwsgi/wiki/InstallationOnSolaris</li>
+	<li>http://groups.google.com/group/modwsgi/browse_thread/thread/7e2cc7ce366253cc</li>
+	<li>http://blogs.sun.com/lr/entry/django_setup_mysql_python_opensolaris</li>
+	<li>http://blogs.sun.com/trond/entry/memcached_in_solaris</li>
+	<li>http://blog.hendrikvolkmer.de/2009/1/29/deploying-a-rails-application-on-opensolaris-with-passenger-aka-modrails/</li>
+</ul>
+<p>I&#8217;m not a Solaris admin. I&#8217;m not really a sysadmin at all, I just end up pretending to be one of late. Any experienced Solaris people with experience of these tools reading this I&#8217;d be grateful for any hints and tips. Hopefully this saves a few people from the head scratching I&#8217;ve been doing for the last few days.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

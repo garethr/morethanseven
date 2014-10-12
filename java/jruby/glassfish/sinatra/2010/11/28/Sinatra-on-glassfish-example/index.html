@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Sinatra On Glassfish Example &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Sinatra On Glassfish Example</h1>
+  <span class="post-date">28 Nov 2010</span>
+  <p>I magically turned into a Java developer last week for a bit when I had to do some integration with a <span class="caps">SOAP</span> based <span class="caps">API</span> that really really wanted me to write Java on client as well. That led me down the route of having a good look at Jruby (which I&#8217;ve used before, mainly for testing using celerity) and in particular how easy it was to use native Java classes in Jruby (very, very easy as it turns out).</p>
+<p>All that meant I&#8217;ll probably end up writing a nice Jruby application in the not too distant future, and not knowing too much about running such a thing in a production environment I thought I&#8217;d take a quick look. I went with Glassfish as the application server for no other reason that it took my fancy. I&#8217;d definately be interested in hearing about any positive or negative experiences people may have with it or other similar servers. My quick look turned into running a tiny Sinatra application.</p>
+<p>First install the required gems for our little experiment. You&#8217;ll obviously need jruby which is sort of the point, I&#8217;d recommend using <span class="caps">RVM</span> for that.</p>
+<pre><code>gem install sinatra warbler</pre><p></code></p>
+<p>Now create a sinatra app. OK, it could be any Ruby rack based application but I like Sinatra. First we need a rackup file.</p>
+<pre><code># config.ru
+require 'init'
+
+set :run, false
+set :environment, :production
+
+run Sinatra::Application</pre><p></code></p>
+<p>Now for our application itself.</p>
+<pre><code># init.rb
+require 'rubygems'
+require 'sinatra'
+get '/' do
+  "Hello World!"
+end</pre><p></code></p>
+<p>Warble is the gem we&#8217;re going to use to create a <span class="caps">WAR</span> file, which is basically an all in one bundle of our application and it&#8217;s dependencies which we can deploy to a java application server.</p>
+<pre><code># config/warble.rb
+Warbler::Config.new do |config|
+  config.dirs = %w(config)
+  config.includes = FileList["init.rb"]
+  config.gems += ["sinatra"]
+  config.gems -= ["rails"]
+  config.gem_dependencies = true
+end</pre><p></code></p>
+<p>Now we&#8217;re ready to generate our <span class="caps">WAR</span> file.</p>
+<pre><code>warble</pre><p></code></p>
+<p>This should create a file called sample.war or similar. Then just deploy that to your application server and away you go. I got this working very easily with Glassfish which seemed to be the recommended tool for such things. Installing Glassfish was time consuming but <a href="http://www.nabisoft.com/tutorials/glassfish/installing-glassfish-301-on-ubuntu">well documented here</a>. Uploading to Glassfish was done via the web interface for the moment. I just selected a Ruby project from the deployment drop down and uploaded the war file.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

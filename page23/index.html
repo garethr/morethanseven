@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/data/rewiredstate/2009/07/13/its-data-we-want/">
+        It's the Data we Want
+      </a>
+    </h1>
+
+    <span class="post-date">13 Jul 2009</span>
+
+    <blockquote>
+<p>A spreadsheet. A <span class="caps">CSV</span> file. Whatever is in use internally. Made available to people like us under a suitable license.</p>
+</blockquote>
+<p>I feel a little self adsorbed quoting myself (from a recent <a href="http://refreshcambridge.org/">Refresh Cambridge</a> discussion) but I did like the turn of phrase. What I was rambling on about was Cambridge County mapping data, after a question from a nice chap from the council about what <em>&#8220;new, exciting map technology&#8221;</em> we&#8217;d like to see. But it applies to any data that you&#8217;re trying to make public what-so-ever, be it government or otherwise.</p>
+<p>What myself and a few other people were talking about, and one of the things that has been discussed as part of the <a href="http://rewiredstate.org/">Rewired State</a> group, is that it&#8217;s all about the data, not necessarily about a nice web based <span class="caps">API</span>.</p>
+<p>Now I&#8217;ve written and spoken about the need for well designed API&#8217;s being treated as part of the user interface. But remember interface design, and by association <span class="caps">API</span> design, isn&#8217;t easy. <span class="caps">API</span> design is often about building manageable flexibility. A public <span class="caps">API</span> is often about managing the flow of data you control out to third parties, as well as the information itself it might include limitations on usage, or request rate, or storage. A public <span class="caps">API</span> codifies how that information can be accessed. APIs also have to tread a fine line between making it easy for you to solve your problem, and making it easy for everyone else to solve their completely different problems. These compromises are design.</p>
+<p>But not everything needs an <span class="caps">API</span>. Sometimes it&#8217;s just about the data, and the best way of getting at that data is as raw as possible. Government data is an easy sell here, as it is (or rather should be) <em>our</em> data. It&#8217;s also for the most part interesting to read rather than write (historical council tax data, or population data for instance). Raw data can generally be provided quicker than via an <span class="caps">API</span>. It doesn&#8217;t need fragile computer systems or extensive manual labour. It doesn&#8217;t need particularly clever computing resources. Just upload a spreadsheet or a <span class="caps">CSV</span> file to a sensible <span class="caps">URL</span> on a known, regular basis and away we go.</p>
+<p>And giving data like this away to the development community is likely to have a few additional benefits if that data is useful (it probably is to someone). We&#8217;ll happily write software libraries, or create APIs over the top of it for you. We&#8217;ll also write all sorts of useful tools using the data in ways no one else thought of. So if you&#8217;re sat on a load of data that&#8217;s not core to your business, or is meant to be public anyway, then lets start talking publicly about how to just get this out on the web quickly and cheaply, rather than spending lots of your time and money on something fancy.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rant/xhtml/xhtml2/w3c/html5/2009/07/08/thoughts-whole-xhtml-and-html5-affair/">
+        Thoughts on the whole XHTML/HTML5 affair
+      </a>
+    </h1>
+
+    <span class="post-date">08 Jul 2009</span>
+
+    <p>I wasn&#8217;t going to write anything about <a href="http://www.w3.org/News/2009#item119">the whole XHTML2 thing</a>. I noted its passing, got <a href="https://twitter.com/jamierumbelow/status/2442111140">a nice message on Twitter</a> and thought that would be it. But no. The web standards world exploded. I honestly didn&#8217;t see that coming.</p>
+<p>Let&#8217;s get a few things straight:</p>
+<ul>
+	<li>I use <span class="caps">XHTML</span> 1.0 for this site. In fact I&#8217;ve been using it for the majority of things for most of my professional life.</li>
+	<li>I don&#8217;t serve content with an <span class="caps">XML</span> mime type. Neither does <em>anyone</em> else. It&#8217;s a complete non issue. Ignore it.</li>
+	<li>At my last job we used <span class="caps">HTML</span> 4. It meant I had to remember not to close my image elements, which bugged me, but not too much. I still quoted everything. Closed everything I could. And only used lowercase element names.</li>
+	<li>My latest two pet projects are using HTML5. I&#8217;m still closing everything (including image elements, yay), quoting everything and lowercasing everything.</li>
+</ul>
+<p>Web Standards are interesting, in that they are standards for both implementors (browser makers) and for authors (us). I like coding standards in programming languages too, it&#8217;s one of the things I love about Python and <a href="http://www.python.org/dev/peps/pep-0008/">PEP8</a>. But with these standards it&#8217;s not about making your code <em>work</em>, it&#8217;s about shared conventions and readability. So common spacing, <span class="caps">UPPERCASE</span> for constants and Leading caps for class names for instance. It&#8217;s also about having a tool to check everyone is adhering to standards, like <a href="http://svn.browsershots.org/trunk/devtools/pep8/pep8.py">pep8.py</a> or <span class="caps">FXCOP</span> for .<span class="caps">NET</span>. If everyone writes code in the same way it&#8217;s easier to read, write and to pick up someone else&#8217; code. You can do that with <span class="caps">HTML</span>, but you <em>have</em> to do that with <span class="caps">XHML</span>.</p>
+<p>Now the whole <span class="caps">HTML</span> 4.0 vs <span class="caps">XHTML</span> 1.0 thing has come up lots of times, on mailing lists, at conferences as well as down the pub. I know on occasion me, <a href="http://allinthehead.com">Drew</a>, <a href="http://rachelandrew.co.uk">Rachel</a> and <a href="http://adactio.com">Jeremy</a> side against <a href="http://simonwillison.net">Simon</a> and <a href="http://natbat.net">Nat</a> on the issue. But what&#8217;s interesting is that I think we all agree on all the typographical conventions stuff. My <a href="http://intranation.com">former</a> <a href="http://thecssdiv.com">colleagues</a> with a passion for front end standards and <span class="caps">HTML</span> 4 did the same thing. I even remember Simon looking for ways to validate against <span class="caps">HTML</span> 4 but also to check for all lower case elements, closed paragraphs and the like.</p>
+<p>Which brings me to the reason why I use <span class="caps">XHTML</span>: The validator enforces my preferred coding standards for <span class="caps">HTML</span> &#8211; lowercase elements, quoted attributes and closed elements. That&#8217;s it. Not much really. I <em>know</em> it&#8217;s <a href="http://hsivonen.iki.fi/xhtml2-html5-q-and-a/">marketing <span class="caps">XHTML</span> rather than technical <span class="caps">XHTML</span></a>. I don&#8217;t care. Or rather I do care, I just make a conscious pragmatic decision based on a small personal advantage. I&#8217;m both pedantic and like having a tool chain which enforces that, <span class="caps">XHTML</span> suits my style.</p>
+<p>The markup language debate is being talked about in terms of pragmatists vs purists. But ignoring the people who both really understood and really wanted XHTML2, it&#8217;s mainly the pragmatists arguing amongst themselves now. Some of them are big company people, others working for themselves. Some have standards or academic leanings, others are rooted in commercial web design. Some people probably work on huge long term projects, others relatively small sites and apps. And I think it&#8217;s these cultural differences that are the root of arguments now. So blog posts coming out saying the same thing but arguing with other people give a strange impression of disagreement. Throw in that the web lends itself to popular blogs gathering a crowd of like-minded people around them and hey presto we have people feeling unfairly put upon and getting agitated.</p>
+<p>What a storm in a teacup. Who doesn&#8217;t genuinely think the best approach is to use whatever you&#8217;re using now for most projects, investigate HTML5 as time permits, and then expect to start using HTML5 in bits and pieces in the short to medium term, when being mainly dependent on your target audience?</p>
+<p>In my opinion the only genuine problem that this saga has highlighted is the fear, uncertainty and doubt around all flavours of <span class="caps">HTML</span> amongst a large number of web professionals. People don&#8217;t get this stuff at all. With the added resources soon to be put into the HTML5 working group at the W3C this <em>outreach and education</em> side of the project has to have just as much love and attention as the spec itself.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/python/quality/pypants/djangodash/2009/07/01/pants-python-code/">
+        Pants Python Code
+      </a>
+    </h1>
+
+    <span class="post-date">01 Jul 2009</span>
+
+    <p>One of the projects that came out of the <a href="http://alt.djangodash.com/">Django Dash</a> recently was <a href="http://pypants.org">PyPants</a> which I&#8217;m finding very cool.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiRTgw" alt="Urltest on PyPants"/></p>
+<p>It&#8217;s basically a quality tracking service for Python modules. For instance my recent <a href="http://pypants.org/projects/urltest/0.2.3/evaluations/3142/">UrlTest module has a page on PyPants</a>, scoring a good B grade after some cleanup work earlier today.</p>
+<p>Under the hood I think it&#8217;s probably <a href="http://pycheesecake.org/">CheeseCake</a> which is available as a command line application, maybe with a hint of <a href="http://pypi.python.org/pypi/pylint">PyLint</a> and <a href="http://svn.browsershots.org/trunk/devtools/pep8/pep8.py">pep8.py</a> thrown in. But the nice interface, as well as tracking of scores over time, really add something. GitHub has been credited by some as making sharing code more fun, I&#8217;m hoping projects like PyPants can do the same for quality in Python code.</p>
+<p>Congrats to <a href="http://ericholscher.com/">Eric Holscher</a>, <a href="http://traviscline.com/">Travis Cline</a>, and <a href="http://playgroundblues.com/">Nathan Borror</a> on a fantastic addition to the Python community.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/urltest/wsgi/pypi/2009/06/24/urltest-pypi/">
+        Urltest on PyPi
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jun 2009</span>
+
+    <p>I&#8217;ve been meaning to add some of my code to the <a href="http://pypi.python.org">Python Package Index</a> for a while and  have finally gotten around to it with <a href="http://github.com/garethr/urltest/tree/master">Urltest</a>, my simple <span class="caps">DSL</span> for testing <span class="caps">WSGI</span> apps.</p>
+<p>You can now find it at <a href="http://pypi.python.org/pypi/urltest">pypi.python.org/pypi/urltest</a> and install it using setuptools with:</p>
+<pre>easy_install urltest</pre>
+<p>At the moment I&#8217;ve not added any categorisation or detailed description to the setup.py file, I&#8217;ll be doing that soon. I wanted to get it working with the absolute minimum setup.py file, which turned out to look like:</p>
+<pre>#!/usr/bin/env python
+from setuptools import setup, find_packages
+setup(
+    name = "urltest",
+    version = "0.1",
+    author = "Gareth Rushgrove",
+    author_email = "gareth@morethanseven.net",    
+    url = "http://github.com/garethr/urltest",
+    packages = find_packages('src'),
+    package_dir = {'':'src'},
+)</pre>
+<p>Uploading it to <span class="caps">PYPI</span> itself was incredibly simple, partly as I was already using setup tools for local installation.</p>
+<pre>python setup.py register
+python setup.py bdist_egg upload</pre>
+<p>Let me know if anyone uses this and gets it working. I&#8217;ll be adding more details and maybe even some more features when I get the chance. Once I do that I&#8217;ll probably work on a few more packages as well.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/ant/2009/06/23/ant-web-developers-ii-restart-apache/">
+        Ant for Web Developers II - Restart Apache
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jun 2009</span>
+
+    <p>Following on from <a href="http://morethanseven.net/2009/06/22/ant-web-developers-i-backup-config-file/">yesterdays first useful ant task</a>, here&#8217;s another commonly used task &#8211; restarting a remote service. I&#8217;ve used apache in this example, but it could be any service running on your remote machine and it doesn&#8217;t have to be the restart command.</p>
+<p>In order to do this we&#8217;ll use the <a href="http://ant.apache.org/manual/OptionalTasks/sshexec.html">sshexec target</a> which has a third party <a href="http://ant.apache.org/manual/install.html#librarydependencies">library dependency</a>. This is the same third party library needed for the scp task in yesterdays post</p>
+<p>You need first to download <a href="http://www.jcraft.com/jsch/index.html"><span class="caps">JSCH</span></a> and then compile the source using ant. Just run <em>ant dist</em> in the downloaded folder and you should get a .jar file in the /dist/lib folder. Save this .jar file as as jsch.jar to a folder in your home directory <em>~/.ant/lib</em> where ant can automatically load it. Alternatively you can run ant with the -lib command to load libraries from a different location.</p>
+<pre>ant -lib /tools/ant-libraries</pre>
+<p>With that out of the way lets have a look at the task.</p>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project name="example" basedir="."&gt;
+&lt;property name="host" value="{host}"/&gt;
+&lt;property name="username" value="{user}"/&gt;
+&lt;property name="password" value="{password}"/&gt;
+&lt;target name="restart-apache" description="execute a remote command to restart apache"&gt;
+        &lt;sshexec host="${host}"
+            username="${username}"
+            password="${password}"
+            command="/etc/init.d/apache2 restart"/&gt;
+&lt;/target&gt;
+&lt;/project&gt;</pre>
+<p>And running it is as simple as:</p>
+<pre>ant restart-apache</pre>
+<p>One potential issue with tasks like this is storing the password in the build file in plain text. The target we&#8217;re using can also use key authentication is you&#8217;re happy using ssh keys. Alternatively you can set properties on the command line each time you run ant like so.</p>
+<pre>ant restart-apache -Dpassword={password}
+</pre>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page24">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page22">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      How to deploy PHP sites with the Pake build tool &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">How to deploy PHP sites with the Pake build tool</h1>
+  <span class="post-date">07 Jan 2008</span>
+  <p>So in case you hadn&#8217;t guessed project automation is the new black. I&#8217;ve been getting back into some development work recently with <a href="http://isitbirthday.com">Is it Birthday?</a> and <a href="http://getjobsin.com">getjobsin</a> and trying to automate as much of the repetitive and boring work as possible.</p>
+<p>I&#8217;m not absolutely sure that that many people outside large or particularly organised teams realise that large web sites are not generally <em>deployed</em> by someone with an <span class="caps">FTP</span> client and crossed fingers. This sort of effort, along with other repetitive tasks like running tests or generating documentation, can be automated. This is a win-win for everyone. It&#8217;s more reliable (scripts don&#8217;t forget to restart a service before they go home), quicker and removes the need for having one person in charge of deployments.</p>
+<p>Even where people know about this build process idea they might not use it for their projects, probably for similar reasons why not everyone uses source control. I think the reason is probably that most web designers and developers (even particularly geeky ones) thing this software engineering stuff is maybe a step too far. Their is also something of a barrier to entry, knowing where to look and how to get started without reading lots of documentation (often filled with <span class="caps">XML</span> examples) and trial and error. Also project automation is apparently not sexy?</p>
+<p>Anyway, if you&#8217;ve been working with Rails you will have come across <a href="http://rake.rubyforge.org/">Rake</a>, which is a build tool used to automate various tasks. Well the nice <a href="http://www.symfony-project.org/">symfony</a> people have written a <span class="caps">PHP</span> version called <a href="http://www.pake-project.com/">Pake</a> for use as part of the framework. It&#8217;s used for all the command line action, from running tests to clearing the cache and <a href="http://www.symfony-project.org/book/1_0/16-Application-Management-Tools#Using%20rsync%20for%20Incremental%20File%20Transfer">automating deployments</a>. Pake is however a separate tool that you can use in your own projects, whatever framework or hand rolled codebase you are using.</p>
+<p>Pake can be downloaded using <a href="http://pear.php.net"><span class="caps">PEAR</span></a> on the command line:</p>
+<pre><code>pear upgrade PEAR
+pear channel-discover pear.symfony-project.com
+pear install symfony/pake</code></pre>
+<p>The documentation for Pake is pretty much non-existent as far as I can tell, but it is a really handy tool so worth a little effort. The best source of knowledge is to look through the default Pake tasks that are provided as part of symfony. One of my favourites, which we&#8217;ll look at now, allows for incremental deployments via Rsync over <span class="caps">SSH</span>. I&#8217;ve been using this with non-symfony projects too.</p>
+<p>Rsync is a command line tool for syncronising two file structures. The Rsync command that does most of the heavy lifting for the deployment looks like the following. Note I&#8217;ve used {} to denote placeholders in the following examples.</p>
+<pre><code>rsync --progress --azC --force \
+--delete -e ssh ./ {user}@{host}:{dir}</code></pre>
+<p>The sync task I&#8217;m using is straight from symfony, but the licence allows for distribution so here is an <a href="http://morethanseven.net/_assets/downloads/pake/pake.zip">example zip of all the files needed to follow along</a>. You&#8217;ll need these to follow along as I haven&#8217;t printed the full sourcecode for the pakefile here.</p>
+<p>First a little configuration. Using <a href="http://www.yaml.org/"><span class="caps">YAML</span></a> we define an environment, <em>staging</em> in this case_ and specify a host, port, user and the full path on the remote server. You can of course specify multiple environments in this file, we&#8217;ll see how to use them shortly.</p>
+<pre><code>[staging]
+  host={host}
+  port=22
+  user={user}
+  dir={dir}</code></pre>
+<p>You can also include an <em>rsync_exclude.txt</em> or an <em>rsync_include.txt</em> file. This gives you control over the files being synced when you run the Pake task. The following example is a good starting point, it stops you pushing those pesky .DS_Store files that <span class="caps">OSX</span> creates to you web server, as well as avoiding subversion metadata and the configuration files for the Pake task.</p>
+<pre><code>.svn
+.DS_Store
+/config/properties.ini
+/config/rsync_exclude.txt
+/config/rsync_include.txt
+/config/rsync.txt</code></pre>
+<p>We can now run the following command, from the directory containing the pakefile.php script, using Pake. The first example will do a dry run, showing you what will happen. You&#8217;ll be prompted for your <span class="caps">SSH</span> password as part of the command unless you&#8217;re using keys for authentication.</p>
+<pre><code>pake sync staging</code></pre>
+<p>When you&#8217;re happy you can run the sync command with the go option which will instruct Rsync to do it&#8217;s thing.</p>
+<pre><code>pake sync staging go</code></pre>
+<p>Pake has a handy flag to find out what tasks are available.</p>
+<pre><code>pake -T</code></pre>
+<p>This should give you a list of tasks and a brief description, useful to find out what you can do if you&#8217;ve been away from a project for a while.</p>
+<p>This is a pretty simple example but one I&#8217;m already finding useful. Rsync is but one way of deploying apps but with Pake has the advantage of being simple and in lots of situations good enough. It&#8217;s certainly better than a manual deployment process. It would be simple enough to build into the task a simple logging system so you have a log of all deployments; when they happened and who did them for instance.</p>
+<p>If that has whet your appetite then their are other deployment tools you might want to look into; <a href="http://www.capify.org/">Capistrano</a> (Ruby), <a href="http://ant.apache.org/">Ant</a> (Java), <a href="http://maven.apache.org/">Maven</a> (Java) and <a href="http://phing.info">Phing</a> (<span class="caps">PHP</span>) spring to mind. If anyone knows of a Python equivalent that would be useful too? I&#8217;m also using Phing for a few tasks on projects at the moment, mainly for some nifty Subversion tasks (and you can use Phing with Pake as symfony does), but that will have to wait until another post.</p>
+<p>So, what are peoples experiences of build tools? Any good pointers? Or maybe reasons why you don&#8217;t use them in your projects?</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Who loses out to X-UA-Compatible? &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Who loses out to X-UA-Compatible?</h1>
+  <span class="post-date">22 Jan 2008</span>
+  <p>If you work on the web you&#8217;ll probably have already seen or noted the existence of the <a href="http://alistapart.com/issues/251">latest issue of A List Apart</a>:</p>
+<ul>
+	<li><a href="http://alistapart.com/articles/beyonddoctype">Beyond <span class="caps">DOCTYPE</span>: Web Standards, Forward Compatibility, and IE8</a></li>
+	<li><a href="http://alistapart.com/articles/fromswitchestotargets">From Switches to Targets: A Standardista&#8217;s Journey</a></li>
+</ul>
+<p>My twitter feed positively exploded with negative feedback on this issue but I&#8217;ve only just got round to reading (and re-reading) the various interesting articles and (some half through through) comments. I though I&#8217;d have a think through who this affects.</p>
+<p>What we&#8217;re disucssing is either adding a meta element to your documents or alternatively sending the relevant <span class="caps">HTTP</span> header. The code for that looks like:</p>
+<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;</code></pre>
+<h3>IE Users</h3>
+<p>Users of Internet Explorer get a bum deal here I think. Their browser is going to get bigger &#8211; potentially a lot bigger. With all those rendering engines rolled into one it&#8217;s also likely to need lots of memory. How this affects the mobile version of IE is anyones guess. Memory and file size are even more important here.</p>
+<h3>Other Browser Vendors</h3>
+<p>I have a feeling they will all go <em>Meh</em> and move along as if nothing happened. Certainly my experience of upgrades to Firefox, Safari and Opera (including recent bleeding edge versions) doesn&#8217;t break any of my bits of the web or the bits I frequent.</p>
+<h3>Web Standards Savvy Designers and Developers</h3>
+<p>A really cool feature for us designers and developers has gone unmentioned I feel. We&#8217;ve been asking Microsoft for one application in which we can test all their browsers in. IE8 will be that browser. Think about it. By changing the contents of the meta element (or the header) we can trigger the rendering engine to use IE6, IE7 or IE8.</p>
+<p>I&#8217;m a big fan of the whole progressive enhancement approach, using new browser features that not everyone supports (generated content, CSS3 selectors, etc.) in a way that they don&#8217;t affect older browsers. If I were to use a feature not yet supported by IE7 but expected in IE8 for instance in this way I would expect it work in IE8. If I include an IE7 <em>X-UA-Compatible</em> declaration this won&#8217;t happen. Which is why I probably won&#8217;t include one. The problem is if I don&#8217;t include it at all I still have the same problem. I&#8217;ll come back to the solution (and the problem with the solution) in a moment.</p>
+<h3>Other Web Designers and Developers</h3>
+<p>Not everyone is using Web Standards, and even less get progressive enhancement. Most of the web is broken and we <em>are not going to fix this</em>. Virtually no one thinks XHTML2 is a good idea because it starts with this fact and says <em>&#8220;Let&#8217;s start again, but get it right this time&#8221;</em>. The fact that all those websites (and more importantly for Microsoft the users of those websites) standardise on IE7 is fine by me. IE7 isn&#8217;t that bad remember.</p>
+<p>So, all in all I don&#8217;t see a major problem for me, or other savvy web designers and developers. I have one issue; namely the strong language around the use of <em>edge</em>.</p>
+<blockquote>
+<p>This option, though strongly discouraged, will cause a site to target the latest IE browser versions as they release.</p>
+</blockquote>
+<p>What this is describing is how things work now. It&#8217;s also how I want to work &#8211; using progressive enhancement to make my websites better when people have browsers that support them. I&#8217;ll be adding the relevant <em>edge</em> headers to my sites by default as I get a moment to tinker.</p>
+<p>In my view this should allow the web to move forward faster with newer features hitting IE sooner, leaving a ghetto populated by IE users who don&#8217;t upgrade quickly and designers and developers who don&#8217;t want to be professional about their craft (or tools that aim for the lowest common denominator). Yes, I&#8217;ll need to add a header to all of my sites in the future but in return I get the latest version of IE that lets me test all previous versions of IE.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

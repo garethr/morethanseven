@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/appengine/gae/python/pyunit/google/2008/10/11/google-app-engine-pyunit-test-runner/">
+        Google App Engine PyUnit Test Runner
+      </a>
+    </h1>
+
+    <span class="post-date">11 Oct 2008</span>
+
+    <p>I&#8217;m starting to play around with using <a href="http://code.google.com/appengine/">App Engine</a> again for small projects. It&#8217;s great for simple, somewhat throwaway apps as long as you don&#8217;t need anything too fancy. Actually all I want really is long running processes but I digress.</p>
+<p>I&#8217;m increasingly writing test suites as well for even small projects and was missing the convenience of the Django test runner for running them against App Engine code. So I&#8217;ve spent a little time writing a simple test running script to use for non-Django Python projects. I&#8217;ve posted it over on the <a href="http://appengine-cookbook.appspot.com/recipe/app-engine-test-runner/">App Engine Cookbook</a> for anyone else who might want to do the same.</p>
+<p>I ended up writing something myself as I couldn&#8217;t find anything else which quite met my needs, so it&#8217;s the typical programmers itch code and as such is provided as <em>works for me</em> software. The other approaches out their didn&#8217;t quite meet my needs but might be useful to know about if you want to start testing your apps.</p>
+<ul>
+	<li><a href="http://code.google.com/p/nose-gae/">Nose <span class="caps">GAE</span></a> uses the nose testing framework which I&#8217;m less familiar with.</li>
+	<li><a href="http://code.google.com/p/gaeunit/"><span class="caps">GAE</span> Unit</a> uses PyUnit but presents it&#8217;s results in a browser rather than on the command line.</li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/sphinx/morbid/xmpp/jabber/barcampbrighton3/erlang/restructuredtext/2008/10/05/jabber-erlang-debugging-things-im-playing-with-at-/">
+        Jabber, Erlang, Debugging. Things I'm playing with at the moment
+      </a>
+    </h1>
+
+    <span class="post-date">05 Oct 2008</span>
+
+    <p>I&#8217;m busy experimenting with various blogging approaches at the moment, hence the short links I&#8217;ve been posting recently. Another type of post I thought I&#8217;d give a try to was the list of interesting things. I find this sort of thing strangely cathartic &#8211; if nothing else by writing down the things I&#8217;m thinking about I won&#8217;t forget to spend time playing with them.</p>
+<ul>
+	<li>I still need to play around some more with Jabber/<span class="caps">XMPP</span>. I tried a little time ago to install a server locally on my Mac with only some success. I&#8217;ve now got a load of linux virtual images handy which might make that easier. What I would really like to see is a dirt simple <span class="caps">XMPP</span> server that you can use for local development. Something like <a href="http://pypi.python.org/pypi/morbid/0.8.2">Morbid</a>. I&#8217;m just not sure I have the time to build one.</li>
+	<li>Which brings me on to virtualisation. I&#8217;m more convinced than ever that sand boxing different local environments is a good idea. I now have a stack of VMWare images set up for configuring.</li>
+	<li>It turns out <a href="http://blog.socklabs.com/cufp2008.html">Yahoo used Erlang</a> under the hood for some part of the new <a href="http://del.icio.us">Delicious</a> I&#8217;m still pretty interested in actually doing something with Erlang, though what I&#8217;m not yet sure. I&#8217;ve been kicking round an idea for ages involving logging which might fit the bill.</li>
+	<li>I talked at barcampbrighton recently about debugging tools for django (and more broadly any development environment) that you need once you have a reasonable sized team. I&#8217;ve been busy packaging some of the tools I mentioned. I&#8217;ll either turn it into an article somewhere, multiple blog posts and/or hopefully get some code released on google code some time soon.</li>
+	<li>The <a href="http://sphinx.pocoo.org/">Sphinx</a> documentation system used by Django for the <a href="http://docs.djangoproject.com/en/dev/">1.0 documentation</a> is pretty nifty. I&#8217;m investigating it for use at work at the moment.</li>
+	<li>I&#8217;ve been a huge fan of Textile since I used Textpattern years ago for an earlier incarnation of this site. But recently I&#8217;ve had a few niggling issues around extensibility and slight differences in implementation. So I&#8217;m pondering using <a href="http://docutils.sourceforge.net/rst.html">ReStructuredText</a> for my writing duties. It appears to be more powerful, more flexible and inherently extensible.</li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/09/30/google-testing/">
+        Google on Testing 
+      </a>
+    </h1>
+
+    <span class="post-date">30 Sep 2008</span>
+
+    <p><a href="http://code.google.com/p/update-engine/wiki/TestingAndCoverage">Interesting testing And coverage reporting</a> write up by the Google Engineers behind <a href="http://code.google.com/p/update-engine">Update Engine</a>. This is the sort of thing we keep discussing in the office.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/vmware/2008/09/27/headless-vmware-fusion/">
+        Headless VMWare Fusion
+      </a>
+    </h1>
+
+    <span class="post-date">27 Sep 2008</span>
+
+    <p>The latest version of <a href="http://www.vmware.com/products/fusion/">VMWare Fusion</a> lets you run virtual machines in headless mode. Which is pretty handy if you&#8217;re using a Linux VM to mirror your live environment. The strange thing is that it&#8217;s not enabled by default. To enable it you need to run the following on your console: <code>defaults write com.vmware.fusion fluxCapacitor -bool YES</code></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/django/2008/09/20/django-admin-options/">
+        Django Admin Options 
+      </a>
+    </h1>
+
+    <span class="post-date">20 Sep 2008</span>
+
+    <p>Working on a decent sized Django project at work means I&#8217;ve found myself delving into Django&#8217;s admin interface more than a few times. Although it&#8217;s always possible to just use a custom template and do everything yourself it&#8217;s nearly always easier and often quicker to use the generated admin views. One of the problems with that is, even with therecent 1.0 release, some of the options are not that well documented outside the source code or in posts buried on mailing lists.</p>
+<p>I&#8217;ll assume a little bit of familiarity with the new-forms-admin way of doing things which is now the default in Django 1.0. If you&#8217;re just getting started with building Django sites then you might want to first have a look at a tutorial or two. It&#8217;s quite different to the examples found in the original Django book or older online tutorials but it&#8217;s also much more powerful and flexible with a better separation of concerns.</p>
+<p>We&#8217;ll start off with a very simple model in models.py which defines a simple Article class with a couple of fields.</p>
+<pre>from django.db import models
+class Article(models.Model):    
+    	title = models.CharField(max_length=200)
+	content = models.TextField()
+	publish_date = models.DateTimeField(default=datetime.today)</pre>
+<p>Django 1.0 introduced the concept of admin autodiscovery. By playing your admin declarations in admin.py in an application (most likely next to models.py and views.py) you can tell django to find these automatically. To enable auto loading of admin modules you can add the following to your urls.py.</p>
+<p>.pre from django.contrib import admin<br />
+admin.autodiscover()</p>
+<p>This will load the module admin.py for each of the apps in the installed apps list. Now Lets add an admin class in your admin.py to go with the above models.py. We&#8217;ll call it ArticleAdmin:</p>
+<pre>from django.contrib import admin
+from models import Article
+class ArticleAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Article, ArticleAdmin)</pre>
+<p>The important line is the last one, in which we register the admin for the Article class. This will display the relevant admin views in the Django admin for that model &#8211; allowing us to add new articles, list existing ones and delete old ones. But by default the admin is quite sparse.</p>
+<p>Once we have a few articles in the system we&#8217;ll find it hard to find them again. Lets add a few more lines to our admin.py file:</p>
+<pre>class ArticleAdmin(admin.ModelAdmin):
+	list_display=('title', 'publish_date')
+	ordering = ['-publish_date']
+	list_per_page = 25
+	search_fields = ['title','content']
+	date_hierarchy = 'publish_date'</pre>
+<p>Lets step though each of these statements and see what we&#8217;ve done:</p>
+<ul>
+	<li>setting <em>list_display</em> for the title and publish_date means these two fields will appear in the changelist. This is the view you get when you hit Articles in the admin and allows you to find the article you are looking for.</li>
+	<li><em>ordering</em> is self explanatory, in that we choose to order the items in the changelist by the publish_date rather than the auto generated numeric id.</li>
+	<li><em>list_per_page</em> is another straightforward option, setting the maximum number of articles to show in the changelist before the list starts paging over multiple pages.</li>
+	<li><em>search_fields</em> adds a simple search to the changelist, the fields specified set which fields to search; title and content in this case.</li>
+	<li><em>date_hierarchy</em> is great when you have a date associated with an object. This outputs a separate filter list which displays the years by which to filter. The option you pass to this setting is the field name which stores the date.</li>
+</ul>
+<p>The simple example above hopefully demonstrates the ease of which the admin can be configured. Knowing about these capabilities already built into Django can save you quite a bit of time when it comes to producing production ready admin interfaces. Except for more complex systems this should suffice. Below is a table of the Django admin options I&#8217;ve been using. If anyone has any more let me know and I&#8217;ll add them here, along with a brief description.</p>
+<table>
+	<tr>
+		<td>Option</td>
+		<td>Description</td>
+	</tr>
+	<tr>
+		<td>model</td>
+		<td> Set the model for which this is the admin </td>
+	</tr>
+	<tr>
+		<td>form</td>
+		<td> Set the form class if one has been created </td>
+	</tr>
+	<tr>
+		<td>list_display</td>
+		<td> Set which fields should appear in the changelist view </td>
+	</tr>
+	<tr>
+		<td>list_filter</td>
+		<td> Se which fields should be used to provide a filter in the changelist view </td>
+	</tr>
+	<tr>
+		<td>raw_id_field</td>
+		<td> Useful when you have a Foreign Key on another model with lots of records. This changes the default interface from the a select box to a custom widget</td>
+	</tr>
+	<tr>
+		<td>ordering</td>
+		<td> Specify the order of the objects in the changelist </td>
+	</tr>
+	<tr>
+		<td>fieldset</td>
+		<td> Fieldsets allow for control over the changeform view, setting which fields to display and whether to separate them out into individual fieldsets. Worth investigating </td>
+	</tr>
+	<tr>
+		<td>save_on_top</td>
+		<td> If you have a long form it&#8217;s useful to be able to display the save buttons at the top as well as the bottom </td>
+	</tr>
+	<tr>
+		<td>date_hierachy</td>
+		<td> Add date based filtering to the chaneglist view </td>
+	</tr>
+	<tr>
+		<td>radio_fields</td>
+		<td> Another alternative widget for Foreign key fields, this time using radio buttons. Useful for fixed small lists of objects </td>
+	</tr>
+	<tr>
+		<td>list_per_page</td>
+		<td> How may objects to list per page on the changelist view </td>
+	</tr>
+	<tr>
+		<td>search_fields</td>
+		<td> Enable search for the model and specify which fields to search </td>
+	</tr>
+	<tr>
+		<td>prepopulated_fields</td>
+		<td> Some fields might be prepopulated based on the user entering text into another field. This is often used to prepopulate slugs based on the title of an object </td>
+	</tr>
+	<tr>
+		<td>filter_horizontal</td>
+		<td> The default widget for many to many fields is the rather shoddy multiple select box. Filter horizontal enhances this with some super javascript, making it much more usable. Never use many to many fields without this or filter_vertical </td>
+	</tr>
+	<tr>
+		<td>filter_vertical</td>
+		<td> Does exactly the same as filter_horizontal, except the filter lists appear one above the other rather than side to side. Useful for thinner admin views</td>
+	</tr>
+</table>
+<p>As you can see you can customise the default admin views a great deal even without creating your own templates and defining custom admin views. The best part is still that as well as being useful for demonstrations and prototypes these interfaces are useful on a live production site. Quite an achievement I think.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page38">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page36">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

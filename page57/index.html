@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/07/fluidflash/">
+        Fluidflash
+      </a>
+    </h1>
+
+    <span class="post-date">07 Jan 2007</span>
+
+    <p>Their is nothing wrong with a nice header graphic. Clients, designers and customers alike love them. But I often see them used as an excuse for fixed width designs. Well no more I say (unless, of course you have a perfectly good reason for a fixed width design in which case you dont really need this technique.)</p>
+<p>The plan was simple. Find a way of incorporating flash headers into sites using liquid or elastic designs in much the same way you might use lots of sliding doors background-image goodness.</p>
+<p>And all it takes is a snippet of actionscript goodness:</p>
+
+
+<pre><code>Stage.scaleMode = "noScale" 
+Stage.align = "TL" 
+var width
+var height
+function resizeEvent ( ) {
+    width = Stage.width
+    height = Stage.height
+    dimensions.text    = 
+       'width : ' + width+ '
+        height : ' + height
+    topRight._x = width
+    bottomLeft._y = height
+    bottomRight._y = height
+    bottomRight._x = width
+}
+resizeEvent ( )
+var stageListener = new Object ( );
+stageListener.onResize = resizeEvent
+Stage.addListener ( stageListener );</code></pre>
+<p><a href="/_assets/downloads/fluidflash/fluidflash.zip">Download example</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/03/webphp/">
+        Web.php
+      </a>
+    </h1>
+
+    <span class="post-date">03 Jan 2007</span>
+
+    <p><a href="http://webpy.org">Web.py</a> is a really nice lightweight web framework written in Python. It&#8217;s not trying to be Rails or Django, it&#8217;s trying to be as simple as possible. Web.php is my homage to Web.py. I&#8217;ve unashamedly copied the ideas and build a very simple web framework in <span class="caps">PHP</span>. It&#8217;s not a complete port, nor does it do everything in the same way.</p>
+<p>The code example from the project home page was what originally piqued my interest:</p>
+
+<pre><code>import web
+urls = (
+   '/(.*)', 'hello'
+)
+class hello:        
+   def GET(self, name):
+       i = web.input(times=1)
+       if not name: name = 'world'
+       for c in xrange(int(i.times)): print 'Hello,', name+'!'
+if __name__ == "__main__": web.run(urls, globals())</code></pre>
+<p>My <span class="caps">PHP</span> versions goes something like this, I&#8217;m sure you can see the similarities:</p>
+
+<pre><code>&amp;lt;?php
+require('webphp/web.php');
+$urls = array(
+   '/' =&amp;gt; 'hello',
+);
+class hello {
+   function GET($path) {
+      echo 'hello world';
+   }
+}
+web::run($urls);
+?&amp;gt;</code></pre>
+<p>I&#8217;ve used it so far on a couple of projects, but it&#8217;s never been properly tested as such nor do I have lots of time to develop it. It&#8217;s purposely feature and code light (the core file is only 80 odd lines of code, includig comments).</p>
+<p><a href="/_assets/downloads/web-php/web-php.zip">Download Zip</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/03/txp2radiant/">
+        TXP2Radiant
+      </a>
+    </h1>
+
+    <span class="post-date">03 Jan 2007</span>
+
+    <p>Having just moved from a couple of year old <a href="http://textpattern.com">Textpattern</a> site to <a href="http://radiantcms.org">Radiant</a> I didn&#8217;t feel much like copy and pasting lots of articles. The script simply copies all your posts from textpattern into the relevant place in Radiant.</p>
+<p><a href="/_assets/downloads/txp2radiant/txp2radiant.phps">Download <span class="caps">PHP</span></a></p>
+<p>At the moment this is undocumented and pretty rough but it saved me time and works. I&#8217;ll try and work up and potentially rewrite in Ruby for possible inclusion in the Radiant core if time permits.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/03/pygunfog/">
+        PyGunFog
+      </a>
+    </h1>
+
+    <span class="post-date">03 Jan 2007</span>
+
+    <p>My first real foray into writing some simple Python scripts was a few scripts to establish the <a href="http://en.wikipedia.org/wiki/Gunning-Fog_Index">Gunning-Fog</a> index of some given text. I wont go into lots of details about the uses of such a script; if you&#8217;re interested read Gez Lemons <a href="http://juicystudio.com/services/readability.php">writeup</a> over on <a href="http://juicystudio.com">Juicy Studio</a>.</p>
+ <p>I took quite a bit of inspiration, and some code, from a similar script, <a href="http://freshmeat.net/projects/pyflesch/?branch_id=57281&#38;release_id=191977">PyFlesch</a>, for establising the Flesch reading score of text.</p>
+ <p>I expanded things a little, using the <a href="http://feedparser.org/">Feedparser</a> module to parse content from <span class="caps">RSS</span> and Atom feeds and give a Flesch or Gunning-Fog score of the summaries.</p>
+ <p><a href="/_assets/downloads/pygunfog/pygunfog.zip">Download all scripts</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/12/25/backgarden/">
+        Backgarden
+      </a>
+    </h1>
+
+    <span class="post-date">25 Dec 2006</span>
+
+    <p>I&#8217;m a fan of <a href="http://backpackit.com">Backpack</a> from <a href="http://37signals.com">37signals</a>. Although you <em>can</em> make pages public their is currently no way to style those differently, or to add content from outside Backpack. That&#8217;s where Backgarden comes in. It&#8217;s a simple <span class="caps">PHP</span> (4 and 5, the <span class="caps">XML</span>/<span class="caps">XSL</span> implementations are slighly different) application that builds a page via the Backpack <span class="caps">API</span> and some <span class="caps">XSL</span> magic that you can put on your site. You just enter the page address and your <span class="caps">API</span> key.</p>
+<p><a href="/_assets/downloads/backgarden/backgarden.zip">Download Zip</a></p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page58">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page56">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

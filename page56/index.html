@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/20/posting-to-twitter-using-php/">
+        Posting to Twitter using PHP
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jan 2007</span>
+
+    <p><em>Please note that Twitter no-longer support Basic Auth via the <span class="caps">API</span> so the following code no longer works. Please see the <a href="http://dev.twitter.com/pages/oauth_faq">official docs</a> for more info</em></p>
+<p>Like others I&#8217;ve found myself becoming something of a fan of <a href="http://twitter.com">Twitter</a>, the impossible to explain social networking site. If you&#8217;re reading this, have a twitter account and not already my <em>friend</em> then <a href="http://twitter.com/garethr">add me</a> if you like.</p>
+<p>Apart from the interesting social aspects I&#8217;m also interested in Twitter as an <span class="caps">API</span> for all sorts of communications, remember Twitter already deals nicely with <span class="caps">SMS</span> messaging, Instant Messaging, subscription and the like and has a <a href="http://twitter.com/help/api">nice <span class="caps">XML</span> and <span class="caps">JSON</span> based <span class="caps">API</span></a>. I&#8217;ve been using the <a href="http://www.zamano.com/">Zamano</a> <span class="caps">SMS</span> gateway at work for a few projects and Twitter actually lets me some more and doesn&#8217;t come with a price tag.</p>
+<p>I started out playing with <a href="http://curl.haxx.se/">curl</a> to send updates like so (obviously with a real username and password):</p>
+<p><code>curl -u username:password -d status="twittering from curl" http://twitter.com/statuses/update.xml</code></p>
+<p>I then used the <span class="caps">PHP</span> curl features to do the same thing from <span class="caps">PHP</span>:</p>
+<pre><code>&amp;lt;?php
+// Set username and password
+$username = 'username';
+$password = 'password';
+// The message you want to send
+$message = 'is twittering from php using curl';
+// The twitter API address
+$url = 'http://twitter.com/statuses/update.xml';
+// Alternative JSON version
+// $url = 'http://twitter.com/statuses/update.json';
+// Set up and execute the curl process
+$curl_handle = curl_init();
+curl_setopt($curl_handle, CURLOPT_URL, "$url");
+curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl_handle, CURLOPT_POST, 1);
+curl_setopt($curl_handle, CURLOPT_POSTFIELDS, "status=$message");
+curl_setopt($curl_handle, CURLOPT_USERPWD, "$username:$password");
+$buffer = curl_exec($curl_handle);
+curl_close($curl_handle);
+// check for success or failure
+if (empty($buffer)) {
+    echo 'message';
+} else {
+    echo 'success';
+}
+?&amp;gt;</code></pre>
+<p>Obviously you could do more with the return than print out a success or failure message. The $buffer variable has the returned <span class="caps">XML</span> or <span class="caps">JSON</span> for you&#8217;re parsing pleasure.</p>
+<p>I&#8217;m going to try out some of the other <span class="caps">API</span> methods too, probably play more with <span class="caps">XSL</span> or look more closely at the <a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198"><span class="caps">PEAR</span> <span class="caps">JSON</span> module</a> in building up a simple library as a quick search didn&#8217;t throw up much of interest and the <span class="caps">API</span> is nice and simple; making it fun to hack on.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/17/colorburnified/">
+        Colorburnified
+      </a>
+    </h1>
+
+    <span class="post-date">17 Jan 2007</span>
+
+    <p>If you visited the site previously since the Radiant move you might notice a new colour scheme. Come to mention it if you visit tomorrow, or the day after you should get a different colour scheme too.</p>
+ <p>I mentioned that I planned on a few experiments around these parts and this is the first one. I&#8217;m a big fan of <a href="http://www.firewheeldesign.com/widgets/">ColorBurn</a> from <a href="http://www.firewheeldesign.com/">Firewheel</a>. For those that haven&#8217;t seen it it&#8217;s a desktop widget that displays a new four colour colour scheme every day that looks a little something like:</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgColorBurn.jpg" alt="ColorBurn OS X Widget" /></p>
+ <p>I often use it for inspiration for colour sets, or just to appreciate interesting colour combinations. This just takes it a step further. A little reverse engineering and I have a script (<span class="caps">PHP</span> this time, running from a cron job) that writes out a new stylesheet once every day with the colours from ColorBurn (using the magic of <span class="caps">XSL</span> if you&#8217;re interested). I&#8217;ve used an alpha transparency on the image to the top left of the page which might result in strange effects in browsers that I dont care about too much. Sorry, but I did warn you.</p>
+ <p>I have a feeling that some days I&#8217;ll wake up and regret this experiment and others I&#8217;ll be pleasantly suprised. I&#8217;m not going to cheat either. ColorBurn provides me with four colours and the script will use them in the order they come in.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/16/opml-feeds-using-radiant/">
+        OPML Feeds using Radiant
+      </a>
+    </h1>
+
+    <span class="post-date">16 Jan 2007</span>
+
+    <p>As mentioned when I moved the site over to Radiant I promised a few tutorials and behind the scenes footage of goings on. So here goes with a quick look at how I added a nice <a href="http://morethanseven.net/friends.opml"><span class="caps">OPML</span> feed</a> to my site.</p>
+ <p>For those not familiar with <a href="http://www.opml.org/"><span class="caps">OPML</span></a> it&#8217;s an <span class="caps">XML</span> format for outlines, often used for storing blog rolls and the like.</p>
+ <p>What I wanted was a friends parent and the ability to add friends to it and for them to appear in a dynamic <span class="caps">OPML</span> feed. The following screenshot shows what I ended up with:</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgFriendsFeed.png" alt="Tree showing Friends feed in Radiant" /></p>
+ <p>To accomplish this within Radiant I needed a custom layout, one which would simply render the content but also had the relevant header and footer markup. Note the mime type setting as well.</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgOpmlLayout.png" alt="Layout for OPML in Radiant" /></p>
+ <p>Next up is the page which actually uses the <span class="caps">OPML</span> layout to render the page.</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgFriendsFeedCode.png" alt="friends feed from Radiant" /></p>
+ <p>Note that I set the status of all the friends records to hidden, and then set the status of the r:children:each loop to search for hidden children. This way the individual friends records dont show up as seperate pages.</p>
+ <p>All I need to do then is add children to the parent, friends-feed in my case. I added a few page parts to each friend page to make management a little easier; a <em>link</em>, a <em>feed</em> and for a little added spice <em>xfn</em>.</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgEditFriend.png" alt="Edit friend view from Radiant" /></p>
+ <p>All in all it makes adding and updating friends easy, and the general approach will work with pretty much any content where you want to compose a single page based on it&#8217;s children.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/10/some-ponderings-on-css3/">
+        Some ponderings on CSS3
+      </a>
+    </h1>
+
+    <span class="post-date">10 Jan 2007</span>
+
+    <p>I&#8217;m starting to get properly interested in CSS3 for a few reasons. I&#8217;ve subscribed to the <a href="http://www.w3.org/Mail/Lists.html#www-style">mailing list</a>, read up on some of the <a href="http://www.w3.org/Style/CSS/current-work">working group goings on</a> and done a bit of research ahead of really jumping in with some code play. Some of this could be of interest to others so here goes:</p>
+ <p>The best two resources I&#8217;ve found are the <span class="caps">CSS</span> Working group home page and the <a href="http://www.css3.info/">CSS3 Info</a></p>
+ <p>The <a href="http://www.w3.org/Style/CSS/current-work"><span class="caps">CSS</span> Working Group Under Construction</a> site over at the <a href="http://www.w3.org">W3C</a> has a huge ammount of information. For those that dont know <span class="caps">CSS</span> is being split into a number of distinct modules, namely:</p>
+<ul>
+ <li>Advanced layout</li>
+  <li>Aural Style Sheets</li>
+  <li>Backgrounds and Borders</li>
+  <li>Basic User Interfaces</li>
+  <li>Box Model </li>
+  <li>Cascading and Inheritance</li>
+  <li>Color</li>
+  <li>Fonts</li>
+  <li>Generated Content for Paged Media</li>
+  <li>Generated and Replaced Content</li>
+  <li>Hyperlink Presentation</li>
+  <li>Introduction</li>
+  <li>Line Layout</li>
+  <li>Lists</li>
+  <li>Maths</li>
+  <li>Multi Column Layout</li>
+  <li>Namespaces</li>
+  <li>Object Model</li>
+  <li>Paged Media</li>
+  <li>Positioning</li>
+  <li>Presentation Levels</li>
+  <li>Reader Media Types</li>
+  <li>Ruby</li>
+  <li>Scoping</li>
+  <li>Speech</li>
+  <li>Syntax</li>
+  <li>Tables</li>
+  <li>Text</li>
+  <li>Text Layout</li>
+  <li>Values and Units</li>
+  <li>Web Fonts</li>
+</ul>
+ <p>Phew. Their is also some work going on on profiles for TV, Printed media and Mobile. I&#8217;m interested in a few of these modules &#8211; particularly those dealing with Web Typography and the Basic User Interface module which deals with <em>the look of form elements in their various states and more cursors and colors to describe GUIs (graphical user interfaces) that blend well with the user&#8217;s desktop environment.</em></p>
+ <p><a href="http://css3.info">CSS3 Info</a> also has lots of information worth reading, including some good examples of parts of CSS3 that have been implemented ahead of recommendation in the <a href="http://www.css3.info/preview/">preview section</a>. My favourite bit however has to be the <a href="http://www.css3.info/selectors-test/test.html"><span class="caps">CSS</span> selector test</a> by <a href="http://rakaz.nl/">Niels Leenheer</a>. You can read a little more about that, and <a href="http://rakaz.nl/item/how_well_do_browsers_support_css_selectors">how different browsers do</a>, or at least how they did in October. The <a href="http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/index.html">W3C test suite</a> is available too, but no where near as slick.</p>
+ <p>I&#8217;ve even gone and installed a <a href="http://nightly.webkit.org/">WebKit nighly build</a> to try out some of the features only supported their at the moment. Who knows? I might even add new designs to the site using new selectors as a treat for those <em>silly</em> enough to be using such experimental browsers.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/01/07/new-year-new-site/">
+        New year New site
+      </a>
+    </h1>
+
+    <span class="post-date">07 Jan 2007</span>
+
+    <p>If you&#8217;re viewing this post in your feedreader then you might not notice anything different but it&#8217;s all change around these parts. I&#8217;ve gone all <a href="http://radiantcms.org">Radiant</a> and with it a new slightly minimal design.</p>
+ <p>Radiant, for those that missed my earlier gushing post is a Rails based Content Management System that looks something like this:</p>
+ <p><img src="/_assets/media/imgRadiantAdmin.png" alt="Morethanseven admin panel from Radiant" /></p>
+ <p>I&#8217;m going to post a few follow ups about how I did certain things using Radiant and my particular setup. All in all it&#8217;s been fun. Always a good sign when developing something. I ported all my old posts across from Textpattern and I&#8217;ve posted a project post (in my new <a href="http://morethanseven.net/projects-feed">project feed</a>) about <a href="http://morethanseven.net/projects/txp2radiant">TXP2Radiant</a> for anyone else looking to do the same.</p>
+ <p>Their will likely be a few gremlins lying around that I&#8217;ll get to over the coming weeks, and I have some decent posts in mind to keep people interested. Expect less about what I&#8217;m up to and more about the pressing issues of web design and development that I keep meaning to write about.</p>
+ <p>The design is a little on the minimal side at the moment but on purpose. I want to play around with different designs for the site while keeping everything clean and simple. I might even set a file size limit for the <span class="caps">CSS</span> and I definately want to start playing more with CSS3 selectors (more than 80% of you dont use IE6, for the other 20% <em>please</em> upgrade). I&#8217;m not going to say anything I&#8217;d regret, like one new design every other month, but I can dream.</p>
+ <p>As I get more familiar with Rails (one of the reasons for the move) and Radiant I&#8217;ll likely add some bits like a <a href="http://flickr.com">Flickr</a> powered gallery and maybe something to do with <a href="http://twitter.com">Twitter</a> but for the moment it&#8217;s all about the content.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page57">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page55">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

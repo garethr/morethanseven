@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/06/22/encoded-characters-in-css3-generated-content/">
+        Encoded Characters in CSS3 Generated Content
+      </a>
+    </h1>
+
+    <span class="post-date">22 Jun 2007</span>
+
+    <p>A quick, but hopefully informative post on something that took me a little time to work out and I thought might trip a few others up too.</p>
+<p>I&#8217;m playing with quite a bit of CSS3 at the moment for our <a href="http://hedgehoglab.com">new company</a> site. It seemed like a good excuse to put into practice lots of progressive enhancement and the like and so far is going nicely if I do say so my self.</p>
+<p>The <a href="http://www.w3.org/TR/css3-content/">CSS3 Generated Content Module</a> has some nice little bits in and I decided to use it to put some icons after external link ala wikipedia (but with nicer icons). Actually what I wanted was simply an arrow and I didn&#8217;t really need an image for that did I?</p>
+<p>Well my first try went a little something like this:</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "#8594;";
+}</code></pre>
+<p>Nope, no luck. By the time it hits the browser it&#8217;s not what I was looking for. I didn&#8217;t think old style named entities would work but what the heck?</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "&amp;rarr;";
+}</code></pre>
+<p>Nope. As I thought. No luck their either. I also tried the character itself (but forgot to put that in the first post &#8211; thanks <a href="http://joeclarke.org/weblogs/">Joe</a>) but again to no avail.</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "â†’";
+}</code></pre>
+<p>Some digging around and I managed to infer the correct syntax from some hidden away examples about something else.</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "\2192";
+}</code></pre>
+<p>You need to use the Unicode encoding. Doh. Job done.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/06/11/introducing-hedgehog-lab/">
+        Introducing hedgehog lab
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jun 2007</span>
+
+    <p>For both of you who care what I get up to during my work hours this post is for you. I&#8217;ve finally gotten involved in a new startup with a couple of friends. Look out for <a href="http://hedgehoglab.com">hedgehog lab</a> related goings on in a Newcastle near you. We&#8217;ve got plans being drawn up as I type (multi-tasking) but a smattering of training and consultancy on web standards design and development and a very health dose of some of those new fangled online products (all with as many microformats as I can sneak in) sounds like fun to me.</p>
+<p><a href="http://hedgehoglab.com/"><img src="http://morethanseven.net/_assets/media/imgHedgehogLab.jpg" title="hedgehog lab" alt="hedgehog lab" /></a></p>
+<p>Bye bye to all the people at TH_NK. It&#8217;s been great for two years and I&#8217;ll miss the cunning hit and run attacks on asp.net that have yielded some pretty good results. I&#8217;m sure you&#8217;ll get more done without me being quite so obstinate!</p>
+<p>It&#8217;s not just the impending job move that has been keeping me so busy. I finally, after much useful feedback and patience from <a href="http://thewatchmakerproject.com">Matt</a> got my first <a href="http://www.digital-web.com">Digital Web</a> article done: <a href="http://www.digital-web.com/articles/apis_and_mashups/">APIs and Mashups For The Rest Of Us</a>. As the title suggests it&#8217;s a quick run through the various goings on, in particular on what I find so interesting about the concepts of Open APIs and this web of data thing. I even squeezed in some talk of <a href="http://microformats.org">Microformats</a> <a href="http://www.digital-web.com/articles/apis_and_mashups/comments/">Let me know what you think</a>. Thanks to <a href="http://sam.aaron.name/">Sam</a> as well for a useful early proof read and to <a href="http://www.tiffehr.com/">Tiff</a> at Digital Web (who also has some interesting things to say on this here industry on her new blog, <a href="http://www.lostcog.com/">Lost Cog</a>.)</p>
+<p>End of self reverential post. The list of <em>real</em> things I have to blog about is frankly too long to wait around. And it&#8217;s not helped by these <a href="http://vivabit.com/atmedia2007">trips</a> to <a href="http://hackday.org">london</a> which frankly just give me even more to write about. Incase anyone is interested (and more to remind me), expect something on automated site testing, some musings and code (!) for doing useful things with microformats, some cool CSS3 (or is it CSS2.2 now?) tricks and something involving flickr which should actually be quite interesting if I get the time.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/06/02/json-configuration-example-printing/">
+        JSON configuration example - Printing
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jun 2007</span>
+
+    <p>As a quick follow up to my <a href="http://morethanseven.net/posts/unobtrusive-javascript-example-printing/">previous post on unobtrusive javascript</a> I thought I&#8217;d expand it even more, but this time in an attempt to make it easier to use.</p>
+<p>As we&#8217;ve already mentioned javascript should be treated like any other programming language &#8211; not necessarily left to the experts but their should ideally be an expert involved somewhere along the line. One way of doing this is to abstract out configuration from programmatic logic. This massively helps with code resuse as well, leaving everyone to play to their strengths. It&#8217;s interesting to note that even programmers who would always store configuration settings seperately when writing <span class="caps">PHP</span> or Rails applications don&#8217;t always get around to doing the same in Javascript. Hell, I used to be one of them until <a href="http://wait-till-i.com/">Chris Heilmann</a> pointed out how patently obvious the solution was while at <a href="http://thehighlandfling.com/2007/">The Highland Fling</a>.</p>
+<p>The answer is <a href="http://www.json.org/"><span class="caps">JSON</span></a>. I think it&#8217;s nearly always easier with a quick example so here&#8217;s the Print snippet from the previous post but this time with a few configurable options:</p>
+<pre><code>var Print = {
+   config: {
+      "id": "iNav",
+      "classname": "has-print",
+      "text": "Print"
+   },
+   init: new domFunction(function() {
+      if (list = document.getElementById(Print.config.id)) {
+         if (list.nodeName.toLowerCase() === 'ul') {
+            if (Print.hasClass(list,Print.config.classname)) {
+               var item = document.createElement("li");
+               item.className = "print";
+               var link = document.createElement("a");
+               link.href = "#";
+               link.onclick = Print.printpage;
+               var txt = document.createTextNode(Print.config.text);
+               link.appendChild(txt);
+               item.appendChild(link);
+               list.appendChild(item);
+            }
+         }
+      }
+   }),
+   hasClass: function(element,cName) { 
+      return new RegExp('\\b''&amp;#43;cName'&amp;#43;'\\b').test(element.className);
+   },
+   printpage: function() {
+      window.print();
+      return false;
+   }
+}</code></pre>
+<p>The main thing we have done is to add a new block:</p>
+<pre><code>config: {
+   "id": "iNav",
+   "classname": "has-print",
+   "text": "brand new text"
+},</code></pre>
+<p>This is simply a <span class="caps">JSON</span> object of name/value pairs. You can easily alter the right hand values and change the workings of the app. You then reference the settings in  the rest of you&#8217;re code using dot notation:</p>
+<pre><code>Print.config.text</code></pre>
+<p>In the above example our configuration directives are stored in our Print object. Depending on the circumstances of use you might find it easier to have a seperate Config object which stores all the configuration settings for the entire site.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/05/29/unobtrusive-javascript-example-printing/">
+        Unobtrusive Javascript Example - Printing
+      </a>
+    </h1>
+
+    <span class="post-date">29 May 2007</span>
+
+    <p>In lieu of some real posts here&#8217;s a quick code sample to keep things ticking along.</p>
+<p>I&#8217;m sure you&#8217;ve had the need to place a nice print button on a web page from time to time. If you haven&#8217;t you&#8217;re probably alone. A quick google will throw up lots of results for print javascript &#8211; the problem is that most of them are horribly obtrusive.</p>
+<p>OK, so it&#8217;s easy to write something like:</p>
+<pre><code>&lt;a href="#" onclick="window.print();"&gt;print&lt;/a&gt;</code></pre>
+<p>But the problem is <em>What if you turn off javascript?</em> The following unobtrusive script automagically adds a print link to the page &#8211; in this case as part of a list item which is added to the unordered list with the id of <em>iNav</em> and a class of <em>has-print</em>.</p>
+<pre><code>var Print = {
+   init: new domFunction(function() {
+      if (list = document.getElementById("iNav")) {
+         if (list.nodeName.toLowerCase() === 'ul') {
+            if (Print.hasClass(list,'has-print')) {
+               var item = document.createElement("li");
+               item.className = "print";
+               var link = document.createElement("a");
+               link.href = "#";
+               link.onclick = Print.printpage;
+               var txt = document.createTextNode("Print");
+               link.appendChild(txt);
+               item.appendChild(link);
+               list.appendChild(item);
+            }
+         }
+      }
+   }),
+
+   hasClass: function(element,cName) { 
+      return new RegExp('\\b'&amp;#43;cName&amp;#43;'\\b').test(element.className);
+   },
+
+   printpage: function() {
+      window.print();
+      return false;
+   }
+}</code></pre>
+<p>With something like this you want it to load as soon as the dom is ready, rather than on page load. <a href="http://www.brothercake.com">Brothercake&#8217;s</a> <a href="http://www.brothercake.com/site/resources/scripts/domready/">domFunction</a> comes to the rescue here. The namespacing is based on <a href="http://www.kryogenix.org">Stuarts</a> technique which should make it more capable of just being dropped in to any site.</p>
+<p>The only problem with this is that it&#8217;s just a little longer than the original. I think this is down to one often missed fact, at least until recently &#8211; Javascript is a programming language and should be treated as such.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/05/18/some-good-news/">
+        Some good news
+      </a>
+    </h1>
+
+    <span class="post-date">18 May 2007</span>
+
+    <p>Yeah, I just got my confirmation email for <a href="http://hackday.org">hackday</a> in a months time.</p>
+<p><a href="http://www.hackday.org" style="border: none; padding: 0px; margin: 0px"><img src="http://l.yimg.com/us.yimg.com/i/us/ydn/hackday/hack_day_pattern_four.gif" alt="Hack Day: London, June 16/17 2007" width="180" height="105" style="border: none; margin: 0; padding: 0;"/></a></p>
+<p>So, who else is going along and does anyone have any ideas they want team mates for? I&#8217;m thinking something mobile or microformats related or alternatively something I know very little about. Any ideas?</p>
+<p>Oh, and I know I&#8217;ve been quite around the place lately, more on that when I can talk about it.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page52">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page50">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

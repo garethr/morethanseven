@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Nice URLs and PHP &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Nice URLs and PHP</h1>
+  <span class="post-date">29 Aug 2005</span>
+  <p>I all one for nice url&#8217;s, that is removing all the  gumf involving question marks and ampersands and the like for something that is both shorter, more human readable and more search engine friendly.</p>
+ <p>Doing it in <span class="caps">PHP</span> is actually pretty straightforward once you get the hang of it and can be pretty powerful &#8211; so here goes with a short tutorial of sorts. It&#8217;s will probably be brief and make too many assumptions of the reader &#8211; any questions just let me know and I may even try and write it up properly.</p>
+ <p>The basic principle is to stop using the <span class="caps">GET</span> array (accessible from $_SERVER[&#8216;<span class="caps">GET</span>&#8217;]) to make descisions with. The question then becomes what to replace it with. A simple class borrowed from the <a href="http://www.sitepoint.com">Sitepoint</a> <a href="http://www.sitepoint.com/books/phpant1/"><span class="caps">PHP</span> Anthology</a> book written by <a href="http://www.sitepoint.com/books/phpant1/about.php">Harry Fuecks</a> is at least my answer. The PathVars class does pretty much what is says in the name, specifically providing access to the path contents in the form of an array. I&#8217;ll provide a link to a <a href="/code/dispatcher.zip">code archive</a> for this article rather than just copy and paste whole classes &#8211; download it now if you are interested in the behind the scenes bits.</p>
+ <p>So we now create a new PathVars instance like so:</p>
+<p><code>
+&lt;pre&gt;
+/* Pathvars object */
+$pathvars = new PathVars($_SERVER['SCRIPT_NAME']);
+&lt;/pre&gt;
+</code></p>
+ <p>And we can now magically get access to each element of the path (separated by a /) from the instance variable pathvars:</p>
+<p><code>$params = $pathvars-&amp;gt;pathVars;</code></p>
+ <p>Or more correctly by using the method provided:</p>
+<p><code>$pathvars-&amp;gt;fetchByIndex(0)</code></p>
+ <p>Where the fetchByIndex parameter is the element you want from the array.</p>
+ <p>Ok, so so far I&#8217;m really just repeating the work of others, if you like this sort of thing I&#8217;d really recommend the book. The next step on top of this is however is to decide what to do with the information when you have it. The following shows a very simple example &#8211; potentially for use in a simple blog or news site:</p>
+<p><code>
+&lt;pre&gt;
+switch ($pathvars-&amp;gt;fetchByIndex(0)) {</p>
+case &#8220;article&#8221;:
+include(views/article.view.php);
+case &#8220;page&#8221;:
+include(views/page.view.php);
+default:
+include(&#8216;views/home.view.php&#8217;);
+<p>}<br />
+</pre><br />
+</code></p>
+ <p>In this example where we have www.example.com/article or www.example.com/article/a_sample_article_name the article view include file is used.</p>
+ <p>What these include files then do is up to you, in my case each of them passes different parameters to a simple templating system which then outputs the page. Again, have a look at the code samples to see that in action.</p>
+ <p>Let me know if anyone found this interesting, useful or informative and I might post other titbits, otherwise it&#8217;s probably back to inane ramblings and misplaced conjecture.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

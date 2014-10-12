@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Simple WSGI Middleware (for App Engine) &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Simple WSGI Middleware (for App Engine)</h1>
+  <span class="post-date">18 Mar 2009</span>
+  <blockquote>
+<p><span class="caps">WSGI</span> is the Web Server Gateway Interface. It is a specification for web servers and application servers to communicate with web applications (though it can also be used for more than that). It is a Python standard, described in detail in <a href="http://www.python.org/dev/peps/pep-0333/"><span class="caps">PEP</span> 333</a>.</p>
+</blockquote>
+<p>For Ruby people <span class="caps">WSGI</span> is the <a href="http://rack.rubyforge.org/">Rack</a> in Python. In fact it was one of the inspirations behind Rack. Rack descriptions itself as:</p>
+<blockquote>
+<p>Rack provides an minimal interface between webservers supporting Ruby and Ruby frameworks.</p>
+</blockquote>
+<p>Which I think is a clearer explanation, except in WSGI&#8217;s case we replace Ruby with Python.</p>
+<p>As well as being able to write <span class="caps">WSGI</span> middleware for Django or Pylons we can also write <span class="caps">WSGI</span> middleware for App Engine applications &#8211; which is what I spent some time doing today. For the most part I found the examples and documentation interesting but overkill for what I needed to do. Specifically I wanted a piece of middleware which modified the response content, adding extra content into the response. Most of the examples I found didn&#8217;t focus on middleware, or where full blown examples making them hard to follow.</p>
+<p>So for anyone looking for a simple example of <span class="caps">WSGI</span> middleware which adds content into the response here goes. I used the <a href="http://pythonpaste.org/webob/">WebOb</a> framework because it provides a nicer interface to the request and response objects and it&#8217;s included in the standard App Engine <span class="caps">SDK</span>. The following sample middleware simple adds <em>Hello World</em> to the end of every response.</p>
+<pre>from webob import Request
+class SimpleMiddleware(object):
+    "Example middleware that appends a message to all 200 html responses"    
+    def __init__(self, app):
+        self.app = app
+    def __call__(self, environ, start_response):       
+        # deal with webob request and response objects
+        # due to a nicer interface
+        req = Request(environ)
+        resp = req.get_response(self.app)
+        # add a string to the end of the body
+        body = resp.body + "Hello World"
+        # set the body to the new copy
+        resp.body = body
+        return resp(environ, start_response)</pre>
+<p>In reality you might want to append something to a specific place in the response, or introduce conditionals. This is easy enough to do by parsing the initial value of <em>resp.body</em> in the example above.</p>
+<p>To use the middleware in your application you simple wrap your current WSGIApplication instance with the middleware class.</p>
+<pre>application = webapp.WSGIApplication(ROUTES, debug=settings.DEBUG)
+# add simple middleware
+application = SimpleMiddleware(application)
+run_wsgi_app(application)</pre>
+<p><span class="caps">WSGI</span> middleware is both a useful place for common functionality to live in your App Engine application as well as being a handy tool for anyone working across multiple Python frameworks to share code.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

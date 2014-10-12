@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/26/a-really-simple-capistrano-recipe/">
+        A Really Simple Capistrano Recipe
+      </a>
+    </h1>
+
+    <span class="post-date">26 Apr 2008</span>
+
+    <p>Build scripts. I think I&#8217;ve probably mentioned before; everyone knows they should but not many actually do. I&#8217;m not talking about your large in-house development teams or your sexy web startups; both probably have a good-enough build process for different reasons. But smaller teams, web design agencies or freelancers often rely on <span class="caps">FTP</span> and a prayer. One of the problems is definitely finding <em>suitable</em> documentation. It&#8217;s not that their isn&#8217;t a lot of good quality documentation &#8211; it&#8217;s the suitability of it for those with only a passing interest and a limited systems administration experience.</p>
+<p><a href="http://capify.org/">Capistrano</a> is a tool for automating tasks on remote servers. It can be used for all sorts of useful things but we&#8217;ll concentrate on it&#8217;s utility for web site deployment. It&#8217;s been popular with the <a href="http://rubyonrails.com/">Rails</a> crowd for a while and is written in Ruby, but it can be used for deploying sites in Python, <span class="caps">PHP</span>, Django, whatever you happen to be using at the time.</p>
+<p>You&#8217;ll first need to install Ruby and Capistrano. The Capistrano site has <a href="http://capify.org/install">installation instructions</a> which should get you up and running. You&#8217;ll need to be able to use a console on your machine and have a passing acquaintance with your webserver. I&#8217;ve also assumed that you&#8217;re using source control, mainly because if you&#8217;re not you should start their. Automation becomes much more useful and practical on the back of a good source control system.</p>
+<p>Right, lets get started. Create a file called <em>capfile</em> somewhere on your local machine. The following two code snippets should go in that file.</p>
+<pre><code>set :username, "&lt;username&gt;"
+set :host, "&lt;host&gt;"
+set :path, "&lt;path&gt;"
+set :restart, "/etc/init.d/apache2 restart"
+set :checkout, "svn export --force"
+set :repo, "&lt;repository address&gt;"</code></pre>
+<p>Just replace the variables (marked with angle brackets) with your own values. The path is the full path on the remote server where you want to deploy your files to. Note that I&#8217;ve abstracted out the webserver restart command and the source control checkout command. The above example values assume you&#8217;re using apache and subversion (and want to do a subversion export). It should be easy enough to change these for your preferred combination of source control system and webserver.</p>
+<pre><code>desc "Remote checkout and restart of webserver"
+task :deploy, :hosts =&gt; "#{username}@#{host}" do
+  run "#{checkout} #{repo} #{path}; #{restart}"
+end</code></pre>
+<p>If your platform of choice doesn&#8217;t require a server restart (say <span class="caps">PHP</span>) you can always remove the <em>; #{restart}</em> portion of the command.</p>
+<p>Now we&#8217;re all set up just bring up a console in the folder containing the <em>capfile</em> and run the following command:</p>
+<pre><code>cap deploy</code></pre>
+<p>After prompting for a password to access the remote machine this should display the output from the commands being run. Depending on the size of the repository you&#8217;re checking out</p>
+<p>Of course for most projects you would want to expand this basic recipe. Maybe you have database updates to run or need to deploy to multiple machines at once? You&#8217;ll might have machine specific configuration files which aren&#8217;t in the source control system. You will also probably want to be able to revert back if something goes wrong and you might want to only change files that have been altered. Capistrano has lots of powerful features built in that will let you do just that, and once you get started with this sort of build scripting you&#8217;ll find lots of areas to improve. And you&#8217;ll find lots of good tutorials online that will take you further.</p>
+<p>The difficult part with project automation and build scripts is often the <em>getting started</em> in the first place; especially if you&#8217;re not the server admin type. Unfortunately the documentation and articles written on the subject tend to be somewhat arcane and aimed at the more hardcore developer. Hopefully this simple, usable, example convinces someone else to give it a try.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/18/resourceful-vs-hackable-search-urls/">
+        Resourceful Vs Hackable Search URLs
+      </a>
+    </h1>
+
+    <span class="post-date">18 Apr 2008</span>
+
+    <p>I often end up pondering <span class="caps">URL</span> design given a moment and something that keeps coming up is hackable search queries. But first a very quick primer on the idea of resourceful design.</p>
+<p><a href="http://en.wikipedia.org/wiki/Representational_State_Transfer"><span class="caps">REST</span></a> is a series of architectural principals more than a defined architecture. The <a href="http://en.wikipedia.org/wiki/Resource_oriented_architecture">Resource Orientated Architecture</a> builds on those ideas with a series of concrete guidelines put down by <a href="http://intertwingly.net">Sam Ruby</a> for designing RESTful systems. The simple version is that you try to design your system around <a href="http://en.wikipedia.org/wiki/Resource_%28Web%29">resources</a> represented by URLs.</p>
+<p>I&#8217;d thoroughly recommend reading <a href="http://www.amazon.co.uk/RESTful-Web-Services-Leonard-Richardson/dp/0596529260">RESTful web services</a> whenever you get a moment as this subject is covered in detail.</p>
+<p>Flickr isn&#8217;t a truly resourceful design but it does have many of the hallmarks. For example the <span class="caps">URL</span> that describes me is at:</p>
+<pre><code>http://flickr.com/people/garethr</code></pre>
+<p>When it comes to searching on flickr we have:</p>
+<pre><code>http://flickr.com/search/?w=all&amp;q=pubstandards&amp;m=text</code></pre>
+<p>The pattern of using a query string argument named <em>q</em> to pass a search string is pretty common. One of the guidelines mentioned as part of the <span class="caps">ROA</span> discussed query strings:</p>
+<blockquote>
+<p>Query string parameters are appropriate if they are inputs to a Resource which is an algorithm. Otherwise, these values should be moved into the <span class="caps">URI</span>.</p>
+</blockquote>
+<p>Search is definitely algorithmic. Now you could maybe argue that a global search should be done on the root of a site, with specific resource searches on the resource in questions. eg. <em>/people/?q=</em>. This would likely work fine but require some behind the scenes complexity as well as probably not being as obvious to the end user. Global searches are in many cases much more common that restricted searches and even in resourceful designs the root of the site (ie. the home page) might not act as a list of available site resources. A notable exception might would have to be the excellent <a href="http://www.bbc.co.uk/programmes"><span class="caps">BBC</span> Programmes</a> site which is basically one big semantic catalogue.</p>
+<p>But we have another kind of <span class="caps">URL</span> that&#8217;s cropping up for search results, one that treats the <span class="caps">URL</span> much more like a fundamental part of the user interface for search. An example from a site I use all the time is <a href="http://traintimes.org.uk/">The Accessible UK Train Timetable</a> which allows for URLs like the following:</p>
+<pre><code>http://traintimes.org.uk/newcastle/london</code></pre>
+<p>You can basically squash all the search parameters from the form into the <span class="caps">URL</span>, meaning you can easily bookmark search results. Note however the actual content is likely to change. The above example for instance would use the current time to get a list of trains from Newcastle to London. In an hours time the results will be different.</p>
+<p>Another good example would be the new Yahoo! UK TV listings which has URLs like these:</p>
+<pre><code>http://uk.tv.yahoo.com/listings/bbc-two/2008-04-17/</code></pre>
+
+<pre><code>http://uk.tv.yahoo.com/listings/itv1/2008-04-17/21-00/</code></pre>
+<p>Again this is really a search query, or at least specifying the time and date is. In some ways it&#8217;s the return of the command line &#8211; allowing searches to be run very quickly from a textual interface.</p>
+<p>Now, both these approaches treat URLs with the respect they deserve. But they do have the potential to clash somewhere in the middle if care isn&#8217;t taken. The Accessible Train Times site is a single purpose site which just does searches while <span class="caps">BBC</span> Programmes does feature a search engine but it&#8217;s just the global <span class="caps">BBC</span> search which takes you off site. And if that wasn&#8217;t enough potential competition then a question raised by <a href="http://simonwillison.net">Simon</a> at The Highland Fling regarding <span class="caps">URL</span> design and the search engine optimisation crowd go me thinking too. From being a somewhat niche area of interest URLs might just become a sort after part of a good website design &#8211; fought over by the varying disciplines of modern web design and development.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/11/dsls-for-html-and-css-the-future-or-just-plain-wro/">
+        DSLs for HTML and CSS - The Future, or Just Plain Wrong? 
+      </a>
+    </h1>
+
+    <span class="post-date">11 Apr 2008</span>
+
+    <p>After my previous post about <a href="http://morethanseven.net/posts/why-the-webstandards-world-appears-to-be-choosing-django/">Django and the web standards community</a> a number of the comments picked up on the fact I mentioned <a href="http://haml.hamptoncatlin.com/">haml</a> under the title <em>Other Craziness</em>. Ok, so I was being a little over-poetic but I decided this warranted a closer look.</p>
+<p>Haml is a markup language that&#8217;s used to cleanly and simply describe the <span class="caps">XHTML</span> of any web document without the use of inline code. Haml functions as a replacement for inline page templating systems such as <span class="caps">PHP</span>, <span class="caps">ASP</span>, and <span class="caps">ERB</span>, the templating language used in most Ruby on Rails applications.</p>
+<p>A quick example should help. The following haml code&#8230;</p>
+<pre><code>%div.special#primary Hello, World!</code></pre>
+<p>&#8230;is compiled to the following <span class="caps">HTML</span>:</p>
+<pre><code>&lt;div class="special" id="primary"&gt;
+  Hello, World!
+&lt;/div&gt;</code></pre>
+<p>Depending on your application this could be at runtime or as part of a build step. Although primarily associated with Rails because haml is also available as a command line utility you could in theory use it with any framework or language.</p>
+<p>My initial take on this was to call haml an abstraction of <span class="caps">HTML</span> but <a href="http://nex-3.com/">Nathan Weizenbaum</a>, one of haml&#8217;s developers, put me straight:</p>
+<blockquote>
+<p>Haml doesn&#8217;t really abstract <span class="caps">HTML</span>. Not in the same sense that, say, Rails helpers do. Since Haml has a one-to-one mapping to <span class="caps">HTML</span>, I view it more as an alternate syntax for <span class="caps">HTML</span> than an abstraction.</p>
+</blockquote>
+<p>Lots more examples for anyone interested can be found on <a href="http://haml.hamptoncatlin.com/docs/">the haml documentation site</a>.</p>
+<p>After some research and some playing around with the command line version of the haml engine I decided to see what Twitter thought about the situation. Little did I realise what I was letting myself in for:</p>
+<p><a href="http://tommorris.org/">Tom Morris</a> kicked things off:</p>
+<blockquote cite="http://twitter.com/tommorris/statuses/784959480">
+<p>I&#8217;m not sure why everyone insists on clumsily reinventing <span class="caps">HTML</span> every few weeks (eg. wiki syntaxes, of which there are hundreds)</p>
+</blockquote>
+<p><a href="http://intranation.com/">Brad Wright</a> thought:</p>
+<blockquote cite="http://twitter.com/intranation/statuses/784963589">
+<p>Sass is just stupid, since you&#8217;re basically writing <strong>exactly</strong> the same <span class="caps">CSS</span> just in shitty <span class="caps">YAML</span> style.</p>
+</blockquote>
+<p>And followed with:</p>
+<blockquote>
+<p>What&#8217;s the point of abstracting <span class="caps">HTML</span>? It&#8217;s not that hard</p>
+</blockquote>
+<p>And <a href="http://cackhanded.net">Mark Norman Francis</a> chipped in with:</p>
+<blockquote>
+<p><span class="caps">EVIL</span>. And not in a good, kittenish way.</p>
+</blockquote>
+<p>A few people echoed <a href="http://thecssdiv.co.uk/">Ross Bruniges</a> sentiment that haml and sass are just:</p>
+<blockquote cite="http://twitter.com/rossbruniges/statuses/784954916">
+<p>front-end code for those who don&#8217;t really care all that much about it and would rather create databases</p>
+</blockquote>
+<p>I have to admit to this being my initial reaction on hearing about and looking at haml, hence the remark from the previous post. But that&#8217;s not to say everyone was negative.</p>
+<p><a href="http://donotremove.co.uk/">Mike Stenhouse</a> stepped in and said:</p>
+<blockquote cite="http://twitter.com/mikesten/statuses/784952890">
+<p>Love haml &#8211; it&#8217;s all I use these days. More readable, dynamic and hackable. Took me a while to come around to it though&#8230;</p>
+</blockquote>
+<p>Some of the comments were about how the use of haml might alter the dynamic of a team, to either positive or negative effect &#8211; depending on your point of view.</p>
+<p><a href="http://www.markng.co.uk/">Mark Ng</a> saw it as a cunning way of getting rid of the front-end guy.</p>
+<blockquote cite="http://twitter.com/markng/statuses/784952935">
+<p>at first, they look elegant. Then it becomes obvious how they remove designers from the process of making markup.</p>
+</blockquote>
+<p>Where as <a href="http://thinkdrastic.net/">Olly Hodgson</a> say it maybe as a route to get the dyed in the wool back-end writing decent markup.</p>
+<blockquote cite="http://twitter.com/OllyHodgson/statuses/784957324">
+<p>They look interesting. With proper training it might be a good way to get back-end programmers creating decent <span class="caps">HTML</span> (shock horror!)</p>
+</blockquote>
+<p>At present haml is very much pitched at the Rails community from whence it came. Many of the examples demonstrate benefits compared to <span class="caps">ERB</span>, and haml is of course written in Ruby and available as a Rails plugin. Being perceived as part of that community has obvious benefits but also some subtle costs, in particular regarding those people that don&#8217;t like Rails very much.</p>
+<p>I&#8217;m not really convinced of the benefits in all fairness. The <em>something else to learn</em> barrier only gets magnified when working within a team environment. You now have to train new recruits of whatever skill level in another syntax. One that they might be able to write quickly enough but can they understand from the briefest of glances at a template? <span class="caps">HTML</span> might not be great here but it is familiar to everyone. Their is also the programmers abstraction. What if I can&#8217;t get the markup I want out the other side of the black box? Yes it&#8217;s open source so I can hack the box open but that causes even more problems. And while I quite like meaningful whitespace (for instance in Python), in templates which fail if it&#8217;s not quite right I see a major problem for those whom a text editor is not their best friend.</p>
+<p>I am however interested to see whether the problems people have with haml are with haml in particular or with the overall approach of alternative syntax&#8217;s for <span class="caps">HTML</span> and <span class="caps">CSS</span>. Are DSLs (Domain Specific Languages) needed for <span class="caps">CSS</span> and <span class="caps">HTML</span>? and if so is this a possible avenue for innovation on top of slow moving standards?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/06/git-ditz-and-microformats/">
+        Git, Ditz and Microformats
+      </a>
+    </h1>
+
+    <span class="post-date">06 Apr 2008</span>
+
+    <p>I finally got round to making use of <a href="http://git.or.cz/">Git</a>, the distributed source code management tools much loved by Open Source projects like the Linux Kernel and now Ruby on Rails. It had been on the long list of things to have a look at for quite a while but for the majority of my personal projects <span class="caps">SVN</span> is just fine. The reason that led me to finally run <em>sudo port install git-core</em> was the new <a href="http://ditz.rubyforge.org/">Ditz</a> command line issue tracking software release on <a href="http://gitorious.org/projects/ditz">Gitorious</a> by <a href="http://cs.stanford.edu/people/wmorgan/">William Morgan</a>.</p>
+<p>Now, a command line issue tracker is maybe kind of niche and a little geeky. But most desktop or web based issue trackers just seem to wind me up and I like small tools that fit in with my command line centric workflow. I managed to clone <a href="http://gitorious.org/projects/ditz/repos/ditz-microformats">my own copy</a> of Ditz to have a play with. I ran into a few initial problems but nothing a <a href="http://www.kernel.org/pub/software/scm/git/docs/tutorial.html">good tutorial</a> and a <a href="http://groups.google.com/group/gitorious">helpful mailing list</a> couldn&#8217;t fix.</p>
+<p>I&#8217;m not just playing around either; Ditz comes with the nice ability to generate a set of static <span class="caps">HTML</span> files representing your issue database. I&#8217;ve committed and pushed a few modifications and enhancements onto my clone &#8211; mainly validation, semantic markup improvements and a smattering of microformats (work in progress) in the templates and a couple of markup generation helpers in the Ruby code. I plan on working up the interface a little as well but like any good web designer I&#8217;m starting with the underlying markup structure.</p>
+<p>A few other enhancements I&#8217;d love to see in Ditz or a clone I could pull from include the ability to use  <a href="http://www.sqlite.org/">SQLite</a> rather than the default <span class="caps">YAML</span> for larger projects, automatic generation of <span class="caps">RSS</span> feeds alongside the <span class="caps">HTML</span> (although I&#8217;ve started implementing hAtom) and maybe automated deployment to a remote host over <span class="caps">FTP</span> or <span class="caps">SSH</span>.</p>
+<p>The distributed nature of Git appears to be pushed as the main advantage to those developers taking a look. But I think this is, in many cases, is not <em>that</em> important compared to the familiarity that comes from having used <span class="caps">SVN</span> or similar for a while. What I think just might be it&#8217;s real strength is that Git is a <strong>social source control system</strong>. For Open Source projects like Ditz this is a potentially game changing move. The ease with which anyone can contribute and take things in strange directions without affecting the overall effort is fantastic. It removes barriers to entry for contributors and means making small quick changes is much easier and more immediate. With both Gitorious and <a href="http://github.com/">Github</a> wrapping Git in a shiny web based interface that focuses on these social aspects it will be interesting to see if this leads to more or faster Open Source collaboration efforts.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/04/04/a-first-class-web-citizen/">
+        A First Class Web Citizen
+      </a>
+    </h1>
+
+    <span class="post-date">04 Apr 2008</span>
+
+    <p>I&#8217;m just back from another great few days in Scotland for <a href="http://thehighlandfling.com">The Highland Fling</a>. The biggest difference for me this year was I was lucky enough to be one of the speakers. Amongst such internet luminaries as <a href="http://simonwillison.co.uk/">Simon Willison</a>, <a href="http://cackhanded.net/">Norm</a>, <a href="http://dev.opera.com/author/974138">Chris Mills</a>, <a href="http://wait-till-i.com/">Christian Heilman</a>, <a href="http://aralbalkan.com/">Aral Balkan</a> and <a href="http://boagworld.com/">Paul Boag</a> I presented on a few web building blogs (<span class="caps">HTTP</span>, URLs) and on some suggestions for <span class="caps">API</span> design. The presentation is available on <a href="http://www.slideshare.net/garethr/a-first-class-web-citizen/">slideshare</a> for anyone who would like a peek.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=webcitizen-1207330793788509-9"/><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=webcitizen-1207330793788509-9" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I think the topic went down well and it triggered some good discussion around the nascent issue of <span class="caps">API</span> design. One thing is clear &#8211; we need some good resources filled with examples on the subject. More and more people are going to be extending various bits of software with an <span class="caps">API</span> and it would be nice to think they will all be a pleasure to use. In the meantime is you have any features or guidelines your like to see in APIs then suggest them <a href="http://doesyourapi.com/suggest/">over here</a>.</p>
+<p>The rest of the conference was great. I particularly enjoyed Norms little history lesson and Aral has me at least thinking about installing all the Flash and Flex tool chain. The highlight for me was probably the format. After each presentation we got a little grilling by Paul. He came up with a few thorny questions for each of us as well as fielding questions from the audience. Hopefully my stint on the sofa made sense to a few people, certainly everyone else threw out a few interesting titbits that probably wouldn&#8217;t have been talked about otherwise. Also, Chris Mills nearly managed to make Paul cry with laughter by striking something of a rock star pose for most of his interview.</p>
+<p>I&#8217;ve just uploaded a <a href="http://www.flickr.com/photos/garethr/sets/72157604386886719/">handful of photos</a> from the event and surrounding geek gatherings too. All in all the event was great (again). With the close venue, interviews mixed in and general friendly atmosphere The Highland Fling had an intimate feel often missing from events. Huge credit goes to <a href="http://www.azcazandco.com/">Alan</a> and hopefully we&#8217;ll all be back next year.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page41">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page39">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

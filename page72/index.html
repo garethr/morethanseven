@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/15/creatives/">
+        &#39;Creatives&#39;
+      </a>
+    </h1>
+
+    <span class="post-date">15 Nov 2005</span>
+
+    <p>I&#8217;m not going to prattle on but something that&#8217;s bugged me for an age. The usage of the word &#8220;Creatives&#8221;. And lo and behold it bugs <a href="http://37signals.com/svn/archives2/creatives.php">other people</a> too.</p>
+ <p>I like knowing that it&#8217;s not just me!</p>
+ <p>Just to say as well that anyone reading this and going along to the <a href="http://www.accessify.com">Accessify</a> <a href="http://www.accessifyforum.com/viewtopic.php?t=3770&#38;postdays=0&#38;postorder=asc&#38;highlight=meetup&#38;start=120">Meetup</a> in Manchester this weekend let me know. Leave a comment. Be good to put names and faces to email addresses and web sites!</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/12/dconstruct/">
+        d.Construct?
+      </a>
+    </h1>
+
+    <span class="post-date">12 Nov 2005</span>
+
+    <p>Right. I wasn&#8217;t at <a href="http://www.dconstruct.org">d.Construct</a> I&#8217;m still a bit gutted really as it sounded like a hoot and lots of it was up my street and would have been good to meet up with &#8216;people&#8217;. But hey, I can still watch the feeds pour in right?</p>
+ <p>With that in mind, to again make my life easier and hopefully be of some use I&#8217;ve set up another (the first one was for <a href="http://www.atmedia2005.co.uk">@media</a>) feed syndicator.</p>
+ <p><a href="http://morethanseven.net/dconstruct">morethanseven.net/dconstruct</a></p>
+ <p>All I&#8217;m doing is parsing, storing and displaying all the feeds. On first run I picked up 27 and hopefully by the time you read this more will have been said. The collection of feeds are a combination of people I&#8217;ve met and people who where blogging about <code>media. If you have a feed and want it adding just leave a comment on here or drop me an &lt;a href="mailto:gareth</code>morethanseven.net&quot;&gt;email</a> and I&#8217;ll add it to the rest.</p>
+ <p>I&#8217;ll just say a big shout for everyone at <a href="http://www.clearleft.com">Clearleft</a> for organising it on such short notice. I&#8217;d rather thinks like this happen and me not be there than they not happen at all because of problems with size or cost or admin. Maybe next year?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/08/tips-for-fluid-design/">
+        Tips for fluid design
+      </a>
+    </h1>
+
+    <span class="post-date">08 Nov 2005</span>
+
+    <p>After getting a few comments about the site design, and in particular a few of the fluid nature comments about it being tricky to get right. I&#8217;ve found myself tending to develop fluid designs more often that not over the <a href="http://thebgroup.co.uk">last</a> <a href="http://newcastlenewmedia.org">few</a> <a href="http://www.cravens.co.uk">years</a> and thought I&#8217;d do a short series of posts about some of the techniques I use. I&#8217;ve generally found it pretty easier to find <a href="http://www.boagworld.com/archives/2005/06/liquid_vs_fixed.html">discussions</a> about the <a href="http://www.digital-web.com/articles/fluid_thinking/">pro&#8217;s</a> and <a href="http://9rules.com/whitespace/design/death_of_liquid_layouts.php">cons</a> and the basic principles but less so on actual techniques. I&#8217;ll try cover some or all of the following over the next few weeks or so:</p>
+<ul>
+ <li>extendable background images</li>
+  <li>using overflow hidden</li>
+  <li>use of fluid flash banners</li>
+  <li>min-width and max-width (and javascript)</li>
+</ul>
+ <p>I&#8217;ll kick off with tricks for background images.</p>
+ <p>This techniques makes extensive use of the <em>background</em> <acronym title="Cascading Style Sheets"><span class="caps">CSS</span></acronym> property which is used as following: <em>div#iBackground { background: url(path/to/image) center top no-repeat; }</em></p>
+ <p>I&#8217;ll assume some familiarity with this and <span class="caps">CSS</span> in general, basically all we are doing is setting a background image to the div with an id of iBackground which is set to align to the top vertically and centered horizontally.</p>
+ <p>Moving the image to the background has a couple of interesting effects, the one that we are interested in here is that the the size of the div is not affected by the size of the image (as it would be if the image was placed inside it). It acts as a kind of viewport into the world of the image. By specifying the width of the div in percentages (or em&#8217;s if you are dealing with an elastic design) the size of the viewport can change dependent on the size of the browser window. An example is inorder:</p>
+ <p><a href="http://joshuaink.com">joshuaink.com</a> makes use of a large background graphic that stretches the full width of the site. This means the space can be used for pretty large imagery but without breaking the experience (sideways scrolling!) for those with lower resolution displays. Note that the flower background is 2000px wide.</p>
+ <p>The only problem with this technique that I have come across is generating the images in such a way that they degrade gracefully. You need to make sure real <em>content</em> (logos or text) appear in a smaller area that the whole image and live with the fact that not everyone is going to see the whole thing. In my mind this is a small price to pay for asthetically interesting fluid layouts.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/06/mint-goings-on/">
+        Mint goings on
+      </a>
+    </h1>
+
+    <span class="post-date">06 Nov 2005</span>
+
+    <p>Well. Lots of goings on since the <a href="http://cssreboot.com">reboot</a>. Rather than fill up lots of posts I thought I&#8217;d summarise &#8211; If something is interesting enough I&#8217;ll probably come back to it.</p>
+ <p>Thanks everyone for positive comments about the redesign, lots of new visitors to the site from the reboot site itself and people who liked the design and said so on their sites:</p>
+<ul>
+ <li><a href="http://pixelicious.co.uk/">pixelicious.co.uk</a></li>
+  <li><a href="http://www.net-lounge.de">net-lounge.de</a></li>
+  <li><a href="http://brainfuel.tv/">brainfuel.tv</a></li>
+</ul>
+ <p>I even got onto <a href="http://screenspire.com/view/morethanseven.net/">screenspire</a> which was nice.</p>
+ <p>All of this I&#8217;ve had the joy of watching from the vantage point of <a href="http://www.haveamint.com">mint</a>. I mentioned that I&#8217;d installed it a while back, as much to have a play around as anything but as many before me had stated, you can easily get hooked on the stats &#8211; and I&#8217;m enough of a numbers fan as it is. So what follows is a very brief, but real world opinion, of Mint. In case your only interested in the final opinion &#8211; I&#8217;m a fan (you could tell that anyway).</p>
+ <p>First things first, purchase, download and installation was an absoolute breeze. OK so I&#8217;m fine with all kinds of command line driven installs but their was non of that anyhow. Just change a simple text configuration file, create a database and upload. Everything else was just point at a <span class="caps">URL</span> and away we go.</p>
+ <p>I decided to install a couple of the official peppers (plugins) along the way, again a simple matter of upload, login and click install.</p>
+ <p>Login presents the nice interface everyone was googling over. It&#8217;s all nice shades of green, shadows and javascript scrolling. The pane&#8217;s themselves provide information about Visits, Referrers, Pages and Searches. This isn&#8217;t all the information you might be used to from other log file based packages but once you get over that you dont really need anything else under most circumstances.</p>
+ <p>One thing that did interest me was information about screen resolutions and that&#8217;s where the User Agent 007 pepper comes in. Displaying information about screen resolution, along with details of Browser and Flash versions. It&#8217;s all very voyeuristic I know but hey.</p>
+ <p>The Visits and Referrers panes are probably where most of the action is. The Referrers section is great from my point of view for seeing who is linking to me, really useful for tracking down interesting people I have no other way of finding out about. Visits details lots of information about the number of visits and visitors &#8211; cunningly logged using javascript so as to avoid lots of referrer (ie. spider) spam. Having said that, Google cropped up in my User Agent 007 pane so maybe Google triggers it too?</p>
+ <p>So. Is it for you? I get the feeling that it depends. It&#8217;s come out of the blogging scene so to speak and it shows. Design decisions have been made that strengthen it immeasurably for blogs while, in my mind, weaken it for other kinds of sites &#8211; in particular from my past experience for campaign style sites where you really want to look at this sort of detail.</p>
+ <p>For example the choice of <span class="caps">PHP</span>, how many well known blogs (at least in the corner of the web inhabited by web designers) dont use <span class="caps">PHP</span>? So for blogs that&#8217;s not a problem but for other sites it can be.</p>
+ <p>Another area is the ability to query the statistics. For a blog you just want to know traffic all the time probably. For a campaign you want to know what happened when. And that might mean going back in time so to speak &#8211; when putting together a report for instance. It might be possible to mine this data, even build a pepper around it &#8211; but I&#8217;m not sure that&#8217;s playing to Mints strengths.</p>
+ <p>As I said initially, these aren&#8217;t really critisisms. Specialist software is where it&#8217;s at in my mind. And this is definately a very nice piece of software.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/01/reboot/">
+        Reboot
+      </a>
+    </h1>
+
+    <span class="post-date">01 Nov 2005</span>
+
+    <p>The real <a href="http://www.cssreboot.com"><span class="caps">CSS</span> Reboot</a> should be going off anytime now. But I&#8217;m in Rome (this message is coming at you through the magic of Textpatterns publish on date facility) so had to put things up a <em>little</em> prematurely. Oh well. In fairness I know which one I&#8217;d prefer to be doing.</p>
+ <p>I&#8217;ll miss the initial rush of running through lots of screen shots and sites, finding new things and generally wanting to redo the design at least for a week anyway. When I&#8217;m back I&#8217;ll post a list of one&#8217;s that caught my eye.</p>
+ <p>In the meantime a couple of other ongoing bits. I&#8217;ll try and sort out lots of photos onto Flickr when I&#8217;m back, hopefully including some shots from Rome and a few other series I&#8217;ve taken and not got round to. Also after meetups, lots of discussion on and around <a href="http://newcastlenewmedia.org">newcastlenewmedia.org</a> hopefully a sense of renewed focus and some hapenings around that.</p>
+ <p>All in all I&#8217;m sure I wont be missed, but enjoy the reboot. If you have any personal favourites then leave a comment. If you have opinions about mine then leave those too. Especially if they&#8217;re nice.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page73">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page71">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

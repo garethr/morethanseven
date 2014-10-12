@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Why the webstandards world appears to be choosing Django &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Why the webstandards world appears to be choosing Django</h1>
+  <span class="post-date">29 Mar 2008</span>
+  <p>I&#8217;ve been noticing an interesting trend recently, not one I have any empirical evidence for mind, but one I though interesting non-the-less. Parts of the webstandards world appear to all be playing with <a href="http://djangoproject.com">Django</a>. Part of this has been the odd mention down the pub, at barcamps or at <span class="caps">SXSW</span> this year. But the main source of information on the topic has been <a href="http://twitter.com">twitter</a>. To name but a few I&#8217;ve seen tweets from <a href="http://nascentguruism.com">Steve</a>, <a href="http://thecssdiv.co.uk">Ross</a> and <a href="http://aralbalkan.com">Aral</a> recently and <a href="http://muffinresearch.co.uk/">Stuart</a> and <a href="http://cyril.doussin.name/thoughts/">Cyril</a> literally wont shut up about it.</p>
+<p>What&#8217;s interesting is that this didn&#8217;t happen with Rails, not in the corner of the pub that generally talks more about markup, javascript and <span class="caps">CSS</span> anyway. I&#8217;ve worked on a couple of Rails projects both personally and commercially, and I&#8217;ve just launched a little pet project build with django called <a href="http://doesyourapi.com">doesyourapi</a>. What follows is, to my mind, a few reasons why I think this trend exists and also why I think it will continue, at least for the time being.</p>
+<h3>People</h3>
+<p>You can&#8217;t ignore the personal touch, and in <a href="http://simonwillison.com">Simon Willison</a> and <a href="http://www.kryogenix.org/">Stuart Langridge</a> we already have two people who bridge the Python/Django community and the web standards crowd, at least in the UK. Personal technology choices at least are often driven by personal correspondence.</p>
+<h3>Templating</h3>
+<p>Django&#8217;s templating introduces a very simple syntax <em>and nothing else</em>. Rails lets you have the full power of Ruby to do with as you will within your views. Rails also makes heavy use of helpers, further adding to the complexity of views. Now I have mixed views here, based on my own skills more than anything. I know I&#8217;d feel much more comfortable throwing someone with good markup skills at a project using Django than Rails. For the most part with Django you use the html you&#8217;re used to, Rails often wants you to change this to helpers &#8211; in much the same way as <span class="caps">ASP</span>.<span class="caps">NET</span> does in fact. I think some of this comes from the Rails <em>don&#8217;t repeat yourself</em> <del>philosophy</del> <ins>obsession</ins>. Sometimes this leads to programmatic complexity which makes working with templates more akin to programming, even if it means less duplication. I&#8217;ve yet to work on a particularly complex Django project so maybe this simplicity might become a limitation to work around? Always a possibility.</p>
+<h3>Default craziness</h3>
+<p>Some of the bits and pieces that come bundled with Rails are just plain wrong, the Javascript helpers being one example. The abuse of <span class="caps">HTTP</span> by default in some of the scaffolding code being another. Oh, and the markup coming out of various helpers as well. In trying to help the application developer Rails gets in the way of the professional webstandards types. Django does next to none of this for you. Programmers coming from Rails might see this as missing features. Frontend types prefer this clean slate approach because it means you don&#8217;t have to fight the backend (sometimes including people) for control of the output. Note that you can work around much of this (in the same way as you can work <em>around</em> <span class="caps">ASP</span>.<span class="caps">NET</span> if you have to), it&#8217;s just nicer to not have to.</p>
+<h3>Other craziness</h3>
+<p>Rails people love Ruby. After all it&#8217;s better than Java (it&#8217;s also a pretty loveable programming language too). But like computer science departments everywhere many Rails people also dislike or simply put up with <span class="caps">HTML</span>, <span class="caps">CSS</span> and Javascript. If they can find a way of not having to write these and write something else (Rails people are also obsessed with domain specific languages) instead. Hence we have the likes of <a href="http://haml.hamptoncatlin.com/"><span class="caps">HAML</span></a> and <a href="http://lab.hamptoncatlin.com/play/with/sass"><span class="caps">SASS</span></a>. The problem is that us frontend loving folk quite like writing <span class="caps">CSS</span> (well, sometimes) and absolutely love writing <span class="caps">HTML</span>. Most of the time for good reasons too &#8211; just look at microformats for an example. Frontend developers tend to like using a mix of tools, predominantly backend developers not so much it seems.</p>
+<p>Personally I find it interesting. You could quite easily flip many of these arguments around to support why so many people are using Rails. For two frameworks with similar goals and uses it&#8217;s interesting to see the early philosophical differences playing out in the real world. It might be interesting to see what happens with frameworks like <a href="http://merbivore.com/">Merb</a> as well which seems to be set out to avoid many of these perceived issues with Rails. So, have anyone else noticed anything similar? Or even the complete opposite?</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

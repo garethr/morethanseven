@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/02/13/example-of-the-yahoo-live-api/">
+        Example of the Yahoo Live Api
+      </a>
+    </h1>
+
+    <span class="post-date">13 Feb 2008</span>
+
+    <p><a href="http://live.yahoo.com/">Yahoo! Live</a> launched recently along with a nice <a href="http://developer.yahoo.com/ylive/rest_api/">RESTful <span class="caps">API</span></a>. I&#8217;ve spoken before about the beauty of <span class="caps">REST</span> being in lowering the barrier to hacking and when I wanted a quick feature for Live it was simplicity itself to put together.</p>
+<p>A few friends are using it far too much it seems, <a href="http://ben-ward.co.uk/">Ben</a> has 7.6 hours and <a href="http://simonjobling.com">Si</a> has already clocked up 15 hours. But for the most part I keep missing their no-doubt highly entertaining antics. One thing that Live misses I feel is a favourite users or previously viewed channels list. Basically I want to see which of my friends who use the service are broadcasting right now. Something like:</p>
+<p><a href="http://morethanseven.net/presents/yahoolive/"><img src="http://img.skitch.com/20080213-q7ntrbip3rhwbkdbykuwt4an5.render.png" alt="Yahoo! Live Online"/></a></p>
+<p>The <span class="caps">API</span> request we&#8217;re interested in is the <a href="http://developer.yahoo.com/ylive/rest_api/channel.html">/channel/<span class="caps">PERMALINK</span></a> method. This lets us get information about whether the user is broadcasting at the moment.</p>
+<pre><code>&lt;?php
+$api = 'http://api.live.yahoo.com/api/v1/channel';
+$friends = array(
+  'garethr',
+  'benward',
+  'sijobling'
+);
+$statuses = array();
+foreach ($friends as $friend) { 
+  $response = simplexml_load_file($api . '/' . $friend);
+  $name = $response-&gt;name; 
+  if ($response-&gt;broadcast) {
+    $status = 'live';
+  } else {
+    $status = 'offline';
+  }
+  $statuses["$name"] = $status;
+}
+function displaylist($array) {
+  $output = '';
+  if (count($array) &gt;= 0) {
+    $output .= '&lt;ul&gt;';
+    foreach ($array as $key =&gt; $value) {
+      $output .= "&lt;li class=\"$value\"&gt;";
+      $output .= "&lt;a href=\"http://live.yahoo.com/$key\"&gt;";
+      $output .= "$key&lt;/a&gt;";
+      $output .= "&lt;span&gt;$value&lt;/span&gt;&lt;/li&gt;";
+    }
+    $output .= '&lt;/ul&gt;';
+  }
+  return $output;
+}
+echo displaylist($statuses);
+?&gt;</code></pre>
+<p>I&#8217;ll add a few more people to <a href="http://morethanseven.net/presents/yahoolive/">my list</a> when I discover other people using the service. If you have an account leave a comment. I&#8217;ve added a touch of javascript as well so as to avoid having to reload the page manually. This way I can loiter on my little aggregator until someone I know starts broadcasting and head over to Live for whatever Si has been spending 15 hours doing.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/02/04/continuous-integration-for-front-end-developers/">
+        Continuous Integration for Front End Developers
+      </a>
+    </h1>
+
+    <span class="post-date">04 Feb 2008</span>
+
+    <p>Most software developers, especially those with a grounding in Agile development methodologies, will probably be familiar with <a href="http://www.martinfowler.com/articles/continuousIntegration.html">Continuous Integration</a></p>
+<blockquote>
+<p>Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily &#8211; leading to multiple integrations per day. <strong>Each integration is verified by an automated build (including test) to detect integration errors as quickly as possible</strong>.</p>
+</blockquote>
+<p>The emphasis above is mine, purely as it&#8217;s at the heart of what I&#8217;m going to ramble on about. A little closer to home <a href="http://theryanking.com">Ryan King</a> just <a href="http://theryanking.com/entries/2008/02/02/inursite/">posted about</a> a new site; <a href="http://inursite.com/">inursite</a>. The premise is simple; enter a few of your sites and <em>inursite</em> will visit them once a day and run a markup validation service over the page. You then get a feed of the pass or failure status. It&#8217;s simple but brilliant. For example, I have this very site added to the service. If I put some invalid markup in this post, tomorrow morning I&#8217;ll get an item in my feedreader telling me of my mistake. I&#8217;ll get that every day until I fix the problem.</p>
+<p>This green/red (pass/fail) type approach to simple tests is what I find most powerful about continuous integration systems like &#8220;Cruise Control&#8221;:&quot;:http://cruisecontrol.sourceforge.net/. Ryan asked over on his site in one of the comments what I&#8217;d like to see, so lets see:</p>
+<ul>
+	<li>Has all the <span class="caps">CSS</span> been compressed using something like <a href="http://csstidy.sourceforge.net/">CSSTidy</a>.</li>
+	<li>Has all the javascript been compressed using something like <a href="http://javascript.crockford.com/jsmin.html">JSMin</a>.</li>
+	<li>Does any Javascript pass the harsh taskmaster that is <a href="http://www.jslint.com/">JSLint</a>.</li>
+	<li>If my markup a little bloated? Maybe I could set a maximum size for the markup and get a fail is I go over that.</li>
+	<li>Ditto <span class="caps">CSS</span> file size.</li>
+	<li>Ditt Javascript.</li>
+	<li>Ditto images.</li>
+	<li>If pages have associated feeds, then validate them as well according to the relevant specification (probably <span class="caps">RSS</span> or Atom).</li>
+	<li>How many <span class="caps">HTTP</span> Requests does it take to load the whole page, including all the relevant assets. <ins>I&#8217;d like to be able to set a maximum number.</ins></li>
+	<li>How many hosts are required to load the whole page? I&#8217;d like to be able to set a maximum number and get a fail if I go over that.</li>
+	<li>Is the page gzipped on the server.</li>
+	<li>And just to keep this topical, does the page have either the IE8 meta element or the associated <span class="caps">HTTP</span> header set to a particular value.</li>
+</ul>
+<p>Lots of this is front-end best practice, some coming from the <span class="caps">YAHOO</span>! <a href="http://developer.yahoo.com/performance/">exceptional performance</a> work. It&#8217;s something <a href="http://24ways.org/2007/minification-a-christmas-diet">I&#8217;ve touched on before</a> too. Can anyone else think of other things you&#8217;d like to see when you&#8217;re working away crafting markup and <span class="caps">CSS</span>? Once you have all these tests running you could display them in widgets, gadgets, twitter, firefox extensions, large displays, mobile devices, the works.</p>
+<p>Now that sounds like an awful lot of stuff for one person (or even for one application) but I have something else in mind. If <em>inursite</em> allowed you to hook up external webservices which accept a <span class="caps">URL</span> as an argument, along with any service specific parameters, and return true or false then, in theory, anyone could add their own custom checks to it. This becomes particularly useful for larger teams than are likely to have internal quality tools already. On top of all that I&#8217;d probably pay for a service like this that let me run it on demand (rather than once per day) &#8211; or maybe even better, pay for a downloadable version (a.l.a. <a href="http://haveamint.com">Mint</a>) I can install locally.</p>
+<p>As you can probably tell, I think the general idea of continuous integration for front end web developer is one for which time has come. It&#8217;s simply part of our discipline growing up and becoming more professional. Whether Ryan looks to extend his fantastic simple service in this direction or not I hope something will come along that does all this and more. I might even work on it myself &#8211; but then I always say that!</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/01/30/simple-deployment-with-svn-and-phing/">
+        Simple deployment with SVN and Phing
+      </a>
+    </h1>
+
+    <span class="post-date">30 Jan 2008</span>
+
+    <p>Another approach to deploying web apps is to use <a href="http://phing.info/">Phing</a>. Phing is at heart a <span class="caps">PHP</span> clone of Ant,  another common build and deployment tool. The main advantage of using Phing, at least if you&#8217;re already using <span class="caps">PHP</span>, is close integration with other <span class="caps">PHP</span> specific tools (PHPDocumentor, PHPLint and PHPUnit to name a few) and ease of install.</p>
+<p>Speaking to installation Phing has it&#8217;s own <span class="caps">PEAR</span> channel. I still think <span class="caps">PEAR</span> is great in so many different ways &#8211; it always makes me frown when I see people cussing at <span class="caps">PEAR</span> (especiallly the installer). You can install Phing as follows.</p>
+<pre><code>pear channel-discover pear.phing.info
+pear install phing/phing</code></pre>
+<p>The <a href="http://phing.info/docs/guide/current/">Phing documentation</a> is nothing if not comprehensive. Unfortunately, unless you are pretty familiar with Ant or you&#8217;re trying to do something complex (and willing to invest the time) the chances are you&#8217;ll be a little lost. More and simpler examples for common problems would be useful for those beginners.</p>
+<p>I might publish a few little recipes down the line or even a full commented production recipe but for the moment lets start simple. The following build script is designed to be run on your remote web server and relies on a subversion repository (hopefully you&#8217;re using source control, if not that&#8217;s another post I&#8217;m afraid). It simply exports the specified repository to the specified export directory on the server. Note that you need to set your own <span class="caps">SVN</span> details and replace the capitalised properly values. The following should be saved as <em>build.xml</em> on your web server, outside the web root.</p>
+<pre><code>&lt;?xml version="1.0"?&gt;
+&lt;project name="build" default="main"&gt;
+  
+  &lt;property name="exportdir"  value="WEB_ROOT" /&gt;
+  &lt;property name="svnpath" value="YOUR_SVNPATH" /&gt;
+  &lt;property name="username" value="YOUR_SVN_USERNAME" /&gt;
+  &lt;property name="password" value="YOUR_SVN_PASSWORD" /&gt;
+  &lt;property name="repo" value="YOUR_SVN_REPO" /&gt;
+        
+  &lt;target name="main" depends="svnexport"/&gt;
+  
+  &lt;target name="svnexport"&gt;
+    &lt;svnexport
+       svnpath="${svnpath}"
+       username="${username}"
+       password="${password}"
+       nocache="true"
+       repositoryurl="${repo}"
+       todir="${exportdir}"/&gt;
+  &lt;/target&gt;
+&lt;/project&gt;</code></pre>
+<p>Let&#8217;s break some of that down. Property definitions allow you to specify variables for use in your build script. In this example we only have one task specified so maybe we don&#8217;t need the extra abstraction but the moment we start reusing scripts or adding more tasks it&#8217;s a good idea.</p>
+<pre><code>&lt;property name="exportdir"  value="./web" /&gt;</code></pre>
+<p>The other major point of interest is the task itself. Here we make use of the properties we have already specified to run a subversion export. The <em>svnexport</em> task is build in to Phing.</p>
+<pre><code>&lt;target name="svnexport"&gt;
+  &lt;svnexport
+     svnpath="${svnpath}"
+     username="${username}"
+     password="${password}"
+     nocache="true"
+     repositoryurl="${repo}"
+     todir="${exportdir}"/&gt;
+&lt;/target&gt;</code></pre>
+<p>Also of note is the setting of a default task, <em>main</em>, as a property of the project element and specifying that the main task depends on another task, <em>svnexport</em>. Again, we could avoid that at this stage but the moment we add another few tasks then we&#8217;ll want more control over execution order.</p>
+<p>Phing should be run from the directory containing the build script. You can run the command without any arguments, in which case the default task will be run (in our case <em>main</em>) or you can pass an argument to specify a specific task. For our simple build script  the two following commands do the same thing:</p>
+<pre><code>phing</code></pre>
+
+<pre><code>phing svnexport</code></pre>
+<p>Given the above build script simple runs a subversion export command you might be wondering what use it is. The answer is not much at this stage. You <em>do</em> get a simple build script which can be stored in your source control system and used by the whole team. The real advantage is where you might go from here. If everyone in your team deploys in the same way (ie. using the build script) then anyone can add extra tasks and everyone gets the benefit. Simple example might be generating code documentation, running Unit tests (and not running the export if the tests fail) and creating a zip file of the deployed source for backup purposes.</p>
+<p>Build scripts can get complicated quickly, but if you start out small and add tasks as you need and understand them, you should be able to raise the quality of your application and avoid easy to make mistakes.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/01/27/questions-pointers-and-reality/">
+        Questions, Pointers and Reality
+      </a>
+    </h1>
+
+    <span class="post-date">27 Jan 2008</span>
+
+    <p>Along with an awful lot of noise, the whole X-UA-<span class="caps">COMPATIBLE</span> IE8 issue is also bringing out some well rounded and thought through arguments from people I admire.</p>
+<p>I still disagree with <a href="http://adactio.com/journal/1403/">Jeremy Keith</a> on the default issue but agree with everything else. Jeremy says:</p>
+<blockquote>
+<p>Let me make it perfectly clear: I understand the need for version targeting. But the onus must be on the publisher to enable it.</p>
+</blockquote>
+<p>At the moment it comes down to a sense of stubborn realism on my part. All the people who know about the issue and the need for the new header (that would be me, Jeremy, probably you and the whole <em>web standards developer</em> crowd) are probably also in a position to add it fairly easily. All those that don&#8217;t know about the header <em>don&#8217;t have to know</em> about it. Ever. I would prefer if this wasn&#8217;t the case but alas I think it might be.</p>
+<p><a href="http://www.isolani.co.uk/blog/standards/InternetExplorerReality">Mike Davies</a> has one of the most well argued points out their. Throwing into the pot the issue of content not served via a web server raises even more issues that make changing the default behaviour difficult. I think Mike sums this up pretty well:</p>
+<blockquote>
+<p>Every other browser has either started from scratch from the ground up (Firefox and Opera), or created a browser after the browser-wars (Safari). As such, all three have benefited from not having to support Microsoft&#8217;s excess baggage. And Microsoft being dragged to a complete stop because of it. This is Microsoft&#8217;s browser-war victory biting them in the ass.</p>
+</blockquote>
+<p>Whether we like it or not this issue is about Microsoft, and I (maybe naively) believe Microsoft would like nothing better than to get back up from the mat and innovate in the browser space. But they can&#8217;t because of the ball and chain.</p>
+<p>Who hasn&#8217;t written at least some code that, in hindsight, turned into a horrible maintenance nightmare? You might dream of jumping in and rewriting it from scratch but if that code has already been shipped to a client then what is that client doing to do? Turning around and saying <em>actually, what we gave you originally was pretty rubbish</em> isn&#8217;t going to go down well &#8211; even when it&#8217;s the right thing to do.</p>
+<p>Mike is right in that the IE team are actually going to be shipping two browsers. That has got to be a massive issue for them &#8211; certainly a bigger issue than me adding a new header to my site or a meta element to my pages. But if it lets the second of those browsers support CSS3, HTML5, <span class="caps">XHTML</span>, Canvas and anything else we dream of then I&#8217;m all for it. We all know the first of those browsers just won&#8217;t be up to the task.</p>
+<p>One particular thorny problem I wasn&#8217;t aware of was issues surrounding accessibility. <a href="http://www.brucelawson.co.uk/index.php/2008/accessibility-implications-microsoft-versioning/">Bruce Lawson</a> has some of the details but in short by locking a large number of sites into the ways of IE7 we essentially freeze the (poor) state of accessibility on the web. <a href="http://splintered.co.uk">Patrick Lauke</a> also raises a related issue in the comments regarding further alienating screen reader and assistive technology developers. These points for me are ones I want addressing by Microsoft and one&#8217;s without resolution which would make me change my mind on this whole issue of defaults.</p>
+<p>So, the jury is still out in my mind. I hope it is in the minds of those working closer to the heart of this problem at Microsoft. Like <a href="http://molly.com">Molly</a> I&#8217;m glad this issue has been raised now, rather than simply revealed at launch. I just hope the reason for that was to get the sort of high quality feedback we&#8217;re seeing in some areas of the community in order to test the waters and come to a consensus.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/01/22/who-loses-out-to-x-ua-compatible/">
+        Who loses out to X-UA-Compatible?
+      </a>
+    </h1>
+
+    <span class="post-date">22 Jan 2008</span>
+
+    <p>If you work on the web you&#8217;ll probably have already seen or noted the existence of the <a href="http://alistapart.com/issues/251">latest issue of A List Apart</a>:</p>
+<ul>
+	<li><a href="http://alistapart.com/articles/beyonddoctype">Beyond <span class="caps">DOCTYPE</span>: Web Standards, Forward Compatibility, and IE8</a></li>
+	<li><a href="http://alistapart.com/articles/fromswitchestotargets">From Switches to Targets: A Standardista&#8217;s Journey</a></li>
+</ul>
+<p>My twitter feed positively exploded with negative feedback on this issue but I&#8217;ve only just got round to reading (and re-reading) the various interesting articles and (some half through through) comments. I though I&#8217;d have a think through who this affects.</p>
+<p>What we&#8217;re disucssing is either adding a meta element to your documents or alternatively sending the relevant <span class="caps">HTTP</span> header. The code for that looks like:</p>
+<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;</code></pre>
+<h3>IE Users</h3>
+<p>Users of Internet Explorer get a bum deal here I think. Their browser is going to get bigger &#8211; potentially a lot bigger. With all those rendering engines rolled into one it&#8217;s also likely to need lots of memory. How this affects the mobile version of IE is anyones guess. Memory and file size are even more important here.</p>
+<h3>Other Browser Vendors</h3>
+<p>I have a feeling they will all go <em>Meh</em> and move along as if nothing happened. Certainly my experience of upgrades to Firefox, Safari and Opera (including recent bleeding edge versions) doesn&#8217;t break any of my bits of the web or the bits I frequent.</p>
+<h3>Web Standards Savvy Designers and Developers</h3>
+<p>A really cool feature for us designers and developers has gone unmentioned I feel. We&#8217;ve been asking Microsoft for one application in which we can test all their browsers in. IE8 will be that browser. Think about it. By changing the contents of the meta element (or the header) we can trigger the rendering engine to use IE6, IE7 or IE8.</p>
+<p>I&#8217;m a big fan of the whole progressive enhancement approach, using new browser features that not everyone supports (generated content, CSS3 selectors, etc.) in a way that they don&#8217;t affect older browsers. If I were to use a feature not yet supported by IE7 but expected in IE8 for instance in this way I would expect it work in IE8. If I include an IE7 <em>X-UA-Compatible</em> declaration this won&#8217;t happen. Which is why I probably won&#8217;t include one. The problem is if I don&#8217;t include it at all I still have the same problem. I&#8217;ll come back to the solution (and the problem with the solution) in a moment.</p>
+<h3>Other Web Designers and Developers</h3>
+<p>Not everyone is using Web Standards, and even less get progressive enhancement. Most of the web is broken and we <em>are not going to fix this</em>. Virtually no one thinks XHTML2 is a good idea because it starts with this fact and says <em>&#8220;Let&#8217;s start again, but get it right this time&#8221;</em>. The fact that all those websites (and more importantly for Microsoft the users of those websites) standardise on IE7 is fine by me. IE7 isn&#8217;t that bad remember.</p>
+<p>So, all in all I don&#8217;t see a major problem for me, or other savvy web designers and developers. I have one issue; namely the strong language around the use of <em>edge</em>.</p>
+<blockquote>
+<p>This option, though strongly discouraged, will cause a site to target the latest IE browser versions as they release.</p>
+</blockquote>
+<p>What this is describing is how things work now. It&#8217;s also how I want to work &#8211; using progressive enhancement to make my websites better when people have browsers that support them. I&#8217;ll be adding the relevant <em>edge</em> headers to my sites by default as I get a moment to tinker.</p>
+<p>In my view this should allow the web to move forward faster with newer features hitting IE sooner, leaving a ghetto populated by IE users who don&#8217;t upgrade quickly and designers and developers who don&#8217;t want to be professional about their craft (or tools that aim for the lowest common denominator). Yes, I&#8217;ll need to add a header to all of my sites in the future but in return I get the latest version of IE that lets me test all previous versions of IE.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page44">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page42">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

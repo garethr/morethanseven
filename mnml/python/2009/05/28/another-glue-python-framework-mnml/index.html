@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Another Glue Python Framework - MNML &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Another Glue Python Framework - MNML</h1>
+  <span class="post-date">28 May 2009</span>
+  <p>Although still a big fan of Django, but for some problems I&#8217;m finding more and more cases where I prefer less code and more freedom. My biggest issue for some types of problems being Django&#8217;s assumption that you&#8217;ll be using a relational database, or a database at all. Django wasn&#8217;t the reason I started using webapp for App Engine stuff, but in doing so I found that webapp often did all that I needed.</p>
+<p>So when I small, non appengine project cropped up I started looking at the <a href="http://wiki.python.org/moin/WebFrameworks">different options available</a> and played with a few of them.</p>
+<ul>
+	<li>I played with Pylons but again got lost in code. I&#8217;ll probably play with Pylons more in the future and for bigger, team based, projects it looks a good mix of component parts and shared conventions.</li>
+	<li>Web.py &#8211; I&#8217;d used web.py before I started with Django (I even wrote a very <a href="http://morethanseven.net/2007/01/03/webphp/">basic <span class="caps">PHP</span> clone</a>) and although I still like somethings about it, it felt like more code than was required for what I wanted.</li>
+	<li><a href="http://github.com/breily/juno/tree/master">Juno</a> is similar in design to Sinatra but again it wasn&#8217;t really what I was after this time. I prefer separating my routing from my code and I&#8217;m not sure I like that it comes with it&#8217;s own templating engine.</li>
+	<li><a href="http://github.com/JaredKuolt/newf/tree/master">Newf</a> was more like it. Basically a hugely stripped down <span class="caps">WSGI</span> framework which provides the very basic building blocks. Something to build on perhaps?</li>
+	<li><a href="http://github.com/bradleywright/mnml/tree/master"><span class="caps">MNML</span></a> (by an ex-colleague <a href="http://intranation.com/">Brad Wright</a>) is build atop Newf adding a few more features and cleaning up some of the interfaces. My only problems here were that I prefer regex based routes and wanted individual methods for each <span class="caps">HTTP</span> verb. The former was a specific design decision Brad had made in order to be able to reverse routes, the later was on the todo list.</li>
+</ul>
+<p>So, I set <a href="http://github.com/garethr/mnml/tree/master">about forking <span class="caps">MNML</span> to create my own branch</a>. I added extra comments as I was making my way through the code, wrote a few tests to checks thinks worked and allowed for pluggable routing mechanisms. <span class="caps">MNML</span> applications look a bit like the following:</p>
+<pre>from mnml import RegexBasedApplication, RequestHandler, HttpResponse, development_server
+class HelloWorld(RequestHandler):
+    def GET(self):
+        return HttpResponse("&lt;h1&gt;Hello World&lt;/h1&gt;")
+routes = (
+    (r'^/$', HelloWorld),
+)
+application = RegexBasedApplication(routes)
+if __name__ == '__main__':
+    development_server(application)</pre>
+<p>If you want to use the token based routing you would substitute in something like the following:</p>
+<pre>routes = (
+    ('/', Foo),
+    ('/myview/:stuff/', Bar)
+)
+application = TokenBasedApplication(routes)</pre>
+<p>The best bit is that it&#8217;s only about 350 lines of code, a great deal of which is accounted for by comments. It&#8217;s also really quite fast &#8211; especially using something like spawning to run the <span class="caps">WSGI</span> application. The other thing I like is the ease with which you can add <span class="caps">WSGI</span> middleware into the mix.</p>
+<p>So, if you have a small scale problem where simple and fast beats everything else then have a look and let me know what you think. It will take less time to read the code and tests than it will be read the introductory chapter on whichever larger framework you choose to look at.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

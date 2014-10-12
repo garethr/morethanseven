@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Unobtrusive Javascript Example - Printing &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unobtrusive Javascript Example - Printing</h1>
+  <span class="post-date">29 May 2007</span>
+  <p>In lieu of some real posts here&#8217;s a quick code sample to keep things ticking along.</p>
+<p>I&#8217;m sure you&#8217;ve had the need to place a nice print button on a web page from time to time. If you haven&#8217;t you&#8217;re probably alone. A quick google will throw up lots of results for print javascript &#8211; the problem is that most of them are horribly obtrusive.</p>
+<p>OK, so it&#8217;s easy to write something like:</p>
+<pre><code>&lt;a href="#" onclick="window.print();"&gt;print&lt;/a&gt;</code></pre>
+<p>But the problem is <em>What if you turn off javascript?</em> The following unobtrusive script automagically adds a print link to the page &#8211; in this case as part of a list item which is added to the unordered list with the id of <em>iNav</em> and a class of <em>has-print</em>.</p>
+<pre><code>var Print = {
+   init: new domFunction(function() {
+      if (list = document.getElementById("iNav")) {
+         if (list.nodeName.toLowerCase() === 'ul') {
+            if (Print.hasClass(list,'has-print')) {
+               var item = document.createElement("li");
+               item.className = "print";
+               var link = document.createElement("a");
+               link.href = "#";
+               link.onclick = Print.printpage;
+               var txt = document.createTextNode("Print");
+               link.appendChild(txt);
+               item.appendChild(link);
+               list.appendChild(item);
+            }
+         }
+      }
+   }),
+
+   hasClass: function(element,cName) { 
+      return new RegExp('\\b'&amp;#43;cName&amp;#43;'\\b').test(element.className);
+   },
+
+   printpage: function() {
+      window.print();
+      return false;
+   }
+}</code></pre>
+<p>With something like this you want it to load as soon as the dom is ready, rather than on page load. <a href="http://www.brothercake.com">Brothercake&#8217;s</a> <a href="http://www.brothercake.com/site/resources/scripts/domready/">domFunction</a> comes to the rescue here. The namespacing is based on <a href="http://www.kryogenix.org">Stuarts</a> technique which should make it more capable of just being dropped in to any site.</p>
+<p>The only problem with this is that it&#8217;s just a little longer than the original. I think this is down to one often missed fact, at least until recently &#8211; Javascript is a programming language and should be treated as such.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

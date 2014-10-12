@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      JSON configuration example - Printing &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">JSON configuration example - Printing</h1>
+  <span class="post-date">02 Jun 2007</span>
+  <p>As a quick follow up to my <a href="http://morethanseven.net/posts/unobtrusive-javascript-example-printing/">previous post on unobtrusive javascript</a> I thought I&#8217;d expand it even more, but this time in an attempt to make it easier to use.</p>
+<p>As we&#8217;ve already mentioned javascript should be treated like any other programming language &#8211; not necessarily left to the experts but their should ideally be an expert involved somewhere along the line. One way of doing this is to abstract out configuration from programmatic logic. This massively helps with code resuse as well, leaving everyone to play to their strengths. It&#8217;s interesting to note that even programmers who would always store configuration settings seperately when writing <span class="caps">PHP</span> or Rails applications don&#8217;t always get around to doing the same in Javascript. Hell, I used to be one of them until <a href="http://wait-till-i.com/">Chris Heilmann</a> pointed out how patently obvious the solution was while at <a href="http://thehighlandfling.com/2007/">The Highland Fling</a>.</p>
+<p>The answer is <a href="http://www.json.org/"><span class="caps">JSON</span></a>. I think it&#8217;s nearly always easier with a quick example so here&#8217;s the Print snippet from the previous post but this time with a few configurable options:</p>
+<pre><code>var Print = {
+   config: {
+      "id": "iNav",
+      "classname": "has-print",
+      "text": "Print"
+   },
+   init: new domFunction(function() {
+      if (list = document.getElementById(Print.config.id)) {
+         if (list.nodeName.toLowerCase() === 'ul') {
+            if (Print.hasClass(list,Print.config.classname)) {
+               var item = document.createElement("li");
+               item.className = "print";
+               var link = document.createElement("a");
+               link.href = "#";
+               link.onclick = Print.printpage;
+               var txt = document.createTextNode(Print.config.text);
+               link.appendChild(txt);
+               item.appendChild(link);
+               list.appendChild(item);
+            }
+         }
+      }
+   }),
+   hasClass: function(element,cName) { 
+      return new RegExp('\\b''&amp;#43;cName'&amp;#43;'\\b').test(element.className);
+   },
+   printpage: function() {
+      window.print();
+      return false;
+   }
+}</code></pre>
+<p>The main thing we have done is to add a new block:</p>
+<pre><code>config: {
+   "id": "iNav",
+   "classname": "has-print",
+   "text": "brand new text"
+},</code></pre>
+<p>This is simply a <span class="caps">JSON</span> object of name/value pairs. You can easily alter the right hand values and change the workings of the app. You then reference the settings in  the rest of you&#8217;re code using dot notation:</p>
+<pre><code>Print.config.text</code></pre>
+<p>In the above example our configuration directives are stored in our Print object. Depending on the circumstances of use you might find it easier to have a seperate Config object which stores all the configuration settings for the entire site.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

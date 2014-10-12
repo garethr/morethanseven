@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Using Checkinstall With Virtualenv For Python Deployments &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Using Checkinstall With Virtualenv For Python Deployments</h1>
+  <span class="post-date">29 Jan 2011</span>
+  <p>Michael Brunton-Spall wrote last week about some <a href="http://www.brunton-spall.co.uk/post/2011/01/26/packaging-and-deploying-python-web-apps/">frustrations with packagings and deploying Python web applications</a>. Although his experience was with Python, the problems he describes are the same for Ruby and <span class="caps">PHP</span> and a whole host of languages. The following example uses Python, but works equally as well for anything else.</p>
+<p>Michael has three simple rules for his servers:</p>
+<ol>
+	<li>they cannot access the internet</li>
+	<li>they cannot access internal services that are for development</li>
+	<li>they cannot have compilers / utilities on them</li>
+</ol>
+<p>I won&#8217;t go into all the reasons for doing this (you can read the blog post linked to above) but these are pretty sensible security precautions.</p>
+<p>My approach to this problem would be to use your friendly system packages and using a handy tool called <a href="http://www.asic-linux.com.mx/~izto/checkinstall/">Checkinstall</a> to create a deb or rpm. I&#8217;m going to use as an example the <a href="http://wiki.secondlife.com/wiki/Eventlet">Eventlet</a> library. This is available in PyPi and one of it&#8217;s dependencies (Greenlets) provides a C extension. The same approach would work for an entire Python web application too. I&#8217;m as ever using the apt package management tool but this should work with yum as well.</p>
+<p>The first step is to build the package on a build machine. This should be a machine or virtual machine running the same operating system as your production web servers. You might build these packages manually or as part of a continuous integration system. On this machine we&#8217;ll need the compilers and development tools:</p>
+<pre>sudo apt-get install build-essential python-dev python-setuptools checkinstall
+sudo easy_install virtualenv</pre>
+<p>We&#8217;ll also create a virtualenv into which we&#8217;ll be installing our packages:</p>
+<pre>sudo virtualenv --no-site-packages /usr/local/environment
+source /usr/local/environment/bin/activate</pre>
+<p>Now, instead of just calling easy_install to install the package, we prefix it with checkinstall.</p>
+<pre>sudo checkinstall /usr/local/environment/bin/easy_install eventlet</pre>
+<p>This will prompt for various meta data about the package you want to create, including the name and version of the package. If you&#8217;re using this method in the real world you&#8217;ll want to decide on a versioning and naming scheme for your packages to avoid clashes with system provided packages. You can also set many of these options from the command line rather than having to manually fill them in each time.</p>
+<p>Once everything has been filled in successfully this should run through, installing eventlet and greenlets and eventually creating a deb or rpm package depending on what platform you&#8217;re running on. You should see something like:</p>
+<pre>Done. The new package has been installed and saved to
+
+ /home/vagrant/eventlet-gareth_20110129-1_i386.deb
+
+ You can remove it from your system anytime using: 
+
+      dpkg -r eventlet-gareth</pre>
+<p>Now lets grab that package and take it to one of our front end web servers via a controlled deployment process. That front end web server needs the virtualenv creating but nothing else. So:</p>
+<pre>sudo apt-get install python-virtualenv
+sudo virtualenv --no-site-packages /usr/local/environment</pre>
+<p>(Now you might be thinking that installing the python-virtualenv package in this way breaks rule 1 above. And you&#8217;d be right in most cases, but I&#8217;m guessing Michael&#8217;s systems team have a local package repo for authorised packages, or alternatively you could download the package to the build machine and push it to the production environment.)</p>
+<p>Now install the package we created earlier.</p>
+<pre>sudo dpkg -i eventlet-gareth_20110129-1_i386.deb</pre>
+<p>That should throw all the required files into the virtualenv environment we created. No compilers. No calls to internal or external systems. Just move some precompiled binaries and text files to predefined places on disk.</p>
+<p>I used a PyPi package as an example. Checkinstall could have been pointed at a custom build file written especially for your own application, one that moves files and folders to where they are needed. Say something that looks like this:</p>
+<pre>#!/bin/sh
+cp /home/stage/myapplication /var/www/apps/</pre>
+<p>The running checkinstall against that (or a more complex build file using capistrano or ant or fabric) you can create a package containing your application code and install it into the specified place.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

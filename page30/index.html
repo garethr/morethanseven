@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/ant/epydoc/2009/02/23/epydoc-ant-task/">
+        Epydoc Ant task
+      </a>
+    </h1>
+
+    <span class="post-date">23 Feb 2009</span>
+
+    <p>I quite like <a href="http://epydoc.sourceforge.net/">Epydoc</a> for generating Python <span class="caps">API</span> documentation, even if the interface looks a little dated and could do with a lick of paint.</p>
+<p>For most project I use an Ant build script to generate documentation when needed. You could wrap the basic commands in a make file or a bash script if you prefer that sort of thing though. The only trick is to make sure you have everything you need on your Python Path. In Django projects, or App Engine projects, you&#8217;ll probably find the default runner script plays with the path somewhat. The following example adds the current directory to the path along with an ext directory where I stash external modules, which should see it run cleanly without any import errors.</p>
+<pre>&lt;project name="secretproject" default="create-api"&gt;
+    &lt;property name="name" value="secretproject"/&gt;
+    &lt;property name="parent" value="/www/projects"/&gt;
+    &lt;property name="api" value="/www/project/secretproject/api"/&gt;
+    &lt;target name="create-api" description="Generate API documentation with epydoc"&gt;
+         &lt;exec executable="/bin/sh"&gt;
+             &lt;env key="PYTHONPATH" value="${parent}:${parent}/${name}/ext:$PYTHONPATH"/&gt;
+             &lt;env key="DJANGO_SETTINGS_MODULE" value="${name}.settings"/&gt;
+             &lt;arg line="-c 'epydoc --html -o ${api} --name ${name} --graph all ${name}'"/&gt;
+         &lt;/exec&gt;
+    &lt;/target&gt;
+&lt;/project&gt;</pre>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/appengine/python/xmpp/imified/2009/02/21/example-using-xmpp-app-engine-imified/">
+        Example of using XMPP on App Engine (via IMified)
+      </a>
+    </h1>
+
+    <span class="post-date">21 Feb 2009</span>
+
+    <p>As I <a href="http://morethanseven.net/2009/02/07/xmpp-and-offline-processing-coming-google-app-engi/">mentioned before</a>, App Engine is getting an <span class="caps">XMPP</span> <span class="caps">API</span> at some point soon. But if you just can&#8217;t wait to start adding IM interfaces to your applications then you <em>can</em> do it now, by using a nifty third party in <a href="http://imified.com/">IMified</a>.</p>
+<p>IMified provide an incredibly simple <span class="caps">HTTP</span> <span class="caps">API</span> for interacting with your own IM bot. If we want to be buzz word compliant we might even call it a <a href="http://webhooks.pbwiki.com">webhook</a>. It&#8217;s also currently a free service while they work through the beta. The <a href="http://new.imified.com/developers/api">documentation</a> is short and to the point but only contains examples in <span class="caps">PHP</span>. It supports multiple step <em>conversations</em> as well as authentication.</p>
+<p>So, armed with a little time on the train over the last few days I got to work knocking together a quick demo application as a proof of concept. You can find the site on <a href="http://imified-demo.appspot.com/">imified-demo.appspot.com</a> and if you want to chat with the bot you can add <em>appengineimified@bot.im</em> to your contacts. The bot uses the Jabber protocol so is available over Jabber or GTalk. IMified make it easy to use <span class="caps">MSN</span> or Yahoo IM accounts as well, which is something the App Engine <span class="caps">API</span> might very well not do I would imagine.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjRDww" alt="Screengrab of the IMified App Engine site"/></p>
+<p>As always you can find the code on <a href="http://github.com/garethr/appengine-imified/tree/master">GitHub</a>. Most of the code is actually just the site itself or settings to make local development easier. The following is a slightly edited version of the live code (logging and caching removed to make it easier to follow). All we need to do is accept a <span class="caps">HTTP</span> Post request with a list of arguments and return a plain text response. All being well the response is sent as a IM message to the sender.</p>
+<pre>class IMified(webapp.RequestHandler):
+    "This is the endpoint for the message from IMified"
+    def post(self):
+        "We recieve post data from IMified"
+        userkey = self.request.get('userkey')
+        network = self.request.get('network')
+        msg = self.request.get('msg')
+        step = self.request.get('step')
+        try:
+            # we try and create the message
+            message = Message(
+                userkey = userkey,
+                network = network,
+                msg = msg,
+                step = int(step)
+            )   
+            message.put()
+            # the response is send as an IM message to the sender
+            self.response.out.write('Message saved')
+        except:
+            self.response.out.write('An error ocured, message not saved')</pre>
+<p>IMified can obviously be used outside App Engine as well, and in fact it&#8217;s not just about working around limitations in existing systems. Running the long running processes required for bots, and potentially even running your own <span class="caps">XMPP</span> server, is fiddly at times and requires at least some setup, monitoring and configuration to get working. Not having that as a barrier for entry for simple experiments or applications is a good thing.</p>
+<p><a href="http://aralbalkan.com/">Aral</a> spoke at the last <a href="http://groups.google.com/group/django-london"><span class="caps">DJUGL</span></a> about App Engine and mentioned a wide range of third party services that you can use to get around current limitations. IMified definitely fits into this group of support services very nicely indeed. I&#8217;d love to see them do really well as it really makes it much easier to get started with <span class="caps">XMPP</span> applications, even if what you can do is limited to a few simple APIs. I&#8217;d love to hear about other services that people are using in this way to build these distributed applications.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/python/rest/2009/02/18/python-rest-client/">
+        Python REST Client
+      </a>
+    </h1>
+
+    <span class="post-date">18 Feb 2009</span>
+
+    <p>I&#8217;m working on a small project involving using RESTful APIs and wanted a simple <span class="caps">HTTP</span> client, something that sat a little higher in the stack than <a href="http://code.google.com/p/httplib2/">httplib2</a> or similar. I turned initially to the <a href="http://www.djangoproject.com/documentation/models/test_client/">Django Test Client</a> which now <a href="http://code.google.com/p/python-rest-client/">supports all the required methods</a> but it turned out that I&#8217;d have to unpick it from django a little.</p>
+<p>With a little bit of looking around I found the <a href="http://code.google.com/p/python-rest-client/">python-rest-client</a> which certainly sounded like it would do what I wanted. It lets you make <span class="caps">HTTP</span> requests in as straight forward a manner as possible and fitted the bill perfectly.</p>
+<pre>from restful_lib import Connection
+conn = Connection("http://morethanseven.net")
+response = conn.request_get("/")</pre>
+<p>It supports authentication, nice helper methods and gives you the response in a nice format.</p>
+<pre>conn = Connection("http://example.org", username="XXX", password="XXX")
+conn.request_delete('/items/11232344')</pre>
+<p>As an added benefit it also comes with a Google App Engine compatible version.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/personal/2009/02/15/looking-new-job-june/">
+        Looking for a New Job in June
+      </a>
+    </h1>
+
+    <span class="post-date">15 Feb 2009</span>
+
+    <p>As I think a few people are aware I&#8217;ll be leaving <a href="http://thisisglobal.com">Global</a> at the end of May.</p>
+<p>It&#8217;s going to have been a pretty good year all told. I got to work with some great people and we built some pretty good stuff from the group up. The <a href="http://www.capitalradio.co.uk/">Capital Radio</a> website was part of it but it&#8217;s the systems behind the scenes where all the interestingness lies. But as the team as a whole was just getting started the economy got bored of growing each year and went south. Global is first and foremost a radio company that makes money from advertising and, in need of cash, it decided to <a href="http://radiotoday.co.uk/news.php?extend.4270">cut lots of the interactive department</a>. All of that meant lots of redundancies and less interesting work and I decided I&#8217;d rather go now than wait around.</p>
+<p>It&#8217;s an odd situation to be in but I&#8217;m not going to dwell on that and I&#8217;m not bitter about any of the goings on. I got to play with Django full time in what, I think, was the biggest Django development team in the UK. I got to work, and argue, with smart people every day. We had two internal hackdays where I got to play with <span class="caps">XMPP</span> and messaging apps. And I&#8217;m definitely a far better programmer than a year ago.</p>
+<p>I&#8217;ll be sticking around at Global for the next three months to finish off a number of projects that I&#8217;ve been involved in and tidy up a few loose ends, as well as to work out what to do next. Which is where you (might) come in. Think of it like a job vacancy in reverse.</p>
+<ul>
+	<li>I&#8217;m looking for a job to start in June or thereabouts.</li>
+	<li>I live in Cambridge and have been working in London for the last 9 months, so I don&#8217;t mind a commute. I&#8217;d also consider something that had me working remotely and traveling further afield as needed.</li>
+	<li>My main focus is on finding something where I get to <em>build interesting things</em>. By that I mean a web development role that also involves bit of system design and other bits thrown in.</li>
+	<li>I&#8217;d like something that tallies with my current interests. This blog, <a href="http://slideshare.net/garethr">Slideshare</a> and <a href="http://github.com/garethr">my GitHub profile</a> should give you an idea about what they are but to name but a few: testing, <span class="caps">REST</span>, APIs, messaging, content distribution, aggregation and development team tools.</li>
+	<li>Technology wise I&#8217;d be more than happy with something using Python or Ruby. I&#8217;d love to do more than just play around at home with Erlang as well, or the opportunity to pick up Scala. Having said all that if it&#8217;s interesting enough I don&#8217;t mind too much, I learn new tricks for fun and have 3 months of free time to kill.</li>
+	<li>Big company or small? It depends on the company, and probably depends more on the people. I&#8217;d choose smart people over a fancy company name any day of the week. I also don&#8217;t mind the idea of getting involved with a startup where some salary is offset against equity &#8211; but only if the idea is good enough.</li>
+	<li>I&#8217;ve got around 8 years of wide ranging professional experience, I write articles, speak at conferences and get things done. I know roughly what the going rate for good professional web developers is as well.</li>
+	<li><a href="http://www.google.com/search?q=gareth+rushgrove">Ask the internet about me</a> if you want to know more.</li>
+</ul>
+<p>So if anyone knows of something that would be up my street I&#8217;d be grateful. Even better, if you or your company are looking for someone at the moment and don&#8217;t mind waiting a few months then I might be what you&#8217;re looking for. For those that don&#8217;t already have an email address you can find me on <a href="mailto:gareth@morethanseven.net">gareth@morethanseven.net</a></p>
+<p>(There is obviously a chance that you might be a recruiter, rather than someone who wants me to work with or for them. I won&#8217;t ignore you out of hand but please don&#8217;t try and ring me unless I ask you to. Email is both quicker and easier for me to deal with. Also if you just want my CV for your files, have only a vague job description, or you want to tell me about a job in a company you can&#8217;t tell me the name of please don&#8217;t be offended if I don&#8217;t get back to you.)</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/django/settings/2009/02/15/let-you-sys-admin-override-your-django-settings/">
+        Let you Sys Admin Override your Django Settings
+      </a>
+    </h1>
+
+    <span class="post-date">15 Feb 2009</span>
+
+    <p>The previous <a href="http://morethanseven.net/2009/02/11/django-settings-tip-setting-relative-paths/">Django settings tip</a> seemed to go down well so I thought I&#8217;d jot down a few more over the next few weeks. Most of these have come out of working with a decent sized Django team at <a href="http://thisisglobal.com">Global</a> so I can&#8217;t take credit for anything but writing them down for the most part. For this example I think <a href="http://alixandalex.com/obfuscated-signatures/">Alex Knowles</a> did the original version.</p>
+<p>I was talking with out friendly <a href="http://search.cpan.org/~rclamp/">sys</a> <a href="http://www.unixdaemon.net/">admins</a> on Friday about a new application and whether they were happy with some application specific logging (using the Python logging module) I&#8217;d build in. Nothing fancy, just application logging to a rotated log file for system events. Their answer was yes, as long as they could control where the log files ended up and the maximum file size, ideally without having to play around in the code or to redeploy the application if they wanted to move the files elsewhere.</p>
+<p>These things were already specified in the settings file rather than hardcode into the application but that only gets us half way. The standard Linux way of setting this sort of thing is with a configuration file stored in the /etc directory. So we ended up with the following snippet of code in our settings.py file.</p>
+<pre># we're going to allow overriding of settings via a yml file.
+# This makes live nicer for anyone managing the box
+# and means settings can be overloaded without redeploying the site
+SETTINGS_OVERIDE = "/etc/application_name.yml"
+try:
+    file = open(SETTINGS_OVERIDE)
+    for key, value in yaml.load(file).items():
+        globals()[key]=value
+except:
+    # we don't always have the file around or need the setting 
+    # defined so best to be quite if things go wrong
+    pass</pre>
+<p>Then in the yaml file you can simply clobber any of the settings using a simple name value pair approach.</p>
+<pre>LOG_FILE: "/var/log/application_name.log"</pre>
+<p>It lets us keep production paths that might change out of the developers code, at the same time as giving the sys admins a familiar way of managing the production environment.</p>
+<p>It does have one downside, if you&#8217;re not aware of it&#8217;s presence then it can make debugging settings related issues a pain. With that in mind you could wrap it so as to only work this way when <span class="caps">DEBUG</span> is False, or take the approach here which is to leave extensive comments.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page31">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page29">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

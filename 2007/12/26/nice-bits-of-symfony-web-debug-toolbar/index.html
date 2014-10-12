@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Nice bits of symfony: Web Debug Toolbar &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Nice bits of symfony: Web Debug Toolbar</h1>
+  <span class="post-date">26 Dec 2007</span>
+  <p>I <a href="http://morethanseven.net/posts/getting-going-with-symfony/">mentioned previously</a> that I&#8217;d been playing with the <a href="http://www.symfony-project.org/">symfony</a> framework on a couple of projects and I have to admit to being more and more impressed as I wade in looking for things. I&#8217;ve worked with enough <span class="caps">MVC</span>-like frameworks to know they are all quite similar in more ways than they are dramatically different. So it&#8217;s the little bits and pieces that win you over.</p>
+<p>One of my favourite little bits in symfony has to be the Web Debug Toolbar. When running in development mode you get a little menu floating above your application like so (top right hand corner).</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonyToolbar.png" title="Web page showing the symfony web debug toolbar in the top right corner" alt="Web page showing the symfony web debug toolbar in the top right corner" /></p>
+<p>This gives you all sorts of useful information as you&#8217;re developing your application &#8211; from the number of database queries to the rendering time, with a full logger built in. It&#8217;s also been particularly useful in learning symfony &#8211; being able to follow the entire request through the stack from the logger is really handy when you don&#8217;t know what is going on.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonyToolbar2.png" title="Web page showing the symfony web debug toolbar fully expanded" alt="Web page showing the symfony web debug toolbar fully expanded" /></p>
+<p>With the increasing use of object relational mapping in web frameworks it&#8217;s quite easy to end up with a <em>working</em> application on your development box that turns out to absolutely hammer your database when used in the real world by only a few hundred people (I&#8217;m looking at you tagging). The database utilities, showing the number of queries and the <span class="caps">SQL</span> for those queries, is particularly handy for finding bottlenecks here.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonySQL.png" title="Web page showing the symfony web debug toolbar SQL view" alt="Web page showing the symfony web debug toolbar SQL view" /></p>
+<p>I&#8217;ve not come across something similar in other frameworks, <span class="caps">PHP</span> or otherwise. I&#8217;d be interested to know if similar things do exist for Rails or Django in particular.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

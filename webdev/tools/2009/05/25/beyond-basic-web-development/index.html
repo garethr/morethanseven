@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Beyond Basic Web Development &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Beyond Basic Web Development</h1>
+  <span class="post-date">25 May 2009</span>
+  <p>I did a talk at the recent barcamp North East on web development tools. Specifically I wanted to talk about the fact that an awful lot of people just use the basic stack of tools they are familiar with. So Microsoft people will just use C#, <span class="caps">MSSQL</span> and <span class="caps">ISS</span> and lots of people just use <span class="caps">PHP</span>, MySQL and Apache. I&#8217;m not saying their is anything wrong with those tools, but if they are all you have in your tool box you&#8217;re limited how well designed your software can be.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I&#8217;d knocked the presentation together in my hotel room pretty quickly before heading down to barcamp and the lack of an internet connection meant I didn&#8217;t have links and didn&#8217;t cover a few tools I should have. It did seem to have the desired result in any case as several people spoke to me afterwards about wanting to use one of the tools I mentioned for something specific.</p>
+<ul>
+	<li><a href="http://www.danga.com/memcached/">Memcached</a></li>
+	<li>Non relational databases (<a href="http://hadoop.apache.org/hbase/">Hbase</a>, <a href="http://couchdb.apache.org/">Couchdb</a>)</li>
+	<li><a href="http://tokyocabinet.sourceforge.net/tyrantdoc/">Tokyo Tyrant</a></li>
+	<li><a href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache Bench</a></li>
+	<li><a href="http://integrityapp.com/">Continuous Integration</a></li>
+	<li><a href="http://djangoproject.com/">Django</a> (specifically for nearly free admin interfaces)</li>
+	<li>Small web servers &#8211; <a href="http://nginx.net/">Nginx</a>, <a href="http://code.macournoyer.com/thin/">Thin</a> and <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a></li>
+	<li>Message queues &#8211; <a href="http://www.rabbitmq.com/">RabbitMQ</a> and <a href="http://stompserver.rubyforge.org/">Stompserver</a></li>
+	<li><span class="caps">HTTP</span> tools &#8211; <a href="http://www.apsis.ch/pound/">Pound</a>, <a href="http://varnish.projects.linpro.no/">Varnish</a> and <a href="http://www.squid-cache.org/">Squid</a></li>
+	<li><a href="http://hadoop.apache.org/core/">Hadoop</a></li>
+</ul>
+<p>We also had a good discussion afterwards and people mentioned a few other tools.</p>
+<ul>
+	<li><a href="http://reductivelabs.com/products/puppet/">Puppet</a></li>
+	<li><a href="http://www.nagios.org/">Nagios</a></li>
+	<li><a href="http://ganglia.info/">Ganglia</a></li>
+	<li><a href="http://www.mortbay.org/jetty/">Jetty</a></li>
+	<li><a href="http://lucene.apache.org/solr/">Solr</a></li>
+</ul>
+<p>Now it&#8217;s possible to spend too much time playing with small tools that are likely to be peripheral to the bulk of your application. But the number of stories I&#8217;ve head of people writing their own messages queuing systems in <span class="caps">PHP</span>, or using PHPMyAdmin as an application admin interface or ignoring the fact that their fancy new application only supports a few people at once.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

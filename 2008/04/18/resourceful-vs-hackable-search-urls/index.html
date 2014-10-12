@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Resourceful Vs Hackable Search URLs &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Resourceful Vs Hackable Search URLs</h1>
+  <span class="post-date">18 Apr 2008</span>
+  <p>I often end up pondering <span class="caps">URL</span> design given a moment and something that keeps coming up is hackable search queries. But first a very quick primer on the idea of resourceful design.</p>
+<p><a href="http://en.wikipedia.org/wiki/Representational_State_Transfer"><span class="caps">REST</span></a> is a series of architectural principals more than a defined architecture. The <a href="http://en.wikipedia.org/wiki/Resource_oriented_architecture">Resource Orientated Architecture</a> builds on those ideas with a series of concrete guidelines put down by <a href="http://intertwingly.net">Sam Ruby</a> for designing RESTful systems. The simple version is that you try to design your system around <a href="http://en.wikipedia.org/wiki/Resource_%28Web%29">resources</a> represented by URLs.</p>
+<p>I&#8217;d thoroughly recommend reading <a href="http://www.amazon.co.uk/RESTful-Web-Services-Leonard-Richardson/dp/0596529260">RESTful web services</a> whenever you get a moment as this subject is covered in detail.</p>
+<p>Flickr isn&#8217;t a truly resourceful design but it does have many of the hallmarks. For example the <span class="caps">URL</span> that describes me is at:</p>
+<pre><code>http://flickr.com/people/garethr</code></pre>
+<p>When it comes to searching on flickr we have:</p>
+<pre><code>http://flickr.com/search/?w=all&amp;q=pubstandards&amp;m=text</code></pre>
+<p>The pattern of using a query string argument named <em>q</em> to pass a search string is pretty common. One of the guidelines mentioned as part of the <span class="caps">ROA</span> discussed query strings:</p>
+<blockquote>
+<p>Query string parameters are appropriate if they are inputs to a Resource which is an algorithm. Otherwise, these values should be moved into the <span class="caps">URI</span>.</p>
+</blockquote>
+<p>Search is definitely algorithmic. Now you could maybe argue that a global search should be done on the root of a site, with specific resource searches on the resource in questions. eg. <em>/people/?q=</em>. This would likely work fine but require some behind the scenes complexity as well as probably not being as obvious to the end user. Global searches are in many cases much more common that restricted searches and even in resourceful designs the root of the site (ie. the home page) might not act as a list of available site resources. A notable exception might would have to be the excellent <a href="http://www.bbc.co.uk/programmes"><span class="caps">BBC</span> Programmes</a> site which is basically one big semantic catalogue.</p>
+<p>But we have another kind of <span class="caps">URL</span> that&#8217;s cropping up for search results, one that treats the <span class="caps">URL</span> much more like a fundamental part of the user interface for search. An example from a site I use all the time is <a href="http://traintimes.org.uk/">The Accessible UK Train Timetable</a> which allows for URLs like the following:</p>
+<pre><code>http://traintimes.org.uk/newcastle/london</code></pre>
+<p>You can basically squash all the search parameters from the form into the <span class="caps">URL</span>, meaning you can easily bookmark search results. Note however the actual content is likely to change. The above example for instance would use the current time to get a list of trains from Newcastle to London. In an hours time the results will be different.</p>
+<p>Another good example would be the new Yahoo! UK TV listings which has URLs like these:</p>
+<pre><code>http://uk.tv.yahoo.com/listings/bbc-two/2008-04-17/</code></pre>
+
+<pre><code>http://uk.tv.yahoo.com/listings/itv1/2008-04-17/21-00/</code></pre>
+<p>Again this is really a search query, or at least specifying the time and date is. In some ways it&#8217;s the return of the command line &#8211; allowing searches to be run very quickly from a textual interface.</p>
+<p>Now, both these approaches treat URLs with the respect they deserve. But they do have the potential to clash somewhere in the middle if care isn&#8217;t taken. The Accessible Train Times site is a single purpose site which just does searches while <span class="caps">BBC</span> Programmes does feature a search engine but it&#8217;s just the global <span class="caps">BBC</span> search which takes you off site. And if that wasn&#8217;t enough potential competition then a question raised by <a href="http://simonwillison.net">Simon</a> at The Highland Fling regarding <span class="caps">URL</span> design and the search engine optimisation crowd go me thinking too. From being a somewhat niche area of interest URLs might just become a sort after part of a good website design &#8211; fought over by the varying disciplines of modern web design and development.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

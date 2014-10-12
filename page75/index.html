@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/30/photos-and-flickr/">
+        Photos and Flickr
+      </a>
+    </h1>
+
+    <span class="post-date">30 Aug 2005</span>
+
+    <p>I&#8217;ve been a (distant) admirer of <a href="http://www.flickr.com">flickr</a> since I had a brief play a while back. Nice interface, good idea and all that. Well I finally got round to setting up a proper account.</p>
+ <p>I&#8217;d recently got myself a reasonable digital camera. Nothing expensive or fancy &#8211; in the past whenever I&#8217;ve thought about taking photo&#8217;s I&#8217;ve always got bored and given up. This time is going to be different. Hopefully.</p>
+ <p>I&#8217;ve only really got round to one proper shoot and in non ideal conditions (well, in terms of photography &#8211; basically in a room under a pub) but I&#8217;m pretty happy with a couple of the photo&#8217;s. But maybe that&#8217;s because I like somewhat abstract orange/red shots?</p>
+ <p>Anyway, hopefully I&#8217;ll get round to taking and uploading some more shots. And maybe using some of them on this site.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/29/nice-urls-and-php/">
+        Nice URLs and PHP
+      </a>
+    </h1>
+
+    <span class="post-date">29 Aug 2005</span>
+
+    <p>I all one for nice url&#8217;s, that is removing all the  gumf involving question marks and ampersands and the like for something that is both shorter, more human readable and more search engine friendly.</p>
+ <p>Doing it in <span class="caps">PHP</span> is actually pretty straightforward once you get the hang of it and can be pretty powerful &#8211; so here goes with a short tutorial of sorts. It&#8217;s will probably be brief and make too many assumptions of the reader &#8211; any questions just let me know and I may even try and write it up properly.</p>
+ <p>The basic principle is to stop using the <span class="caps">GET</span> array (accessible from $_SERVER[&#8216;<span class="caps">GET</span>&#8217;]) to make descisions with. The question then becomes what to replace it with. A simple class borrowed from the <a href="http://www.sitepoint.com">Sitepoint</a> <a href="http://www.sitepoint.com/books/phpant1/"><span class="caps">PHP</span> Anthology</a> book written by <a href="http://www.sitepoint.com/books/phpant1/about.php">Harry Fuecks</a> is at least my answer. The PathVars class does pretty much what is says in the name, specifically providing access to the path contents in the form of an array. I&#8217;ll provide a link to a <a href="/code/dispatcher.zip">code archive</a> for this article rather than just copy and paste whole classes &#8211; download it now if you are interested in the behind the scenes bits.</p>
+ <p>So we now create a new PathVars instance like so:</p>
+<p><code>
+&lt;pre&gt;
+/* Pathvars object */
+$pathvars = new PathVars($_SERVER['SCRIPT_NAME']);
+&lt;/pre&gt;
+</code></p>
+ <p>And we can now magically get access to each element of the path (separated by a /) from the instance variable pathvars:</p>
+<p><code>$params = $pathvars-&amp;gt;pathVars;</code></p>
+ <p>Or more correctly by using the method provided:</p>
+<p><code>$pathvars-&amp;gt;fetchByIndex(0)</code></p>
+ <p>Where the fetchByIndex parameter is the element you want from the array.</p>
+ <p>Ok, so so far I&#8217;m really just repeating the work of others, if you like this sort of thing I&#8217;d really recommend the book. The next step on top of this is however is to decide what to do with the information when you have it. The following shows a very simple example &#8211; potentially for use in a simple blog or news site:</p>
+<p><code>
+&lt;pre&gt;
+switch ($pathvars-&amp;gt;fetchByIndex(0)) {</p>
+case &#8220;article&#8221;:
+include(views/article.view.php);
+case &#8220;page&#8221;:
+include(views/page.view.php);
+default:
+include(&#8216;views/home.view.php&#8217;);
+<p>}<br />
+</pre><br />
+</code></p>
+ <p>In this example where we have www.example.com/article or www.example.com/article/a_sample_article_name the article view include file is used.</p>
+ <p>What these include files then do is up to you, in my case each of them passes different parameters to a simple templating system which then outputs the page. Again, have a look at the code samples to see that in action.</p>
+ <p>Let me know if anyone found this interesting, useful or informative and I might post other titbits, otherwise it&#8217;s probably back to inane ramblings and misplaced conjecture.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/29/a-typo-on-this-site/">
+        A Typo? On this site?
+      </a>
+    </h1>
+
+    <span class="post-date">29 Aug 2005</span>
+
+    <p>Well, their are no doubt lots of typo&#8217;s on this site but I&#8217;m referring to the Ruby on Rails blogging application <a href="http://typo.leetsoft.com">Typo</a> (currently version 2.5.5)</p>
+ <p>So far I have to say it&#8217;s quite nice. I&#8217;m only playing at the moment &#8211; the site you are currently reading (for those of you actually on the site, and not reading the feed) is a product of my <span class="caps">PHP</span> skills. Some of it I like (ie. the bits I wanted to write), others I&#8217;m not too sure about and well, it doesn&#8217;t do anything I cant be bothered to write. Which up until not hasn&#8217;t been a problem. But I&#8217;d still quite like live searching, categories and tags and all that malarkey.</p>
+ <p>Browsing the usual supect sites the choice between using a bespoke system and an existing solution seems fairly split. <a href="http://www.hicksdesign.co.uk">John Hicks</a> is always raving about <a href="http://www.textpattern.com">TextPattern</a> and saying nice things. You see lots of <a href="www.movabletype.org/">MovableType</a> fans and <a href="http://www.wordpress.com/">WordPress</a> fans but non to be fair I never really liked them. Maybe that was just me?</p>
+ <p>It might be that all, especially WordPress and MovableType are pretty mature solutions and that I like something to hack on? So a custom self built solution seems the way to go? Or does it? With everything providing very similar featuresets &#8211; and differing only in a few important areas building something bespoke means 95% redesigning and rebuilding the wheel and maybe 5% innovation. Which is cool as a learning experience but I&#8217;m now in more of a get stuff done mood of late.</p>
+ <p>I haven&#8217;t decided as yet one way or the other but Typo might just be the anwser. Small enough to hack, an excuse to learn Rails and featureful to boot.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/25/the-greatness-of-online-tutorials/">
+        the greatness of online tutorials
+      </a>
+    </h1>
+
+    <span class="post-date">25 Aug 2005</span>
+
+    <p>A somewhat grandiouse title but hey, dont you just love it when things just work? A slow evening lead to following two tutorials at once, the outcome I now have <a href="http://andybudd.com">andy budd</a>&#8217;s fab <a href="http://www.andybudd.com/archives/2005/08/itunes_smart_playlists/index.php#more">iTunes playlists</a> set up and I have rails running on my host. Woo Hoo.</p>
+ <p>I love working things out and generally dont mind things ending up not working even but sometimes it&#8217;s nice when everything takes only a small amount of time and effort and then works. A sense of acomplishment, and admiration, if you will.</p>
+ <p>Oh, proof of the rails pudding: <a href="http://morethanseven.net:3000/">morethanseven.net:3000/</a><br />
+WEBrick at the moment, FastCGI is for another day, hopefully soon. And before you ask, I didn&#8217;t just copy the source from a local install. Really.</p>
+ <p>The tutorial I followed for that I grabbed from <a href="http://xmlareas.com/ruby-rails-howto.html">xmlareas.com/ruby-rails-howto.html</a> which might be of use on a range of reasonable shared hosting environments &#8211; though remember to remomve the temp directory as it will contain <span class="caps">LOTS</span> of files that may flag some hosting file limits.</p>
+ <p>Makes me want to write some sort of how to articles on some subject or other. Question on a post card is what?</p>
+ <p>So a big thanks for Andy&#8217;s rather geeky approach to cataloging music (my librarian housemate is going to love that) and to goldenratio (probably not a real name?) for the Rails article. Long live the Internet and all that.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/21/the-state-of-newcastle/">
+        The State of Newcastle
+      </a>
+    </h1>
+
+    <span class="post-date">21 Aug 2005</span>
+
+    <p>I&#8217;ve been a practicing web designer/developer/whatever in Newcastle for over three years now and about a year ago I set up a mailing list to try and act as a useful resource, shamelessly stealing from <a href="http://brightonnewmedia.org">brightonnewmedia.org</a></p>
+ <p>So was born <a href="http://newcastlenewmedia.org">newcastlenewmedia.org</a>.</p>
+ <p>The grand plan was to find other people like me with an interest. Anyone I could learn new bits from and hopefully the utopian dream of everyone getting something out of particupating in a community. It&#8217;s been, I guess, something of a partialy something. Traffic goes up and down depending on, well I dont really know. Hopefully it&#8217;s been useful on occasion.</p>
+ <p>One issue was I never really promoted it. So, with a little time on my hands rather than redesigning this site (again) I did a little work freshening up the website, adding a showcase of local designers personal sites in the process and the plan is to promote it a little. Hopefully get some more people on their and in particular some students from the local Uni&#8217;s &#8211; quite a few of which teach something along the lines of web design but approach it in wildly different ways &#8211; something I might write about next.</p>
+ <p>Anyway, I guess the main aim is to get a snap shot of the industry and in particularly the people who make up the industry, in and around the North East. Are their people in their bedrooms going crazy <span class="caps">CSS</span> zen Garden designs? Are their any <span class="caps">DOM</span> Scripting leviathans? British web designers seem to be the cream of the crop, or at least make up a decent percentage of the cream (why do Standards based design analogies always end up being <a href="http://www.stuffandnonsense.co.uk/archives/web_standards_trifle.html">cake related</a>?), but where are the Northern designers, never mind the North East.</p>
+ <p>Anyone else think differently? Let me know. Send me sites of designers and developers in and around the North East and I&#8217;ll post them into the <a href="http://www.newcastlenewmedia.org">newcastlenewmedia.org</a> site and we shall see.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page76">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page74">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

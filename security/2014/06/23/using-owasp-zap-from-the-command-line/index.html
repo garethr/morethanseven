@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Using OWASP ZAP from the command line &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Using OWASP ZAP from the command line</h1>
+  <span class="post-date">23 Jun 2014</span>
+  <p>I&#39;m a big fan of <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP ZAP</a> or
+the Zed Attack Proxy. It&#39;s suprisingly user friendly and nicely pulls of
+it&#39;s aim of being useful to developers as well as more hardcore penetration testers.</p>
+
+<p>One of the features I&#39;m particularly fond of is the aforementioned
+proxy. Basically it can act as a transparent HTTP proxy, recording the
+traffic, and then analyse that to conduct various active security tests;
+looking for XSS issues or directory traversal vulnerabilities for
+instance. The simplest way of seeding the ZAP with something to analyse is using
+the simple inbuilt spider.</p>
+
+<p>So far, so good. Unfortunately ZAP isn&#39;t designed to be used from the
+command line. It&#39;s either a thick client, or it&#39;s a proxy with a simple
+API. Enter <a href="https://github.com/garethr/zapr">Zapr</a>.</p>
+
+<p>Zapr is a pretty simple wrapper around the ZAP API (using the
+<a href="https://github.com/vpereira/owasp_zap">owasp_zap</a> library under the
+hood). All it does is:</p>
+
+<ul>
+<li>Launch the proxy in headless mode</li>
+<li>Trigger the spider</li>
+<li>Launch various attacks against the collected URLs</li>
+<li>Print out the results</li>
+</ul>
+
+<p>This is fairly limited, in that a spider isn&#39;t going to work
+particularly well for a mor interactive application, but it&#39;s a farily good
+starting point. I may add different seed methods in the future (or would
+happily accept pull requests). Usage wise it&#39;s as simple as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">zapr --summary http://localhost:3000/
+</code></pre></div>
+<p>That will print you out something like the following, assuming it finds
+an issue.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">+-----------------------------------+----------+----------------------------------------+
+| Alert                             | Risk     | URL                                    |
++-----------------------------------+----------+----------------------------------------+
+| Cross Site Scripting (Reflected)  | High     |http://localhost:3000/forgot_password   |
++-----------------------------------+----------+----------------------------------------+
+</code></pre></div>
+<p>The above alert is taken from a <a href="https://github.com/garethr/zapr-example">simple example</a>,
+using the <a href="https://github.com/OWASP/railsgoat">RailsGoat</a> vulnerable web
+application as a scape goat. You can see the resulting output from
+<a href="https://travis-ci.org/garethr/zapr-example">Travis running the tests</a>.</p>
+
+<p>Zapr is a bit of a proof of concept so it&#39;s not particularly robust or
+well tested. Depending on usage and interest I may tidy it up and extend
+it, or I may leave it as a useful experiment and try and finally get ZAP
+support into <a href="http://gauntlt.org">Gauntlt</a>, only time will tell.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/vagrant/cucumber/testing/2014/03/15/testing-vagrant-runs-with-cucumber/">
+            Testing Vagrant runs with Cucumber
+            <small>15 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

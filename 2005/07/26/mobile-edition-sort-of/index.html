@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Mobile Edition (sort of) &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Mobile Edition (sort of)</h1>
+  <span class="post-date">26 Jul 2005</span>
+  <p>I&#8217;m something of a fan of mobile devices and really should do more mobile web stuff but hey, the support for mobile <span class="caps">CSS</span> is shody at best. Enter <a href="http://www.mikeindustries.com/blog/archive/2005/07/make-your-site-mobile-friendly">this article</a>.</p>
+ <p>The idea is really pretty simple. All you really want when your paying for bandwidth on your phone (or you <span class="caps">PDA</span> connected to your phone via bluetooth) is the content. So lets get rid of everything (and we mean everything) else. The solution is fairly devious &#8211; using some <span class="caps">PHP</span> jiggery pokery, a sub domain and some text parsing.</p>
+ <p>Have a look at <a href="http://mobile.morethanseven.net">mobile.morethanseven.net</a> for an example on this site.</p>
+ <p>In reality it&#8217;s a non ideal solution, but considerng it really does take two minutes I dont see that as a problem, and I think that was what the author of the article was getting at. We want to use mobile <span class="caps">CSS</span> but some browsers ignore it while others pretend they are grown up browsers and try and render the whole site <span class="caps">CSS</span> file.</p>
+ <p>I&#8217;m hopefully going to alter this a little, rather than removing all stylesheets leaving any  mobile media sheets intact. Assign these to the main site and we have an interim solution. Fancy devices that make use of the correct style sheets can use the main domain fine, others can get the same design by visiting the mobile sub domain.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

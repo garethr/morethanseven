@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/13/unobtrusive-javascript/">
+        unobtrusive javascript
+      </a>
+    </h1>
+
+    <span class="post-date">13 Aug 2005</span>
+
+    <p>Lots of talk around at the moment about <a href="http://adactio.com/atmedia2005/">unobtrusive</a>  <a href="http://www.bobbyvandersluis.com/articles/goodpractices.php">javascript</a> on the usual websites and <a href="http://designersinhouse.com">discussion</a> <a href="http://www.quirksmode.org/dom/list.html ">lists</a>. However alot of people, maybe outside the inner circles, are still finding old school examples of inline code on out of date pages.</p>
+ <p>So here&#8217;s my tuppence. I guess the more websites that post new, up to date, examples and reasoning the better?</p>
+ <p>The premise is pretty simple. In the same way as controlling formating with tables and having everything being mixed up in one .htm file is frowned upon as simply being too much work &#8211; dealing with lots of inline snippets of javascript raises the same problems. Namely being time consuming to update and maintain.</p>
+ <p>The solution is to keep <span class="caps">ALL</span> your javascript in separate .js files, and that includes removing things like <code>href="javascript:"</code> or <code>onclick=</code>. The first question is therefor how &#8211; when I started looking down this route I found a simple answer hard to come by, having to look at more complex examples and reverse engineer them.</p>
+ <p>The following is the method I&#8217;m using at the moment. It may have issues I&#8217;m unaware &#8211; if your a javascript guru let me know. The examples are from the fluidflash page on this site, see it in action at <a href="http://www.morethanseven.net/fluidflash">www.morethanseven.net/fluidflash</a></p>
+ <p>We first I set up an initialisation function:</p>
+
+
+<pre><code>
+function init() {
+    if (!document.getElementById) return false;
+
+    liquid = document.getElementById("iNavLiquid");
+
+    liquid.onclick = liquidChangeClass;
+}
+</code></pre>
+ <p>This sets the onclick event on the element with the id <code>iNavLiquid</code> that will trigger the function <code>liquidChangeClass</code>. Next we define that function:</p>
+
+
+<pre><code>
+function changeClass( targetId, newClass ) {
+    if (document.getElementById){
+        target = document.getElementById( targetId );
+        target.className = newClass;
+    }
+}
+
+function liquidChangeClass() {
+    changeClass("iBody","liquid");
+}
+</code></pre>
+ <p>The specifics aren&#8217;t too important to this example but you can see the <code>liquidChangeClass</code> function which is triggered by the onclick event handler.</p>
+ <p>And finally we need to trigger the <code>init</code> function when the page loads. Their are lots of ways of doing this which is probably a conversation for another time &#8211; I used a <code>schedule</code> function from <a href="http://themaninblue.com">themaninblue.com</a> which you can find below:</p>
+
+
+<pre><code>
+function schedule(objectID, functionCall, iteration) {
+   if (iteration == null){
+   iteration = 0;
+   }
+
+   if (objectID == "window") {
+   var oldonload = window.onload;
+
+   if (typeof window.onload != "function") {
+   window.onload = functionCall;
+   } else {
+   window.onload = function() {
+   oldonload();
+   functionCall();
+   }
+   }
+   } else if (document.getElementById(objectID)) {
+   functionCall();
+   } else if (iteration &amp;lt; 300) {
+   setTimeout(function(){schedule(objectID, 
+           functionCall, iteration + 1)}, 10);
+   }
+
+   return true;
+}  
+
+schedule("window", init);
+</code></pre>
+ <p>So their we have it, hopefully a simple enough example of how to move to unobtrusive javascript. As most of this is generic and used all the time it&#8217;s far simpler that it first appears.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/11/how-i-came-to-love-visio/">
+        How i came to love visio
+      </a>
+    </h1>
+
+    <span class="post-date">11 Aug 2005</span>
+
+    <p>I&#8217;m doing a lot more IA stuff of late and being in a Microsoft shop that meant getting to play with Visio. And I have to say it&#8217;s a great tool. It&#8217;s pretty simple to pick up, powerful, lots of options and customisations and even better &#8211; simple to get to grips with.</p>
+ <p>Quite a bit of work I&#8217;ve been doing has been around process and specification. I&#8217;d read The Elements of User Experience a while back but have been getting more into it recently, and the visual vocabulary stuff is excellent. Have a look on <a href="http://www.jjg.net/ia/visvocab/">www.jjg.net/ia/visvocab/</a> if your into this kind of planning. You can download Visio Shapes as well and then it&#8217;s just a matter of dragging, dropping and drawing arrows.</p>
+ <p>Another good resourse has been <a href="http://www.boxesandarrows.com">boxesandarrows.com</a>,  a site I&#8217;ve read on occasion but found both more useful and more time to read recently. Documentation seems pretty key to getting projects working efficiently within team environments &#8211; and pictures say a thousand words (or something).</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/08/02/fluid-flash-v01/">
+        fluid flash v0.1
+      </a>
+    </h1>
+
+    <span class="post-date">02 Aug 2005</span>
+
+    <p>Their is nothing wrong with a nice header graphic. Clients, designers and customers alike love them. But I often see them used as an excuse for fixed width designs. Well no more I say (unless, of course you have a perfectly good reason for a fixed width design in which case you dont really need this technique.)</p>
+ <p>The plan was simple. Find a way of incorporating flash headers into sites using liquid or elastic designs in much the same way you might use lots of sliding doors background-image goodness.</p>
+ <p>A quick actionscript solution, courtesy of <a href="http://mikomedia.com">Mike Ord</a> combined with some <span class="caps">CSS</span> and Javascript is presented for perusal on <a href="http://www.morethanseven.net/fluidflash">www.morethanseven.net/fluidflash</a> .</p>
+ <p>This is a simple example, the header at the top is flash and writes to screen it&#8217;s current dimensions. Try resizing the screen (liquid layout) or text (elastic layout) and see for yourself.</p>
+ <p>I need a nice attractive flash movie to really show this off so anyone who wants to send something let me know &#8211; I&#8217;ll make sure to provide credit.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/07/31/new-designs-with-added-width/">
+        new designs with added width
+      </a>
+    </h1>
+
+    <span class="post-date">31 Jul 2005</span>
+
+    <p>Any previous visitors will notice something of a redesign which is pretty much finished &#8211; although no doubt their will be a few tweaks over the coming weeks as time permits.</p>
+ <p>The main reason was to bring in a liquid design that will allow more space &#8211; something I&#8217;m quite fond of as an idea.</p>
+ <p>The default for web pages, before we add any styles, is a liquid layout &#8211; where the site content fills the window whatever the width. This should be ideal for everyone, whatever resolution or monitor (or device) screen size. Why then do a great deal of sites use a fixed width design, my previous design included?</p>
+ <p>Design expediancy seems to me to be the main culprit in my view. Not always I&#8217;ll admit &#8211; lots of blog style sites use a fixed width centered column in order to get a readable number of words per line (whether they know it or not), which was my original excuse I&#8217;ll admit. For most designers, and most people, it&#8217;s simply easier to think in terms of thinks that dont change. Using percentages (in a liquid layout) or em&#8217;s (in a <a href="http://www.alistapart.com/articles/elastic">elastic</a> layout) simply takes a bit of getting your head round.</p>
+ <p>It&#8217;s the web, not print, and that is something that from my experience (second hand I&#8217;ll admit) is something that isn&#8217;t drilled home on the majority of university or college courses.</p>
+ <p>Attractive header graphics is something that lots of sites, in particular commercial sites, employ &#8211; and with good reasons. It&#8217;s a great way of getting across a brand ethos in an attractive and eye catching manner. It&#8217;s also sometimes used as an excuse to use a fixed width design &#8211; the question is why? Try resizing windows and text on www.vivabit.com, www.thebgroup.co.uk or www.capgemini.com .</p>
+ <p>One outstanding issue I see is using Flash in a similar way. With broadband usage, especially amongst companies, on the up and up, using Flash (and video) in a similar way becomes increasingly more attractive. So something I&#8217;m going to have a look at is how Flash and either <a href="http://adactio.com/atmedia2005/">unobtrusive javascript</a> or sliding doors techniques can be used to get the cake (attractive, flexible layouts which use Flash &#8211; without breaking the layout) and eat it. More soon.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/07/26/mobile-edition-sort-of/">
+        Mobile Edition (sort of)
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jul 2005</span>
+
+    <p>I&#8217;m something of a fan of mobile devices and really should do more mobile web stuff but hey, the support for mobile <span class="caps">CSS</span> is shody at best. Enter <a href="http://www.mikeindustries.com/blog/archive/2005/07/make-your-site-mobile-friendly">this article</a>.</p>
+ <p>The idea is really pretty simple. All you really want when your paying for bandwidth on your phone (or you <span class="caps">PDA</span> connected to your phone via bluetooth) is the content. So lets get rid of everything (and we mean everything) else. The solution is fairly devious &#8211; using some <span class="caps">PHP</span> jiggery pokery, a sub domain and some text parsing.</p>
+ <p>Have a look at <a href="http://mobile.morethanseven.net">mobile.morethanseven.net</a> for an example on this site.</p>
+ <p>In reality it&#8217;s a non ideal solution, but considerng it really does take two minutes I dont see that as a problem, and I think that was what the author of the article was getting at. We want to use mobile <span class="caps">CSS</span> but some browsers ignore it while others pretend they are grown up browsers and try and render the whole site <span class="caps">CSS</span> file.</p>
+ <p>I&#8217;m hopefully going to alter this a little, rather than removing all stylesheets leaving any  mobile media sheets intact. Assign these to the main site and we have an interim solution. Fancy devices that make use of the correct style sheets can use the main domain fine, others can get the same design by visiting the mobile sub domain.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page77">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page75">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

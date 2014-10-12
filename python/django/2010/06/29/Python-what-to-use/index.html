@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Python: What To Use? &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Python: What To Use?</h1>
+  <span class="post-date">29 Jun 2010</span>
+  <p>My friend <a href="http://jamieonsoftware.com">Jamie Rumbelow</a> has started a new project and decided to use Python. He asked a great question over on <a href="http://stackoverflow.com/questions/3143115/architecting-from-scratch-in-python-what-to-use">Stack Overflow</a> which basically came down to <em>what should I use for my first proper Python web application project</em>. After a quick prompting on twitter I decided to have a go. I&#8217;ve cross posted my anwser below more because it took as long as a typical blog post to write.</p>
+<h2>Frameworks</h2>
+<p>OK, so I&#8217;m a little biased here as I currently make extensive use of Django and organise the Django User Group in London so bear that in mind when reading the following.</p>
+<p>Start with Django because it&#8217;s a great gateway drug. Lots of documentation and literature, a very active community of people to talk to and lots of example code around the web.</p>
+<p>That&#8217;s a completely non-technical reason. Pylons is probably purer in terms of Python philosophy (being much more a collection of discrete bits and pieces) but lots of the technical stuff is personal preference, at least until you get into Python more. Compare the very active Django tag on Stack Overflow with that of pylons or turbogears though and I&#8217;d argue getting started is simply easier with Django irrespective of anything to do with code.</p>
+<p>Personally I default to Django, but find that an increasing amount of time I actually opt for writing using simpler micro frameworks (think Sinatra rather than Rails). Lots of things to choose from (<a href="http://fewagainstmany.com/blog/python-micro-frameworks-are-all-the-rage">good list here</a>). I tend to use <span class="caps">MNML</span> (because I wrote parts of it and it&#8217;s tiny) but others are actively developed. I tend to do this for small, stupid web services which are then strung together with a Django project in the middle serving people.</p>
+<p>Worth noting here is appengine. You have to work within it&#8217;s limitations and it&#8217;s not designed for everything but it&#8217;s a great way to just play with Python and get something up and working quickly. It makes a great testbed for learning and experimentation.</p>
+<h2>Mongo/<span class="caps">ORM</span></h2>
+<p>On the MongoDB front you&#8217;ll likely want to look at the <a href="http://api.mongodb.org/python/">basic python mongo library</a> first to see if it has everything you need. If you really do want something a little more <span class="caps">ORM</span> like then <a href="http://hmarr.com/mongoengine/">mongoengine</a> might be what you&#8217;re looking for. A bunch of folks are also working on making Django specifically integrate more seamlessly with nosql backends. Some of that is for future Django releases, but <a href="http://www.allbuttonspressed.com/projects/django-nonrel">django-norel</a> has code now.</p>
+<p>For relational data <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> is good if you want something standalone. Django&#8217;s <span class="caps">ORM</span> is also excellent if you&#8217;re using Django.</p>
+<h2><span class="caps">API</span></h2>
+<p>The most official Oauth library is <a href="http://github.com/simplegeo/python-oauth2">python-oauth2</a>, which handily has a Django example as part of it&#8217;s docs.</p>
+<p><a href="http://bitbucket.org/jespern/django-piston/wiki/Home">Piston</a> is a Django app which provides lots of tools for building APIs. It has the advantage of being pretty active and well maintained and in production all over the place. Other projects exist too, including <a href="http://zacharyvoase.github.com/dagny/">Dagny</a> which is an early attempt to create something akin to RESTful resources in Rails.</p>
+<p>In reality any Python framework (or even just raw <span class="caps">WSGI</span> code) should be reasonably good for this sort of task.</p>
+<h2>Testing</h2>
+<p>Python has unittest as part of it&#8217;s standard library, and unittest2 is in python 2.7 (but <a href="http://pypi.python.org/pypi/unittest2/0.1.4">backported to previous versions too</a>). Some people also like <a href="http://code.google.com/p/python-nose/">Nose</a>, which is an alternative test runner with some additional features. <a href="http://twill.idyll.org/">Twill</a> is also nice, it&#8217;s a &#8220;a simple scripting language for Web browsing&#8221;, so handy for some functional testing. <a href="http://github.com/rlisagor/freshen">Freshen</a> is a port of cucumber to Python. I haven&#8217;t yet gotten round to using this in anger, but a quick look now suggests it&#8217;s much better than when I last looked.</p>
+<p>I actually also use Ruby for high level testing of Python apps and apis because I love the combination of celerity and cucumber. But I&#8217;m weird and get funny looks from other Python people for this.</p>
+<h2>Message Queues</h2>
+<p>For a message queue, whatever language I&#8217;m using, I now always use RabbitMQ. I&#8217;ve had some success with stompserver in the past but Rabbit is awesome. Don&#8217;t worry that it&#8217;s not itself written in Python, neither is PostgresSQL, Nginx or MongoDB &#8211; all for good reason. What you care about are the libraries available. What you&#8217;re looking for here is <a href="http://barryp.org/software/py-amqplib/">py-amqplib</a> which is a low level library for talking amqp (the protocol for talking to rabbit as well as other message queues). I&#8217;ve also used <a href="http://github.com/ask/carrot/">Carrot</a>, which is easier to get started with and provides a nicer <span class="caps">API</span>. Think bunny in Ruby if you&#8217;re familiar with that.</p>
+<h2>Environment</h2>
+<p>Whatever bits and pieces you decide to use from the Python ecosystem I&#8217;d recommend getting to who <a href="http://clemesha.org/blog/2009/jul/05/modern-python-hacker-tools-virtualenv-fabric-pip/">pip and virtualenv</a> &#8211; note that fabric is also cool, but not essential and these docs are out of date on that tool). Think about using Ruby without gem, bundler or rvm and you&#8217;ll be in the right direction.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

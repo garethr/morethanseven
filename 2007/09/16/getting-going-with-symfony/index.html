@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Getting going with Symfony &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Getting going with Symfony</h1>
+  <span class="post-date">16 Sep 2007</span>
+  <p>I&#8217;ve tinkered with a rather large number of these web application frameworks, in Ruby, Python, <span class="caps">PHP</span> and C#, at some point over the last few years. But I&#8217;ve never really settled on any of them &#8211; mainly because my day job didn&#8217;t need me to and also because I like playing with new toys. I even tinkered with <a href="http://morethanseven.net/posts/webphp/">my own homage</a> to <a href="http://webpy.org/">Web.py</a> in <span class="caps">PHP</span> which a few people have picked and are <a href="http://code.google.com/p/wephp/">running with</a>.</p>
+<p>Right now though I&#8217;ve been doing some work with a <a href="http://rbd.shiftnetwork.co.uk/">few</a> <a href="http://www.bofh.org.uk/">people</a> on a Rails project. Their are some seriously nice things in Rails that I don&#8217;t see elsewhere; really good testing support baked in for one, and some serious deplyments for another.</p>
+<p><a href="http://www.symfony-project.com/">Symfony</a> is another <span class="caps">PHP</span> framework but one that only supports PHP5 (a good thing in my book). It&#8217;s basically a slick integration of lots of existing mature <span class="caps">PHP</span> tools plus some good old <span class="caps">MVC</span> and tried and trusted Software Patterns. I also discovered from a few YAHOO&#8217;s that they have started using it on some levels within <span class="caps">YAHOO</span>.</p>
+<p>My interest piqued I found a couple of <a href="http://www.slideshare.net/fullo/federico-feroldi-php-in-yahoo/">related</a> <a href="http://www.slideshare.net/dustin.whittle/symfony-yui-professional-web-20">presentations</a> on <a href="http://www.slideshare.net/">Slideshare</a> (my new favourite web app), and the site has a <a href="http://www.symfony-project.com/book/1_0">high quality online documentation</a> which can also be <a href="http://www.amazon.co.uk/Definitive-Guide-Symfony-Experts-Source/dp/1590597869">purchased in dead tree format</a>.</p>
+<p>Having a play around with Symfony it took me a little while to get everything up and running, but I&#8217;d kept some handy notes for later. Hopefully they might be useful to someone other than me.</p>
+<p>I&#8217;ve dropped in a few variables denoted by braces where relevant. The paths are from my <span class="caps">MAMP</span> and <span class="caps">PEAR</span> based environment and I&#8217;m using a MySQL database, though you could just as easily use Sqlite.</p>
+<p>First we set up a virtual host in Apache. You have to do this manually at the moment. I already have a script for setting up virtual hosts under apache on OS X which I might extend to do this for me if I end up using Symfony alot.</p>
+<p><code>&lt;pre&gt;&lt;VirtualHost 127.0.0.1&gt;
+  ServerName 
+  DocumentRoot "/Applications/MAMP/htdocs/{project}/web"
+  DirectoryIndex index.php
+  Alias /sf /Applications/MAMP/bin/php5/lib/php/data/symfony/web/sf
+  &lt;Directory "/Applications/MAMP/bin/php5/lib/php/data/symfony/web/sf"&gt;
+    AllowOverride All 
+    Allow from All</p>
+</Directory>
+&lt;Directory &#8220;/Applications/<span class="caps">MAMP</span>/htdocs/{project}/web&#8221;&gt;
+AllowOverride All
+Allow from All
+</Directory>
+<p></VirtualHost></pre></code></p>
+<p><code>&lt;pre&gt;cd /www
+mkdir {project}
+cd {project}&lt;/pre&gt;</code></p>
+<p>Now we dive into the actual symfony commands. We&#8217;ll just setting up both a frontend and a backend for this app which I think is likely to be pretty typical. I quite like the idea of seperate entities for these.</p>
+<p><code>&lt;pre&gt;symfony init-project {project_name}
+symfony init-app frontend
+symfony init-module frontend {module_name}&lt;/pre&gt;</code></p>
+<p>Next we have to configure our database connection by editing /config/databases.yml</p>
+<p><code>&lt;pre&gt;all:
+    propel:
+      class: sfPropelDatabase
+      param:
+        dsn: mysql://{username}:{password}@localhost:3306/{database_name}&lt;/pre&gt;</code></p>
+<p>That done we can set up our data definitions in <em>/config/schema.yml</em>. Read the documention for all the details but you can probably get the general idea.</p>
+<p><code>&lt;pre&gt;propel:
+ item:
+   id:
+   title: varchar(200)
+   description: longvarchar
+   created_at:&lt;/pre&gt;</code></p>
+<p>And yet another quick change in <em>/config/propel.ini</em></p>
+<p><code>&lt;pre&gt;propel.database.createUrl = mysql://{username}:{password}@localhost:3306
+propel.database.url = mysql://{username}:{password}@localhost:3306/{database_name}&lt;/pre&gt;</code></p>
+<p>The next set of commands build our model files, create <span class="caps">SQL</span> for out chosen database and then create the tables in the database.</p>
+<p><code>&lt;pre&gt;symfony propel-build-model
+symfony propel-build-sql
+symfony propel-insert-sql&lt;/pre&gt;</code></p>
+<p>We&#8217;ll quickly create a backend using the scaffolding. Note that <em>item</em> here is the model name which is taken from the <em>schema.yml</em> config file above.</p>
+<p><code>&lt;pre&gt;symfony init-app backend
+symfony propel-generate-crud backend items Item&lt;/pre&gt;</code></p>
+<p>All in all not bad going. And that&#8217;s basically the same for most of the apps you&#8217;re likely to develop. It could probably be a little easier in the database and apache config areas in fairness. Rails&#8217; use of an inbuild webserver really helps here. But the use of <span class="caps">YAML</span> to define the model is, in my mind, more straightforward that using Ruby in Rails migrations. I&#8217;ve an app in the works at the moment and I&#8217;m looking at using Symfony. If that pans out I&#8217;ll blog more about the bits I&#8217;m interested in &#8211; the inbuilt unit testing framework high on my list.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

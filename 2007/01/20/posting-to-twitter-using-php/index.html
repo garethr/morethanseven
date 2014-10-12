@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Posting to Twitter using PHP &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Posting to Twitter using PHP</h1>
+  <span class="post-date">20 Jan 2007</span>
+  <p><em>Please note that Twitter no-longer support Basic Auth via the <span class="caps">API</span> so the following code no longer works. Please see the <a href="http://dev.twitter.com/pages/oauth_faq">official docs</a> for more info</em></p>
+<p>Like others I&#8217;ve found myself becoming something of a fan of <a href="http://twitter.com">Twitter</a>, the impossible to explain social networking site. If you&#8217;re reading this, have a twitter account and not already my <em>friend</em> then <a href="http://twitter.com/garethr">add me</a> if you like.</p>
+<p>Apart from the interesting social aspects I&#8217;m also interested in Twitter as an <span class="caps">API</span> for all sorts of communications, remember Twitter already deals nicely with <span class="caps">SMS</span> messaging, Instant Messaging, subscription and the like and has a <a href="http://twitter.com/help/api">nice <span class="caps">XML</span> and <span class="caps">JSON</span> based <span class="caps">API</span></a>. I&#8217;ve been using the <a href="http://www.zamano.com/">Zamano</a> <span class="caps">SMS</span> gateway at work for a few projects and Twitter actually lets me some more and doesn&#8217;t come with a price tag.</p>
+<p>I started out playing with <a href="http://curl.haxx.se/">curl</a> to send updates like so (obviously with a real username and password):</p>
+<p><code>curl -u username:password -d status="twittering from curl" http://twitter.com/statuses/update.xml</code></p>
+<p>I then used the <span class="caps">PHP</span> curl features to do the same thing from <span class="caps">PHP</span>:</p>
+<pre><code>&amp;lt;?php
+// Set username and password
+$username = 'username';
+$password = 'password';
+// The message you want to send
+$message = 'is twittering from php using curl';
+// The twitter API address
+$url = 'http://twitter.com/statuses/update.xml';
+// Alternative JSON version
+// $url = 'http://twitter.com/statuses/update.json';
+// Set up and execute the curl process
+$curl_handle = curl_init();
+curl_setopt($curl_handle, CURLOPT_URL, "$url");
+curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl_handle, CURLOPT_POST, 1);
+curl_setopt($curl_handle, CURLOPT_POSTFIELDS, "status=$message");
+curl_setopt($curl_handle, CURLOPT_USERPWD, "$username:$password");
+$buffer = curl_exec($curl_handle);
+curl_close($curl_handle);
+// check for success or failure
+if (empty($buffer)) {
+    echo 'message';
+} else {
+    echo 'success';
+}
+?&amp;gt;</code></pre>
+<p>Obviously you could do more with the return than print out a success or failure message. The $buffer variable has the returned <span class="caps">XML</span> or <span class="caps">JSON</span> for you&#8217;re parsing pleasure.</p>
+<p>I&#8217;m going to try out some of the other <span class="caps">API</span> methods too, probably play more with <span class="caps">XSL</span> or look more closely at the <a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198"><span class="caps">PEAR</span> <span class="caps">JSON</span> module</a> in building up a simple library as a quick search didn&#8217;t throw up much of interest and the <span class="caps">API</span> is nice and simple; making it fun to hack on.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

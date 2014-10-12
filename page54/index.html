@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/02/28/uk-web-design-meetups-map/">
+        UK Web Design Meetups Map
+      </a>
+    </h1>
+
+    <span class="post-date">28 Feb 2007</span>
+
+    <p>I&#8217;ve posted a list before of events and meetups I know about around the UK but had got playing with the <a href="http://www.google.com/apis/maps/documentation/">Google Maps <span class="caps">API</span></a> and decided to go one stage further and create a hopefully useful place to put all that info in the shape of a quick mashup.</p>
+<p>Have a look over on <a href="http://morethanseven.net/presents/meetup">morethanseven.net/presents/meetup</a> for a hopefully useful tool. I&#8217;ll try and keep this up to date manually for the time being, so if you know of any other get togethers please leave a comment and I&#8217;ll add them to the list. Thanks to the excellent, if a little technical (well, it is Google) <span class="caps">API</span> documentation and <a href="http://adactio.com">Jeremy&#8217;s</a> <a href="http://austin.adactio.com">Adactio Austin</a> for inspiration.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgMapSample.jpg" title="Sample map of UK Meetups" alt="Sample map of UK Meetups" /></p>
+<p>I&#8217;d like to make this even more flexible, ideally all I should have to do is point the page at the group urls and then parse out the geo-coded microformats data and then display it on the map and page, rather than duplicate this information and maintain it by hand. So if any of the owners of these sites want to geo-code up their sites and let me know that would be great. Some <a href="http://upcoming.org">Upcoming</a> integration might be on the cards too.</p>
+<p>Hopefully it should be of some use to anyone looking for things going on in their area, or if you find yourself in a strange part of the country for whatever reasons then you&#8217;ll know how to find the local geek community without risking life and limb with an odd T-Shirt.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/02/26/what-erdf-can-learn-from-microformats/">
+        What eRDF can learn from Microformats 
+      </a>
+    </h1>
+
+    <span class="post-date">26 Feb 2007</span>
+
+    <p>Quite a bit of time at <a href="http://barcamp.org/BarCampLondon2">BarCamp</a> was spent thinking, talking and in running skirmishes about the Semantic Web. Or the semantic web depending which <em>side</em> you&#8217;re on.</p>
+<p>Now I&#8217;m a big fan and perpetual user of <a href="http://microformats.org">Microformats</a>. They make sense, are simple to add everywhere (by stealth if needs be) and the potential is pretty interesting to boot. They are designed in the open, allowing everyone to participate and have a strong emphasis on solving every day problems in the real world.</p>
+<p>Contrast that with <a href="http://www.w3.org/RDF/"><span class="caps">RDF</span></a> and the Semantic Web. Most of the work here has been going on for years in academic institutions and W3C working groups. It&#8217;s all rather grandiose. Everything I&#8217;d seen previously horribly broke <span class="caps">HTML</span>. But someone seems to have seen the light. <a href="http://blogs.opml.org/tommorris/">Tom Morris</a> mentioned in one of his talks <a href="http://research.talis.com/2005/erdf/wiki/Main/RdfInHtml">eRDF</a>, which is a method for embedding <span class="caps">RDF</span> in <em>valid</em> <span class="caps">HTML</span>.</p>
+<p>After one of the talks I got chatting with Tom Morris and <a href="http://www.kid666.com/blog/">Tom Croucher</a>, both card carrying <span class="caps">RDF</span> folk, and <a href="http://niquimerret.com/">Niqui Merret</a> another interested bystander. Toms argument basically comes down to Microformats solve the 80% problem, <span class="caps">RDF</span> trys to solve the other 20%. I sort of think the Microformats group would probably agree with that. I also like the idea of creating your own formats off the cuff. I&#8217;ve seen enough to at least have a further look see and hopefully try out a few experiements myself.</p>
+<p><a href="http://ben-ward.co.uk/">Ben Ward</a> had a <a href="http://ben-ward.co.uk/journal/fao-rdf/">few things to say on the subject</a> which are worth a good read. I agree with the majority of his arguments but coudn&#8217;t resist commenting on at least one:</p>
+<blockquote>
+<p>If youâ€™re working with <span class="caps">RDF</span>, show me something new. Donâ€™t just rehash vcard and icalendar into your own format; Iâ€™m not interested</p>
+</blockquote>
+<p>I disagree. One of the best thinks about Microformats, that draw people (including me) in from the get go, is the unquestionable ease with which you can add <a href="http://microformats.org/wiki/hcard">hcard</a> or <a href="http://gmpg.org/xfn/">xfn</a> and get on with your day. Weeks or months later, after a few feel good projects you&#8217;ll be keeping an eye on the wiki when you come across something in need of structure. And even then you find it&#8217;s a <a href="http://microformats.org/wiki/hresume">composite</a> of something you&#8217;ve seen before.</p>
+<p>Right now I&#8217;d love to find that. A simple example of how to mark up a few very simple examples of eRDF. Hey, if that means contact details and a calendar event then so be it. If all that&#8217;s wrapped up in a lovely shiny green coat of pain with an icon logo so much the better. Until I can experiment with simple I cant do anything else, never mind anything new. So that&#8217;s two posts for the future sorted then.</p>
+<p>Tom has set up a wiki over at <a href="http://www.getsemantic.com/wiki/Main_Page">GetSemantic</a> to start to collate information together in one place which from my initial research seems like a good idea. If and when I get enough together (and the <a href="http://openid.net">OpenId</a> authentication is up and running) I&#8217;ll make sure to add everything there. If I get carried away and find interesting voices on the blogosphere I might event get a planet up and running. Or I might find way too much <span class="caps">XML</span> and leave it at that.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/02/25/people-i-met-in-london/">
+        People I met in London
+      </a>
+    </h1>
+
+    <span class="post-date">25 Feb 2007</span>
+
+    <p>Meeting likeminded people is always good fun and the UK web conference scene provides lots of good opportunities for that. Sometimes it&#8217;s meeting up with past <em>aquaintances</em> or <em>friends</em> and other times mainly about making new <em>contacts</em>. Oh, and their are always a few <em>co-worker&#8217;s</em> in tow.</p>
+<p>Mainly as a reminder but also as a &#8220;hello&#8221; to some of those I met down in London for <a href="http://barcamp.org/barcamplondon2">BarCamp</a> (BarcampLondon2) and <a href="http://futureofwebapps.com">Future of Web Apps</a> (FOWALondon07) here goes with a list of some of the people, mainly <em>colleague</em> and a few <em>neighbor</em> I met on my travels:</p>
+<p><a href="http://www.kid666.com/blog">Tom Croucher</a>, <a href="http://blogs.opml.org/tommorris">Tom Morris</a>, <a href="http://www.garethrodger.com/">Gareth Rogers</a>, <a href="http://ben-ward.co.uk">Ben Ward</a>, <a href="http://adactio.com">Jeremy Keith</a>, <a href="http://kapowaz.net">Ben Darlow</a>, <a href="http://cackhanded.net">Norm</a>, <a href="http://www.cubicgarden.com/">Ian Forrester</a>, <a href="http://muffinresearch.co.uk/">Stuart Colville</a>, <a href="http://thedredge.org/">Andy Hume</a>, <a href="http://www.donotremove.co.uk/">Mike Stenhouse</a>, <a href="http://pixelicious.co.uk/">Pete Lambert</a>, Lisa Price, <a href="http://blog.meriwilliams.com/">Meri Williams</a>, <a href="http://www.ellythompson.co.uk/blog/">Elly Williams</a>, <a href="http://nascentguruism.com/">Steve Marshall</a>, <a href="http://niquimerret.com/">Niqui Merret</a>, <a href="http://notes.natbat.net/">Natalie Downe</a>, <a href="http://www.agm.me.uk/blog/">Alistair MacDonald</a>.</p>
+<p>Between them they now have me interested in doing more with mobile messaging (<span class="caps">SMS</span>, <span class="caps">MMS</span>, Jabber), finding our more about eRDF, playing with Pipes, organising a Barcamp, getting some Moo cards, playing more with the flickr machine tags api and, oh, about a hundred and one other things including drinking beer (ok, that one was Ben). Consider that a partial list of the sorts of things I&#8217;m likely to post on over the next month or so.</p>
+<p>If their is anyone I have yet to add to <a href="http://flickr.com">Flickr</a>, <a href="http://upcoming.org">Upcoming</a> or <a href="http://twitter.com">Twitter</a> hopefully I&#8217;ll find you soon or feel free to drop me a line. If I missed someone sorry, probably all the sleep I&#8217;ve been trying to catch up on.</p>
+<p>This post brought to you by some of <span class="caps">XFN</span>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/02/24/content-management-systems-a-go-go/">
+        Content Management Systems a go-go
+      </a>
+    </h1>
+
+    <span class="post-date">24 Feb 2007</span>
+
+    <p>Well, I&#8217;m now running <a href="http://wordpress.org">WordPress</a>. I know I appear to be aimlessly flitting between content management systems on this site but it&#8217;s more of a little research project I swear. Hopefully it&#8217;s all happening pretty seemlessly for everyone reading my ramblings. This time <span class="caps">RSS</span> came to the fore, allowing me to simply export a feed of all my previous posts and import them straight into WordPress. This sort of portability is very very nice for the user. I&#8217;d love to see this sort of functionality for hierachically structured data in larger enterprise systems.</p>
+<p>I&#8217;ve got Wordpress up and running with a few choice plugins and a new theme in a couple of days which is nice. Hopefully any minor issues will be ironed out as I find them. An added bonus is comments are now back, I&#8217;ve got so many things to rave about after getting back from <a href="http://barcamp.org/BarCampLondon2">BarCamp</a> and <a href="http://futureofwebapps.com">Future of Web Apps</a> that letting anyone else point out the errors is only fair.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/02/15/useful-api-links/">
+        Useful API links
+      </a>
+    </h1>
+
+    <span class="post-date">15 Feb 2007</span>
+
+    <p>After a load of research for a couple of projects I thought I may as well add a large pile of links to a post for future reference. Feel free to wander through if your interests stretch to using scripting languages in mashups and the like.</p>
+ <h3><span class="caps">PHP</span></h3>
+<ul>
+ <li><a href="http://uk.php.net/curl">http://uk.php.net/curl</a></li>
+  <li><a href="http://developer.yahoo.com/php/">http://developer.yahoo.com/php/</a></li>
+  <li><a href="http://pear.php.net/package/HTTP_Request">http://pear.php.net/package/HTTP_Request</a></li>
+  <li><a href="http://uk2.php.net/file_get_contents">http://uk2.php.net/file_get_contents</a></li>
+  <li><a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198">http://pear.php.net/pepr/pepr-proposal-show.php?id=198</a></li>
+  <li><a href="http://www.aurore.net/projects/php-json">http://www.aurore.net/projects/php-json</a></li>
+  <li><a href="http://pear.php.net/package/XML_Serializer/">http://pear.php.net/package/XML_Serializer/</a></li>
+  <li><a href="http://simplepie.org/">http://simplepie.org/</a></li>
+  <li><a href="http://magpierss.sourceforge.net/">http://magpierss.sourceforge.net/</a></li>
+  <li><a href="http://pear.php.net/package/XML_RSS">http://pear.php.net/package/XML_RSS</a></li>
+</ul>
+ <h3>Python</h3>
+<ul>
+ <li><a href="http://developer.yahoo.com/python/">http://developer.yahoo.com/python/</a></li>
+  <li><a href="http://bitworking.org/projects/httplib2/">http://bitworking.org/projects/httplib2/</a></li>
+  <li><a href="http://docs.python.org/lib/module-urllib.html">http://docs.python.org/lib/module-urllib.html</a></li>
+  <li><a href="http://docs.python.org/lib/module-urllib2.html">http://docs.python.org/lib/module-urllib2.html</a></li>
+  <li><a href="http://docs.python.org/lib/module-httplib.html">http://docs.python.org/lib/module-httplib.html</a></li>
+  <li><a href="http://diveintopython.org/http_web_services/index.html">http://diveintopython.org/http_web_services/index.html</a></li>
+  <li><a href="http://cheeseshop.python.org/pypi/simplejson">http://cheeseshop.python.org/pypi/simplejson</a></li>
+  <li><a href="http://feedparser.org/">http://feedparser.org/</a></li>
+  <li><a href="http://docs.python.org/lib/module-xml.dom.html">http://docs.python.org/lib/module-xml.dom.html</a></li>
+  <li><a href="http://docs.python.org/lib/module-xml.dom.minidom.html">http://docs.python.org/lib/module-xml.dom.minidom.html</a></li>
+</ul>
+ <h3>Ruby</h3>
+<ul>
+ <li><a href="http://developer.yahoo.com/ruby/">http://developer.yahoo.com/ruby/</a></li>
+  <li><a href="http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/index.html">http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/index.html</a></li>
+  <li><a href="http://raa.ruby-lang.org/project/ruby-xml-simple/">http://raa.ruby-lang.org/project/ruby-xml-simple/</a></li>
+  <li><a href="http://json.rubyforge.org/">http://json.rubyforge.org/</a></li>
+  <li><a href="http://www.rubyrss.com/">http://www.rubyrss.com/</a></li>
+  <li><a href="http://www.ruby-doc.org/core/classes/RSS.html">http://www.ruby-doc.org/core/classes/<span class="caps">RSS</span>.html</a></li>
+  <li><a href="http://rubyforge.org/projects/feedtools/">http://rubyforge.org/projects/feedtools/</a></li>
+  <li><a href="http://www.germane-software.com/software/rexml/">http://www.germane-software.com/software/rexml/</a></li>
+  <li><a href="http://xml-simple.rubyforge.org">http://xml-simple.rubyforge.org/</a></li>
+</ul>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page55">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page53">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Nabaztag REST API &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Nabaztag REST API</h1>
+  <span class="post-date">18 Jul 2007</span>
+  <p>I&#8217;m having quite a bit of fun with my rabbit, <em>cambridge</em>, at the moment. Their were a number of projects at <a href="http://hackday.org">Hackday</a> involving the ever so cute <a href="http://nabaztag.com">Nabaztag</a> and I had a feeling I&#8217;d probably go home and adopt one. The idea of a rabbit with APIs was simple too much fun.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgNabaztag.jpg" title="Nabaztag" alt="Nabaztag" /></p>
+<p>The Nabaztag <span class="caps">API</span> docs can be found in two places (the rest of the site unfortunately has a number of issues when it comes to finding information easily); in the <a href="http://help.nabaztag.com/fiche.php?langue=3&amp;fiche=29#none">help section</a> and on the <a href="http://api.nabaztag.com/docs/home.html"><span class="caps">API</span> site</a>. The latter are much better than the former by the way.</p>
+<p>Lots of people have already been hacking on the wireless rabbit. Their are some good tools over on the <a href="http://nabaztools.sourceforge.net/">Nabaztag Sourceforge project</a>, a handy <a href="http://rubyforge.org/projects/nabaztag/">Ruby module</a> and a <a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=463">prospective</a> <a href="http://tmp.lfms.nl/nabaztag/"><span class="caps">PEAR</span> module</a> for <span class="caps">PHP</span>.</p>
+<p>I&#8217;ve been getting more and more into the ideas behind <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer"><span class="caps">REST</span></a> recently and one thing that disappointed me a litte was the <span class="caps">HTTP</span> <span class="caps">RPC</span> style Nabaztag <span class="caps">API</span> (note to anyone thinking <span class="caps">REST</span> simply means using a <span class="caps">GET</span> request rather than something like <span class="caps">SOAP</span> or <span class="caps">XML</span>-<span class="caps">RPC</span>, it doesn&#8217;t). I couldn&#8217;t help seeing PUTs to ears and POSTs to the mouth.</p>
+<p>Inspired a little by <a href="http://www.aralbalkan.com/">Arals</a> <a href="http://aralbalkan.com/994">Bunny Talk</a> I&#8217;ve started implementing parts of the <span class="caps">API</span> in a RESTful manner, and used my <span class="caps">API</span> abstraction layer to build a similar application.</p>
+<p>Head over to <a href="http://morethanseven.net/presents/nabaztag/">morethanseven.net/presents/nabaztag/</a> and send me a message (via my rabbit obviously) or, er, play with <em>cambridges</em> ears (he likes that). At the moment the <span class="caps">API</span> is configured only for my rabbit, although you can download the source code and run it yourself if you like. It requires PHP5 at the moment as one of the required modules is PHP5 only. But you are using <a href="http://gophp5.org/">PHP5 now</a> aren&#8217;t you?</p>
+<p>If you don&#8217;t want to use the form you can access the <span class="caps">API</span> directly. Here are a couple of examples using curl:</p>
+<pre><code>curl http://morethanseven.net/presents/nabaztag/ears/left</code></pre>
+
+<pre><code>curl -X 'PUT' http://morethanseven.net/presents/nabaztag/ears/left/13</code></pre>
+
+<pre><code>curl -X 'POST' -d "message" http://morethanseven.net/presents/nabaztag/mouth</code></pre>
+<p>Their&#8217;s a litte documentation in the source. I&#8217;ll add more methods, more documentation and maybe make an <span class="caps">API</span> anyone with a Nabaztag can use by authenticating either as I need it or if people actually want it. Let me know what you think (via the rabbit obviously!)</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

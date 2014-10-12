@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/01/04/media-redux/">
+        @media redux
+      </a>
+    </h1>
+
+    <span class="post-date">04 Jan 2006</span>
+
+    <p>Yes it&#8217;s back. <a href="http://vivabit.com/atmedia2006">@media</a> returns as promised by <a href="http://htmldog.com">Patrick</a> last year and, well, it&#8217;s definately bigger. Two streams, more speakers and panels than you can shake a pink elephant at. I know for a fact that this was being planned even before <a href="http://molly.com">Molly</a> had left the bar last year and boy does it show.</p>
+ <p>The blogs are alight with the sound of people coming up with something, anything to tell their bosses in the morning. I&#8217;m sure I&#8217;m not the only one still awake either posting comments (Yes <a href="http://zachinglis.com">Zach</a>, <a href="http://spintered.co.uk">Patrick</a> I do mean you) and making blog posts.</p>
+ <p>I&#8217;ll post more about what I want to see, how I&#8217;m going to decide which sessions to go to (I&#8217;ll need some sort of system &#8211; simply trying to decide which one&#8217;s will be best will only end in heartbreak) over the next 6 months or so. Yes it really is that far away. With the <a href="http://www.carsonworkshops.com/summit">Carson Summit</a> coming up so soon as well that should more than keep me going &#8211; especially with them having different emphasise (web standards/accessibility and web application development/design respectively) to keep thinks from getting boring.</p>
+ <p>And with all that in mind the reason it&#8217;s late when I post this makes sense. Yes it&#8217;s <a href="http://morethanseven.net/atmedia">another</a> <a href="http://morethanseven.net/dconstruct">feed</a> <a href="http://morethanseven.net/carson">agregator</a> thing.</p>
+ <p><a href="http://morethanseven.net/atmedia2006">morethanseven.net/atmedia2006</a></p>
+ <p>The place is already starting to hot up and I&#8217;d guess that will only get worse (or better?) over the next few days. I&#8217;m glad to get in early this time. Last year proved useful (at least to me) in keeping up with the aftershow goings on with 150 posts from 52 feeds &#8211; but  I only got it together a week or so after the event, thanks mainly to <a href="http://kurafire.net">Faruk</a> for compiling the initial list of posts.</p>
+ <p>Any bugs or suggestions let me know. Also if anyone has a good name (feed agregator is pretty mechanical) then please do tell. I&#8217;ve added a few of the requested features from previous editions and it&#8217;s now possible to quickly suggest new feeds and to search through all the posts.</p>
+ <p>Anyway &#8211; Hope to see people in June. My predictions of a year of real world activity to mirror our enlightened online existence are coming to fruitition already.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/01/02/commented-on-follow-up/">
+        @Commented-on Follow up
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jan 2006</span>
+
+    <p>Since the <a href="http://morethanseven.net/posts/commented-on">brief discussion</a> based around <a href="http://www.ben-ward.co.uk">ben&#8217;s</a> original idea for using <a href="http://del.icio.us">del.icio.us</a> to track comments you have made on other blogs I&#8217;ve been having a play.</p>
+ <p>The main issue that people saw was simplicity, which I see falling under two headings:</p>
+<ul>
+ <li>Ideally it should just happen. If you comment somewhere (and opt in, obviously) you browser or online service should keep a track and give you access to this data. This would require changes to existing blogs and in particular the common software like <a href="http://www.textpattern.com">textpattern</a> or <a href="http://wordpress.org">the other one</a></li>
+  <li>Saving that for later, a simple one click service which does not get in the way and achieves the same thing should be suitable.</li>
+</ul>
+ <p>It&#8217;s the later that I&#8217;ve been playing with and thought I&#8217;d present here in it&#8217;s early stages. The plan is as follows:</p>
+<ul>
+ <li>A <a href="http://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a> collects the data from the page (title and url) and sends it to an intermediary page, rather than del.icio.us.</li>
+  <li>The intermediary page prompts for a username and password (<span class="caps">HTTP</span> authentication) and adds the post to del.icio.us automatically.</li>
+  <li>The page is then either closed or redirected back to the page from whence the request came.</li>
+</ul>
+ <h3>The bookmarklet</h3>
+ <p>The bookmarklet section is simple enought modifications of the existing del.icio.us bookmarklets. See the download at the end of this post for details.</p>
+ <h3>Intermediary</h3>
+ <p>The intermediary page uses <span class="caps">HTTP</span> authentication to ask for a del.icio.us username and password (note that I&#8217;m not storing these at all, or for that matter at present checking if they are correct.) This needs only happen the first time you use the page if you use your browser to store the details or once per browser session otherwise.</p>
+ <p>The page then makes a request to the <a href="http://del.icio.us/help/api/">del.icio.us <span class="caps">API</span></a> using the lovely <span class="caps">PHP</span> library from <a href="http://dietrich.ganx4.com/delicious/">dietrich.ganx4.com/delicious/</a></p>
+ <h3>Return</h3>
+ <p>On a failed request the page reports that an error has occured (I&#8217;ll expand on this with more pertinent error messages as time permits.)</p>
+ <p>On success however we have two options, depending on the bookmarklet used. The default is to close the page down, with an alternative beiong to redirect back to the refering page. We do however run into a slight problem here with Firefox. Our favourite browser will only allow windows to be closed via javascript if they where opening by a script (<span class="caps">NOT</span> including our bookmarket). Internet Explorer has a similar set up where it prompts the user for an action, although a <a href="http://www.guyfromchennai.com/?p=18">simple fudge</a> get&#8217;s us around that one. At the moment therefore the close window bookmarklet is of limited usage for Firefox users.</p>
+ <h3>Future</h3>
+ <p>This could quite easily be expanded for use on a blog as the requests are simple <span class="caps">HTTP</span> requests with query string parameters. However the security implications of giving out your username and password would likely limit this approach. I&#8217;m going to look into the sending of bookmarks to others that ben mentioned and see if that can be used here &#8211; as hopefully that may only require you to give out your username. A service like <a href="http://www.gravatar.com/">gravatar</a> could then be used to do lookups between email addresses and del.icio.us usernames and away we go.</p>
+ <p>Any thoughts, comments or suggestions welcome. And feel free to try out the bookmarklets. I&#8217;ve included a handy download below including a quick readme and the bookmarklets.</p>
+ <p><a href="http://morethanseven.net/commented-on/commented-on.zip">download @Commented-on pack</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/12/27/obligatory-next-year-post/">
+        Obligatory next year post
+      </a>
+    </h1>
+
+    <span class="post-date">27 Dec 2005</span>
+
+    <p>Well, that&#8217;s nearly 2005 over and done with. Quite an eventful year all told and I couldn&#8217;t let it end without the obligatory <a href="http://www.andybudd.com/archives/2005/12/web_design_and_development_trends_for_2006/">next</a> <a href="http://www.hicksdesign.co.uk/journal/come-with-me-on-a-journey">year</a> <a href="http://www.molly.com/2005/12/13/mollys-unabashedly-biased-picks-2005-blogs-design-books-and-achievements/">post</a> .</p>
+ <p>So without further ado, this year various things happened to me:</p>
+<ul>
+ <li><a href="http://www.atmedia2005.co.uk">@media</a> was great. Met <a href="http://mrpatto.com/">lots</a> of <a href="http://www.molly.com/">nice</a> <a href="http://theintranetblog.blogspot.com/">people</a> and had a blast. Roll on next year.</li>
+  <li>I <a href="http://morethanseven.net/posts/thnking-about-a-move">moved jobs</a></li>
+  <li>I actually started blogging. I redesigned the site around that goal and now I&#8217;m hooked. Oh well.</li>
+  <li>The <a href="http://www.cssreboot.com">Reboot</a> was a massive success. It got me to redo my site properly, got me all of ten minutes of minor fame and I&#8217;m still on the front page. Thanks to everyone.</li>
+</ul>
+ <p>Next year my crystal ball predicts:</p>
+<ul>
+ <li>The <a href="http://carsonworkshops.com/summit/index.html">Carson Workshops Summit</a> will be huge.</li>
+  <li>I&#8217;ll find something more specific to write about rather than jumping around all the time.</li>
+  <li><a href="http://www.newcastlenewmedia.org">Newcastle New Media</a> will kick into action with some real world meetups and then who knows?</li>
+</ul>
+ <p>On less of a self centred trip:</p>
+<ul>
+ <li><a href="http://www.nwpropertysolutions.com">Elastic</a> and <a href="http://www.cssliquid.com">Liquid</a> design will be essential.</li>
+  <li><a href="http://www.37signals.com/svn/archives2/yahoo_vs_google_an_academics_vs_inthetrenches_entrepreneurs_showdown_.php">Yahoo Vs Google</a> will really hot up. With more buying and innovating that you can shake a stick at.</li>
+  <li>Intel powered Apples will be launch to a crazy ipod fueled public. Who still wont buy them. They will however by the machine of choice for the discerning conference attending web design geek next year.</li>
+  <li>Some crazy, web 2.0, buzzword compliant <span class="caps">CMS</span>/Blogging software will hit the streets causing a ruckus. Textpattern will still be great.</li>
+  <li>Some cools stuff has to come out of <a href="http://pages.alexa.com/prod_serv/WebInfoService.html">Alexa opening up their archive via web services</a></li>
+</ul>
+ <p>All in all, I&#8217;m looking forward to next year for a range of reasons including the above. Hope to see (or meet) all of you (again) over the coming year.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/12/18/commented-on/">
+        @commented-on
+      </a>
+    </h1>
+
+    <span class="post-date">18 Dec 2005</span>
+
+    <p><strong>Update</strong> I&#8217;ve updated this site to include a list of recent comments I&#8217;ve made powered by <a href="http://del.icio.us">del.icio.us</a> and @commented-on. A quick hack of the <a href="http://textpattern.org/plugins/163/txpicious">txt.icio.us</a> plugin and some thinking on at rules for del.icio.us later and their we go. Expect more details soon.</p>
+ <p><strong>Update</strong> <a href="http://ben-ward.co.uk">Ben</a> has posted an <a href="http://ben-ward.co.uk/journal/follow-me-with-delicious/">update to his post</a> with a quick hack of the <a href="http://del.icio.us">del.icio.us</a> bookmarklet.</p>
+ <p>Ah Ha. Nice when you have a vague need and think about spending some time coming up with a quick solution, only to forget about it until you come across a solution.</p>
+ <p>I&#8217;m busy (ok sometimes) but only part of that is down to my blog reading habit. I only occasionally find time to comment and then often forget where I&#8217;ve commented and no doubt miss the follow up. If only their was a quick way of keeping track. Where did I comment and when? What if (strange, probably stalkerish) people wanted to know where I had been commenting and what I&#8217;d been saying? Well thanks to <a href="http://www.ben-ward.co.uk">Ben</a> we may have a solution.</p>
+ <p>Enter <a href="http://del.icio.us">del.icio.us</a>. Ben has suggested using the tag <code>commented-on and who am I to argue? By tagging any page I make a comment on in this way del.icio.us will keep a record at &lt;a href="http://del.icio.us/garethr/</code>commented-on&quot;&gt;del.icio.us/garethr/<code>commented-on&lt;/a&gt; as well as make a feed available at &lt;a href="http://del.icio.us/rss/garethr/</code>commented-on&quot;&gt;del.icio.us/rss/garethr/@commented-on</a></p>
+ <p>Nothing on those at the moment but as I comment on things around the web I&#8217;ll try and remember. The whole <a href="http://flock.com">flock</a> thing would be particularly useful for this (at least once it&#8217;s a bit more stable) with it&#8217;s built in del.icio.us setup. A couple of apps spring to mind on that back of this, and playing with rss is still one of my fave things. A textpattern plugin (I&#8217;ve been meaning to at least have a look at building one at some point) or some social network app would be interesting. Watch this space (maybe).</p>
+ <p>Anyone else start using this technique leave a comment. I&#8217;d be interested to see it catch on.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/12/18/a-meetup-and-a-quick-review/">
+        A meetup and a quick review
+      </a>
+    </h1>
+
+    <span class="post-date">18 Dec 2005</span>
+
+    <p>Well last week or so the <a href="http://newcastlenewmedia.org">Newcastle New Media</a> list kicked into life once again with a flurry of posts (some of a sickening nature regarding future rock star Nathan Hardwick). After a suggestion to have a look at <a href="http://www.meetwithapproval.com/">meetwithapproval.com</a> (more on in a moment) we finally got round to organising a proper meetup.</p>
+ <p>The date has been set as the 12th of January 2006. The location as <a href="http://maps.google.co.uk/maps?q=bridge+hotel+NE1&#38;ll=54.969026,-1.609701&#38;spn=0.008845,0.023606&#38;iwloc=A&#38;iwstate2=page%3Abasics&#38;hl=en">The Bridge Hotel</a> and the time around 17:45.</p>
+ <p>So anyone in the area fancy coming along feel free. The plan is nothing formal. Lots of people have lots of ideas from organising a full blown conference to a vaguely regular meetup. My feeling is that anything we can do to help build a sense of community can only be a good think &#8211; what to do with the website and education are on the top of my list in reality. The latter both in terms of learning from everyone else and hopefully giving back. I&#8217;d like to get some sort of response to the Local Uni&#8217;s web coursess as well, something me and <a href="http://xlab.co.uk">Phil</a> discussed a while back.</p>
+ <p>With regard to <a href="http://www.meetwithapproval.com/">meetwithapproval</a> we used it and organised something so there you go. A success. However it had a wide range of little bits that didn&#8217;t quite work or things that appeared missing &#8211; plus no documentaion I could see. I&#8217;m going to note them down here, but before I do I&#8217;d like to say it&#8217;s not in a vengeful sort of a way. I&#8217;d much rather be using web applications like this (in <a href="http://momb.socio-kybernetics.net/">Beta</a> if you must) now rather than the finished, untested things in six months. Ok, here goes:</p>
+<ul>
+ <li>A few people using the service could not, try as they might, mark them selves as accepted. Not sure on browser type and version &#8211; sorry.</li>
+  <li>In setting up the event I wasn&#8217;t really sure what was going to happen. The email that was sent to people didn&#8217;t really tell the recipients about the service as I didn&#8217;t include that in the description. A separate box for email message would be handy here.</li>
+  <li>A nicer memorable event url would be good, rather than the long numeric string.</li>
+  <li><span class="caps">RSS</span> feeds for comments and acceptances and date suggestions are an absolute must and would make the app far more useful.</li>
+  <li>Some badges would be nice. I&#8217;m going to&#8230; and so are&#8230; type things. Good way of promoting the service too.</li>
+  <li>When I confirmed the event I was not aware that it would immediately close comments and acceptances from people. I just thought that it would mean the event was definately on. I found this misleading. I think some more explanation and fine grained control would be nice here. If the event was going to move later on then I&#8217;d need to set up a brand new event.</li>
+  <li>Maybe cancel does what I&#8217;m describing but I&#8217;m not wanting to press it incase it emails everyone telling them not to bother coming.</li>
+</ul>
+ <p>As I mentioned I hope the people <a href="http://www.thissideup.co.uk/">behind</a> the app dont take this the wrong way. I&#8217;ll love to keep using it in the future and with a couple of improvements (especially the <span class="caps">RSS</span> and documentation) I can see a nice future. Maybe a nice <acronym title="Application Programmer Interface"><span class="caps">API</span></acronym> as well? Any other comments or suggestions leave a comment.</p>
+ <p>Anyone coming along on the 12th as well who feels like saying hi, or getting going early leave a comment too.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page71">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page69">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

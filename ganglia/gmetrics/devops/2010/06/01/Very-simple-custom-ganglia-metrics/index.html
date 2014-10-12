@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Very Simple Custom Ganglia Metrics &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Very Simple Custom Ganglia Metrics</h1>
+  <span class="post-date">01 Jun 2010</span>
+  <p>Logging useful information from running systems for monitoring purposes is pretty important if you want to see how your software is behaving in the real world. It&#8217;s one thing to test something locally, another to test something under load on a testing environment and quite something else to watch production code while running.</p>
+<p>The numbers can be useful for checking newly released code isn&#8217;t having a detrimental effect on performance, observing what changes in load are doing to systems over time and planning for future capacity growth.</p>
+<p>Creating log files, agregating files from multiple machines and then analysing the results is one approach. Another is using something like <a href="http://ganglia.sourceforge.net/">Ganglia</a>. Ganglia is great for trending data over time, and ties in nicely to Nagios for reporting. Installing the monitoring daemon on machines and generally getting the default checks (memory, disk, network, etc.) up and running is nice and easy. From there using the gmetric command line to create custom metrics (say checking some mysql statistics) is again straight forward.</p>
+<p>So far, so good. The only issue I&#8217;ve run into was creating custom metrics on the fly from a machine outside the network. For bonus points these metrics were nothing to do with the machine on which they were collected, but to do with the system overall. More specifically the metrics were web site performance data gathered via some cucumber and <a href="http://celerity.rubyforge.org/">celerity</a> scripts.</p>
+<p>For this I knocked up a tiny web service wrapper around the gmetric command line. It&#8217;s very feature light at the moment (I only needed it to collect time based stats at regular intervals) but it could be made more featureful and expose the rest of the gmetric <span class="caps">API</span> if needs be. It does it using a very simple <span class="caps">URL</span> scheme:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+/{metric-name}/{metric-value}/ 
+<% end %>
+<p>So for example I can create metrics on the fly simply using an <span class="caps">HTTP</span> client or a web browser.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+/GarethsCommuteTime/3600/
+/ExternalPageLoad/2.005/
+<% end %>
+<p>The <a href="http://github.com/garethr/gmetric-web">code is up on GitHub</a> and is completely self contained. I&#8217;ve been running it mainly using spawning but any small <span class="caps">WSGI</span> server could surfice. I looked very briefly at the <span class="caps">API</span> for Ganglia but found the gmetric approach to be much simpler.</p>
+<p>And if you&#8217;re a Ganglia expert and know a much better way of doing this then let me know. Ganglia is awesome, and collecting metrics is both useful and fun (for me at least) but it&#8217;s not always obvious how to get into creating simple custom metrics which tell you something about your own appliction code.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

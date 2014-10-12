@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/12/08/tis-the-season-to/">
+        Tis the season to...
+      </a>
+    </h1>
+
+    <span class="post-date">08 Dec 2005</span>
+
+    <p>It&#8217;s nearly that time of year again where all of us working types get more than a week off work (the students amongst you are probably already on holiday, or at least acting like you are).</p>
+ <p>As well as all the obvious things everyone will be up to I always try and have some sort of computer project on the go. Something I can have a proper run at over the festive period. New language. Application. New site. You get the idea.</p>
+ <p>I&#8217;m intrigued to see if that&#8217;s just me? Is everyone else thinking &#8220;No computer for a week!&#8221; or similar? Or has anyone got any exciting projects on the go, and fancy letting us in on a little secret.</p>
+ <p>Needless to say I&#8217;ll have more on what I&#8217;m up to nearer the time but obviously it will start in <a href="http://momb.socio-kybernetics.net/">beta</a> and if I&#8217;m really pushing the boat out I&#8217;ll set up an AJAXified sign up page and maybe an <a href="http://measuremap.com/">invitation only</a> period. I might just be mocking others here but maybe not, time will tell.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/12/04/tips-for-fluid-design-ii/">
+        Tips for fluid design II
+      </a>
+    </h1>
+
+    <span class="post-date">04 Dec 2005</span>
+
+    <p>A while back I decided to jot down a couple of practical, simple techniques that have served me well when actually building fluid designs.</p>
+ <p>One of the situations that often comes up is the need to make an elements width vary. This is no problem when that element is a block level element (say a div or a paragraph) as unless you tell them otherwise their width willl vary with the space available. However, when it comes to graphics this can be a problem. After all, these will (probably) have been designed with a fixed size in mind.</p>
+ <p>Their are a couple of possible solutions here, both useful in different circumstances. However, both rely on the image itself to some extent.</p>
+ <p>The sometimes obvious method is using the <span class="caps">CSS</span> <em>background</em> rules, the image wont actually be part of the page and so wont take up any space, the size of the image can then be controlled by the size of the element (say a div) on which the background image is placed. This works but has a couple of ugly side effects &#8211; if the image is content based (ie. it carries some sort of important message rather than being just for it&#8217;s asthetic attributes) then placing it in the <span class="caps">CSS</span> removes it from the page completely, not good for those without <span class="caps">CSS</span> support. Another consequence is in site management. Having content imagery in the <span class="caps">CSS</span> can make life a little tricky.</p>
+ <p>The second approach involves using the <span class="caps">CSS</span> overflow property. By wrapping the inline image with a container (again, maybe a div) and assigning this an <em>overflow: hidden</em> we can control the viewable area of the image by controlling the size of the surrounding div (with <span class="caps">CSS</span>, natch). An example of this can be seen on these pages, with the favourite sites and flickr images. Resize the window. These images should expand to fill the available space.</p>
+ <p>OK, so we have added some additional markup to the page, depending on your feelings on this that solution may be fine. Want to go a bit further? What about assigning a class to the image and using some nifty <span class="caps">DOM</span> scripting to add in the additional markup?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/27/ajax-and-privacy/">
+        AJAX and Privacy
+      </a>
+    </h1>
+
+    <span class="post-date">27 Nov 2005</span>
+
+    <p>Ok, so everyone by now has no doubt had a play with <acronym>XML&quot;&gt;<span class="caps">AJAX</span></acronym> in some shape or form, and their are lots of good <a href="http://rajshekhar.net/blog/archives/85-Rasmus-30-second-AJAX-Tutorial.html">tutorials</a> and <a href="http://dhtmlnirvana.com/ajax/ajax_tutorial/">articles</a> around. I&#8217;m not going to add to the pile, but on my travels I did do something that raised a couple of questions. Let me know if anyone has any answers.</p>
+ <p>The questions are more ethical than technological however and came about when considering online advertising and it&#8217;s never ending need for metrics &#8211; at the moment that generally means impressions and click throughs (maybe also including converting click throughs). These two states are imposed to some extent by the stateless nature of most web pages. We can tell what gets shown to the visitor. But they then disappear from our radar until they do something &#8211; in this case click on an advert (or dont).</p>
+ <p>But what about the asynchronous nature of our new toy <span class="caps">AJAX</span>? We are starting to break out from the constrains of the stateless web so can anything be added to our add example? Why yes of course it can.</p>
+ <p>I&#8217;ve set up a quick working example that should hopefully make my point a little clearer. Open in a new tab (I know 80% of you can &#8211; <a href="http://haveamint.com">mint</a> is great) if you will &#8211; <a href="http://morethanseven.net/monitor">morethanseven.net/monitor</a></p>
+ <p>Mouse over the two <em>Ad</em> areas a few times. Click on them a few times too. Obviously the appearing message telling you what you have done is hardly exciting but it&#8217;s actually a response from an <span class="caps">AJAX</span> (actually it&#8217;s not returning <span class="caps">XML</span> so is that AJ?) call. All the call does is log the action inn a text file and return a success or failure. This isn&#8217;t high tech stuff &#8211; it&#8217;s proof of concept remember, it gets interesting a couple of jumps forwards.</p>
+ <p>The two buttons at the bottom, clear log and view log, allow you to see the log of actions (and delete them). I dont imagine this attracting high but the log file will log everyone&#8217;s actions not just yours, so you might want to clear the log first to more easily see your actions appear.</p>
+ <p>OK, so what? Well lets imagine instead of just the actions I log your IP address, some date details, maybe store a cookie on your computer while I&#8217;m at it. Also as well as hooking up two add areas as in the example I hook up <em>everything</em> on the page. Not only can I build up a picture of your activities between pages (your path through the site), I can build up a picture of what your mouse was doing on a given page. Now where stalking.</p>
+ <p>OK, so I&#8217;m not sure if their is a correlation between a web users mouse pointer and what they intend but think of other examples &#8211; I could trigger the events on focus for form elements. You might get half way through registering or purchasing (you&#8217;ve entered your name and an email address) and then decide against it. Normally all I&#8217;d be able to get would be someone went to the page in question and did not complete the required actions &#8211; with <span class="caps">AJAX</span> I could log who you where and were you got to in the process (and then email you to ask why).</p>
+ <p>Ethics anyone? Anyone else see problems? Let me know.</p>
+ <p><em>Note. The javascript examples are not great and I&#8217;ve testing in recent versions of IE and Firefox only. It&#8217;s a proof of concept rather than tutorial.</em></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/26/roll-on-february/">
+        Roll On February
+      </a>
+    </h1>
+
+    <span class="post-date">26 Nov 2005</span>
+
+    <p>Well &#8211; It looks like february has made a quick move to try and secure the prestigious <em>month of the year</em> award.</p>
+ <p>With two events happening in London, namely <a href="http://clearleft.com">Clearleft&#8217;s</a> <a href="http://www.clearleft.com/training/ajax.php">Ajax Training Workshop</a> on the 10th and <a href="http://www.carsonworkshops.com/">Carson Workshops</a> <a href="http://www.carsonworkshops.com/summit/">Future of Web Apps</a> summit on the 8th it&#8217;s <em>all go</em> in the rapidly expanding world of web geek meetups.</p>
+ <p>After missing <a href="http://dconstruct.org">d.Construct</a> I dont feel two bad about the outlay for going to both of these, especially with the assistance of my lovely employers. So I need to work out the details; travel, accomodation, what to do on the thursday, etc. but that should hopefully not be too painful. Any suggestions welcome &#8211; especially if anyone else is going along to one or both &#8211; be good to be in the same hotel as other attendess &#8211; I met <a href="http://theintranetblog.blogspot.com/">Nic</a> at <a href="http://atmedia2005.co.uk">@Media</a> last year as she was in the same hotel.</p>
+ <p>So, anyone else going along? Want to meet up? Ideas for accomodation or things to do on the Thursday? See you in February!</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/11/20/accessify-rocks-manchester/">
+        Accessify ROCKS Manchester
+      </a>
+    </h1>
+
+    <span class="post-date">20 Nov 2005</span>
+
+    <p>Back from Manchester after a pretty <a href="http://accessifyforum.com/viewtopic.php?t=3770&#38;postdays=0&#38;postorder=asc&#38;highlight=meetup&#38;start=150">good weekend</a> all in all.</p>
+ <p>It didn&#8217;t start particularly well. Very briefly I was late getting to the station. Missed train. Waited an hour and the next train was delayed half an hour. Missed meeting everyone at the station and had no clue where the place was. After a trip (in the opposite direction to the pub) to the tourist information centre I finally got there and things picked up markedly.</p>
+ <p>Present where <a href="http://www.splintered.co.uk/">Patrick Lauke</a>, <a href="http://vigo.org.uk">Vigo</a>, <a href="http://www.logohere.co.uk/">Andy Saxton</a>, <a href="http://www.thepickards.co.uk">Jack Pickard</a>, <a href="http://www.pixeldiva.co.uk">Pixeldiva</a>, <a href="http://www.xhtmlcoder.com">Robert Wellock</a>, <a href="http://accidentalsmallholder.net">Dan Champion</a> and myself.</p>
+ <p>We started out in a small deserted bar where Patrick had booked a table (including a reserved sign with bad fonts). Considering that we accounted for the vast majority of people in their throughout the afternoon this was mildy amusing.</p>
+ <p>I missed most of the introductions but not to fear. Conversation jumped around &#8211; people who made it to <a href="http://dconstruct.org">d.Construct</a> filled everyone else in with the highlights and the behind the scenes gossip. Tales of massages and ladies mainly. We had a wireless laptop connection and browsed around a little. Bad examples of error messages (I&#8217;ll dig out the links later on), brand new public sector sites that simply consist of sliced up images (including links with blue underlines and ovely image maps) and goings on at the <span class="caps">BBC</span>. But we cant speak about the later. Some talk as well on privacy issues tied in with the whole open <span class="caps">API</span> goings on and an idea we intent to sell to google &#8211; stalking.google.com &#8211; which is fairly self explanatory but we got into a worrying level of detail!</p>
+ <p>After a brief break to stop off at the hotel, and for some of the group to depart, we got some Indian food on the way to a pub recommended by Patrick, who was going to meet the rest of us there. It was a <span class="caps">ROCK</span> pub. Rage on the jukebox, lots of proper beers, people wearing black, etc. All of a sudden we found something else we had in common &#8211; musical tastes. More discussions going backwards and forwards between the music (what&#8217;s that tune?) and the state of the industry. All good fun.</p>
+ <p>Overall, another enjoyable meetup. Thumbs up to everyone turning up and I&#8217;ll look forward to the next one. I&#8217;ll post links and the obligatory <a href="http://flickr.com">flick</a> details once everyone else has their say.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page72">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page70">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

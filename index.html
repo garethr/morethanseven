@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+        Leaving GDS never easy
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jul 2014</span>
+
+    <p><em>The following is the email I sent to lots of my colleagues at the 
+<a href="https://gds.blog.gov.uk/">Government Digital Service</a> last week.</em></p>
+
+<p>So, after 3 rather exciting years I&#39;ve decided to leave GDS.</p>
+
+<p>That&#39;s surprisingly difficult to write if I&#39;m honest.</p>
+
+<p>I was part of the team that built and shipped the beta of <a href="https://www.gov.uk">GOV.UK</a>.
+Since then I&#39;ve worked across half of what has become GDS, equally
+helping and frustrating (then hopefully helping) lots of you. I&#39;ve
+done a great deal and learnt even more, as well as collected arcane
+knowledge about government infosec and the dark arts of procurement
+along the way. I&#39;ve done, and helped others do, work I wouldn&#39;t even
+have thought possible (or maybe likely is the right word?) when I
+started.</p>
+
+<p>So why leave? For all the other things I do I&#39;m basically a tool
+builder. So I&#39;m going off to work for <a href="http://puppetlabs.com">Puppet Labs</a> to build
+infrastructure tools that don&#39;t suck. That sort of pretty specific
+work is something that <em>should</em> be done outside government in my
+opinion. I&#39;m a pretty firm believer in &quot;government should only do what
+only government can do&quot; (<a href="https://www.gov.uk/design-principles#second">design principle number 2</a> for those that
+haven&#39;t memorised them yet). And if I&#39;m honest, focusing on something
+smaller than fixing a country&#39;s civic infrastructure is appealing for
+now.</p>
+
+<p>I&#39;ll let you in on a secret; I didn&#39;t join what became GDS because of
+the GOV.UK project. I joined to work with friends I&#39;d not yet had the
+chance to work with and to see the inside of a growing organisation
+from the start. I remember <a href="http://twitter.com/tomskitomski">Tom Loosemore</a> promising me we&#39;d be 200
+people in 3 years! As far as anyone knows we&#39;re 650+ people. That&#39;s
+about a person a day for 2 years. I&#39;m absolutely not saying that came
+without a cost, but for me being part of that that was part of the
+point - so I can be a little accepting with hindsight.</p>
+
+<p>For me, apart from all the short term things (side-note: this job now
+has me thinking £10million is a small amount of money and 2 years is a
+small amount of time) there is one big mission:</p>
+
+<blockquote>
+<p>Make government a sustainable part of the UK tech community</p>
+</blockquote>
+
+<p>That means in 10 years time experienced tech people from across the
+country, as well as people straight from university, choosing to work
+for government. Not just for some abstract and personal reason (though
+that&#39;s fine too), but because it&#39;s a a genuinely interesting place to
+work. That one&#39;s on us.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+        Using OWASP ZAP from the command line
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jun 2014</span>
+
+    <p>I&#39;m a big fan of <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP ZAP</a> or
+the Zed Attack Proxy. It&#39;s suprisingly user friendly and nicely pulls of
+it&#39;s aim of being useful to developers as well as more hardcore penetration testers.</p>
+
+<p>One of the features I&#39;m particularly fond of is the aforementioned
+proxy. Basically it can act as a transparent HTTP proxy, recording the
+traffic, and then analyse that to conduct various active security tests;
+looking for XSS issues or directory traversal vulnerabilities for
+instance. The simplest way of seeding the ZAP with something to analyse is using
+the simple inbuilt spider.</p>
+
+<p>So far, so good. Unfortunately ZAP isn&#39;t designed to be used from the
+command line. It&#39;s either a thick client, or it&#39;s a proxy with a simple
+API. Enter <a href="https://github.com/garethr/zapr">Zapr</a>.</p>
+
+<p>Zapr is a pretty simple wrapper around the ZAP API (using the
+<a href="https://github.com/vpereira/owasp_zap">owasp_zap</a> library under the
+hood). All it does is:</p>
+
+<ul>
+<li>Launch the proxy in headless mode</li>
+<li>Trigger the spider</li>
+<li>Launch various attacks against the collected URLs</li>
+<li>Print out the results</li>
+</ul>
+
+<p>This is fairly limited, in that a spider isn&#39;t going to work
+particularly well for a mor interactive application, but it&#39;s a farily good
+starting point. I may add different seed methods in the future (or would
+happily accept pull requests). Usage wise it&#39;s as simple as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">zapr --summary http://localhost:3000/
+</code></pre></div>
+<p>That will print you out something like the following, assuming it finds
+an issue.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">+-----------------------------------+----------+----------------------------------------+
+| Alert                             | Risk     | URL                                    |
++-----------------------------------+----------+----------------------------------------+
+| Cross Site Scripting (Reflected)  | High     |http://localhost:3000/forgot_password   |
++-----------------------------------+----------+----------------------------------------+
+</code></pre></div>
+<p>The above alert is taken from a <a href="https://github.com/garethr/zapr-example">simple example</a>,
+using the <a href="https://github.com/OWASP/railsgoat">RailsGoat</a> vulnerable web
+application as a scape goat. You can see the resulting output from
+<a href="https://travis-ci.org/garethr/zapr-example">Travis running the tests</a>.</p>
+
+<p>Zapr is a bit of a proof of concept so it&#39;s not particularly robust or
+well tested. Depending on usage and interest I may tidy it up and extend
+it, or I may leave it as a useful experiment and try and finally get ZAP
+support into <a href="http://gauntlt.org">Gauntlt</a>, only time will tell.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/consul/2014/04/25/consul/">
+        Consul, DNS and Dnsmasq
+      </a>
+    </h1>
+
+    <span class="post-date">25 Apr 2014</span>
+
+    <p>While at <a href="http://craft-conf.com/2014">Craft</a> I decided to have a quick look at
+<a href="http://www.consul.io/">Consul</a>, a new service discovery framework with
+a few intersting features. One of the main selling points is a DNS
+interface with a nice API. The <a href="http://www.consul.io/intro/index.html">Introduction</a>
+shows how to use this via the dig command line tool, but how do you use
+a custom internal DNS server without modifying all your applications?
+One answer to this question is
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a>.</p>
+
+<p>I&#39;m not explaining Consul here, the above mentioned introduction does a
+good job of stepping through the setup. The following assumes you have
+installed and started consul.</p>
+
+<h2>Installation and configuration</h2>
+
+<p>I&#39;m running these examples on an Ubuntu 14.04 machine, but dnsmasq
+should be available and packaged for lots of different operating
+systems.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get install dnsmasq
+</code></pre></div>
+<p>Once installed we can create a very simple configuration.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;server=/consul/127.0.0.1#8600&quot;</span> &gt; /etc/dnsmasq.d/10-consul
+</code></pre></div>
+<p>All we&#39;re doing here is specifying that DNS requests for consul services
+are to be dealt with by the DNS server at 127.0.0.1 on port 8600. Unless
+you&#39;ve changed the consul defaults this should work.</p>
+
+<p>Just in case you prefer Puppet their is already a handy
+<a href="https://github.com/saz/puppet-dnsmasq">dnsmasq</a> module. The resulting
+puppet code then looks like this.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="k">include</span> <span class="na">dnsmasq</span>
+<span class="na">dnsmasq</span><span class="p">::</span><span class="na">conf</span> <span class="p">{</span> <span class="s">&#39;consul&#39;</span><span class="p">:</span>
+  <span class="na">ensure</span>  <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">content</span> <span class="o">=&gt;</span> <span class="s">&#39;server=/consul/127.0.0.1#8600&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Usage</h2>
+
+<p>The examples from the main documentation specify a custom DNS server for
+dig like so:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">dig @127.0.0.1 -p <span class="m">8600</span> web.service.consul
+</code></pre></div>
+<p>With Dnsmasq installed and configured as above you should just be able
+to do the following:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">dig web.service.consul
+</code></pre></div>
+<p>And now any of your existing applications will be able to use your
+consul instance for service discovery via DNS.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/vagrant/cucumber/testing/2014/03/15/testing-vagrant-runs-with-cucumber/">
+        Testing Vagrant runs with Cucumber
+      </a>
+    </h1>
+
+    <span class="post-date">15 Mar 2014</span>
+
+    <p>I&#39;ve been a big fan of <a href="http://www.vagrantup.com/">Vagrant</a> since it&#39;s
+initial release and still find myself using it for various tasks.</p>
+
+<p>Recently I&#39;ve been using it to test collections of Puppet modules. For a
+single host
+<a href="https://github.com/jvoorhis/vagrant-serverspec">vagrant-serverspec</a> is
+excellent. Simply install the plugin, add a provisioner and write your
+<a href="http://serverspec.org/">serverspec</a> tests. The serverspec provisioner
+looks like the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:serverspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+  <span class="n">spec</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;*_spec.rb&#39;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>But I also found myself wanting to test behaviour from the host
+(serverspec tests are run on the guest), and also wanted to write tests
+that checked the behaviour of a multi-box setup. I started by simply
+writing some <a href="http://cukes.info/">Cucumber</a> tests which I ran locally,
+but I decided I wanted this integrated with vagrant. Enter
+<a href="https://github.com/garethr/vagrant-cucumber-host">vagrant-cucumber-host</a>.
+This implements a new vagrant provisioner which runs a set of cucumber
+features locally.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:cucumber</span> <span class="k">do</span> <span class="o">|</span><span class="n">cucumber</span><span class="o">|</span>
+  <span class="n">cucumber</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Just drop your features in the features folder and run <code>vagrant
+provision</code>. If you just want to run the cucumber features, without any
+of the other provisioners running you can use:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vagrant provision --provision-with cucumber
+</code></pre></div>
+<p>Another advantage of writing this as a vagrant plugin is that it uses
+the Ruby bundled with vagrant, meaning you just install the plugin
+rather than faff about with a local Ruby install. </p>
+
+<p>A couple of other vagrant plugins that I&#39;ve used to make the testing
+setup easier are <a href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a>
+and <a href="https://github.com/adrienthebo/vagrant-hosts">vagrant-hosts</a>. Both
+help with managing hosts files, which makes writing tests without
+knowing the IP addresses easier.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/monitoring/2014/02/16/buy-vs-build-your-monitoring-system/">
+        Buy vs Build your Monitoring System
+      </a>
+    </h1>
+
+    <span class="post-date">16 Feb 2014</span>
+
+    <p>At the excellent <a href="http://www.theguardian.com/info/developer-blog/2014/feb/15/london-devops-meetup-held-at-the-guardian">London Devops meetup</a> last week I asked what was
+apparently a controversial question:</p>
+
+<blockquote>
+<p>should you just use software as a service monitoring products rather than integrate lots of open source tools?</p>
+</blockquote>
+
+<p>This got a few people worked up and I promised a blog post.</p>
+
+<p>Note that I wrote a post listing lots of <a href="http://www.morethanseven.net/2013/10/13/looking-into-monitoring-and-logging-tools/">open source monitoring tools</a>
+not that long ago. And I&#39;ve been to both the
+<a href="http://monitorama.com/">Monitorama</a> events about open source
+monitoring. And have a bunch of <a href="http://forge.puppetlabs.com/garethr?q=monitoring">Puppet modules for open source monitoring tools</a>. I&#39;m
+a fan of both open source and of open source monitoring. Please don&#39;t
+read this as an attack on either, and particularly on the work of
+awesome people working on  great open source monitoring products.</p>
+
+<h2>Some assumptions</h2>
+
+<ol>
+<li>No one product exists that does everything. I think this is true for
+SaaS as much as for open source.</li>
+<li>Lets work with about 200 hosts. This is a somewhat arbitrary number I
+know, some people will have more and others less.</li>
+<li>If it saves money we&#39;ll pay yearly, rather than monthly or hourly.</li>
+<li>We could probably get some volume discounts from some of the
+suppliers, but we&#39;ll use list prices for this post.</li>
+</ol>
+
+<h2>Show me the money</h2>
+
+<p>So what would it cost to get up and running with a state of the art
+software as a service monitoring system? In order to do this we need to
+choose our software. For this post that means I&#39;m going to pick products
+I&#39;ve used (sometimes only a bit) and like. This isn&#39;t a comprehensive
+study of all the alternatives I&#39;m afraid - though feel free to write
+your own alternative blog posts.</p>
+
+<ul>
+<li><p><a href="http://newrelic.com/">New Relic</a> provides a crazy amount of data about
+the running of both your servers and your applications. This includes
+application performance data, errors, low level metrics and even rolled
+up method or database query performance. $149 per host per month for our
+200 hosts gives us <em>$29,800</em> per month.</p></li>
+<li><p><a href="https://metrics.librato.com">Librato Metrics</a> provides a fantastic way
+of storing arbitrary time series data. We&#39;re already storing lots of
+data in New Relic but Metrics provides us with less opinionated software
+so we can use it for anything, for instance number of logins or searches
+or other business level metrics. We&#39;ll go for a plan with 200 data sources, 100 metrics each and at 10 second resolution for a cost of <em>$3,860</em> per month.</p></li>
+<li><p><a href="http://www.pagerduty.com/">Pagerduty</a> is all about the alerts side of
+monitoring. Most of the other SaaS tools we&#39;ve chosen integrate with it
+so we can make sure we get actionable emails and SMS messages to the
+right people at the right time. Our plan costs $18 per person per month, 
+so lets say we have 30 people at a cost of <em>$540</em> per month.</p></li>
+<li><p><a href="https://papertrailapp.com/">Papertrail</a> is all about logs. Simple setup
+your servers with syslog and Papertrail will collect, analyze and store
+all your log messages. You get a browser based interface, search tools
+and the ability to setup alerts. We like lots of logs so we&#39;ll have a
+plan for 2 weeks of search, 1 year archive and 100GB month of log
+traffic. That all costs <em>$575</em> per month.</p></li>
+<li><p><a href="https://www.getsentry.com">Sentry</a> is all about exceptions. We could be
+simply logging these and sending them to Papertrail but Sentry provides
+tools for tracking and rolling up occurences. We&#39;ll go for a plan with
+90 days of history and 200 events per minute at a cost of <em>$199</em> a
+month.</p></li>
+<li><p><a href="https://www.pingdom.com">Pingdom</a> used to provide a very simple
+external check service, but now they have added more complex multistage
+checks as well as real user monitoring to the basic ping. We&#39;ll choose
+the plan with 250 checks, 20 Real User Monitoring sites and 500 SMS
+alerts for <em>$107 a month</em>.</p></li>
+</ul>
+
+<h2>How much!</h2>
+
+<p>In total that all comes to <em>$35,080 (£20,922)</em> per month, or
+<em>$420,960 (£251,062)</em> per year.</p>
+
+<p>Now the first reaction of lots of people will be <em>that&#39;s a lot of money</em>
+and it is. But remember open source isn&#39;t free either. We need to pay
+for:</p>
+
+<ul>
+<li>The servers we run our monitoring software on</li>
+<li>The people to operate those servers</li>
+<li>The people to install and configure our monitoring software</li>
+<li>The office space and other costs of employing people (like management
+and hiring)</li>
+</ul>
+
+<p>I think people with the ability to build software tend to forget they
+are expensive, whether as a contractor or as a full time member of
+staff. And people without management experience tend to forget costs
+like insurance, rent, management overhead, recruitment, etc.</p>
+
+<p>And probably more important than these for some people we need to consider:</p>
+
+<ul>
+<li>The time taken to build a good open source monitoring system</li>
+</ul>
+
+<p>The time needed to put together a good monitoring stack based on for
+instance logstash, kibana, riemann, sensu, graphite and collectd isn&#39;t
+small. And don&#39;t forget the number of other moving parts like redis,
+rabbitmq and elasticsearch that need installing configuring and
+maintaining. That probably means compromising in the short term or
+shipping later. In a small team how core is building your monitoring
+stack to what you do as a business?</p>
+
+<h2>But I can&#39;t use SaaS</h2>
+
+<p>For some people, using a software as a service product just isn&#39;t going
+to cut it. Here&#39;s a list of reasons I can think of:</p>
+
+<ul>
+<li>Regulation constrains where your data can be stored, for instance it&#39;s
+not allowed out of the country</li>
+<li>Sheer size of infrastructure, although you may be able to get a volume
+discount it might not be enough</li>
+</ul>
+
+<p>I think everything else is a cost/benefit issue or personal preference
+(or bias). Happy to add more to that list, but I don&#39;t think it&#39;s a very
+long list.</p>
+
+<h2>Conclusions</h2>
+
+<p>I&#39;ve purposefully not talked about the quality of the tools here, just
+the cost. I&#39;ve also not mentioned that it&#39;s likely not an all or nothing
+decision, lots of people will mix SaaS products and open source tools.</p>
+
+<p>Whether taking a SaaS approach will be quicker, cheaper or better will
+depend on your specific business context. But try and make that about
+the organisation and not about the technology.</p>
+
+<p>If you&#39;ve never used the current crop of SaaS monitoring
+tools (and not just the one&#39;s mentioned above) then I think you&#39;re missing
+out. Even if you stick with a mainly open source monitoring stack you
+might look at your tools a bit differently after you&#39;ve experimented
+with some of the commercial competition.</p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page2">Older</a>
+  
+  
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
+    </div>
+
+  </body>
+</html>

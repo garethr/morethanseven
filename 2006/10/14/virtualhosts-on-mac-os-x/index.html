@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Virtualhosts on Mac OS X &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Virtualhosts on Mac OS X</h1>
+  <span class="post-date">14 Oct 2006</span>
+  <p><a href="http://www.thewatchmakerproject.com">Matthew</a> just posted a quick write up of <a href="http://www.thewatchmakerproject.com/journal/378/virtual-hosts-and-the-proper-way-to-work-offline">setting up virtual hosts</a> on windows and a little of the rationale behind why you would bother.</p>
+ <p>Being a Mac person when I&#8217;m not in the office I thought a quick follow up would be useful for those that way inclined.</p>
+ <p>On OS X their are a couple of things needed to setup a virtual host. As well as the apache virtualhost directives the host needs adding to NetInfoManager.</p>
+ <p>Although you can do all of this manually I&#8217;m more of a fan of a quick shell script and, as it happens, so are others. I&#8217;ve been using a modified version of <a href="http://patrickgibson.com/">Patrick Gibsons</a> <a href="http://patrickgibson.com/utilities/virtualhost/">Virtualhost&#8217;s script</a> for a while. Just drop it somewhere on your path (or run it from a specific folder) from Terminal like so:</p>
+<div><code>sudo virtualhost.sh morethanseven.dev</code></div>
+ <p>Where morethanseven.dev is the local domain you want setting up. The default version of the script makes the assumption that you are using the default web server which comes with OS X. I&#8217;m not, but it&#8217;s easy enough to modifiy the configuration parameters at the top of the (well commented) script to point where you want. I have it working perfectly with a copy of the <a href="http://www.mamp.info/"><span class="caps">MAMP</span></a> installation package for instance.</p>
+ <p>I&#8217;m something of a fan of utility scripts. Often repeated tasks can be bundled up into a shell script, python script or automator workflow. Automatic screen capture? Batch image processing? Backup? It can help keep everything tidy, as well as minimising repeated effort. Anyone else with any good examples of process automation with regards web design want to share?</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

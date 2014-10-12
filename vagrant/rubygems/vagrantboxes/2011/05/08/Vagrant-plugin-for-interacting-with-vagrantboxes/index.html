@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Vagrant Plugin For Interacting With Vagrantbox.es &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Vagrant Plugin For Interacting With Vagrantbox.es</h1>
+  <span class="post-date">08 May 2011</span>
+  <p>After <a href="http://www.jedi.be/blog">Patrick</a> released <a href="https://github.com/jedi4ever/sahara/">Sahara</a>, a nifty extension for the <a href="http://vagrantup.com">Vagrant</a> command line tool, I&#8217;ve been meaning to put together a similar extension for interacting with the growing list of base boxes on <a href="http://www.vagrantbox.es">vagrantbox.es</a>.</p>
+<p>After a bit of hacking this morning I&#8217;ve just pushed out an initial release of the <a href="https://rubygems.org/gems/vagrantboxes">vagrantboxes gem</a> and you can find the <a href="https://github.com/garethr/ruby-vagrantboxes">source code and some documentation on GitHub</a>.</p>
+<p>The extensions adds a vagrantboxes namespace to the vagrant command line tool which provides a few useful commands. Specifically you can list all the available boxes, do text searches, show the full details of a box and most handily of all add a box that takes your fancy to your local base box store, all without having to worry about the URLs of the boxes if you don&#8217;t want to.</p>
+<p>Here&#8217;s an example of a simple search:</p>
+<pre>&gt;&gt; vagrant vagrantboxes search centos
+3    centos 5.5                http://dl.dropbox.com/u/15307300/vagrant-0.7-centos-64-base.box
+6    opscode centos 5          http://opscode-vagrant-boxes.s3.amazonaws.com/centos5-gems.box
+7    opscode ubuntu 10.04      http://opscode-vagrant-boxes.s3.amazonaws.com/ubuntu10.04-gems.box
+9    puppet centos 5.5 64      http://puppetlabs.s3.amazonaws.com/pub/centos5_64.box
+10   puppet centos 4 64        http://puppetlabs.s3.amazonaws.com/pub/centos4_64.box
+21   centos 5.6 32             http://yum.mnxsolutions.com/vagrant/centos_56_32.box</pre>
+<p>And another quick example, this time of show printing the full description. In the future I might look to store more structured metadata and make this more useful.</p>
+<pre>&gt;&gt; vagrant vagrantboxes show 18
+puppet debian lenny 64
+http://puppetlabs.s3.amazonaws.com/pub/debian_lenny_64.box
+
+Debian Lucid 64 bit vagrant box. Puppet 2.6.6 installed and ready to provision using the Puppet provisioner in Vagrant.
+
+For good sample modules, try the jeffmccune-motd and jeffmccune-mockbuild modules posted to http://forge.puppetlabs.com/
+
+Created by Ken Barber, ken@puppetlabs.com</pre>
+<p>This proved a good excuse to delve into the Vagrant source code which is pretty readable for the most part once you understand the libraries it&#8217;s build upon. It&#8217;s simple enough to extend for adding commands like this too, which bodes well for other more useful additions in the future.</p>
+<p>If anyone has any problems with this extensions do let me know. Error handling currently consists of returning blank output rather than sensible error codes or messages, and as I&#8217;ve yet to add a small test suite so their might (will) be a few bugs lying around. I&#8217;ll try and make it better behaved in the next week or two but reasoned it&#8217;s useful straight away.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

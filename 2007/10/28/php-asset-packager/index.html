@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      PHP Asset Packager &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">PHP Asset Packager</h1>
+  <span class="post-date">28 Oct 2007</span>
+  <p>Performance used to be something other people thought about. If you were working on a high traffic site for a large company, chances are they would throw inordinate amounts of expensive hardware at the problem. If you had a personal site only if you got really popular would you need more than a shared host. But the number of web applications being launched by small companies or individuals from their bedrooms is raising the awareness of the importance of performant websites.</p>
+<p>Credit to <span class="caps">YAHOO</span>! here. Google and Amazon might be the first companies that spring to mine when it comes to thinking about infrastructure but <span class="caps">YAHOO</span>! have been publishing lots of useful, practical and interesting information in this area. <a href="http://stevesouders.com/">Steve Souders</a>, the Chief Performance <span class="caps">YAHOO</span>! has a <a href="http://www.amazon.co.uk/o/ASIN/0596529309/">new book</a> going into detail about <a href="http://developer.yahoo.com/performance/rules.html"><span class="caps">YAHOO</span>!s performance rules</a>. The recent release of the <a href="http://developer.yahoo.com/yslow/">YSlow</a> extension and another <a href="http://website-performance.org/">upcoming book</a> from <a href="http://muffinresearch.co.uk/archives/2007/09/27/css-sprite-generator-tool/">Stuart Colville</a> and <a href="http://www.ejeliot.com/">Ed Eliot</a> cap things off nicely.</p>
+<p>According to <a href="http://developer.yahoo.com/performance/rules.html#num_http"><span class="caps">YAHOO</span>!</a></p>
+<blockquote>
+<p>Combined files are a way to reduce the number of <span class="caps">HTTP</span> requests by combining all scripts into a single script, and similarly combining all stylesheets into a single stylesheet. It&#8217;s a simple idea that hasn&#8217;t seen wide adoption. The ten top U.S. web sites average 7 scripts and 2 stylesheets per page. Combining files is more challenging when the scripts and stylesheets vary from page to page, but making this part of your release process improves response times.</p>
+</blockquote>
+<p>While all that has been going on I&#8217;ve been working with a <a href="http://rbd.shiftnetwork.co.uk/">few</a> <a href="http://www.bofh.org.uk/">people</a> on a Rails project and come across a great plugin; <a href="http://synthesis.sbecker.net/pages/asset_packager">asset_packager</a> from <a href="http://synthesis.sbecker.net/">Scott Becker</a>. Inspired by the <a href="http://www.thinkvitamin.com/features/webapps/serving-javascript-fast">Vitamin article</a> by <a href="http://www.iamcal.com/">Cal Henderson</a> (of Flickr and <a href="http://www.amazon.co.uk/Building-Scalable-Web-Sites-Henderson/dp/0596102356">another good book</a> fame), asset_packager compresses and merges <span class="caps">CSS</span> and Javascript based on a prescribed configuration.</p>
+<p>I&#8217;m also working on a few <span class="caps">PHP</span> projects and wanted the same experience in these as well, so  I&#8217;ve gone a put together a quick release of <a href="http://code.google.com/p/php-asset-packager/">php asset packager</a>. At the moment this is a <span class="caps">CSS</span> only release, with Javascript features coming later, along with all the rest of the features of the Rails plugin and anything else I can think of or need.</p>
+<p>First off you define your stylesheet setup. I used <a href="http://www.yaml.org/"><span class="caps">YAML</span></a> as my goal was to stick as close as possible to the Rails plugin.</p>
+<p><code>&lt;pre&gt;stylesheets:
+- base:
+  - screen
+  - header
+- secondary:
+  - foo
+  - bar&lt;/pre&gt;</code></p>
+<p>The above simply states that you want to merge screen and header <span class="caps">CSS</span> files together to form a base stylesheet, and merge foo and bar together to create a secondary <span class="caps">CSS</span> file.</p>
+<p>All you then have to do is include the following:</p>
+<p><code>&lt;pre&gt;// define("ENVIRONMENT", "production");</p>
+<p>echo Asset_packager::stylesheet_link_merged();</pre></code></p>
+<p>If the <span class="caps">ENVIRONMENT</span> constant is set to <em>production</em> the line includes the merged stylesheet links, otherwise each file is included seperately. This again mirrors the behaviour of the Rails plugin. A command line script is also included in the <a href="http://code.google.com/p/php-asset-packager/source">source</a> to actually merge (and <a href="http://csstidy.sourceforge.net/">tidy</a>) the <span class="caps">CSS</span> files.</p>
+<p>The vague plan is to add the rest of the features and then maybe package up as a plugin for whatever software or frameworks I&#8217;m working with at the time. At the moment that probably means wordpress, <a href="http://www.symfony-project.com/">symfony</a> and <a href="http://codeigniter.com/">code igniter</a>. Everything is open source and available from svn over on the <a href="http://code.google.com/p/php-asset-packager">Google Code site</a>. Contributions, in the way of code, bugs, documentation or thoughts welcome.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

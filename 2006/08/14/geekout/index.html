@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Geekout &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Geekout</h1>
+  <span class="post-date">14 Aug 2006</span>
+  <p>On occasion I even surprise myself. Sometimes you just need to geek. Rob at work was discussing his ideal device, basically something that would read text based <span class="caps">RSS</span> feeds to him while in the bath in the morning. Lazy I know.</p>
+ <p>I thought to myself <em>That cant be too difficult</em> and I&#8217;ve never played with any text to speach stuff before and off I went. A few hours later and I just got my Windows machine to read out the top story from this site.</p>
+ <p>Python is so cool to just hack in. Did I mention that before? I&#8217;ve yet to do anything <em>real</em> in it, but playing around with code is nice. Anyway, on with a solution;</p>
+ <p>Lots of things to install first. As mentioned I used Windows, in this case so I could access the Win32 Speech <span class="caps">API</span>. I looked at using <a href="http://www.cstr.ed.ac.uk/projects/festival/">Festival</a> on Unix but left that for now. Tools of choice were <a href="http://python.org">Python</a> 2.4 with the <a href="http://sourceforge.net/projects/pywin32/">Win32 extensions</a>. A couple of Python modules do most of the work. First up <a href="http://sourceforge.net/projects/uncassist">pyTTS</a> which deals with the text to speach and <span class="caps">SAPI</span> integration. Next comes the <a href="http://feedparser.org/">Feedparser</a> module. I&#8217;d heard this mentioned by <a href="http://simon.incutio.com/archive/2006/08/08/ydn">Simon</a> over on the <a href="http://developer.yahoo.com/python/python-rss.html">Yahoo Python developer network</a> and it really is nice.</p>
+ <p>The rest was easy.<code>&lt;pre&gt;import pyTTS
+import feedparser
+d = feedparser.parse("http://morethanseven.net/rss")
+tts = pyTTS.Create()
+tts.Speak(d['items'][0].description)&lt;/pre&gt;</code></p>
+ <p>Ok, so this isn&#8217;t an application. Just a proof of concept but you get the idea and I dont really want or need this app anyway. Why then? because I thought I could. Oh, and Python&#8217;s interactive prompt is so cool. I want one for everything.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

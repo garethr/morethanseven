@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2012/02/06/whats-jekyll/">
+        What's Jekyll?
+      </a>
+    </h1>
+
+    <span class="post-date">06 Feb 2012</span>
+
+    <p><a href="http://jekyllrb.com">Jekyll</a> is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes. From <a href="https://github.com/mojombo/jekyll/blob/master/README.markdown">the project&#39;s readme</a>:</p>
+
+<blockquote>
+<p>Jekyll is a simple, blog aware, static site generator. It takes a template directory [...] and spits out a complete, static website suitable for serving with Apache or your favorite web server. This is also the engine behind GitHub Pages, which you can use to host your project’s page or blog right here from GitHub.</p>
+</blockquote>
+
+<p>It&#39;s an immensely useful tool and one we encourage you to use here with Hyde.</p>
+
+<p>Find out more by <a href="https://github.com/mojombo/jekyll">visiting the project on GitHub</a>.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/jenkins/node/javascript/hubot/github/2012/01/06/Talking-to-jenkins-from-campfire-with-hubot/">
+        Talking To Jenkins From Campfire With Hubot
+      </a>
+    </h1>
+
+    <span class="post-date">06 Jan 2012</span>
+
+    <p>In what turned out to be a productive holiday hacking with languages I&#8217;d not used before, I got round to writing some coffeescript on node.js. This was more to do with scratching a personal itch that pure experimentation. I had a play with <a href="https://github.com/github/janky">Janky</a> (Github&#8217;s Jenkins/Hubot mashup) but found it a little opinionated on the Jenkins side, but the campfire integration is excellent. Looking at the Jenkins commands in <a href="https://github.com/github/hubot-scripts/">hubot-scripts</a> though I found those even more opinionated.</p>
+<p>The magic of open source though is you can just fix things, then ask nice people if they like what you&#8217;ve done. I set about writing a few more general commands and lo, the&#8217;ve been quickly <a href="https://github.com/github/hubot-scripts/pull/23840h">merged upstream</a>.</p>
+<p>These add:</p>
+<ul>
+	<li>A command to list all your Jenkins jobs and the current state</li>
+	<li>A command to trigger a normal build</li>
+	<li>A command to trigger a build with a list of parameters</li>
+</ul>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRipwAIM" alt="campfire window showing jenkins tasks"/></p>
+<p>This was made much easier by first looking at the previous Jenkins commands, and then looking at other scripts in the hubot-scripts repository. The best way of learning a new language/framework is still on the shoulders of others.</p>
+<p>I&#8217;ve got a few other good ideas for Jenkins related commands. I want to add a filter command to the jobs list, both by name and by current state. For longer running jobs I also want to report whether a build is currently running. And then maybe get information about a specific job, like the last few runs or similar. Any other requests or ideas most welcome.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/ec2/fabric/python/2011/12/31/Ec2-tasks-for-fabric/">
+        EC2 Tasks For Fabric
+      </a>
+    </h1>
+
+    <span class="post-date">31 Dec 2011</span>
+
+    <p>For running ad-hoc commands across a small number of servers you really can&#8217;t beat <a href="http://fabfile.org">Fabric</a>. It requires nothing other than ssh installed on the servers, is generally just a one-line install and requires next to no syntaxtic fluff between you and the commands you want running. It&#8217;s much more of a swiss army knife to Capistranos bread knife.</p>
+<p>I&#8217;ve found myself doing more and more EC2 work of late and have finally gotten around to making my life easier when using Fabric with Amazon instances. The result of a bit of hacking is <a href="https://github.com/garethr/cloth">Cloth</a> (also <a href="http://pypi.python.org/pypi/cloth">available on PyPi</a>). It contains some utility functions and a few handy tasks for loading host details from the EC2 <span class="caps">API</span> and using them in your Fabric tasks. No more static lists of host names that constantly need updating in your fabfile.</p>
+<p>Specifically, with a fabfile that looks like:</p>
+<pre>#! /usr/bin/env python
+from cloth.tasks import *</pre>
+<p>You can run:</p>
+<pre>fab all list</pre>
+<p>And get something like:</p>
+<pre>instance-name-1 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-2 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-3 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-4 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-5 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-6 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-7 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-8 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+...</pre>
+<p>And then you could run:</p>
+<pre>fab -P all uptime</pre>
+<p>And you&#8217;d happily get the load averages and uptime for all your EC2 instances.</p>
+<p>A few more tricks are documented in the <a href="https://github.com/garethr/cloth">GitHub <span class="caps">README</span></a>, including filtering the list by a regex and some convention based mapping to Fabric roles. I&#8217;ll hopefully add a few more features as I need them and generally tidy up a few things but I&#8217;m pretty happy with it so far.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/jenkins/clojure/noir/2011/12/26/First-experience-building-something-with-clojure/">
+        First Experience Building Something With Clojure
+      </a>
+    </h1>
+
+    <span class="post-date">26 Dec 2011</span>
+
+    <p>I nearly always try and grab some time over Christmas to try something new and this year I&#8217;d been planning on spending some time with Clojure. I have several friends who are big fans, but dipping in and out of a book hadn&#8217;t really worked. What I needed was an itch to scratch.</p>
+<p>I stuck with a domain I&#8217;m pretty familiar with for this first project, namely building a little web application. It renders a web page, makes <span class="caps">HTTP</span> requests, parses <span class="caps">JSON</span> into native data structures and does a bit of data juggling. Nothing fancy or overly ambitious, I was mainly interested in picking up the syntax, understanding common libraries and getting something built. Here&#8217;s what I&#8217;ve got:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjBuAIM" alt="Dasboard for Jenkins builds"/></p>
+<p>Jenkins has various <span class="caps">API</span> endpoints, but most dashboards I&#8217;ve seen concentrate on showing you the current status of all the builds. This is hugely useful when it comes to the simple case of continuous integration, but I&#8217;ve also been using Jenkins for other automation tasks, and making extensive use of parameterized builds. What the dashboard above concentrates on is showing recent builds for a specific job, along with the parameters used to run them.</p>
+<p>Overall it was a fun project. Clojure made much more sense to me building this application than it had from simple examples. The <a href="http://webnoir.org/">Noir</a> web framework is excellent and proved easy enough to jump into and simple enough that I could read the source code if I was interested in how something worked. The <a href="https://github.com/technomancy/leiningen">Leiningen</a> build tool made getting started, downloading and managing dependencies and running tests and the application itself easy.</p>
+<p>What I didn&#8217;t find particularly appealing was the lack of a strong standard library coupled with the difficulty of tracking down suitable libraries. <span class="caps">JSON</span> parsing, dealing with <span class="caps">HTTP</span> requests and date handing are very common activities in web programming and all needed me to jump around looking at the best way of dealing with the common case. I settled on <a href="https://github.com/dakrone/clj-http">clj-http</a>, <a href="https://github.com/dakrone/cheshire">chesire</a> and using Java interop for date formatting. clj-http suffered from having lots of forks on GitHub to navigate through. I started with clojure-json before discovering it had been deprecated. And neither clj-time or date-clj appeared to support unix timestamps as far as I could tell from the source. Throw in some uncertainty over the status of clojure-contrib that isn&#8217;t well documented on the official site and it needs some effort to get started.</p>
+<p>The working code for this is already up on <a href="https://github.com/garethr/jenkins-build-list">GitHub</a> and I&#8217;d be interested in any Clojure experts showing me the error of my ways.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/puppet/2011/12/13/Setting-puppet-class-using-environment-variables/">
+        Setting Puppet Class Using Environment Variables
+      </a>
+    </h1>
+
+    <span class="post-date">13 Dec 2011</span>
+
+    <p>I&#8217;m not sure how novel this approach is but a few folks at work hadn&#8217;t seen it before so I thought it worth jotting down.</p>
+<p>If you have even a small but dynamic set of servers then a problem arises with how those nodes are defined in puppet. A node remember is defined in puppet like so:</p>
+<pre>node web3.example.com {
+  include web_server
+}</pre>
+<p>The problem is twofold. If you have a growing infrastructure, that list of nodes is going to get quickly out of hand. The other problem is around provisioning new hosts, the obvious approach to which is something like:</p>
+<p>1. Summon new EC2 instance<br />
+2. Change the node definition to include the new hostname<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Step 2 stands out. The others are easily automated, but do you want to automate a change to your puppet manifests and a redeploy to the puppetmaster for a new instance? Probably not.<br />
+Puppet has the concept of an external node classifier which can be used to solve this problem, but another simpler approach is to use an environment variable on the new machine.</p>
+<p>Lets say we define our nodes something like this instead:</p>
+<div class='bogus-wrapper'><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span><br />
+<span class='line-number'>2</span><br />
+<span class='line-number'>3</span><br />
+<span class='line-number'>4</span><br />
+<span class='line-number'>5</span><br />
+<span class='line-number'>6</span><br />
+<span class='line-number'>7</span><br />
+<span class='line-number'>8</span><br />
+<span class='line-number'>9</span><br />
+<span class='line-number'>10</span><br />
+</pre></td><td class='code'><pre><code class=''>&lt;span class='line'&gt;node default {
+&lt;/span&gt;&lt;span class='line'&gt;  case $machine_role {
+&lt;/span&gt;&lt;span class='line'&gt;    frontend:           { include web_server }
+&lt;/span&gt;&lt;span class='line'&gt;    backend:            { include app_server }
+&lt;/span&gt;&lt;span class='line'&gt;    data:               { include db_server }
+&lt;/span&gt;&lt;span class='line'&gt;    monitoring:         { include monitoring_server }
+&lt;/span&gt;&lt;span class='line'&gt;    development:        { include development }
+&lt;/span&gt;&lt;span class='line'&gt;    default:            { include base }
+&lt;/span&gt;&lt;span class='line'&gt;  }
+&lt;/span&gt;&lt;span class='line'&gt;}&lt;/span&gt;</code></pre></td><p></tr></table></div></figure></notextile></div></p>
+<p>If a machine runs and sets the $machine_role variable to frontend it includes the web_server class, if that variable equals &#8216;data&#8217; it&#8217;s going to include the db_server class instead. Much cleaner and more maintainable in my view. Now to set that variable.</p>
+<p>Facter is the tool used by Puppet to get system information like the operating system or processor count. You can use these facter provided variables anywhere in your manifests. And one way of adding a new fact is via an environment variable on the client. Any environment variable prefixed with FACTER_ will be available in Puppet manifests. So in this case we can:</p>
+<pre>export FACTER_machine_role=frontend</pre>
+<p>So our steps from above become something like:</p>
+<p>1. Summon new machine<br />
+2. echo &#8220;export FACTER_machine_role=backend&#8221; &gt;&gt; /etc/environment<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Much easier to automate. And if you&#8217;re looking at a box and want to know what it&#8217;s role is you can check the relevant environment variable.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page8">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page6">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

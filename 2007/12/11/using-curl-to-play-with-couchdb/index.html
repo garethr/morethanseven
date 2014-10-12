@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Using Curl to play with CouchDB &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Using Curl to play with CouchDB</h1>
+  <span class="post-date">11 Dec 2007</span>
+  <p>As a big big fan of all things <span class="caps">HTTP</span>, the new <a href="http://www.erlang.org/">Erlang</a> based database, <a href="http://couchdb.org">CouchDB</a>, piqued my interest. With the recent <a href="http://damienkatz.net/2007/11/couchdb_070.html">release of 0.7</a> it&#8217;s now intended for widespread use. Now I&#8217;m a fan of databases as long as I don&#8217;t have to go too near them. <span class="caps">SQL</span>, triggers and stored procedures are all a little too close to magic for me.</p>
+<p>The reason CouchDB looks particularly good fun was it&#8217;s build around a <span class="caps">REST</span> <span class="caps">API</span> using <span class="caps">JSON</span> for data transport. I&#8217;m generally not an acronym guy, but <span class="caps">REST</span>, <span class="caps">JSON</span>, <span class="caps">API</span> and <span class="caps">HTTP</span> in one open source piece of code? Sounds like fun to me.</p>
+<p>The CouchDB community have built up an already <a href="http://www.couchdbwiki.com/">excellent wiki</a> with all the information you need to get started and get the <a href="http://www.couchdbwiki.com/index.php?title=Installation">software installed</a>. I just used the magic of <a href="http://www.macports.org/">MacPorts</a> but the page covers all the various dependencies and setups (though nothing on their yet about the N800).</p>
+<pre><code>sudo port install couchdb</code></pre>
+<p>You might then need to set-up a user and some permissions. Again the wiki has more <a href="http://www.couchdbwiki.com/index.php?title=Installation#Security_Considerations">detailed installation instructions</a>. All being well you should then be able to fire up CouchDB:</p>
+<pre><code>sudo -u couchdb couchdb</code></pre>
+<p>So first things first. Their are getting started code examples on the wiki in all the usual languages so you can just dive in. CouchDB also comes with a few in-build tools which are both pretty attractive and useful. You have a <a href="http://localhost:8888/_utils/browse/index.html">database browser</a>, a full <a href="http://localhost:8888/_utils/couch_tests.html">test suite</a> and a <a href="http://localhost:8888/_utils/shell.html">command shell</a>.</p>
+<p><a href="http://curl.haxx.se/">Curl</a>, for those not familiar with it, is a fantastic command line utility for throwing around <span class="caps">HTTP</span> requests. I already use it for testing and generally prodding sites but it&#8217;s absolutely perfect for demonstrating CouchDB. Let&#8217;s start with creating a database called <em>test</em>:</p>
+<pre><code>curl -X PUT http://localhost:8888/test/</code></pre>
+<p>That should have created the database. Let&#8217;s get some information back about the database:</p>
+<pre><code>curl -X GET http://localhost:8888/test/</code></pre>
+<p>Everything should be returning <span class="caps">JSON</span> strings telling us something about what it finds. Let&#8217;s add a blank document to the database:</p>
+<pre><code>curl -X POST http://localhost:8888/test/ \
+-H "Content-Type: application/json" -d {}</code></pre>
+<p>Note the blank <span class="caps">JSON</span> object <em>{}</em> passed as Post data. What about retrieving a list of document from the database?</p>
+<pre><code>curl -X GET http://localhost:8888/test/_all_docs</code></pre>
+<p>We&#8217;re now done with that database so let&#8217;s delete it.</p>
+<pre><code>curl -X DELETE http://localhost:8888/test/</code></pre>
+<p>I&#8217;ve just done the basics here, but the APIs are simple and nicely documented enough for you easily to find out more. This is the beauty of RESTfully designed APIs, they are just about self documenting. For the most part you just have a predefined <span class="caps">HTTP</span> method and a defined <span class="caps">URL</span>.</p>
+<ul>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_View_API"><span class="caps">HTTP</span> View <span class="caps">API</span></a></li>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_Doc_API"><span class="caps">HTTP</span> Doc <span class="caps">API</span></a></li>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_Db_API"><span class="caps">HTTP</span> DB <span class="caps">API</span></a></li>
+</ul>
+<p>The Erlang base of CouchDB makes for some interesting horizontal scaling possibilities (as well as a good excuse to play with Erlang.) Even if CouchDB wasn&#8217;t cool enough already, it comes with probably the best start-up message I&#8217;ve seen in software for ages:</p>
+<pre><code>CouchDB has started. Time to relax.</code></pre>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

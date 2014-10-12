@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      A Proliferation of Feed Standards &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">A Proliferation of Feed Standards</h1>
+  <span class="post-date">23 Apr 2006</span>
+  <p>Google just announced <a href="http://code.google.com/apis/gdata/overview.html">GData</a>, which is apparently a:</p>
+<blockquote>
+  <p>&#8230;simple standard protocol for reading and writing data on the web.</p>
+</blockquote>
+ <p>It is basically an amalgamation of Atom, <span class="caps">RSS</span> and bits and pieces of Goodle juice. It piqued my interest for a couple of reasons:</p>
+<ul>
+ <li>What was termed <em>Optimistic Concurrency</em></li>
+  <li>A promise of <em>Authentication</em></li>
+  <li><em><span class="caps">REST</span></em> based</li>
+</ul>
+ <p>The former relates to a simple solution to the problem of concurrent updates. Say I grab a file and make a change, but in between another individual grabs the same file, and after I submit my changes, they also try top submit changes all my changes could be lost. GData specifies a solution to this by introducing version numbers, only if the version you are modifying has the latest version number will it be accepted. The version number is simply provided in the edit <span class="caps">URI</span> in the feed. Nice.</p>
+ <p>I wont ramble too much about <a href="http://www.xfront.com/REST-Web-Services.html"><span class="caps">REST</span>,</a> safe to say if you like URLs then it makes perfect sense and you can just get on with it. Lots of other posts about <a href="http://billburnham.blogs.com/burnhamsbeat/2004/12/rest_vs_soap_wh.html">why</a> if you missed the (ongoing) debate. It&#8217;s a bit like <a href="http://microformats.org">Microformats</a> and the Semantic Web. The bariers to entry for microformats are the the same as those for building web pages.</p>
+ <p>I say the promise of Authentication above because it turns out that part of the system is not in place yet. The other part of that I&#8217;m sceptical about is, from my reading, a complete reliance on Google to provide the <a href="http://code.google.com/apis/gdata/protocol.html#Authentication">authentication</a>. For some applications that&#8217;s fine, for others you probably dont want Google in charge of the keys.</p>
+ <p>It also has simple proscribed methods of dealing with categories and search queries, including <a href="http://opensearch.a9.com/">Opensearch</a> integration.</p>
+ <p>I was thinking about playing with a <span class="caps">PHP</span> based client/server for GData, or at least having a look, but I think I&#8217;ll wait until I know more about the authentication side.</p>
+ <p>I have a feeling Microsoft will do something like this as well, take existing open standards and republish them with a few bells and whistles. And again the developers, ie. us, are left supporting multiple slight variations on a theme. Maybe I&#8217;m just suspicious. Time will tell.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

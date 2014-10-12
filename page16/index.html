@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/python/django/2010/06/29/Python-what-to-use/">
+        Python: What To Use?
+      </a>
+    </h1>
+
+    <span class="post-date">29 Jun 2010</span>
+
+    <p>My friend <a href="http://jamieonsoftware.com">Jamie Rumbelow</a> has started a new project and decided to use Python. He asked a great question over on <a href="http://stackoverflow.com/questions/3143115/architecting-from-scratch-in-python-what-to-use">Stack Overflow</a> which basically came down to <em>what should I use for my first proper Python web application project</em>. After a quick prompting on twitter I decided to have a go. I&#8217;ve cross posted my anwser below more because it took as long as a typical blog post to write.</p>
+<h2>Frameworks</h2>
+<p>OK, so I&#8217;m a little biased here as I currently make extensive use of Django and organise the Django User Group in London so bear that in mind when reading the following.</p>
+<p>Start with Django because it&#8217;s a great gateway drug. Lots of documentation and literature, a very active community of people to talk to and lots of example code around the web.</p>
+<p>That&#8217;s a completely non-technical reason. Pylons is probably purer in terms of Python philosophy (being much more a collection of discrete bits and pieces) but lots of the technical stuff is personal preference, at least until you get into Python more. Compare the very active Django tag on Stack Overflow with that of pylons or turbogears though and I&#8217;d argue getting started is simply easier with Django irrespective of anything to do with code.</p>
+<p>Personally I default to Django, but find that an increasing amount of time I actually opt for writing using simpler micro frameworks (think Sinatra rather than Rails). Lots of things to choose from (<a href="http://fewagainstmany.com/blog/python-micro-frameworks-are-all-the-rage">good list here</a>). I tend to use <span class="caps">MNML</span> (because I wrote parts of it and it&#8217;s tiny) but others are actively developed. I tend to do this for small, stupid web services which are then strung together with a Django project in the middle serving people.</p>
+<p>Worth noting here is appengine. You have to work within it&#8217;s limitations and it&#8217;s not designed for everything but it&#8217;s a great way to just play with Python and get something up and working quickly. It makes a great testbed for learning and experimentation.</p>
+<h2>Mongo/<span class="caps">ORM</span></h2>
+<p>On the MongoDB front you&#8217;ll likely want to look at the <a href="http://api.mongodb.org/python/">basic python mongo library</a> first to see if it has everything you need. If you really do want something a little more <span class="caps">ORM</span> like then <a href="http://hmarr.com/mongoengine/">mongoengine</a> might be what you&#8217;re looking for. A bunch of folks are also working on making Django specifically integrate more seamlessly with nosql backends. Some of that is for future Django releases, but <a href="http://www.allbuttonspressed.com/projects/django-nonrel">django-norel</a> has code now.</p>
+<p>For relational data <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> is good if you want something standalone. Django&#8217;s <span class="caps">ORM</span> is also excellent if you&#8217;re using Django.</p>
+<h2><span class="caps">API</span></h2>
+<p>The most official Oauth library is <a href="http://github.com/simplegeo/python-oauth2">python-oauth2</a>, which handily has a Django example as part of it&#8217;s docs.</p>
+<p><a href="http://bitbucket.org/jespern/django-piston/wiki/Home">Piston</a> is a Django app which provides lots of tools for building APIs. It has the advantage of being pretty active and well maintained and in production all over the place. Other projects exist too, including <a href="http://zacharyvoase.github.com/dagny/">Dagny</a> which is an early attempt to create something akin to RESTful resources in Rails.</p>
+<p>In reality any Python framework (or even just raw <span class="caps">WSGI</span> code) should be reasonably good for this sort of task.</p>
+<h2>Testing</h2>
+<p>Python has unittest as part of it&#8217;s standard library, and unittest2 is in python 2.7 (but <a href="http://pypi.python.org/pypi/unittest2/0.1.4">backported to previous versions too</a>). Some people also like <a href="http://code.google.com/p/python-nose/">Nose</a>, which is an alternative test runner with some additional features. <a href="http://twill.idyll.org/">Twill</a> is also nice, it&#8217;s a &#8220;a simple scripting language for Web browsing&#8221;, so handy for some functional testing. <a href="http://github.com/rlisagor/freshen">Freshen</a> is a port of cucumber to Python. I haven&#8217;t yet gotten round to using this in anger, but a quick look now suggests it&#8217;s much better than when I last looked.</p>
+<p>I actually also use Ruby for high level testing of Python apps and apis because I love the combination of celerity and cucumber. But I&#8217;m weird and get funny looks from other Python people for this.</p>
+<h2>Message Queues</h2>
+<p>For a message queue, whatever language I&#8217;m using, I now always use RabbitMQ. I&#8217;ve had some success with stompserver in the past but Rabbit is awesome. Don&#8217;t worry that it&#8217;s not itself written in Python, neither is PostgresSQL, Nginx or MongoDB &#8211; all for good reason. What you care about are the libraries available. What you&#8217;re looking for here is <a href="http://barryp.org/software/py-amqplib/">py-amqplib</a> which is a low level library for talking amqp (the protocol for talking to rabbit as well as other message queues). I&#8217;ve also used <a href="http://github.com/ask/carrot/">Carrot</a>, which is easier to get started with and provides a nicer <span class="caps">API</span>. Think bunny in Ruby if you&#8217;re familiar with that.</p>
+<h2>Environment</h2>
+<p>Whatever bits and pieces you decide to use from the Python ecosystem I&#8217;d recommend getting to who <a href="http://clemesha.org/blog/2009/jul/05/modern-python-hacker-tools-virtualenv-fabric-pip/">pip and virtualenv</a> &#8211; note that fabric is also cool, but not essential and these docs are out of date on that tool). Think about using Ruby without gem, bundler or rvm and you&#8217;ll be in the right direction.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/dibi/2010/06/19/Dibi-video/">
+        Dibi Video
+      </a>
+    </h1>
+
+    <span class="post-date">19 Jun 2010</span>
+
+    <p><object width="400" height="225"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=12613643&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=12613643&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="225"></embed></object></p>
+<p>The videos from the <a href="http://www.dibiconference.com/"><span class="caps">DIBI</span></a> conference are now up on <a href="http://vimeo.com/groups/48480/videos">Vimeo</a>. Lots of good stuff and more to come. The one disadvantage of a a two track conference is you miss half the talks so when I get a chance I&#8217;ll be catching up with those talks I didn&#8217;t get chance to see.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/ganglia/gmetrics/devops/2010/06/01/Very-simple-custom-ganglia-metrics/">
+        Very Simple Custom Ganglia Metrics
+      </a>
+    </h1>
+
+    <span class="post-date">01 Jun 2010</span>
+
+    <p>Logging useful information from running systems for monitoring purposes is pretty important if you want to see how your software is behaving in the real world. It&#8217;s one thing to test something locally, another to test something under load on a testing environment and quite something else to watch production code while running.</p>
+<p>The numbers can be useful for checking newly released code isn&#8217;t having a detrimental effect on performance, observing what changes in load are doing to systems over time and planning for future capacity growth.</p>
+<p>Creating log files, agregating files from multiple machines and then analysing the results is one approach. Another is using something like <a href="http://ganglia.sourceforge.net/">Ganglia</a>. Ganglia is great for trending data over time, and ties in nicely to Nagios for reporting. Installing the monitoring daemon on machines and generally getting the default checks (memory, disk, network, etc.) up and running is nice and easy. From there using the gmetric command line to create custom metrics (say checking some mysql statistics) is again straight forward.</p>
+<p>So far, so good. The only issue I&#8217;ve run into was creating custom metrics on the fly from a machine outside the network. For bonus points these metrics were nothing to do with the machine on which they were collected, but to do with the system overall. More specifically the metrics were web site performance data gathered via some cucumber and <a href="http://celerity.rubyforge.org/">celerity</a> scripts.</p>
+<p>For this I knocked up a tiny web service wrapper around the gmetric command line. It&#8217;s very feature light at the moment (I only needed it to collect time based stats at regular intervals) but it could be made more featureful and expose the rest of the gmetric <span class="caps">API</span> if needs be. It does it using a very simple <span class="caps">URL</span> scheme:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+/{metric-name}/{metric-value}/ 
+<% end %>
+<p>So for example I can create metrics on the fly simply using an <span class="caps">HTTP</span> client or a web browser.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+/GarethsCommuteTime/3600/
+/ExternalPageLoad/2.005/
+<% end %>
+<p>The <a href="http://github.com/garethr/gmetric-web">code is up on GitHub</a> and is completely self contained. I&#8217;ve been running it mainly using spawning but any small <span class="caps">WSGI</span> server could surfice. I looked very briefly at the <span class="caps">API</span> for Ganglia but found the gmetric approach to be much simpler.</p>
+<p>And if you&#8217;re a Ganglia expert and know a much better way of doing this then let me know. Ganglia is awesome, and collecting metrics is both useful and fun (for me at least) but it&#8217;s not always obvious how to get into creating simple custom metrics which tell you something about your own appliction code.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/devops/twitter/2010/05/26/Devops-twitter-aggregator/">
+        Devops Twitter Aggregator
+      </a>
+    </h1>
+
+    <span class="post-date">26 May 2010</span>
+
+    <p>I&#8217;ve been hacking on appengine again and have thrown up a simple <a href="http://devopstweets.appspot.com/">twitter aggregator for devops</a>. It&#8217;s again based on <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> with an increasing number of additions and changes.</p>
+<p>As well as just the tweets I want to build a few other small features. The first of which is link extraction, so at the moment you&#8217;ll see recent links a the top of the page. I&#8217;ll hopefully make that a little more useful, with better browing and converting short urls into the real ones. I also have vague plans for providing exports, listing people talking about devops and some useful graphs to track general activity around devops.</p>
+<img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjphAEM" alt="Devops aggregator on Twitter"
+<p>I&#8217;m really interested to see if the whole discussion around the term devops grows over the next year or so, and I&#8217;m hoping this will make it a little easier to see that change happen.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/debian/ubuntu/2010/05/18/Installing-integrity-on-debianubuntu/">
+        Installing Integrity On Debian/Ubuntu
+      </a>
+    </h1>
+
+    <span class="post-date">18 May 2010</span>
+
+    <p>I&#8217;ve been playing with <a href="http://integrityapp.com">Integrity</a> again as a simple continuous integration server and have installed it on a few debian and ubuntu machines in the last few weeks. The current site has good installation instructions for the Ruby side of things but leaves it as an excercise for the installer to make sure all the system level dependencies are installed.</p>
+<p>So probably as much for me in the future, here is what I had to install to get the installation instructions to work for me.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install build-essential
+apt-get install ruby
+apt-get install rdoc
+apt-get install sqlite3
+apt-get install libdbd-sqlite3-ruby
+apt-get install libdataobjects-sqlite3-ruby1.8 
+apt-get install libsqlite3-dev
+apt-get install libxml2
+apt-get install libxml2-dev
+apt-get install libxsl-dev
+apt-get install libopenssl-ruby
+<% end %>
+<p>I also needed to install the following package on Ubuntu:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install ruby1.8-dev
+<% end %>
+<p>If you want to use a database other than the default SQLite then you won&#8217;t need those packages and I&#8217;ll assume you know what you&#8217;re doing.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page17">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page15">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

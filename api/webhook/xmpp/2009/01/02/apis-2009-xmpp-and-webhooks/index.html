@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      APIs in 2009 - XMPP and WebHooks &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">APIs in 2009 - XMPP and WebHooks</h1>
+  <span class="post-date">02 Jan 2009</span>
+  <p>Everyone has to have a post with a year in the title at the start of the year so I thought I better write something. Rather than one of those personal retrospective emails I thought I&#8217;d go for something different &#8211; a look at what I&#8217;d like to see in APIs in the coming year.</p>
+<h2>Webhooks</h2>
+<p>I&#8217;m pretty interested in the idea of applications exposing <a href="http://webhooks.pbwiki.com/">Webhooks</a> at the moment. It&#8217;s a pretty simple idea. As a user of a service you can register your own <span class="caps">HTTP</span> end points to receive information whenever events occur in the service.  Both <a href="http://wiki.shopify.com/WebHook">Shopify</a> and <a href="http://github.com/guides/post-receive-hooks">GiHub</a> have pretty nifty hooks for extending their capabilities for instance. When someone pushes code to a git repository you could send a ping to trigger a process to update the documentation for example.</p>
+<p>With the rise of hosted application development environments like <a href="http://code.google.com/appengine/">AppEngine</a> writing small, nearly throwaway, apps to subscribe to these hooks could become incredibly powerful. It&#8217;s a lot like how unix programmers think, by piping lots of small applications together to get to the expected end result. It&#8217;s not a replacement for the more standard read/write <span class="caps">API</span>, but it&#8217;s a potential solution to the need to constantly poll that <span class="caps">API</span> for some types of applications.</p>
+<p>The idea of public webhooks would be hugely powerful, but would also likely be a scalability nightmare. Imagine if Flickr exposed a hook that you could subscribe to whenever anyone added a public photo. Or Twitter added a hook for when anyone tweeted. These sorts of hooks would quickly be swamped with subscribers. The number of <span class="caps">HTTP</span> requests being sent by a service like Flickr under these circumstances would be <em>rather large</em> to say the least. Which is where another technology that&#8217;s designed for this sort of problem becomes useful.</p>
+<h2><span class="caps">XMPP</span> Interfaces</h2>
+<p><a href="http://xmpp.org/"><span class="caps">XMPP</span></a> or the Extensible Messaging and Presence Protocol has been around for a while, although originally under the name Jabber. It&#8217;s predominantly being used at the moment as a instant messaging protocol, but in reality it&#8217;s far more general purpose than that. Or rather, IM is generally considered to be between two or more people. But their is no reason that either or all the participants in an <span class="caps">XMPP</span> session can&#8217;t be programs.</p>
+<p>On my local machine I&#8217;m a big fan of the command line for all sorts of simple, and sometimes complex, tasks.  If applications expose their APIs via an <span class="caps">XMPP</span> bot then you basically have a ready made command line interface to online services via your IM client of choice. Combined with a solution to the public webhook problem mentioned above and you can hopefully see why I find <span class="caps">XMPP</span> pretty interesting.</p>
+<p>I&#8217;ve been playing with writing <span class="caps">XMPP</span> bots recently, both at our internal hackday and at the recent <a href="http://github.com/garethr/lastbot/tree/master">Last.fm event</a>. Their are various libraries and code examples lying around the internet that make getting started easy enough. With services like <a href="http://imified.com/">Imified</a> getting setup last year I&#8217;d imagine it will get easier still this year.</p>
+<p>As for what I&#8217;m going to be up to along these lines, we&#8217;ll have to wait and see. I have a few pet projects that I&#8217;d like to get off the ground which might be good test beds for this sort of thing. Apart from that I&#8217;d like to write some <em>getting started</em> style tutorials on some of the technologies involved or maybe a full blown article on the theory if I can find somewhere to publish it. A barcamp presentation or two might also fall off the back if I do get the time to play around a little more. But that&#8217;s just me. If you&#8217;re building, or planning on developing, an <span class="caps">API</span> for a product at the moment I&#8217;d suggest having a look at these two areas. They might turn out to just be potential extensions to what you had planned. Or they might turn out to be just the right approach to the problems you&#8217;ll face getting people to use your <span class="caps">API</span>.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

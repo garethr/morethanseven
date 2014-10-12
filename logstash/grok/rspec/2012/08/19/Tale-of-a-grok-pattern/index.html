@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Tale Of A Grok Pattern &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Tale Of A Grok Pattern</h1>
+  <span class="post-date">19 Aug 2012</span>
+  <p>I&#8217;m all of a sudden adding lots more code to GitHub. Here&#8217;s the latest project, <a href="https://github.com/garethr/logstash-patterns">grok patterns for logstash</a>. At the moment this repo only contains one new pattern but I&#8217;m hoping to add more, and maybe even for others to add more too.</p>
+<p>First, a bit of background. <a href="http://logstash.net/">Logstash</a> is the excellent, open source, log agregation and processing framework. It takes inputs from various configurable places, processes them with filters and then outputs the results. So maybe you&#8217;ll take inputs from various application log files and output then into an elastic search index for easy searching, or output the same inputs to graphite and statsd to get graphs of rates. One of the host powerful filters in logstash is the <a href="http://logstash.net/docs/1.0.17/filters/grok">grok filter</a>. It takes a grok pattern and parses out information contained in the text into fields that can be more easily used by outputs. This post serves hopefully as both an explanation of why and an example of how you might do that.</p>
+<h2>The problem</h2>
+<p>Rails logs are horrible, that is until you install the excellent <a href="https://github.com/roidrage/lograge">lograge</a> output formatter. That gives you lines like:</p>
+<pre>GET /jobs/833552.json format=json action=jobs#show status=200 duration=58.33 view=40.43 db=15.26</pre>
+<p>This contains loads of useful information that&#8217;s easily parsable by a developer. We have the <span class="caps">HTTP</span> status code, the rails controller and information about response time too. A grok filter lets us teach logstash about that information too. The working grok filter for filtering this line looks like this:</p>
+<h2>The solution</h2>
+<pre>LOGRAGE %{WORD:method}%{SPACE}%{DATA}%{SPACE}action=%{WORD:controller}#%{WORD:action}%{SPACE}status=%{INT:status}%{SPACE}duration=%{NUMBER:duration}%{SPACE}view=%{NUMBER:view}(%{SPACE}db=%{NUMBER:db})?%{GREEDYDATA}</pre>
+<p>That was worked out pretty much with a bit of trial and error and use of the logstash java binary, using stdin and stdout inputs and outputs. It works but getting their wasn&#8217;t that much funand proving it works outside a running logstash setup was tricky. Enter rspec and the grok implementation in pure Ruby. The project above contains an Rspec matcher for use when testing grok filters for logstash. I&#8217;ll probably extract that into a gem at some point but you&#8217;ll get the idea. Now we can write tests like these:</p>
+<pre>the lograge grok pattern
+  with a standard lograge log line
+    should have the correct http method value
+    should have the correct value for the request duration
+    should have the correct value for the request view time
+    should have the correct controller and action
+    should have the correct value for db time
+  without the db time
+    should have the correct value for the request view time
+  with a post request
+    should have the correct http method value
+
+Finished in 0.01472 seconds
+7 examples, 0 failures
+</pre>
+<p>The <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/lograge_spec.rb">tests themselves</a> are just basic Rspec with most of the work done in the <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/spec_helper.rb">custom matcher</a>. This not only means I can be a bit more confident that my grok pattern works, it also provides a much nicer framework for writing more patterns for other log formats. Parsing rules like this are one area where test driven development is a huge boon in my experience. And with tests comes continuous integration, in this case via <a href="http://travis-ci.org/#!/garethr/logstash-patterns">Travis</a>.</p>
+<p>I&#8217;ll hopefully find myself writing more patterns and tests for them, and if anyone wants to send pull requests and to start collecting working grok patterns together so much the better.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

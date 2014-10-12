@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/jenkins/2011/11/16/Jenkins-parameterized-builds/">
+        Jenkins Parameterized Builds
+      </a>
+    </h1>
+
+    <span class="post-date">16 Nov 2011</span>
+
+    <p>I&#8217;m a huge Jenkins fan now, but that wasn&#8217;t always the case. I started (and still have a soft spot for) Cruise Control, mainly building .<span class="caps">NET</span> and <span class="caps">PHP</span> applications. I then jumped to much simpler projects like <a href="http://integrityapp.com/">Integrity</a> mainly for Python and Ruby projects. I reasoned I didn&#8217;t need the complexity of Cruise or Hudson, I just wanted to be able to run my tests on a remote machine and have something go green or red. I then worked out that wasn&#8217;t quite the case, and ended up committing webhook like functionality to Integrity so I could chain builds together. And then I eventually tried Jenkins and found it&#8217;s power mixed with flexibility won me over. That&#8217;s really all just context, but hopefully explains a little about why I like a few Jenkins features in particular, one of which is <a href="https://wiki.jenkins-ci.org/display/JENKINS/Parameterized+Build">Parameterized builds</a>.</p>
+<p>The Jenkins wiki describes this by saying:</p>
+<blockquote>
+<p>Sometimes, it is useful/necessary to have your builds take several &#8220;parameters.&#8221;</p>
+</blockquote>
+<p>But then goes onto a usecase that probably won&#8217;t mean much to dynamic language folk. This is one failing of much of the documentation around Jenkins, it often feels geared towards developers of certain languages when in reality the tool is useful everywhere. The important take away here is that builds can take arguments, which can have default values. Here&#8217;s an example:</p>
+<p>Imagine we have a build which runs a set of simple tests against a live system . And further imagine that said system is composed of a number of different web services. Oh, and we&#8217;re running a few different parrallel versions of the entire system for testing and staging purposes. We could have one Jenkins job per application/environment combination. Or we could have one parameterized build.</p>
+<p>Lets first specify our parameters from the Configure build screen of our Job.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjZsAIM"/></p>
+<p>Here we&#8217;re specifying a TARGET_APPLICATION and TARGET_PLATFORM parameter. These are going to turn into environment variables we can use in our build steps. We can specify default values for these if we like too. I&#8217;m just using strings here, but I could also use a select box or file dialog, or other options provided by various plugins.</p>
+<p>Now when we hit the build button, instead of the build just starting, we&#8217;re propted for these values.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjxqAIM"/></p>
+<p>So with our new build if we want it to run against the staging environment and just for the foobar application we enter those values and hit build. That on it&#8217;s own can be used to drastically cut down on the number of individual builds you have to manage in Jenkins. And we&#8217;re not just restricted to text inputs, we can use boolean values or even prompt for file uploads at build time. But throw in a few plugins and things get even more interesting.</p>
+<p>Jenkins has an overwhelming number of plugin available. If you haven&#8217;t spent the good half hour it takes to go down the list I&#8217;d highly recommend it. One of Jenkins best features is the ability to trigger a build after the successful run of another job. It allows you to chain things like test runs to integration deployments to smoke tests to production deploys. Basically your modern continuous deployment/delivery pipeline. The <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Pipeline+Plugin">Build Pipeline</a> plugin is excellent for visuallising this and introducing human gates if needed. Another useful plugin in this context is the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Parameterized+Trigger+Plugin">Parameterized Trigger</a> plugin. A limitation of Jenkins is that downstream builds can&#8217;t pass parameters, but this plugin works around that. Instead of ticking the <em>Build other projects</em> option you go for the <em>Trigger parameterized build on other projects</em> box. This allows you to select the project and to specify parameters to pass. This could be hard coded values, paramaters already passed into the pipeline, or things from other plugins like the git sha1 hash or subversion version number.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjyqAIM"/></p>
+<p>Combine all this together and it&#8217;s simple to have a per project continuous integration build running a test suite, kicking off a standard set of downsteam jobs for deploying to a test environment (by passing th relevant parameters), running some basic smoke tests and allowing someone to click a button to deploy to production. Or going the whole continuous deployment, I trust my test suite route, and deploying automatically. All within Jenkins. Getting this working requires a bit of planning. You want all of your projects to be deployed the same way but you probably want this to be the case anyway.</p>
+<p>Providing flexible push button builds/deploys and reducing the number of nearly identical jobs in Jenkins are just two advantages to using parameterized builds. Most of the tricks come from thinking about Jenkins as much more than a continuous integration tool and more of an automation framework &#8211; I know at least one large organisation who have pretty much replaced cron for many tasks with Jenkins for instance. Running tests automatically, and in a central environment as close to production as possible, is important. But it&#8217;s just a sanity check if you&#8217;re doing everything right already. Centralising activity on a build pipeline requires you to be doing all that anyway, but in my opinion gives way more useful and rapid feedback about the state of the code your team is writing.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/puppet%20facter/2011/11/02/Exposing-puppet-and-facter-information-on-the-web/">
+        Exposing Puppet And Facter Information On The Web
+      </a>
+    </h1>
+
+    <span class="post-date">02 Nov 2011</span>
+
+    <p>I don&#8217;t appear to have been in a writing mood recently but I&#8217;ve been getting back into hacking on a couple of pet projects. The first fruits of this coding (mainly backwards and forwards on the train) I&#8217;ve just made available to anyone interested.</p>
+<p><a href="https://github.com/garethr/web-puppet">Web Facter</a> is a gem which takes the output from <a href="https://github.com/puppetlabs/facter">Facter</a> and exposes this as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. In theory you could run this on a configurable port on each of your machines and have a <span class="caps">URL</span> you can hit to get information on uptime, networking setup, hostnames or anything else exposed by Facter. It comes with a simple built-in web server and optional http basic authentication if you&#8217;re not going to do this via a proxy. The <span class="caps">JSON</span> display should be both human and machine readable, and I have a few ideas for projects which needed this information.</p>
+<p>The other project is very similar, and even has a similar name, <a href="https://github.com/garethr/web-facter">Web Puppet</a>. You can run this on your puppet master and it exposes the node information (currently including the facts and tags) again as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. I&#8217;m still working on this to make it a little more usable. At the moment it just shows you all nodes and all information, if you&#8217;re working with a larger cluster this isn&#8217;t really sensible. Recent versions of Puppet do have an <a href="http://docs.puppetlabs.com/guides/rest_api.html"><span class="caps">HTTP</span> based <span class="caps">API</span></a> but it requires some hoops to be jumped through and I&#8217;m not quite sure from the docs it lets me do what I want (I have a specific usecase, of which more soon all being well).</p>
+<p>Both projects have had me reading the source code of Puppet and Facter, which for the most part has been enjoyable and informative. Puppet in particular has some great comments lying around :) Both of the above projects are available as gems for anyone else to play around with and build on, but my main aim is a little more high level. All being well I&#8217;ll have a couple of projects built atop these APIs shortly.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/mongodb/javascript/mongoid/ruby/2011/10/10/Javascript-in-your-ruby-mongoid-map-reduce/">
+        Javascript In Your Ruby: Mongoid Map Reduce
+      </a>
+    </h1>
+
+    <span class="post-date">10 Oct 2011</span>
+
+    <p>We&#8217;re pretty fond of <a href="http://mongodb.org/">Mongodb</a> at work and I&#8217;ve been getting an opportunity to kick some of the more interesting tyres recently. I thought I&#8217;d document something I found myself doing here, half hoping it might be useful for anyone else with a similar problem and also to see if anyone else has a much neater approach. The examples are obviously pretty trivial, but hopefully you get the idea.</p>
+<p>So, we&#8217;re making using of the rather nice <a href="http://mongoid.org/">Mongoid</a> Ruby library for defining our models as Ruby classes. Here&#8217;s a couple of very simple classes. Anyone familiar with DataMapper or Django&#8217;s <span class="caps">ORM</span> should be right at home here.</p>
+<pre>class Publication
+  include Mongoid::Document
+
+  field :name,            :type =&gt; String
+  field :section,         :type =&gt; String
+  field :body,            :type =&gt; String
+  field :is_published,    :type =&gt; Boolean
+end
+
+class LongerPublication &lt; Publication
+  field :extra_body,      :type =&gt; String
+end
+</pre>
+<p>So we now have a good few publications and longer publications in our system. And folks have been creating sections with wild amandon. What I&#8217;d like to do now is do some reporting, specifically I want to know the numbers of Publications by type and publication status. And lets allow a breakdown by section while we&#8217;re at it.</p>
+<p>One approach to this is using Mongo&#8217;s built in map-reduce capability. Mongoid exposes this pretty cleanly in my view, by allowing you to write the required javascript functions (a mapper and a reducer) inline in the Ruby code. This might feel evil, but seems the best of the available options. I can see for much larger functions that splitting this out into separate javascript files for ease of testing might be nice, but were you can just test the input/output of the whole job this works for me.</p>
+<pre>KLASS = "this._type"
+SECTION = "this.section"
+
+def self.count_by(type)
+  map = &lt;&lt;EOF
+    function() {
+      function truthy(value) {
+        return (value == true) ? 1 : 0;
+      }
+      emit(#{type}, {type: #{type}, count: 1, published: truthy(this.is_published)})
+    }
+EOF
+
+  reduce = &lt;&lt;EOF
+    function(key, values) {
+      var count = 0; published = 0;
+      values.forEach(function(doc) {
+        count += parseInt(doc.count);
+        published += parseInt(doc.published);
+        type = doc.type
+      );
+      return {type: type, count: count, published: published}
+    }
+EOF
+
+  collection.mapreduce(map, reduce).find()
+
+end
+</pre>
+<p>In our case that will return something like the following, or rather more specifically it will return a Mongo::Cursor that allows you to get at the following data.</p>
+<pre>[{"_id"=&gt;"Publication", "value"=&gt;{"type"=&gt;"Publication", "count"=&gt;42.0, "published"=&gt;29.0}},
+{"_id"=&gt;"LongerPublication", "value"=&gt;{"type"=&gt;"LongerPublication", "count"=&gt;12.0, "published"=&gt;10.0}}]
+</pre>
+<p>I&#8217;ve been pretty impressed with both Mongo and Mongoid here. I like the feel of mapreduce jobs for this sort of reporting task. In particular it&#8217;s suprising how writing two languages mixed together like this doesn&#8217;t really affect the readability of the code in my view. Given that with a relational database you&#8217;d probably be writing <span class="caps">SQL</span> anyway maybe that&#8217;s not that suprising &#8211; the syntactic differences between Javascript and Ruby are much smaller than pretty much anything and <span class="caps">SQL</span>. Lots of folks have written about the increase of polyglot programming, but I wonder if we&#8217;ll see an increase in the embedding of one language in another?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/nagios/rundeck/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
+        Rundeck And Nagios Nrpe Checks
+      </a>
+    </h1>
+
+    <span class="post-date">11 Sep 2011</span>
+
+    <p>I&#8217;ve been playing with <a href="http://rundeck.org/">Rundeck</a> recently. For those that haven&#8217;t seen it yet it&#8217;s an application for running commands across a cluster of machines and recording the results. It has both a command line client and a very rich web interface which boths allows you to trigger commands and shows the results.</p>
+<p>I&#8217;ve played with a few different jobs so far, including triggering Puppet runs across machines triggered by a Jenkins plugin. I&#8217;ve also been looking at running all my monitoring tasks at the click of a button (or again as part of a smoke test triggered by Jenkins) and I thought that might make a nice simple example.</p>
+<p>My checks are written as Nagios plugins, and run periodically by Nagios. I also trigger them manually, using Dean&#8217;s <a href="http://www.unixdaemon.net/tools/commandline/introducing-nrpe-runner.html"><span class="caps">NRPE</span> runner script</a>.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiJoQIM" alt="Rundeck showing a job output"/></p>
+<p>The above shows a successful run across a few machines I use for experimenting with tools. Hopefully you can see the summary of the run on each of the four machines, each ran five <span class="caps">NRPE</span> checks and all passed. On failure we&#8217;d see the results as well as different symbols and colous. We can easily save the output to a file if we need to, rerun or duplicate the job (maybe to have it run against a different group of machines) or we can export the job definition file to load into another instance.</p>
+<p>The same job can also be run on the command line (which makes use the of Rundeck <span class="caps">API</span>)</p>
+<pre>./run -j "Run NRPE checks" -p PRGMR</pre>
+<p>This example shows running a specific pre-defined job, but it&#8217;s also equally possible to fire of adhoc commands to some or all of the machines rundeck knows about.</p>
+<p>One thing in particular that I prefer about this approach to say using Capistrano or Fabric for remote execution tasks is that you have a centralised authentication and logging capability. It would be easy enough to encapsulate the jobs into cap or fabric tasks (and manage that in source control) which means you&#8217;re not stuck if Rundeck isn&#8217;t available.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/personal/gds/2011/08/19/On-her-majestys-digital-service/">
+        On Her Majesty's Digital Service
+      </a>
+    </h1>
+
+    <span class="post-date">19 Aug 2011</span>
+
+    <p>This blog post is mainly an excuse to use the pun in the title. It&#8217;s also an opportunity to tell folks that don&#8217;t already know I&#8217;ll be starting a new job on Monday working for the UK Government. I&#8217;m going to be work for the <a href="http://digital.cabinetoffice.gov.uk/">Government Digital Service</a>, a new department tasked with a pretty wide range of sorting the Government out online.</p>
+<p>The opportunity is huge. And when it came around I couldn&#8217;t turn it down. I&#8217;m going to be working with a bunch of people I&#8217;ve <a href="http://memespring.co.uk/">known</a> <a href="http://nicepaul.com/">and</a> <a href="http://fberriman.com/">respected</a> for a while, as well as other equally smart people. That means I&#8217;m going to be back in London again as well.</p>
+<p>Hopefully I&#8217;ll be able to talk lots about what we&#8217;re up to. The groundwork for that has already been laid by the <a href="http://alpha.gov.uk">alpha.gov</a> team who have been blogging furiously about topics of interest.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page9">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page7">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

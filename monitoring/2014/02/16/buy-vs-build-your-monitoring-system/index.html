@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Buy vs Build your Monitoring System &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Buy vs Build your Monitoring System</h1>
+  <span class="post-date">16 Feb 2014</span>
+  <p>At the excellent <a href="http://www.theguardian.com/info/developer-blog/2014/feb/15/london-devops-meetup-held-at-the-guardian">London Devops meetup</a> last week I asked what was
+apparently a controversial question:</p>
+
+<blockquote>
+<p>should you just use software as a service monitoring products rather than integrate lots of open source tools?</p>
+</blockquote>
+
+<p>This got a few people worked up and I promised a blog post.</p>
+
+<p>Note that I wrote a post listing lots of <a href="http://www.morethanseven.net/2013/10/13/looking-into-monitoring-and-logging-tools/">open source monitoring tools</a>
+not that long ago. And I&#39;ve been to both the
+<a href="http://monitorama.com/">Monitorama</a> events about open source
+monitoring. And have a bunch of <a href="http://forge.puppetlabs.com/garethr?q=monitoring">Puppet modules for open source monitoring tools</a>. I&#39;m
+a fan of both open source and of open source monitoring. Please don&#39;t
+read this as an attack on either, and particularly on the work of
+awesome people working on  great open source monitoring products.</p>
+
+<h2>Some assumptions</h2>
+
+<ol>
+<li>No one product exists that does everything. I think this is true for
+SaaS as much as for open source.</li>
+<li>Lets work with about 200 hosts. This is a somewhat arbitrary number I
+know, some people will have more and others less.</li>
+<li>If it saves money we&#39;ll pay yearly, rather than monthly or hourly.</li>
+<li>We could probably get some volume discounts from some of the
+suppliers, but we&#39;ll use list prices for this post.</li>
+</ol>
+
+<h2>Show me the money</h2>
+
+<p>So what would it cost to get up and running with a state of the art
+software as a service monitoring system? In order to do this we need to
+choose our software. For this post that means I&#39;m going to pick products
+I&#39;ve used (sometimes only a bit) and like. This isn&#39;t a comprehensive
+study of all the alternatives I&#39;m afraid - though feel free to write
+your own alternative blog posts.</p>
+
+<ul>
+<li><p><a href="http://newrelic.com/">New Relic</a> provides a crazy amount of data about
+the running of both your servers and your applications. This includes
+application performance data, errors, low level metrics and even rolled
+up method or database query performance. $149 per host per month for our
+200 hosts gives us <em>$29,800</em> per month.</p></li>
+<li><p><a href="https://metrics.librato.com">Librato Metrics</a> provides a fantastic way
+of storing arbitrary time series data. We&#39;re already storing lots of
+data in New Relic but Metrics provides us with less opinionated software
+so we can use it for anything, for instance number of logins or searches
+or other business level metrics. We&#39;ll go for a plan with 200 data sources, 100 metrics each and at 10 second resolution for a cost of <em>$3,860</em> per month.</p></li>
+<li><p><a href="http://www.pagerduty.com/">Pagerduty</a> is all about the alerts side of
+monitoring. Most of the other SaaS tools we&#39;ve chosen integrate with it
+so we can make sure we get actionable emails and SMS messages to the
+right people at the right time. Our plan costs $18 per person per month, 
+so lets say we have 30 people at a cost of <em>$540</em> per month.</p></li>
+<li><p><a href="https://papertrailapp.com/">Papertrail</a> is all about logs. Simple setup
+your servers with syslog and Papertrail will collect, analyze and store
+all your log messages. You get a browser based interface, search tools
+and the ability to setup alerts. We like lots of logs so we&#39;ll have a
+plan for 2 weeks of search, 1 year archive and 100GB month of log
+traffic. That all costs <em>$575</em> per month.</p></li>
+<li><p><a href="https://www.getsentry.com">Sentry</a> is all about exceptions. We could be
+simply logging these and sending them to Papertrail but Sentry provides
+tools for tracking and rolling up occurences. We&#39;ll go for a plan with
+90 days of history and 200 events per minute at a cost of <em>$199</em> a
+month.</p></li>
+<li><p><a href="https://www.pingdom.com">Pingdom</a> used to provide a very simple
+external check service, but now they have added more complex multistage
+checks as well as real user monitoring to the basic ping. We&#39;ll choose
+the plan with 250 checks, 20 Real User Monitoring sites and 500 SMS
+alerts for <em>$107 a month</em>.</p></li>
+</ul>
+
+<h2>How much!</h2>
+
+<p>In total that all comes to <em>$35,080 (£20,922)</em> per month, or
+<em>$420,960 (£251,062)</em> per year.</p>
+
+<p>Now the first reaction of lots of people will be <em>that&#39;s a lot of money</em>
+and it is. But remember open source isn&#39;t free either. We need to pay
+for:</p>
+
+<ul>
+<li>The servers we run our monitoring software on</li>
+<li>The people to operate those servers</li>
+<li>The people to install and configure our monitoring software</li>
+<li>The office space and other costs of employing people (like management
+and hiring)</li>
+</ul>
+
+<p>I think people with the ability to build software tend to forget they
+are expensive, whether as a contractor or as a full time member of
+staff. And people without management experience tend to forget costs
+like insurance, rent, management overhead, recruitment, etc.</p>
+
+<p>And probably more important than these for some people we need to consider:</p>
+
+<ul>
+<li>The time taken to build a good open source monitoring system</li>
+</ul>
+
+<p>The time needed to put together a good monitoring stack based on for
+instance logstash, kibana, riemann, sensu, graphite and collectd isn&#39;t
+small. And don&#39;t forget the number of other moving parts like redis,
+rabbitmq and elasticsearch that need installing configuring and
+maintaining. That probably means compromising in the short term or
+shipping later. In a small team how core is building your monitoring
+stack to what you do as a business?</p>
+
+<h2>But I can&#39;t use SaaS</h2>
+
+<p>For some people, using a software as a service product just isn&#39;t going
+to cut it. Here&#39;s a list of reasons I can think of:</p>
+
+<ul>
+<li>Regulation constrains where your data can be stored, for instance it&#39;s
+not allowed out of the country</li>
+<li>Sheer size of infrastructure, although you may be able to get a volume
+discount it might not be enough</li>
+</ul>
+
+<p>I think everything else is a cost/benefit issue or personal preference
+(or bias). Happy to add more to that list, but I don&#39;t think it&#39;s a very
+long list.</p>
+
+<h2>Conclusions</h2>
+
+<p>I&#39;ve purposefully not talked about the quality of the tools here, just
+the cost. I&#39;ve also not mentioned that it&#39;s likely not an all or nothing
+decision, lots of people will mix SaaS products and open source tools.</p>
+
+<p>Whether taking a SaaS approach will be quicker, cheaper or better will
+depend on your specific business context. But try and make that about
+the organisation and not about the technology.</p>
+
+<p>If you&#39;ve never used the current crop of SaaS monitoring
+tools (and not just the one&#39;s mentioned above) then I think you&#39;re missing
+out. Even if you stick with a mainly open source monitoring stack you
+might look at your tools a bit differently after you&#39;ve experimented
+with some of the commercial competition.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

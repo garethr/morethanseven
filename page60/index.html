@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/10/14/virtualhosts-on-mac-os-x/">
+        Virtualhosts on Mac OS X
+      </a>
+    </h1>
+
+    <span class="post-date">14 Oct 2006</span>
+
+    <p><a href="http://www.thewatchmakerproject.com">Matthew</a> just posted a quick write up of <a href="http://www.thewatchmakerproject.com/journal/378/virtual-hosts-and-the-proper-way-to-work-offline">setting up virtual hosts</a> on windows and a little of the rationale behind why you would bother.</p>
+ <p>Being a Mac person when I&#8217;m not in the office I thought a quick follow up would be useful for those that way inclined.</p>
+ <p>On OS X their are a couple of things needed to setup a virtual host. As well as the apache virtualhost directives the host needs adding to NetInfoManager.</p>
+ <p>Although you can do all of this manually I&#8217;m more of a fan of a quick shell script and, as it happens, so are others. I&#8217;ve been using a modified version of <a href="http://patrickgibson.com/">Patrick Gibsons</a> <a href="http://patrickgibson.com/utilities/virtualhost/">Virtualhost&#8217;s script</a> for a while. Just drop it somewhere on your path (or run it from a specific folder) from Terminal like so:</p>
+<div><code>sudo virtualhost.sh morethanseven.dev</code></div>
+ <p>Where morethanseven.dev is the local domain you want setting up. The default version of the script makes the assumption that you are using the default web server which comes with OS X. I&#8217;m not, but it&#8217;s easy enough to modifiy the configuration parameters at the top of the (well commented) script to point where you want. I have it working perfectly with a copy of the <a href="http://www.mamp.info/"><span class="caps">MAMP</span></a> installation package for instance.</p>
+ <p>I&#8217;m something of a fan of utility scripts. Often repeated tasks can be bundled up into a shell script, python script or automator workflow. Automatic screen capture? Batch image processing? Backup? It can help keep everything tidy, as well as minimising repeated effort. Anyone else with any good examples of process automation with regards web design want to share?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/10/04/the-readability-of-our-prose/">
+        The readability of our prose
+      </a>
+    </h1>
+
+    <span class="post-date">04 Oct 2006</span>
+
+    <p>I&#8217;ve been doing a little more light weight analytical research, this time on the readability of the content I read in my feed reader, which mainly consists of web design and development blogs and magazines.</p>
+ <p>A combination of things brough me to this point. An interest in accessibility and readability, being a maths and stats geek and my affair with Python. Yes, I know it&#8217;s just stats, and I did just parse the titles and descriptions from feeds once. I&#8217;m not claiming anything other than I though it interesting and worth sharing. If I get really carried away I&#8217;ll set up a league table.</p>
+ <p>Who knows; maybe it will encourage some to use less dense prose? As long as people dont start competing for the highest scores!</p>
+ <p>For more information on the background to some of these algorithms and what they mean have a read of <a href="http://juicystudio.com/services/readability.php">Jez&#8217;s excellent write up</a></p>
+<table>
+<tr>
+   <th>Site</th>
+   <th>Flesch Kincaid</th>
+   <th>Gunning Fog</th>
+</tr>
+<tr>
+   <td>AnneÃ¢â‚¬â„¢s Weblog</td>
+   <td>4.54</td>
+   <td>2.58</td>
+</tr>
+<tr>
+   <td>Jesse James Garrett&#8217;s Hidden Agenda</td>
+   <td>5.38</td>
+   <td>2.8</td>
+</tr>
+<tr>
+   <td>Jeffrey Zeldman Presents The Daily Report</td>
+   <td>5.5</td>
+   <td>3.08</td>
+</tr>
+<tr>
+   <td>mezzoblue dailies</td>
+   <td>5.93</td>
+   <td>3.85</td>
+</tr>
+<tr>
+   <td>Subtraction</td>
+   <td>6.14</td>
+   <td>4.43</td>
+</tr>
+<tr>
+   <td>ZachInglis.com</td>
+   <td>5.33</td>
+   <td>5.5</td>
+</tr>
+<tr>
+   <td><span class="caps">HTML</span> Dog Blog</td>
+   <td>7.46</td>
+   <td>4.65</td>
+</tr>
+<tr>
+   <td>Tom Hume</td>
+   <td>7.73</td>
+   <td>4.41</td>
+</tr>
+<tr>
+   <td>ShaunInman.com</td>
+   <td>7.61</td>
+   <td>4.91</td>
+</tr>
+<tr>
+   <td>molly.com</td>
+   <td>6.73</td>
+   <td>5.84</td>
+</tr>
+<tr>
+   <td>Test</td>
+   <td>8.24</td>
+   <td>4.66</td>
+</tr>
+<tr>
+   <td>Adactio</td>
+   <td>7.47</td>
+   <td>5.92</td>
+</tr>
+<tr>
+   <td>Authentic Boredom</td>
+   <td>8.26</td>
+   <td>5.54</td>
+</tr>
+<tr>
+   <td>xlab weblog</td>
+   <td>7.57</td>
+   <td>6.41</td>
+</tr>
+<tr>
+   <td>Jaredigital &#8211; article</td>
+   <td>7.86</td>
+   <td>6.29</td>
+</tr>
+<tr>
+   <td>The Intranet Blog</td>
+   <td>7.58</td>
+   <td>6.58</td>
+</tr>
+<tr>
+   <td>Loud Thinking</td>
+   <td>8.14</td>
+   <td>6.09</td>
+</tr>
+<tr>
+   <td><span class="caps">DOM</span> Scripting Blog</td>
+   <td>8.12</td>
+   <td>6.18</td>
+</tr>
+<tr>
+   <td>Jeffrey Veen</td>
+   <td>8.42</td>
+   <td>6.07</td>
+</tr>
+<tr>
+   <td>@media 2006</td>
+   <td>9.17</td>
+   <td>5.35</td>
+</tr>
+<tr>
+   <td>katemonkey.co.uk</td>
+   <td>7.76</td>
+   <td>6.78</td>
+</tr>
+<tr>
+   <td>CollyLogic</td>
+   <td>8.17</td>
+   <td>6.42</td>
+</tr>
+<tr>
+   <td>Carson Systems News</td>
+   <td>8.59</td>
+   <td>6.07</td>
+</tr>
+<tr>
+   <td>Dave Shea&#8217;s mezzoblue</td>
+   <td>7.99</td>
+   <td>6.8</td>
+</tr>
+<tr>
+   <td>dotjay.co.uk &#8211; blog</td>
+   <td>8.23</td>
+   <td>6.64</td>
+</tr>
+<tr>
+   <td>UX Magazine</td>
+   <td>8.61</td>
+   <td>6.33</td>
+</tr>
+<tr>
+   <td>QuirksBlog</td>
+   <td>8</td>
+   <td>7.11</td>
+</tr>
+<tr>
+   <td>Joel on Software</td>
+   <td>8.24</td>
+   <td>7.07</td>
+</tr>
+<tr>
+   <td>Signal vs. Noise</td>
+   <td>8.61</td>
+   <td>6.75</td>
+</tr>
+<tr>
+   <td>24 ways</td>
+   <td>9.39</td>
+   <td>6.23</td>
+</tr>
+<tr>
+   <td>Clearleft Events</td>
+   <td>8.9</td>
+   <td>6.74</td>
+</tr>
+<tr>
+   <td>box of chocolates</td>
+   <td>8.69</td>
+   <td>7.05</td>
+</tr>
+<tr>
+   <td>Stopdesign</td>
+   <td>9.09</td>
+   <td>6.74</td>
+</tr>
+<tr>
+   <td>Steven Woods &#8211; Swoo.co.uk</td>
+   <td>8.99</td>
+   <td>7.16</td>
+</tr>
+<tr>
+   <td>/\ndy&#8217;s Blog</td>
+   <td>9.19</td>
+   <td>6.96</td>
+</tr>
+<tr>
+   <td>Thoughts From Eric</td>
+   <td>9.32</td>
+   <td>6.91</td>
+</tr>
+<tr>
+   <td>Vitamin</td>
+   <td>9.26</td>
+   <td>6.99</td>
+</tr>
+<tr>
+   <td>Boxes and Arrows</td>
+   <td>10.0</td>
+   <td>6.50</td>
+</tr>
+<tr>
+   <td>BitWorking Joe Gregorio</td>
+   <td>9.78</td>
+   <td>6.76</td>
+</tr>
+<tr>
+   <td>Andy Budd::Blogography</td>
+   <td>9.27</td>
+   <td>7.32</td>
+</tr>
+<tr>
+   <td>Mike Davidson</td>
+   <td>9.21</td>
+   <td>7.51</td>
+</tr>
+<tr>
+   <td>cackhanded</td>
+   <td>9.32</td>
+   <td>7.4</td>
+</tr>
+<tr>
+   <td>Bruce Lawson&#8217;s personal site</td>
+   <td>9.90</td>
+   <td>7.22</td>
+</tr>
+<tr>
+   <td>Le Ã‚Â«blog personnelÃ‚Â» de Joe Clark</td>
+   <td>9.89</td>
+   <td>7.3</td>
+</tr>
+<tr>
+   <td>morethanseven.net</td>
+   <td>9.38</td>
+   <td>7.86</td>
+</tr>
+<tr>
+   <td>hicksdesign &#8211; journal</td>
+   <td>9.58</td>
+   <td>7.79</td>
+</tr>
+<tr>
+   <td>as days pass by</td>
+   <td>9.49</td>
+   <td>8.15</td>
+</tr>
+<tr>
+   <td>Logoblog: Web Standards, Accessibility &#38; Usability</td>
+   <td>9.19</td>
+   <td>8.62</td>
+</tr>
+<tr>
+   <td>Simon Willison&#8217;s Weblog</td>
+   <td>10.6</td>
+   <td>7.66</td>
+</tr>
+<tr>
+   <td>John Battelle&#8217;s Searchblog</td>
+   <td>10.6</td>
+   <td>7.69</td>
+</tr>
+<tr>
+   <td>Veerle&#8217;s blog: full articles</td>
+   <td>9.78</td>
+   <td>8.68</td>
+</tr>
+<tr>
+   <td>Garrett Dimon</td>
+   <td>10.4</td>
+   <td>8.16</td>
+</tr>
+<tr>
+   <td>The Web Standards Project</td>
+   <td>10.9</td>
+   <td>7.77</td>
+</tr>
+<tr>
+   <td>plasticbag.org</td>
+   <td>10.7</td>
+   <td>8.04</td>
+</tr>
+<tr>
+   <td>:Ben Metcalfe Blog</td>
+   <td>10.3</td>
+   <td>8.47</td>
+</tr>
+<tr>
+   <td>456 Berea Street</td>
+   <td>11</td>
+   <td>8.30</td>
+</tr>
+<tr>
+   <td>Clagnut</td>
+   <td>10.8</td>
+   <td>8.6</td>
+</tr>
+<tr>
+   <td>KuraFire Network &#8211; Log</td>
+   <td>10.5</td>
+   <td>8.98</td>
+</tr>
+<tr>
+   <td>The Web&#8217;s Bollocks</td>
+   <td>11</td>
+   <td>8.56</td>
+</tr>
+<tr>
+   <td>developer.* &#8211; The Independent Magazine for Software Professionals</td>
+   <td>11.8</td>
+   <td>8.03</td>
+</tr>
+<tr>
+   <td>Bare Naked App</td>
+   <td>10.8</td>
+   <td>9.38</td>
+</tr>
+<tr>
+   <td>danwebb.net &#8211; Home</td>
+   <td>11</td>
+   <td>9.23</td>
+</tr>
+<tr>
+   <td>Ben Ward</td>
+   <td>10.8</td>
+   <td>9.54</td>
+</tr>
+<tr>
+   <td>Content with Style &#8211; Articles</td>
+   <td>10.7</td>
+   <td>9.92</td>
+</tr>
+<tr>
+   <td>KuraFire Network &#8211; Articles</td>
+   <td>11.8</td>
+   <td>8.92</td>
+</tr>
+<tr>
+   <td>all in the head</td>
+   <td>11.4</td>
+   <td>9.45</td>
+</tr>
+<tr>
+   <td>Wait till I come!</td>
+   <td>13</td>
+   <td>7.93</td>
+</tr>
+<tr>
+   <td>And all that Malarkey</td>
+   <td>11.5</td>
+   <td>9.76</td>
+</tr>
+<tr>
+   <td>Digital Web: Latest Articles</td>
+   <td>12.7</td>
+   <td>8.59</td>
+</tr>
+<tr>
+   <td>bloggED</td>
+   <td>11.1</td>
+   <td>10.2</td>
+</tr>
+<tr>
+   <td>Web Standards with Imagination</td>
+   <td>11.4</td>
+   <td>10.2</td>
+</tr>
+<tr>
+   <td>Official Google Blog</td>
+   <td>11.8</td>
+   <td>10</td>
+</tr>
+<tr>
+   <td>Particletree</td>
+   <td>12.2</td>
+   <td>9.71</td>
+</tr>
+<tr>
+   <td>Niall Kennedy&#8217;s Weblog</td>
+   <td>12.8</td>
+   <td>9.29</td>
+</tr>
+<tr>
+   <td>Brothercake</td>
+   <td>13.9</td>
+   <td>9.7</td>
+</tr>
+<tr>
+   <td>Blog Standard Stuff</td>
+   <td>12.1</td>
+   <td>11.6</td>
+</tr>
+<tr>
+   <td>ThePickards</td>
+   <td>13.3</td>
+   <td>11.4</td>
+</tr>
+<tr>
+   <td>dean.edwards.name/weblog/</td>
+   <td>15</td>
+   <td>10.7</td>
+</tr>
+<tr>
+   <td>SitePoint Blogs</td>
+   <td>14.9</td>
+   <td>11.5</td>
+</tr>
+<tr>
+   <td>Space &#38; Beyond</td>
+   <td>14.2</td>
+   <td>12.9</td>
+</tr>
+<tr>
+   <td>The Watchmaker Project &#8211; journal</td>
+   <td>14.8</td>
+   <td>12.3</td>
+</tr>
+<tr>
+   <td>Muffin Research Labs</td>
+   <td>16.6</td>
+   <td>14.9</td>
+</tr>
+<tr>
+   <td>Point studios</td>
+   <td>20.5</td>
+   <td>19.2</td>
+</tr>
+<tr>
+   <td>Juicy Studio</td>
+   <td>28.3</td>
+   <td>18.8</td>
+</tr>
+</table>
+ <p>A few interesting things to note. I&#8217;m sure some parsing error or such has Juicy Studio scoring so highly!</p>
+ <p>I&#8217;ll hopefully get round to releasing the scripts once I finish a couple of other things off.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/09/26/niche-job-boards-and-hot-skills/">
+        Niche job boards and hot skills
+      </a>
+    </h1>
+
+    <span class="post-date">26 Sep 2006</span>
+
+    <p>The growth of niche job boards took another jump today with the launch of <a href="http://authenticjobs.com/">Authentic Jobs</a> by <a href="http://www.cameronmoll.com/">Cameron Moll</a>, following on from the job boards over on <a href="http://jobs.37signals.com">37signals</a> and <a href="http://jobs.joelonsoftware.com">Joel on Software</a>.</p>
+ <p>I find all this pretty interesting, not because I&#8217;m looking for job (I&#8217;m not), but more from a social research point of view. It&#8217;s the whole <a href="http://www.wired.com/wired/archive/12.10/tail.html">long tail</a> thing again, and it will be intersting to see if these things take off in other, shall we say, less geeky circumstances. Niche job boards for the building industry for instance? or insurance?</p>
+ <p>This source of focused data also gave me a chance to play with Python as a data mining tool, something I&#8217;m finding it amazingly well suited to. My background was in experimental design and analysis so I&#8217;m something of a number crunching fan deep down.</p>
+ <p>The scripts are simple and have no niceties like error handling or comments so I&#8217;m not going to post them unless someone really wants them or I get chance to clean them up. Safe to say I used the outstanding <a href="http://www.feedparser.org/">Universal Feedparser</a> module from <a href="http://diveintomark.org">Mark</a> for most of the heavy lifting.</p>
+ <p>Brief methodology was to grab the complete feeds from the three sites mentioned and dump all the contents to a file, sans markup and lowercased. I then parsed them for a short list of words &#8211; in this case programming languages and counted the results.</p>
+ <p>Well, here are a few of the tidbits of info I pulled out. This is only the start obviously, more time may mean more detailed (and accurate) research ideally with a time element thrown in.</p>
+<ul>
+ <li>C++ &#8211; 137</li>
+  <li>Java &#8211; 128</li>
+  <li><span class="caps">PHP</span> &#8211; 110</li>
+  <li>Javascript &#8211; 90</li>
+  <li>C# &#8211; 74</li>
+  <li>Flash &#8211; 52</li>
+  <li>Ruby &#8211; 43</li>
+  <li>Python &#8211; 40</li>
+  <li>Rails &#8211; 32</li>
+  <li>Actionscript &#8211; 11</li>
+</ul>
+ <p>This I found interesting. The old school (C++ and Java) might not be <em>hot</em> but their certainly seems to be a need for good programmers. Javascript being up their is <a href="http://www.quirksmode.org/blog/archives/2006/09/sxsw_panel_java.html">probably to be expected</a> but strange non the less, given where it would have been a year ago.</p>
+ <p>This obviously has myriad problems; your unlikely to use the <em>word</em> C# in a description unless your talking about programming, but you might use the word flash) and was weighted towards the <a href="http://jobs.joelonsoftware.com">Joel on Software</a> site as that both had much longer descriptions and lots more elements in the feed. Nothing about density either, so someone writing Java, Java, Java would skew the results. If I do some proper research and write it up you could get around most of these easily enough.</p>
+ <p>Anyone know of other niche job boards around so far? I&#8217;d be interested to have a look. I have a feeling recruitment is heading towards the same fate as advertising; where online advertising models are increasingly making the the old <em>do work for free and charge a percentage on the backend</em> ways nearly unworkable.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/09/21/more-devices-with-browsers/">
+        More devices with browsers
+      </a>
+    </h1>
+
+    <span class="post-date">21 Sep 2006</span>
+
+    <p>I&#8217;m something of a gadget fan when I think about it, and the growing ubiquity of the internet makes my life easier, as well as posing interesting questions when it comes to design. It would be a win win situation if it didn&#8217;t keep costing m money. Well I think I&#8217;m going to be spending again soon (unfortunately?)</p>
+ <p>I only heard about the Nintendo DS Lite getting a browser add on last week, but it peaked my interest. The spread of mass market devices with WiFi and a decent browser throw up interesting possibilities, so it was with a smile on my face that I discovered the browser was going to be <a href="http://opera.com">Opera</a>. Their is quite a bit of information over on their site on <a href="http://www.opera.com/pressreleases/en/2006/02/15/">press releases</a> and a special <a href="http://www.opera.com/products/devices/nintendo/">Nintendo section</a> and all looks good.</p>
+ <p>I&#8217;d be interested to see how the two screens thing works for browsing, and how the device copes with the problems of content not being designed for the small screen very often, though <a href="http://www.opera.com/products/mobile/operamini/">Opera Mini</a> did a ridiculously good job. Also of note is that the upcoming Wii is going to use an Opera browser as well. The move from the desktop to focus on devices looks like being a very clever move.</p>
+ <p>One minor let down is that the DS browser costs. This looks like it&#8217;s due to extra hardware being required but it&#8217;s still a shame after the <span class="caps">PSP</span> browser was added simply as a software upgrade. Hopefully that wont be a barrier to entry. If and when (ok, when) I get my hands on one (launch 6th of October) I might try and post some tests. The <span class="caps">PSP</span> browser does occasionally fall over on very large sites with a nasty memory error, and I&#8217;m interested in how complete the <span class="caps">CSS</span> and Javascript support are.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/09/18/6-hours-on-a-train-with-code-igniter/">
+        6 hours on a train with Code Igniter
+      </a>
+    </h1>
+
+    <span class="post-date">18 Sep 2006</span>
+
+    <p>I&#8217;ve mentioned <a href="http://codeigniter.com">Code Igniter</a> <a href="http://morethanseven.net/posts/internet-check-media-check">before</a> but only now have I got round to really putting it through it&#8217;s paces by building something proper. I got the opportunity (if you could call it that) thanks to a six hour train journey from Oxford.</p>
+ <p>I&#8217;ve been thinking about sprucing up this site for a while, and have a few other personal projects that I really should get round to sorting out. Something I&#8217;ve noted of late is a move, amongst some parties, back to bespoke personal content management systems. <a href="http://adactio.com">Jeremy</a> has been speaking about some of the <a href="http://adactio.com/journal/1162">feaures he has been adding</a> recently, <a href="http://christianmontoya.com">Christian</a> had a <a href="http://www.christianmontoya.com/2006/09/16/enjoying-cake/">few comments</a> too plus <a href="http://snook.ca">Jonathan</a> has been <a href="http://withcake.com/posts/view/snook_ca_using_cakephp">posting</a>  about his recent move to <a href="http://cakephp.org/">CakePHP</a> from <a href="http://www.movabletype.org">Movable Type</a>.</p>
+ <p>I find this kind of interesting. Everyone started off with hand rolled solutions, seemed to move to the comfort of <a href="http://textpattern.com">Textpattern</a> or <a href="http://wordpress.org">Wordpress</a> and the more geekely inclined are on the move again. With such large user bases the big blogging platforms are (rightly) spending more time on bug fixes and user experience, rather than kick ass features. And us geeks want more <a href="http://microformats.org">Microformats</a> and mashups that we can shake a stick at. Only this time we get to stand on the shoulders of giants by using frameworks such as <a href="http://rubyonrails.org">Rails</a>, <a href="http://www.djangoproject.com/">Django</a> or <a href="http://codeigniter.com">Code Igniter</a> which means less time doing the boring stuff.</p>
+ <p>Short sales pitch. <a href="http://codeigniter.com">Code Igniter</a> is cool, and more. The documentation is first rate and comes along with the download rather than just being available online (useful when your on the train.) It all makes sense as well which is nice, especially if you have some familiarity with the <span class="caps">MVC</span> pattern. It covers the basics so you dont have to &#8211; validation, database abstraction, session hanling. It&#8217;s also easily extensible through a nice plugin architecture and makes no assumpions about what you intend to build. I have a quick and dirty <a href="http://textism.com/tools/textile/">Textile</a> plugin that I need to package up and put out &#8211; some <a href="http://www.codeigniter.com/forums/viewthread/1105/P0/">discussion</a> of this over on the <a href="http://www.codeigniter.com/forums/">forums</a> which I may peruse.</p>
+ <p>In short expect to see some minor additions and the like round these parts as I try to transition away from <a href="http://textpattern.com">Textpattern</a> and any problems caused are no doubt the fault of some poor coding somewhere.</p>
+ <p>And I wonder what the next step will be? We have been through hand rolled to stable applications to frameworks to hand rolled based on frameworks. Any takers?</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page61">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page59">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

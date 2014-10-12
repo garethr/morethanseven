@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Ruby on Rails on Nokia N800 &middot; More than seven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Ruby on Rails on Nokia N800</h1>
+  <span class="post-date">15 Jul 2007</span>
+  <p>My latest job has allowed me to get back into playing with <a href="http://rubyonrails.com">Rails</a>, something I&#8217;ve been meaning to do for a year or so. Having got everything up to date and installed on my virtual server and on my laptop I couldn&#8217;t resist seeing if I could get it going on my <a href="http://www.nseries.com/products/n800">N800</a>.</p>
+<p>The reasons for this are mainly that the idea of a wireless web server in my pocket is pretty intriguing. Think about it. If you&#8217;re at an event with Wi-Fi you can just point people to an IP address and hey presto they have access to your details, or a set of photos, or whatever you want to show them. I&#8217;ve also got nginx installed, but I&#8217;m not as yet that up on running python or <span class="caps">PHP</span> behind it on the N800. So, no need to carry around the laptop. OK, maybe it&#8217;s just me and all this going to web conferences? We&#8217;ll have to see if I actually knock up anything useful for the next conference and see. Saving that I&#8217;ve been travelling quite a bit recently and it&#8217;s handy when reading a Rails book to be able to try out the examples.</p>
+<p>Anyway, it turns out that you can indeed <a href="http://flickr.com/photos/kwe/484269853/">install Ruby and Rails on the N800</a>, although their isn&#8217;t much information around and non of it worked exactly as stated for me &#8211; hence this post.</p>
+<p>I followed along with a <a href="http://www.digitalknk.com/2007/05/27/howto-ruby-on-rails-on-your-nokia-n800/">pretty good tutorial</a>, although I already had Red Pill Mode, XTerm and <span class="caps">SSH</span> installed. Ruby is also now available in the <a href="https://garage.maemo.org/projects/ruby185/">Garage</a>.</p>
+<p>The crux of the post is that you can find the required packages, in particular for Gem, <a href="http://pierre.droids-corp.org/maemo/">here</a>. But unfortunately that is were the problems start. I ran into exactly the same problem as described in the comments in the above post, on <a href="http://railsgrunt.com/2007/5/14/installing-ruby-on-rails-on-the-n800">this blog post</a> and on this <a href="http://www.internettablettalk.com/">Internet Tablet Talk</a> <a href="http://www.internettablettalk.com/forums/showthread.php?t=5442&amp;page=2">forum thread</a>. Specifically, Gem hanging, crashing or returning a segmentation fault in the yaml.rb file on line 133.</p>
+<p>The problem appears to be (this is me guessing here) with gem and the N800 being able download all the info for Gem to update it&#8217;s package list. The solution, or rather a suitable workaround, is to download the individual gems yourself to the local file system or a memory card and then install them from there. You can get all the Rails gems <a href="http://pierre.droids-corp.org/maemo/gems/">here</a>. A quick script/server later and I had the familiar Rails welcome screen on port 3000. This should in theory work for oher gems as well. You can either download them directly or use Gem on a local machine and them move the files across via bluetooth or <span class="caps">USB</span>.</p>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/work/gds/2014/07/20/leaving-gds-never-easy/">
+            Leaving GDS never easy
+            <small>20 Jul 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/security/2014/06/23/using-owasp-zap-from-the-command-line/">
+            Using OWASP ZAP from the command line
+            <small>23 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/consul/2014/04/25/consul/">
+            Consul, DNS and Dnsmasq
+            <small>25 Apr 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

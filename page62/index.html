@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/08/07/some-start-of-the-week-fun-with-yahoo/">
+        Some start of the week fun with Yahoo!
+      </a>
+    </h1>
+
+    <span class="post-date">07 Aug 2006</span>
+
+    <p>Well, Christian&#8217;s book, <a href="http://www.beginningjavascript.com">Begining Javascript with <span class="caps">DOM</span> Scripting and Ajax</a> is out and, as of writing this <a href="http://www.amazon.co.uk/gp/product/1590596803/202-8465886-9794241?v=glance&#38;n=266239">Amazon UK</a> only have four copies left so hopefully that&#8217;s a good sign.</p>
+ <p>A quick competition on the site peaked my amusometer and I couldn&#8217;t resist.</p>
+ <p><img src="http://static.flickr.com/97/209018272_66abe7c6ea.jpg?v=0" alt="" /></p>
+ <p>Keep an eye on <a href="http://flickr.com/photos/tags/newcoverforbeginningjavascript/">flickr</a> for more hopefully.</p>
+ <p><a href="http://simon.incutio.com/">Everyone</a> <a href="http://www.wait-till-i.com">who</a> <a href="http://www.paulhammond.org/journal/">is</a> <a href="http://cackhanded.net/">everyone</a> already resides at <span class="caps">YAHOO</span>!, with more <a href="http://allinthehead.com/">recent</a> <a href="http://muffinresearch.co.uk/">movers</a> that you can shake a stick at.  I&#8217;d just like to make a couple of observations:</p>
+ <p>Both <a href="http://allinthehead.com/retro/297/joining-yahoo">Drew</a> and <a href="http://muffinresearch.co.uk/archives/2006/07/12/joining-yahoo/">Stuart</a> posted posts titled <strong>Joining Yahoo!</strong>. The brain washing obviously starts in the interviews so you have been warned!</p>
+ <p>The upcoming <a href="http://barcamp.org/BarCampLondon">BarCampLondon</a> event is being held at the Yahoo offices in London. I&#8217;m thinking about going along, but I&#8217;m scared Yahoo might not let all those talented developers leave on the sunday?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/07/25/yui-lovin/">
+        YUI lovin
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jul 2006</span>
+
+    <p>I&#8217;m working on some redesign work for one of my under maintained sites at the moment, with something of a redesign in the works. It seemed a good opportunity to play more with <a href="http://developer.yahoo.com/yui/"><span class="caps">YUI</span></a>, the Yahoo User Interface Library, which I&#8217;d had a peak at before and heard nice things about (sorry, I like the long namespaces).</p>
+ <p>I&#8217;ve nothing finished yet past a proof of concept, but I thought a couple of lines of javascript wouldn&#8217;t go a miss. Nothing fancy mind, just some nice bits I like so far.</p>
+ <p>The case in point was wanting to add event handlers to an unknown number of links within an unordered list.</p>
+ <p>First off a quick, clever, one liner. <em>onAvailable</em> checks for the availability of the object (if you remove the quotes) or an object with a specified id in this case. It executes the callback function, <em>init</em> in this case, when the condition is true.</p>
+<div><code>YAHOO.util.Event.onAvailable("iList", init);</code></div>
+ <p>Moments later we have events added to all the links.</p>
+<div><code>&lt;pre&gt;
+function init() {
+   var links = document.getElementById("iList").getElementsByTagName("A");
+   YAHOO.util.Event.addListener(links, "click", clickCallback);
+}&lt;/pre&gt;</code></div>
+ <p>Again you just throw in whatever you happen to be working with (in this case an array returned by <em>getElementsByTagName</em>) and everything just gets dealt with. I originally had a <em>for</em> loop, iterating over the links and adding events, then I worked out <span class="caps">YUI</span> just did it all for me if I let it. I like that. I <strong>could</strong> have done it myself. <span class="caps">YUI</span> would have let me and not complained. But if I want to delve a bit I can find cool, quick, clean ways of doing the same thing. I refactored my code, with the help of <span class="caps">YUI</span> in ten minutes. I like that, but I think I said that.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/07/19/more-dconstruct-craziness/">
+        More dConstruct craziness
+      </a>
+    </h1>
+
+    <span class="post-date">19 Jul 2006</span>
+
+    <p>Last year I missed out on <a href="http://2006.dconstruct.org/">dconstruct</a>, this year I sat and watched the timer tick down. Which didn&#8217;t help hugely as a fair few other people were doing the same thing and the site went into what appeared to be a javascript induced page request meltdown. Oh well. Everything worked out in the end, I paid my money for myself and a <a href="http://sarat.xcelens.co.uk/">colleague</a> to attend and so did 348 or so other people and it&#8217;s now sold out. Why do I get a feeling I could name half the people attending? and be about right?</p>
+ <p>Their will again I&#8217;m sure be more <em>web conference as trendy holiday for web geeks and nothing else</em> conversations, but again I dont care. I haven&#8217;t had the chance to do any holidays at all for ages unless you count <a href="http://carsonworkshops.com/summit">Carson</a> and <a href="http://vivabit.com/atmedia2006">@media</a>, and I learn lots again as well.</p>
+ <p>Well, I&#8217;ve fired up the <a href="http://morethanseven.net/dconstruct/">dConstruct feed thing</a> again, although I need to update the codebase with the latest version as it lacks the bits I added (like new post indicators and the stats) more recently. Give me a week or so.</p>
+ <p>Much more interestingly, and entertainingly, I have to recommend the <a href="http://2006.dconstruct.org/podcast/">dConstruct Podcast</a>. I listen to podcasts on occasion, always grab talks from conferences and the like and subscribed because it was their. I didn&#8217;t expect it to be a <strong>rock and roll fourteen minutes of comedy genius</strong>. Everyone who&#8217;s been to one of <a href="http://adactio.com">Jeremy&#8217;s</a> talks or sessions will know he&#8217;s an enthusiastic and engaging presenter, but little did we know about the comic inside. Ok, so you need to know everyone, so maybe it&#8217;s a bit incestuous, but it&#8217;s still funny. Through in some more info about the upcoming event and everyone will be laughing. More of the same please.</p>
+ <p>On the web design podcast front; anyone know of any good magazine style programmes on web design and development? or even better a weekly comic look at the industry?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/07/16/media-in-pictures/">
+        @media in pictures
+      </a>
+    </h1>
+
+    <span class="post-date">16 Jul 2006</span>
+
+    <p>I always take ages to get photos off my camera. It&#8217;s like the sort of delay you would get if you sent them off to be developed. Anyhow, I&#8217;ve finally sorted out my <a href="http://vivabit.com/atmedia2006">@media</a> photos and uploaded a few to flickr. Have a look if you feel so inclined. I&#8217;ve included a few below, mainly because these ones made me chuckle:</p>
+ <p>A look of sheer horror if ever their was one from <a href="http://splintered.co.uk">Patrick</a>.</p>
+ <p><img src="http://static.flickr.com/65/190869172_a3a229458d_m.jpg" alt="Patrick H Lauke on the big screen" /></p>
+ <p>Is &#8220;Chris Wilson&#8221;: not the spitting image of He Man?</p>
+ <p><img src="http://static.flickr.com/63/190868288_530626e765_m.jpg" alt="Chris Wilson" /></p>
+ <p>If this isn&#8217;t caption competition material I dont know what is. <a href="http://cackhanded.net">Norm</a> was most definately <em>the man</em> that night.</p>
+ <p><img src="http://static.flickr.com/59/190872439_ca8f880df2_m.jpg" alt="Norm. nuff said." /></p>
+ <p>Ah. The famous straw incident. Featuring <a href="http://theintranetblog.blogspot.com/">Nic</a> and an awful lot of straws.</p>
+ <p><img src="http://static.flickr.com/46/190871829_2445000f09_m.jpg" alt="A drink very very full of straws" /></p>
+ <p>And I&#8217;m still trying to decide what was funnier; the fact <a href="http://htmldog.com">Patrick</a> set up a bird bath in the middle of the pub, or the fact it took him and <a href="http://blog.meriwilliams.com">Meri</a> quite a while with the instructions to put it together.</p>
+ <p><img src="http://static.flickr.com/72/190878254_6b8f33193f_m.jpg" alt="A bird bath with instructions" /></p>
+ <p>Some people have been saying that the socialising is getting in the way of the learning and sundry at these conferences. I&#8217;ve got to disagree. You just cant ignore the socialising, not when it&#8217;s this much fun. But that doesn&#8217;t mean the message doesn&#8217;t get drilled home too.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/07/09/who-is-pushing-the-envelope-anyhow/">
+        Who is pushing the envelope anyhow?
+      </a>
+    </h1>
+
+    <span class="post-date">09 Jul 2006</span>
+
+    <p><strong>Update</strong> <span class="caps">UCAS</span> to the rescue. Here are lists of graphic design courses and their ilk. Go get em.</p>
+<ul>
+ <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=1022&#38;word=GRAPHIC+DESIGN&#38;single=N">Graphic design</a></li>
+  <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=3573&#38;word=GRAPHIC+INFORMATION+DESIGN&#38;single=N">Graphic information design</a></li>
+  <li><a href="http://search.ucas.co.uk/cgi-bin/hsrun/search/search/StateId/RUPaH3M7e0jnvbZ8tqvP_ff9TJzUs-VwIz/HAHTpage/search.HsKeywordSuggestion.whereNext?query=3581&#38;word=GRAPHIC+COMMUNICATIONS+DESIGN&#38;single=N">Graphics communication design</a></li>
+</ul>
+ <p><a href="http://adactio.com">Jeremy</a> posted a <a href="http://adactio.com/journal/1149">thought provoking read</a> that tapped into somethings I&#8217;ve been thinking about of late, and others that have been somewhere in my head for a while. In a nut shell:</p>
+<blockquote>
+  <p>Most designers have simply swapped the old technology (tables and font tags) for the new technology, without fully exploring whatÃ¢â‚¬â„¢s so completely <em>new</em>.</p>
+</blockquote>
+ <p>I&#8217;ve got to say I tend to agree with pretty much everything Jeremy said. I could pick up on liquid layouts being <em>harder</em> (I dont think that&#8217;s completely true once you&#8217;ve done a good number, it&#8217;s like anything new, it just takes getting your head around) but that&#8217;s just nit picking.</p>
+ <p>One thing I will comment on is some of what I see as the reasoning and, if I can think of anything, some things we can do to counter them.</p>
+ <p>One issue is that most of the designs are not done by designers in my opinion. I&#8217;m not really sure I count as a designer here, I flit between too many disciplines to be completely comfortable with the title (or most titles to be honest). The perceived technicalities of <span class="caps">CSS</span> (it&#8217;s plain text) can put those without that bend (ie. Photoshop users) off, and at the same time attract people who thing <a href="http://www.vim.org/">vim</a> is cool. Combine this with a truly fantastic <a href="http://sitepoint.com">online</a> <a href="http://alistapart.com">community</a> full of <a href="http://www.htmldog.com/">helpful</a> <a href="http://www.w3schools.com/css/">tutorials</a> and you have a recipe for technically good, but creatively stunted, websites. Throw into the mix easily replicated techniques (rounded corners and gradients anyone?) and gallery sites with a low barrier to entry and you get to where we are now.</p>
+ <p>And I dont really think all of this is bad? Anyone can put together web pages, even half decent web sites. For me that just makes it more fun/challenging to do it professionally and demonstrate real value. Everyone can paint, but how many people can say they can paint well? And I dont mean your skirting boards. Some are already sounding the <a href="http://www.collylogic.com/?/comments/the-end-of-css-showcases/">death knell for gallery sites</a>. The real gallery is and should be the web itself. If design is about communicating, unless your aim is to communicate to other web standards designers, the galleries should be the last thing on your mind.</p>
+ <p>But where are the new breed of designers? The people doing the sorts of things that Jeremy wishes were happening right now (or more likely happened last year)? <a href="http://stuffandnonsense.co.uk">Malarkey&#8217;s</a> <a href="http://www.amazon.co.uk/gp/product/0321410971/">book</a> will be stunning if the bits and pieces he mentioned at <a href="http://vivabit.com/atmedia2006">@media</a> are anything to go by, but who is going to force it into the hands of the graphic design student, or the art college graduate. And beat them over the head with it until they are ready to come work with me? Or you? Or me and you if you work with me already.</p>
+ <p>I&#8217;m now vaguely miffed. I thought right, I&#8217;m going to go and get myself a list of all the uk design degrees and put it up here. People could then leave comments, ring them up and try and get in to speak to these people about web design and report back. If the mountain won&#8217;t come to mohamed and all that. Except guessing and googling didn&#8217;t turn up anything useful. The <a href="http://design-council.org.uk">design council</a> had lots about education (in theory) but then the search facility broke (and the fact it appears to be a table based love child of the old <a href="http://adobe.com">adobe</a> site and <a href="http://bd4d.com">BD4D</a>). <a href="http://www.ucas.ac.uk/"><span class="caps">UCAS</span></a> are doing maintenance and are offline until midnight. I&#8217;ll post a list when I can get by hands on one. Or if you have better luck let me know. Funky logos and pithy slogans can come later, as can a big pile of presentations and materials if anyone, inlcuding me, ever does anything about it.</p>
+ <p>So. Who&#8217;s with me? I dont care if your scared of public speaking (or just scared of speaking in general, or even scared of the public). You&#8217;ll know more than the students in any case and that makes you dangerous. And they might have the ideas, and enthusiasm, we need to pass beyond the limits of our current design problems.</p>
+ <p><em>I know I went off in something of a straight line here. I made a bee line for design education. I could have detoured to visual design tools or photoshop designers with a loving for print and a propensity to want a 350 page website look like their comps. Both of them. Feel free to go off on a tangent yourselves, and let me know what you think.</em></p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page63">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page61">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

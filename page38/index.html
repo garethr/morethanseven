@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/oauth/openmicroblogging/2008/09/16/openmicroblogging/">
+        openmicroblogging
+      </a>
+    </h1>
+
+    <span class="post-date">16 Sep 2008</span>
+
+    <p><a href="http://openmicroblogging.org/">Open Microblogging</a> looks pretty interesting. An open standard built upon other <a href="http://oauth.net/">open standards</a> for the purpose of passing information between micro blogging services like Twitter or Facebook.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/stomp/python/ruby/stompserver/2008/09/14/using-python-and-stompserver-get-started-message-q/">
+        Using Python and Stompserver to Get Started With Message Queues
+      </a>
+    </h1>
+
+    <span class="post-date">14 Sep 2008</span>
+
+    <p>Message Queues are cool. It&#8217;s official. Now, banks and financial institutions have been using big Enterprise Java message systems for years. But it&#8217;s only really over the last year or two that the web community at large have got interested. Wonder what all the interest is in Erlang, Scala or Haskell? Distributed systems and a lack of shared state &#8211; hopefully leading to some sort of scalability nirvana &#8211; that&#8217;s what.</p>
+<p>Matt Biddulph of Dopplr has spoken at varying levels of technical detail on the subject over the last year or so. At <a href="http://adamcohenrose.blogspot.com/2007/11/messaging-scales-matt-biddulph.html">barcamps</a> and more recently at <a href="http://2008.dconstruct.org/">dconstruct</a>. But you still don&#8217;t find that many people actually starting to use any of this stuff. Looking around the internet I couldn&#8217;t find that many examples of how to get started. Their are some pretty mature standards, good libraries, server interoperability, but few tutorials aimed at people who don&#8217;t know all about it.</p>
+<p>The first problem is looking for a simple use case that most developers will have experienced problems with. The example I like to give is sending email. If you have a simple form on your site that sends email you probably just submit the request to the backend, it sends the email and then renders the success page back to the user. The problem here comes with scale. How many connections can your mailserver sustain? How many emails can you send from it before you start looking like you&#8217;ve been turned into a spam factory? At what point does the time taken for the mail server to respond to the web server cause the web server to time out or respond so slowly the user left or pressed refresh? If you&#8217;re sending lots of emails you need to think about this sort of stuff. For your average site this might not be a problem, but for the newer breed of applications or social networks this might bite you sooner than you think. You can gain more control over this process by introducing a message queue. Submitting the form simply adds a work task to the queue. A listener reads from the queue and sends the email. The advantage comes when you realise by removing the rendering of the page form the same process as sending the email you can throttle the system without affecting page rendering time.</p>
+<p>So onto a simple working example. I&#8217;ve decided to use Python as that&#8217;s my language of choice at the moment. It&#8217;s also easy to read in a -sudo-<ins>pseudo</ins> code sort of way. Writing these examples using equivalent libraries in Ruby or <span class="caps">PHP</span> should be straightforward enough. As for the message queue itself I&#8217;ve opted for <a href="http://stompserver.rubyforge.org/">stompserver</a> which is available as a Ruby gem. So assuming you have Ruby and gem installed (good instructions for this on the <a href="http://wiki.rubyonrails.com/rails/pages/GettingStartedWithRails">Rails wiki</a>) you can just run:</p>
+<pre><code>sudo gem install stompserver</code></pre>
+<p>Starting the queue is as simple as running:</p>
+<pre><code>stompserver</code></pre>
+<p>This will get you up and running quickly. Stompserver has a number of arguments you can pass in to use different ports or backends but for the purposes of getting started it&#8217;s enough to just run it. This ease of use is the thing I love about stompserver. ApacheMQ is something of a tricky beast to setup, though you might want to use that in a production environment.</p>
+<p>So now we have the server up and running we can get on with talking to it. I used the Python <a href="http://www.briggs.net.nz/log/projects/stomppy/">stomp.py</a> library to deal with the heavy lifting. All the other modules are in the standard library. Their are equivalents for <a href="http://stomp.codehaus.org/PHP"><span class="caps">PHP</span></a> and <a href="http://stomp.codehaus.org/Ruby+Client">Ruby</a> available as well.</p>
+<p>The first script is a listener. Its job is to listen for activity on the queue and then act upon it. You pass the script an argument of the name of the queue to listen to.</p>
+<pre><code>./stomp_listen.py /queue/test</code></pre>
+<p>This example simply prints the messages from the queue to the console, but in reality the on_message handler would be were you act upon the message received. In our email example above it would be were you parse out the email address, subject line and message and actually send the email.</p>
+<p>Stompserver currently exposes a queue for monitoring the queue server at <em>/queue/monitor</em>. You can use this script to subscribe to that queue and get information about the current state of the server. It will tell you which queues currently have items in them and if these are currently being processed.</p>
+<p>You can run multiple instances of this script subscribing to a single queue. This is one of the real advantage of message based systems, two listeners should clear a queue in half the time. This sort of horizontal scaling is hugely useful as you grow a site or application.</p>
+<pre>#!/usr/bin/python
+import time
+import sys
+import logging
+import socket
+import stomp
+# the stomp module uses logging so to stop it complaining
+# we initialise the logger to log to the console
+logging.basicConfig()
+# first argument is the que path
+queue = sys.argv[1]
+# defaults for local stompserver instance
+hosts=[('localhost', 61613)]
+# we want the script to keep running
+def run_server():
+    while 1:
+        time.sleep(20)
+class listener(object):
+    '''define the event handlers'''
+    # if we recieve an error from the server
+    def on_error(self, headers, message):
+        print 'received an error %s' % message
+    # if we retrieve a message from the server
+    def on_message(self, headers, message):
+        print 'received a message %s' % message
+# do we have a connection to the server?
+connected = False
+while not connected:
+    # try and connect to the stomp server
+    # sometimes this takes a few goes so we try until we succeed
+    try:
+        conn = stomp.Connection(host_and_ports=hosts)
+        # register out event hander above
+        conn.add_listener(listener())
+        conn.start()
+        conn.connect()
+        # subscribe to the names que
+        conn.subscribe(destination=queue, ack='auto')
+        connected = True
+    except socket.error:
+        pass
+# we have a connection so keep the script running
+if connected:
+    run_server()</pre>
+<p>The second script allows us to send messages to the queue:</p>
+<pre><code>./stomp_send.py /queue/test "test message 1"</code></pre>
+<p>The script takes a couple of arguments, the first one is the name of the queue, the second is the message you want to send.</p>
+<pre>#!/usr/bin/python
+import time
+import sys
+import logging
+import socket
+import stomp
+# the stomp module uses logging so to stop it complaining
+# we initialise the logger to log to the console
+logging.basicConfig()
+# first argument is the queue
+queue = sys.argv[1]
+# second argument is the message to send
+message = sys.argv[2]
+# defaults for local stompserver instance
+hosts=[('localhost', 61613)]
+# do we have a connection to the server?
+connected = False
+while not connected:
+    try:
+        # connect to the stompserver
+        conn = stomp.Connection(host_and_ports=hosts)
+        conn.start()
+        conn.connect()
+        # send the message
+        conn.send(message,destination=queue)    
+        # disconnect from the stomp server
+        conn.disconnect()
+        connected = True
+    except socket.error:
+        pass</pre>
+<p>Both these scripts are pretty simple examples. In the real world you would probably want to make them a little more robust and user friendly. Both could probably do with checking they have the relevant arguments and providing help information if you run them without. I&#8217;d also probably move the hosts into a config file as it&#8217;s currently hardcoded into the scripts. I&#8217;ve also not tested them with other stomp compatible servers like ApacheMQ. In theory they should work fine assuming stomp.py works as advertised.</p>
+<p>Overall, it&#8217;s surprisingly easy to get started with message queues. If you&#8217;ve been hearing about the advantages of distributed message based architectures but assumed you had to be <a href="http://www.hackdiary.com/">Matt Biddulph</a> to use them, think again.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/im/2008/09/14/imified/">
+        Imified
+      </a>
+    </h1>
+
+    <span class="post-date">14 Sep 2008</span>
+
+    <p><a href="http://new.imified.com/developers">Imified</a> looks like an interesting way of getting started with using instant messaging bots in your applications. (<a href="http://digg.com/programming">Via</a>)</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/django/2008/08/31/django-powered/">
+        Django Powered
+      </a>
+    </h1>
+
+    <span class="post-date">31 Aug 2008</span>
+
+    <p>A short break from blogging ends with a new site design. As with all these things their will no doubt be a few kinks still to work out and I&#8217;ll be adding to the design a little over the coming months. The main reason for all this change? A move to a custom <span class="caps">CMS</span> build using Django. This was something of an excuse to play around with Django outside <a href="http://www.gcapmedia.com/">work</a> and I&#8217;m pretty happy with the results. I have all the bits of wordpress I actually used, plus a few bits I didn&#8217;t have before. More importantly I have something I want to hack on. Wordpress is a kick ass blogging tool, but keeping it updated or adding new features never seemed much like fun.</p>
+<p>It seems like it&#8217;s the week for Django related site launches in the UK. We released the <a href="http://www.capitalradio.co.uk/">new Capital Radio site</a> on the world last week and Nat beat me by a day or so with <a href="http://natbat.net/">her new Django powered site</a>. Look for more in the future too I would wager.</p>
+<p>I have a whole range of posts brewing about what I found out along the way, both building a personal blog and building a large site with a big team. Keeping up with the bleeding edge of Django ahead of the 1.0 release took some doing (I&#8217;m running the latest Trunk release here at the moment). Deciding to use a combination of <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a> and <a href="http://nginx.net/">Nginx</a> for serving is a nice break from Apache as well. But that is all for later when I have a little more time.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/06/21/of-hacking-continuous-integration-and-django/">
+        Of Hacking, Continuous Integration and Django
+      </a>
+    </h1>
+
+    <span class="post-date">21 Jun 2008</span>
+
+    <p>I&#8217;ve not written anything here for a good few weeks, my tweeting has slowed down some and I&#8217;m behind on my feed reading. I&#8217;m going to blame the new job and the daily commute from Cambridge to London I think. I&#8217;ve definitely not been any less busy that usual:</p>
+<h3>Hacking</h3>
+<p>We had an internal hackday on Thursday and Friday last week where lots of us over at GCap/Global downed tools and build cools stuff for a couple of days. This is exactly the sort of reason I took the job in London &#8211; for the opportunity to build interesting things quickly with other smart people. I got to play around with an event driven, music orientated, <span class="caps">API</span> hack and a more useful but less sexy documentation hack. Yes, I said documentation hack. I might be able to release the latter all being well but I need to finish it off first and kick the tyres on some internal projects</p>
+<h3>Django</h3>
+<p>As a development team we&#8217;re using <a href="http://djangoproject.com/">Django</a> for everything which is proving to be huge fun. It&#8217;s a decent size project and we&#8217;re pushing Django (and in particular new-forms admin) in interesting ways. Having worked previously with <span class="caps">PHP</span>, <span class="caps">ASP</span>.<span class="caps">NET</span> and Rails I&#8217;m loving lots of bits of Django. I mentioned the <a href="http://morethanseven.net/posts/why-the-webstandards-world-appears-to-be-choosing-django/">template system</a> before but their are lots of other things to appreciate. Some of this just comes from working with people like <a href="http://simonwillison.com">Simon</a> and <a href="http://www.siudesign.co.uk/">Rob</a> who know Django pretty well. Some of it just from being able to write Python every day.</p>
+<h3>Continuous Integration</h3>
+<p>When not working on Django, or writing <span class="caps">HTML</span>, <span class="caps">CSS</span> or Javascipt (now mainly using <a href="http://jquery.com">JQuery</a>), I&#8217;ve been busy pushing the benefits of Continuous Integration. As someone who is actually pretty bad at writing unit tests I like the process of working with <a href="http://cruisecontrol.sourceforge.net/">Cruise Control</a> as a gatekeeper. I also like automation in general so have been busy with Ant scripts and some Twill scripts as well for more functional testing. Django&#8217;s test suite is pretty nifty and easy to use. <a href="http://www.djangoproject.com/documentation/testing/">The official documentation</a> is a pretty good starting point but I&#8217;m still on the lookout for some more in depth best practices articles.</p>
+<p>So, between writing lots of code I&#8217;ve had less time to write words other than internal documentation. I&#8217;m finding the change pretty refreshing at the moment but want to keep up with writing every now and again. Who knows how that will work out? I have a feeling that I might blog more geeky code related stuff but time will see how that plays out.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page39">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page37">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>

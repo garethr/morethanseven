@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      More than seven &middot; Gareth Rushgrove
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/tools/dibi/2010/04/29/Youre-going-to-need-a-bigger-toolbox/">
+        You're Going To Need A Bigger Toolbox
+      </a>
+    </h1>
+
+    <span class="post-date">29 Apr 2010</span>
+
+    <p>I&#8217;m just getting back from Newcastle after getting to present at the first Design It Build It conference. It was great to be back up in Newcastle and to see lots of familiar faces. As with most conferences it was also good to meet new people (especially those for whom it was their first conference) and to listen to people talking about interesting stuff. Personal highlights for me were David Singleton from Last.fm and Michael Brunton Spall from The Guardian going through really interesting case studies from their respective organisations. It&#8217;s the sort of gritty content it&#8217;s often hard to come by. Speaking did mean I missed out on most of the design track unfrotunately, but videos should be available soon and by all accounts it sounds like the larger designer crowd went home happy.</p>
+<p><object id="__sse3884141" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=biggertoolbox-100428092640-phpapp02&stripped_title=youre-going-to-need-a-bigger-toolbox" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed name="__sse3884141" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=biggertoolbox-100428092640-phpapp02&stripped_title=youre-going-to-need-a-bigger-toolbox" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I think my presentation at <a href="http://dibiconference.co.uk"><span class="caps">DIBI</span></a> went OK. I&#8217;d got a little bit carried away with cramming content in, which meant it felt rushed at times and I still went over by 5 minutes into my Q&amp;A time. But hey, a few people said nice things afterwards.</p>
+<p>I wanted to tell the world (of web developers) about as many different tools as I could. I think most people who read this blog have probably come across most of this software, heck you might be commiting code to it or already using it in production. But lots of people haven&#8217;t ever heard of Memcached, never mind Cassandra or RabbitMQ. And more inportant than the specific software is the differnt types of tools available. Small web servers, message queues, <span class="caps">HTTP</span> caches, etc. Conferences are a good place to find and educate people. Hopefully I managed to do just that.</p>
+<p>One thing I hope I got across, I&#8217;m not for a moment saying you shouldn&#8217;t be using tools you know and love. Nor am I saying you should jump in and start using lots of crazy software. But keeping an eye on new developments can serve you well when it comes to deciding whether the best approach is really to build something from scratch. I&#8217;ve spoken to several people over the last few weeks who where starting to write simple queing systems using cron and mysql, or using a hand rolled file system based caching setup. And in both cases I think they would be better served by existing tools.</p>
+<p>My slides had <em>a lot</em> of links in them and I mentioned during my talk I&#8217;m put a list of them somewhere:</p>
+<h2>Small Web Servers</h2>
+<ul>
+	<li>Nginx &#8211; <a href="http://wiki.nginx.org">http://wiki.nginx.org</a></li>
+	<li>Thin &#8211; <a href="http://code.macournoyer.com/thin/">http://code.macournoyer.com/thin/</a></li>
+	<li>Mongrel &#8211; <a href="http://github.com/fauna/mongrel/">http://github.com/fauna/mongrel/</a></li>
+	<li>Spawning &#8211; <a href="http://pypi.python.org/pypi/Spawning/">http://pypi.python.org/pypi/Spawning/</a></li>
+	<li>Unicorn &#8211; <a href="http://github.com/defunkt/unicorn/">http://github.com/defunkt/unicorn/</a></li>
+</ul>
+<h2>Caching</h2>
+<ul>
+	<li>Memcached &#8211; <a href="http://memcached.org">http://memcached.org</a></li>
+	<li>Squid &#8211; <a href="http://www.squid-cache.org">http://www.squid-cache.org</a></li>
+	<li>Varnish &#8211; <a href="http://varnish-cache.org">http://varnish-cache.org</a></li>
+</ul>
+<h2>Search Engines</h2>
+<ul>
+	<li>Solr &#8211; <a href="http://lucene.apache.org/solr/">http://lucene.apache.org/solr/</a></li>
+	<li>Xapian &#8211; <a href="http://xapian.org">http://xapian.org</a></li>
+	<li>Sphinx &#8211; <a href="http://sphinxsearch.com">http://sphinxsearch.com</a></li>
+	<li>Nutch &#8211; <a href="http://lucene.apache.org/nutch/">http://lucene.apache.org/nutch/</a></li>
+	<li>Whoosh &#8211; <a href="http://whoosh.ca">http://whoosh.ca</a></li>
+</ul>
+<h2>Message Queues</h2>
+<ul>
+	<li>RabbitMQ &#8211; <a href="http://rabbitmq.com">http://rabbitmq.com</a></li>
+	<li>Apache ActiveMQ &#8211; <a href="http://activemq.apache.org">http://activemq.apache.org</a></li>
+	<li>Beanstalk &#8211; <a href="http://kr.github.com/beanstalkd/">http://kr.github.com/beanstalkd/</a></li>
+	<li>Stomp Server &#8211; <a href="http://stomp.codehaus.org">http://stomp.codehaus.org</a></li>
+	<li>MemcacheQ &#8211; <a href="http://memcachedb.org/memcacheq/">http://memcachedb.org/memcacheq/</a></li>
+</ul>
+<h2>Non-relational Data Stores</h2>
+<ul>
+	<li>CouchDB &#8211; <a href="http://couchdb.apache.org">http://couchdb.apache.org</a></li>
+	<li>MongoDB &#8211; <a href="http://www.mongodb.org">http://www.mongodb.org</a></li>
+	<li>Tokyo Tyrant &#8211; <a href="http://1978th.net/tokyotyrant/">http://1978th.net/tokyotyrant/</a></li>
+	<li>Cassandra &#8211; <a href="http://cassandra.apache.org">http://cassandra.apache.org</a></li>
+	<li>Redis &#8211; <a href="http://code.google.com/p/redis/">http://code.google.com/p/redis/</a></li>
+</ul>
+<h2>Data Mining</h2>
+<ul>
+	<li>Hadoop &#8211; <a href="http://hadoop.apache.org">http://hadoop.apache.org</a></li>
+	<li>Hive &#8211; <a href="http://wiki.apache.org/hadoop/Hive/">http://wiki.apache.org/hadoop/Hive/</a></li>
+	<li>Pig &#8211; <a href="http://hadoop.apache.org/pig/">http://hadoop.apache.org/pig/</a></li>
+	<li>Dumbo &#8211; <a href="http://lastfm.com/dumbo/">http://lastfm.com/dumbo/</a></li>
+	<li>Disco &#8211; <a href="http://discoproject.org">http://discoproject.org</a></li>
+</ul>
+<h2>Functional Testing</h2>
+<ul>
+	<li>Cucumber &#8211; <a href="http://cukes.info">http://cukes.info</a></li>
+	<li>Cucumber-Nagios &#8211; <a href="http://auxesis.github.com/cucumber-nagios/">http://auxesis.github.com/cucumber-nagios/</a></li>
+</ul>
+<h2>Server Provisioning</h2>
+<ul>
+	<li>Puppet &#8211; <a href="http://puppetlabs.com">http://puppetlabs.com</a></li>
+	<li>Chef &#8211; <a href="http://wiki.opscode.com/display/chef/Home/">http://wiki.opscode.com/display/chef/Home/</a></li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/devops/barcamp/barcamb3/2010/04/24/Devops-at-barcamp-cambridge/">
+        Devops At Barcamp Cambridge
+      </a>
+    </h1>
+
+    <span class="post-date">24 Apr 2010</span>
+
+    <p>I&#8217;m at barcamp cambridge this weekend and decided to do a short talk on devops. It&#8217;s still a term that not too many people have come across and something that lots of people building websites should think about.</p>
+<p><object width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=devops-100424081210-phpapp02&stripped_title=devops-3839400" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=devops-100424081210-phpapp02&stripped_title=devops-3839400" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I put the slides together this morning so much of it will be familiar to people who have been reading the same blog posts as me over the last year or so. For anyone else either just finding out about the whole world of operations or old hand sysadmins finding likeminded people hopefully the slides will be useful.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/misc/2010/04/19/Dibi-twitter-aggregator/">
+        DIBI Twitter Aggregator
+      </a>
+    </h1>
+
+    <span class="post-date">19 Apr 2010</span>
+
+    <p>So, <a href="http://dibiconference.com/"><span class="caps">DIBI</span></a> is just over a week away and lots of people seem to be getting excited. Personally I&#8217;m really looking forward to it. I get a nice trip back up to my old home of Newcastle and get to talk geek to an audience of likeminded (and not so likeminded) web professionals. I&#8217;m also going to catch up with quite a few people I haven&#8217;t seen in quite a while.</p>
+<p>Anyway, Twitter is at it&#8217;s best at conferences like this. It&#8217;s perfect for the <em>where to go now</em> situation. But I also like going back in time after the fact and looking at what people said, especially to get feedback about my talk. With that in mind I&#8217;ve build a <a href="http://dibiconf.appspot.com/">little aggregator</a> for all things #dibi. So far that appears to be a mixture of excitement and travel chaos.</p>
+<p>I specifically wanted something that ran on the server, which discounted an awful lot of pure javascript versions. I think Twitter clients generally do a good job of the <em>right now</em> anyway. I also like to collect data for mining later, assuming I have the time. After a number of discussions on Twitter, then just some wandering around GitHub I found <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> which is fantastic. I&#8217;ve hacked it around quite a bit into something more general purpose. I&#8217;ve added some caching, some other App Engine performance tweaks and some monitoring. I&#8217;ll commit those to GitHub when I get the chance. I&#8217;d forgotten quite how much fun App Engine development was.</p>
+<p>I still want to add a few more features before the conference. The styles work quite well on my Android but less well (text too small) on my iPod Touch. So I&#8217;ll fix that first. Any other requests?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/hadoop/hive/2010/04/05/Hadoop-hive-web-interface/">
+        Hadoop Hive Web Interface
+      </a>
+    </h1>
+
+    <span class="post-date">05 Apr 2010</span>
+
+    <p>I&#8217;ve been playing with Hive recently and liking what I&#8217;ve found. In theory at least it provides a very nice, simple way of getting into analysing large data sets. To make it even easier to show other people what you&#8217;re up to Hive has a nascent web interface with a little documentation <a href="http://wiki.apache.org/hadoop/Hive/HiveWebInterface">on the wiki</a></p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiBfQw" alt="image of hive web ui"/></p>
+<p>On the one hand it&#8217;s rather simple at this point, but that should be easily enought to prettify given a bit of time. The bigger problem was getting it working in the first place. What follows worked for me using the latest cloudera packages on debian testing. I&#8217;m assuming you already have Hive and Hadoop installed, the basic packages worked fine for me here.</p>
+<p>Next up you&#8217;ll need the <span class="caps">JDK</span> (not just the <span class="caps">JRE</span>) as their is some compilation that will go on the first time you run the web interface.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install ant sun-java6-jdk
+<% end %>
+<p>Next up I had to modify the installed <em>/etc/hive/conf/hive-site.xml</em> file as follows:</p>
+<p>I changed this:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hivevar/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>To this. Note the hivevar path doesn&#8217;t exist so I&#8217;m not sure if this was a typo in the source.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hive/var/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>I also change the following section regarding the metastore name:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/${user.name}_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>To this, with a fixed name. When using the above confirguration the file was actually called ${user.name} rather than my username being subsituted in. Elsewhere this seems to work fine.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/metastore_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>I&#8217;m not convinced the above two changes are needed but have left them here just in case. The main tricky part is making sure a load of environment variables are correctly set. The following worked for me:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+export ANT_LIB=/usr/share/ant/lib
+export HIVE_HOME=/usr/lib/hive
+export HADOOP_HOME=/usr/lib/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+<% end %>
+<p>All being well that should allow you to run the hive command with the web interface like so:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+hive --service hwi
+<% end %>
+<p>That should bring up a webserver on port 9999 where you should see something similar to the screenshot above.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/django/2010/03/28/More-django-project-templates/">
+        More Django Project Templates
+      </a>
+    </h1>
+
+    <span class="post-date">28 Mar 2010</span>
+
+    <p>Quite a while ago I released some handy scripts for building up Django project layouts. Part of the reason behind this was to kick off discussions about ideal pproject layouts and maybe even get a few user submitted layouts into the project. Paster makes this soft of thing really easy to do and I was interested in what people might come up with.</p>
+<p>Well, the team over at <a href="http://chicagotribune.com/">The Chicargo Tribune</a> have done just that, creating a branch of the original project and <a href="http://github.com/ryanmark/django-project-templates/">adding a very rich example project to it</a></p>
+<p>I&#8217;ve finally gotten around to merging that back into <a href="http://github.com/garethr/django-project-templates/">my branch</a> and releasing a new version to <a href="http://pypi.python.org/pypi/django-project-templates/0.11">PyPi</a>. It&#8217;s got a good number of PostGreSQL commands that might be of use, as well as several Amazon S3 and EC2 examples. Even if none of these complete templates fit what you&#8217;re looking for exactly their are lots of smaller fabric recipes worth taking a look at.</p>
+<p>You can read all about what is in the project over on their <a href="http://blog.apps.chicagotribune.com/2010/03/08/advanced-django-project-layout/">developer blog</a>, which if filled with other interesting web and operations goodness.</p>
+<p>So, huge thanks to <a href="http://blog.apps.chicagotribune.com/author/cgroskopf/">Chris</a>, <a href="http://blog.apps.chicagotribune.com/author/bboyer/">Brian</a>, <a href="http://blog.apps.chicagotribune.com/author/ryanthomasmark/">Ryan</a> and <a href="http://blog.apps.chicagotribune.com/author/joegermuskact/">Joe</a> for some great work.</p>
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page18">Older</a>
+  
+  
+    
+      <a class="pagination-item newer" href="/page16">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>
