@@ -68,6 +68,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/09/09/Script-running-web-interface-with-websockets/">
+        Script Running Web Interface With Websockets
+      </a>
+    </h1>
+
+    <span class="post-date">09 Sep 2010</span>
+
+    <p>After something of a break I found a bit of time for some hacking at the weekend and decided to scratch a personal itch. I like writing shell scripts for everything from checking on things to deploying code. For anything that is more than just executing one command, or anything with detailed output or that takes a while I like to be able to see what&#8217;s going on. I also like to (OK, only sometimes) let other people run those commands and not all those people want to check something out and run a console. The web maks a pretty good interface for this sort of situation.</p>
+<p>Enter <a href="http://github.com/garethr/bolt/">Bolt</a>. It&#8217;s my first proper go at using websockets for the communication between client and server, and my first stab at EventMachine. The code at the moment needs some improvement (tests, configurability, deployment options) but it works as a proof of concept.</p>
+<p>It&#8217;s pretty simple, designed for running a single command at the push of a button and showing the results scroll past as they happen.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5lAEM" alt="Bolt script running interface"/></p>
+<p>Hopefully it&#8217;s useful to a few more people, or at least it will be when I clean it up a bit. For more information head over to the <a href="http://github.com/garethr/bolt/">GitHub page</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/07/11/Git-pre-recieve-hook-for-integrity/">
         Git Pre Recieve Hook For Integrity
       </a>
@@ -149,21 +165,6 @@
 <% end %>
 <p>The <a href="http://github.com/garethr/gmetric-web">code is up on GitHub</a> and is completely self contained. I&#8217;ve been running it mainly using spawning but any small <span class="caps">WSGI</span> server could surfice. I looked very briefly at the <span class="caps">API</span> for Ganglia but found the gmetric approach to be much simpler.</p>
 <p>And if you&#8217;re a Ganglia expert and know a much better way of doing this then let me know. Ganglia is awesome, and collecting metrics is both useful and fun (for me at least) but it&#8217;s not always obvious how to get into creating simple custom metrics which tell you something about your own appliction code.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/05/26/Devops-twitter-aggregator/">
-        Devops Twitter Aggregator
-      </a>
-    </h1>
-
-    <span class="post-date">26 May 2010</span>
-
-    <p>I&#8217;ve been hacking on appengine again and have thrown up a simple <a href="http://devopstweets.appspot.com/">twitter aggregator for devops</a>. It&#8217;s again based on <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> with an increasing number of additions and changes.</p>
-<p>As well as just the tweets I want to build a few other small features. The first of which is link extraction, so at the moment you&#8217;ll see recent links a the top of the page. I&#8217;ll hopefully make that a little more useful, with better browing and converting short urls into the real ones. I also have vague plans for providing exports, listing people talking about devops and some useful graphs to track general activity around devops.</p>
-<img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjphAEM" alt="Devops aggregator on Twitter"
-<p>I&#8217;m really interested to see if the whole discussion around the term devops grows over the next year or so, and I&#8217;m hoping this will make it a little easier to see that change happen.</p>
   </div>
   
 </div>

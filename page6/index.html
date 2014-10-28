@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2012/08/11/Riemann-puppet-module/">
+        Riemann Puppet Module
+      </a>
+    </h1>
+
+    <span class="post-date">11 Aug 2012</span>
+
+    <p>Thanks to an <a href="https://twitter.com/bitprophet/status/233626675307479040">errant tweet</a> I started playing with <a href="http://aphyr.github.com/riemann/">Riemann</a> again. It ticks lots of boxes for me, from the clojure to configuration as code and the overloadable dashboard application. What started as using Puppet and Vagrant to investigate Riemann turned into a full blown tool and module writing exercise, resulting in two related projects on GitHub.</p>
+<ul>
+	<li><a href="https://github.com/garethr/garethr-riemann/">garethr-riemann</a> is a Puppet module for installing and configuring Riemann. It allows for easily specifying your own server configuration and dashboard views.</li>
+	<li><a href="https://github.com/garethr/riemann-vagrant">riemann-vagrant</a> is a Vagrantfile and other code which uses above puppet module to setup a local testing environment.</li>
+</ul>
+<p>I like this combination, a separate Puppet module along with a vagrant powered test bed. I&#8217;ve written a reasonable rspec based test suite to check the module but it&#8217;s always easier to be able to run <em>vagrant provision</em> as well to check everything is working. This also turned out to be the perfect opportunity to use <a href="https://github.com/rodjek/librarian-puppet">Librarian-Puppet</a> to manage the dependencies and eventually to ship the module to the <a href="https://forge.puppetlabs.com/garethr/riemann">Puppet Forge</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2012/07/01/The-vagrantbox.es-story/">
         The Vagrantbox.es Story
       </a>
@@ -218,20 +235,6 @@ Percentage of the requests served within a certain time (ms)
 </ul>
 <p>After someone bugged me on Twitter I realised the small bit of code we&#8217;ve been using for our Nagios dashboard wasn&#8217;t out in the wild. So introducing <a href="https://github.com/garethr/nash">Nash</a>, a very simple high level check dashboard which screenscrapes nagiosand runs happily on Heroku.</p>
 <p>Although I&#8217;ve not been writing too much on here I&#8217;ve been keeping <a href="http://devopsweekly.com/">Devops Weekly</a> going each week for over a year now. I&#8217;ve just crossed 3000 subscribers which is pretty neat for a pet project.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/02/19/Dashboards-at-govuk/">
-        Dashboards At Gov.Uk
-      </a>
-    </h1>
-
-    <span class="post-date">19 Feb 2012</span>
-
-    <p>This is a bit of a cheat blog post really. I&#8217;ve been crazy busy all month with little time for anything except work (specifically shipping the first release of <a href="https://www.gov.uk/">www.gov.uk</a>). I have had a little time to blog over on the Cabinet Office blog though, about work we&#8217;ve done with dashboards.</p>
-<p><a href="http://digital.cabinetoffice.gov.uk/2012/02/08/radiating-information/">http://digital.cabinetoffice.gov.uk/2012/02/08/radiating-information/</a></p>
-<p>If you&#8217;re ever looking for good little hack projects dashboards are perfect, and often hugely useful once up and running. Convincing people of this before you have a few in the office might be hard &#8211; so just build something simple in a lunch break and find a screen to put it on. We&#8217;ve had great feedback from ours, both from people wandering through the office and from our colleagues who have a better idea of what&#8217;s going on.</p>
   </div>
   
 </div>

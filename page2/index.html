@@ -68,6 +68,57 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/03/15/testing-vagrant-runs-with-cucumber/">
+        Testing Vagrant runs with Cucumber
+      </a>
+    </h1>
+
+    <span class="post-date">15 Mar 2014</span>
+
+    <p>I&#39;ve been a big fan of <a href="http://www.vagrantup.com/">Vagrant</a> since it&#39;s
+initial release and still find myself using it for various tasks.</p>
+
+<p>Recently I&#39;ve been using it to test collections of Puppet modules. For a
+single host
+<a href="https://github.com/jvoorhis/vagrant-serverspec">vagrant-serverspec</a> is
+excellent. Simply install the plugin, add a provisioner and write your
+<a href="http://serverspec.org/">serverspec</a> tests. The serverspec provisioner
+looks like the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:serverspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+  <span class="n">spec</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;*_spec.rb&#39;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>But I also found myself wanting to test behaviour from the host
+(serverspec tests are run on the guest), and also wanted to write tests
+that checked the behaviour of a multi-box setup. I started by simply
+writing some <a href="http://cukes.info/">Cucumber</a> tests which I ran locally,
+but I decided I wanted this integrated with vagrant. Enter
+<a href="https://github.com/garethr/vagrant-cucumber-host">vagrant-cucumber-host</a>.
+This implements a new vagrant provisioner which runs a set of cucumber
+features locally.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:cucumber</span> <span class="k">do</span> <span class="o">|</span><span class="n">cucumber</span><span class="o">|</span>
+  <span class="n">cucumber</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Just drop your features in the features folder and run <code>vagrant
+provision</code>. If you just want to run the cucumber features, without any
+of the other provisioners running you can use:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vagrant provision --provision-with cucumber
+</code></pre></div>
+<p>Another advantage of writing this as a vagrant plugin is that it uses
+the Ruby bundled with vagrant, meaning you just install the plugin
+rather than faff about with a local Ruby install. </p>
+
+<p>A couple of other vagrant plugins that I&#39;ve used to make the testing
+setup easier are <a href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a>
+and <a href="https://github.com/adrienthebo/vagrant-hosts">vagrant-hosts</a>. Both
+help with managing hosts files, which makes writing tests without
+knowing the IP addresses easier.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/02/16/buy-vs-build-your-monitoring-system/">
         Buy vs Build your Monitoring System
       </a>
@@ -496,46 +547,6 @@ apt-get install ntp -y
 <p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
 
 <p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/01/01/testing-packer-created-images-with-serverspec/">
-        Testing Packer created images with serverspec
-      </a>
-    </h1>
-
-    <span class="post-date">01 Jan 2014</span>
-
-    <p><a href="http://www.packer.io/">Packer</a> provides a great way of describing the steps for creating a virtual machine image. But it doesn&#39;t have a built-in way of verifying those images.</p>
-
-<p><a href="http://serverspec.org/">Serverspec</a> provides a nice framework for writing tests against infrastructure, asserting the operation of services or the installation of packages.</p>
-
-<p>I&#39;m interested at the moment in building continous delivery pipelines for infrastructure components and have a simple working example of <a href="https://github.com/garethr/packer-serverspec-example">testing Packer with Serverspec</a> on
-Github. The example uses the AWS builder and the Puppet provisioner but the approach should work with other combinations.</p>
-
-<p>This doesn&#39;t represent a complete infrastructure pipeline, but it does demonstrate an approach to automating one particular component - building base images.</p>
-
-<h2>Testing</h2>
-
-<p>In our example I&#39;m using the <a href="https://github.com/puppetlabs/puppetlabs-ntp">Puppetlabs NTP</a> module to install and configure NTP. Once the Puppet provisioner has run, but before we build the AMI (or other virtal machine image) we run a test suite. For our example the tests are pretty simple:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">describe package(&#39;ntp&#39;) do
-  it { should be_installed }
-end
-
-describe service(&#39;ntp&#39;) do
-  it { should be_enabled   }
-  it { should be_running   }
-end
-</code></pre></div>
-<p>If the tests fail, Packer will stop and the AMI won&#39;t be built. The combination of storing the code (Packer template) alongside a test suite (Serverspec) and building a new AMI whenever you change the code, makes this setup perfect for continuous integration. </p>
-
-<h2>Wercker builds</h2>
-
-<p>As an example of a continuous integration setup the repository contains a <a href="https://github.com/garethr/packer-serverspec-example/blob/master/wercker.yml">wercker.yml</a> configuration file for the excellent <a href="http://devcenter.wercker.com/">Wercker</a> service. Wercker makes setting up multi-step built pipelines easy and nicely configurable via a simple text file in your repository.</p>
-
-<p>The Wercker <a href="https://app.wercker.com/#applications/52c450e489daaf145f001ad8">build for this project is public</a>. Currently the build involves downloading Packer, running <code>packer validate</code> to check the template and eventually running <code>packer build</code> to boot an instance and run our serverspec tests. </p>
 
   </div>
   

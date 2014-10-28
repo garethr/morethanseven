@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
+        Rundeck And Nagios Nrpe Checks
+      </a>
+    </h1>
+
+    <span class="post-date">11 Sep 2011</span>
+
+    <p>I&#8217;ve been playing with <a href="http://rundeck.org/">Rundeck</a> recently. For those that haven&#8217;t seen it yet it&#8217;s an application for running commands across a cluster of machines and recording the results. It has both a command line client and a very rich web interface which boths allows you to trigger commands and shows the results.</p>
+<p>I&#8217;ve played with a few different jobs so far, including triggering Puppet runs across machines triggered by a Jenkins plugin. I&#8217;ve also been looking at running all my monitoring tasks at the click of a button (or again as part of a smoke test triggered by Jenkins) and I thought that might make a nice simple example.</p>
+<p>My checks are written as Nagios plugins, and run periodically by Nagios. I also trigger them manually, using Dean&#8217;s <a href="http://www.unixdaemon.net/tools/commandline/introducing-nrpe-runner.html"><span class="caps">NRPE</span> runner script</a>.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiJoQIM" alt="Rundeck showing a job output"/></p>
+<p>The above shows a successful run across a few machines I use for experimenting with tools. Hopefully you can see the summary of the run on each of the four machines, each ran five <span class="caps">NRPE</span> checks and all passed. On failure we&#8217;d see the results as well as different symbols and colous. We can easily save the output to a file if we need to, rerun or duplicate the job (maybe to have it run against a different group of machines) or we can export the job definition file to load into another instance.</p>
+<p>The same job can also be run on the command line (which makes use the of Rundeck <span class="caps">API</span>)</p>
+<pre>./run -j "Run NRPE checks" -p PRGMR</pre>
+<p>This example shows running a specific pre-defined job, but it&#8217;s also equally possible to fire of adhoc commands to some or all of the machines rundeck knows about.</p>
+<p>One thing in particular that I prefer about this approach to say using Capistrano or Fabric for remote execution tasks is that you have a centralised authentication and logging capability. It would be easy enough to encapsulate the jobs into cap or fabric tasks (and manage that in source control) which means you&#8217;re not stuck if Rundeck isn&#8217;t available.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/08/19/On-her-majestys-digital-service/">
         On Her Majesty's Digital Service
       </a>
@@ -134,20 +154,6 @@
 <p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5kQIM" alt="Pipeline example showing build in progress"/></p>
 <p>Note that I&#8217;m only allowing the last build to be deployed given only that one can be checked on staging. Again this is configuration specific to my usage, the plugins lets you operate a number of different ways. There are a number of tweaks I want to make to this, mainly around experimenting with parameterized builds to pass useful information downstream and even allow parrallel execution. For the moment I have the <em>Block build when upstream project is building</em> flag checked on the deploy.</p>
 &nbsp;* Yes, this is a one page site. With a 5 step build process in Jenkins including a small suite of functional tests and a staging environment. This is what we call overengineering.
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/07/07/Varnish-at-refresh-cambridge/">
-        Varnish At Refresh Cambridge
-      </a>
-    </h1>
-
-    <span class="post-date">07 Jul 2011</span>
-
-    <p>I did a quick lightning talk at the Refresh Cambridge meetup last night, a very quick introduction to <a href="https://www.varnish-cache.org/">Varnish</a>. Given 10 minutes all I really wanted to do was get people to go away and take a look at it. Lots of folks in the room hadn&#8217;t come across it before so I think the talk was hopefully well pitched.</p>
-<p><iframe src="http://www.slideshare.net/slideshow/embed_code/8531073?rel=0" width="510" height="426" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></p>
-<p>Several people asked about slighly dynamic pages and I only got chance to mention support for <a href="https://www.varnish-cache.org/trac/wiki/ESIfeatures"><span class="caps">ESI</span></a> (Edge Side Includes) at the end. Conversation afterwards turned to various parts of the modern web stack and I had a pretty good time being opinionated. Hopefully more of the same next month.</p>
   </div>
   
 </div>

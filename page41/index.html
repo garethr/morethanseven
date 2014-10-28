@@ -68,6 +68,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/04/06/git-ditz-and-microformats/">
+        Git, Ditz and Microformats
+      </a>
+    </h1>
+
+    <span class="post-date">06 Apr 2008</span>
+
+    <p>I finally got round to making use of <a href="http://git.or.cz/">Git</a>, the distributed source code management tools much loved by Open Source projects like the Linux Kernel and now Ruby on Rails. It had been on the long list of things to have a look at for quite a while but for the majority of my personal projects <span class="caps">SVN</span> is just fine. The reason that led me to finally run <em>sudo port install git-core</em> was the new <a href="http://ditz.rubyforge.org/">Ditz</a> command line issue tracking software release on <a href="http://gitorious.org/projects/ditz">Gitorious</a> by <a href="http://cs.stanford.edu/people/wmorgan/">William Morgan</a>.</p>
+<p>Now, a command line issue tracker is maybe kind of niche and a little geeky. But most desktop or web based issue trackers just seem to wind me up and I like small tools that fit in with my command line centric workflow. I managed to clone <a href="http://gitorious.org/projects/ditz/repos/ditz-microformats">my own copy</a> of Ditz to have a play with. I ran into a few initial problems but nothing a <a href="http://www.kernel.org/pub/software/scm/git/docs/tutorial.html">good tutorial</a> and a <a href="http://groups.google.com/group/gitorious">helpful mailing list</a> couldn&#8217;t fix.</p>
+<p>I&#8217;m not just playing around either; Ditz comes with the nice ability to generate a set of static <span class="caps">HTML</span> files representing your issue database. I&#8217;ve committed and pushed a few modifications and enhancements onto my clone &#8211; mainly validation, semantic markup improvements and a smattering of microformats (work in progress) in the templates and a couple of markup generation helpers in the Ruby code. I plan on working up the interface a little as well but like any good web designer I&#8217;m starting with the underlying markup structure.</p>
+<p>A few other enhancements I&#8217;d love to see in Ditz or a clone I could pull from include the ability to use  <a href="http://www.sqlite.org/">SQLite</a> rather than the default <span class="caps">YAML</span> for larger projects, automatic generation of <span class="caps">RSS</span> feeds alongside the <span class="caps">HTML</span> (although I&#8217;ve started implementing hAtom) and maybe automated deployment to a remote host over <span class="caps">FTP</span> or <span class="caps">SSH</span>.</p>
+<p>The distributed nature of Git appears to be pushed as the main advantage to those developers taking a look. But I think this is, in many cases, is not <em>that</em> important compared to the familiarity that comes from having used <span class="caps">SVN</span> or similar for a while. What I think just might be it&#8217;s real strength is that Git is a <strong>social source control system</strong>. For Open Source projects like Ditz this is a potentially game changing move. The ease with which anyone can contribute and take things in strange directions without affecting the overall effort is fantastic. It removes barriers to entry for contributors and means making small quick changes is much easier and more immediate. With both Gitorious and <a href="http://github.com/">Github</a> wrapping Git in a shiny web based interface that focuses on these social aspects it will be interesting to see if this leads to more or faster Open Source collaboration efforts.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/04/04/a-first-class-web-citizen/">
         A First Class Web Citizen
       </a>
@@ -132,71 +148,6 @@
 <p>We&#8217;re going to be holding the event in the middle of Newcastle, at <a href="http://theartworksgalleries.com/">The Art Works</a> on the weekend of the 24th/25th of May. That&#8217;s a whole two months away, ample time for everyone to make arrangements hopefully. From the early discussions we were always set upon going the whole hog and having a two day event. The venue is big enough for people to sleep over as well if they want which is great. It keeps the cost down for anyone visiting as well as meaning we can play Werewolf all night. We&#8217;re piggy backing on the <a href="http://www.thinkingdigital.co.uk">Thinking Digital conference</a> as well so hopefully some of the people from that will stick around for the barcamp.</p>
 <p>We have the requisite <a href="http://barcamp.org/BarCampNorthEast">Barcamp wiki</a> page as well as a listing on <a href="http://upcoming.yahoo.com/event/462291/">Upcoming</a>. Feel free to indicate your interest on either of these. Registration isn&#8217;t open just yet, but we should be opening that up next week on <strong>Tuesday 1st April at 11:00am</strong>. Look for the link on here, on <a href="http://twitter.com/garethr">twitter</a>, on the upcoming and barcamp wiki pages and anywhere else I can think of to shout about it.</p>
 <p>Feel free to contact me with any questions. If you&#8217;re not sure what all the fuss is about then have a look at the <a href="http://barcamp.org/">barcamp</a> site. And if you&#8217;ve never been outside London before then maybe this is your chance. Newcastle is only two and a half hours away by a train with free wifi. We&#8217;re also on the lookout for a few sponsors; if your interested drop me a line.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/03/22/testing-websites-with-twill/">
-        Testing Websites with Twill
-      </a>
-    </h1>
-
-    <span class="post-date">22 Mar 2008</span>
-
-    <p>I&#8217;ve been playing with <a href="http://twill.idyll.org/">Twill</a> a little recently. It&#8217;s a Python based <span class="caps">DSL</span> used for functional testing of websites. From the official website:</p>
-<blockquote>
-<p>Twill is a simple language that allows users to browse the Web from a command-line interface. With twill, you can navigate through Web sites that use forms, cookies, and most standard Web features.</p>
-</blockquote>
-<p>A simple example might make things clearer. You&#8217;ll need to install twill first &#8211; the instructions are available on <a href="http://twill.idyll.org/">the site</a>. We can write tests directly into the shell so we&#8217;ll start their. For our first test we&#8217;ll write one that will hopefully fail &#8211; a test to check whether this website is down.</p>
-<pre><code>twill-sh
-&gt;&gt; go http://morethanseven.net
-&gt;&gt; code 404</code></pre>
-<p>First we fire up the twill shell then enter two simple commands. The first command, <em>go</em>, sends the browser to the specified <span class="caps">URL</span>. The second command is an assertion, in this case a check on the <span class="caps">HTTP</span> status code. If this website is available then it should return the <span class="caps">HTTP</span> code 200, if it&#8217;s unavailable then it will probably return a 404 Not Found. This test will hopefully fail, indicating that this website is up and running. In reality you&#8217;re more likely to test for the 200 status code and fail on anything else but for this example it&#8217;s useful to see what a failing test looks like.</p>
-<p>Although pretty powerful the twill scripting language is nice and small. I&#8217;ve listed most of the commands below just to give you an idea of the sort of things that you can get up to. You can type <em>help</em> at the twill shell to get more information on the available commands and the individual commands themselves.</p>
-<ul>
-	<li>twill-sh</li>
-	<li>twill-sh {filename}</li>
-	<li>twill-sh {filename1} {filename2}</li>
-	<li>twill-sh -u {url} {filename}</li>
-	<li>twill-sh -n {filename}</li>
-	<li>go {url}</li>
-	<li>show</li>
-	<li>save_html {file-name}</li>
-	<li>showlinks</li>
-	<li>showforms</li>
-	<li>follow {url|url-name}</li>
-	<li>back</li>
-	<li>reload</li>
-	<li>showhistory</li>
-	<li>echo {variable}</li>
-	<li>formvalue {form} {input} {value}</li>
-	<li>submit {input}</li>
-	<li>show_cookies</li>
-	<li>save_cookies {file-name}</li>
-	<li>load_cookies {file-name}</li>
-	<li>clear_cookies</li>
-	<li>code {code}</li>
-	<li>url {text}</li>
-	<li>title {text}</li>
-	<li>find {text}</li>
-	<li>setglobal {name} {value}</li>
-	<li>setlocal {name} {value}</li>
-	<li>debug http 1</li>
-	<li>redirect_output {file}</li>
-	<li>redirect_error {file}</li>
-	<li>agent {ie5|ie55|ie6|opera7|konq32|saf11|aol9}</li>
-	<li>add_auth {realm} {url} {user} {password}</li>
-	<li>runfile {file-name}</li>
-	<li>extend_with check_links</li>
-	<li>check_links</li>
-	<li>check_links {regex}</li>
-	<li>twill-fork -n {number} -p {processes} {script}</li>
-</ul>
-<p>You can also store tests in individual files as well as run a batch of tests at once. I have a couple of tests that I can run against any <span class="caps">URL</span> which might be a useful starting point for anyone else starting to look at testing their sites or applications. You can <a href="http://morethanseven.net/_assets/downloads/twill/twill.zip">download these tests here</a>.</p>
-<p>If you unpack the zip archive and then open the folder in a terminal or console. You can then run all of the tests like so, note we&#8217;re passing the starting <span class="caps">URL</span> into the scripts which makes using the same scripts for multiple sites easier.</p>
-<pre><code>twill-sh * -u http://morethanseven.net</code></pre>
-<p>The tests included do a few things; from checking for the presence of several required markup elements and checking for an <span class="caps">XHTML</span> doctype to checking that all the links on the page are working.</p>
-<p>All these examples are pretty simple and non-site-specific. For more complex form based applications you can write application browsers which fill out forms, create user sessions and do everything a user might do. Twill is also particularly useful when it comes to testing RESTful webservices with all the URLs and <span class="caps">HTTP</span> status codes floating about.</p>
   </div>
   
 </div>

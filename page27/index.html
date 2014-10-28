@@ -68,6 +68,33 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/04/10/support-revcanonical/">
+        Support for Rev=Canonical
+      </a>
+    </h1>
+
+    <span class="post-date">10 Apr 2009</span>
+
+    <p>There has been <a href="http://adactio.com/journal/1566/">lots of talk</a> recently about <span class="caps">URL</span> shortening. Services like <a href="http://tinyurl.com/">TinyURL</a> have been around for a good while, offering shortened versions of URLs like <a href="http://tinyurl.com/dd7w2m">tinyurl.com/dd7w2m</a> which are easier to put in a tweet or an email. The problem with this is that not only does the shorter version mask any information about the destination, but if TinyURL or one of the other shortening services goes away, or loses control of it&#8217;s domain name, a large number of links are going to stop working the way they should.</p>
+<p><a href="http://laughingmeme.org/">Kellan</a> in particular has been proposing some simple steps that might get us out of this hole. You can read more about the ideas behind using <a href="http://revcanonical.wordpress.com/">Rev=Canonical</a> and try out the future (maybe) of these services at <a href="http://revcanonical.appspot.com">revcanonical.appspot.com</a>.</p>
+<p>The nicest thing from my point of view about this idea is how simple it is to implement. This blog is running a custom Django based blogging engine called <a href="http://github.com/garethr/django-train/tree/master">Train</a>.</p>
+<p>The posts on this site exist at urls like the following: <a href="http://morethanseven.net/2009/04/04/mixing-it-programming-language-choice/">morethanseven.net/2009/04/04/mixing-it-programming-language-choice/</a>. With only a small view function, a change to a template and the addition of a url this blog should now work with Kellans new url shortener.</p>
+<p>I decided to use the ids for the articles on the blog as the key for the short versions. So if you were to visit <a href="http://morethanseven.net/284">morethanseven.net/284</a> you would get the article above. I decided to issue a redirect from the short version to the long version in the end rather than serve duplicate content with the canonical link, not sure which way is probably best though.</p>
+<p>The markup for each article contains the required link in the head of the document:</p>
+<pre>&lt;link rel="alternate shorter" href="http://morethanseven.net/284"&gt;&lt;/pre&gt;</pre>
+<p>And the django view looks something like this:</p>
+<pre>def tiny(request, id):
+    "Provide tiny urls based on ids for articles"
+    # get the article or throw a 404
+    article = get_object_or_404(Article, id=id, status='live')
+    url = article.get_absolute_url()
+    # redirect to the relevant
+    return HttpResponsePermanentRedirect(url)</pre>
+<p>All in all, incredible simply to implement, especially in something like Rails or Django which make this sort of wire up urls to view stuff easy. So what&#8217;s stopping you adding this to you site or current project? If enough people just do it we can make the web a slightly better place in reasonably short order.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/04/04/mixing-it-programming-language-choice/">
         Mixing it Up - Programming Language Choice
       </a>
@@ -169,18 +196,6 @@
 	<li>http://feeds.feedburner.com/FoundersBlog-Cluttermecom</li>
 </ul>
 <p>I have a couple of other communities or events that I&#8217;d like to do the same thing around, as well as a few features I want to add to the underlying software. The nice thing with App Engine is rolling new instances out is as simple as running a command.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/19/webapp-custom-filters/">
-        Webapp custom filters
-      </a>
-    </h1>
-
-    <span class="post-date">19 Mar 2009</span>
-
-    <p>The webapp framework wish ships with App Engine uses the Django templating system by default, but without Django apps doesn&#8217;t support the same mechanism for loading template tags and filters. <a href="http://javawonders.blogspot.com/2009/01/google-app-engine-templates-and-custom.html">This is how to do it though</a> using a few webapp.template methods.</p>
   </div>
   
 </div>

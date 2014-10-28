@@ -68,6 +68,41 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/05/25/beyond-basic-web-development/">
+        Beyond Basic Web Development
+      </a>
+    </h1>
+
+    <span class="post-date">25 May 2009</span>
+
+    <p>I did a talk at the recent barcamp North East on web development tools. Specifically I wanted to talk about the fact that an awful lot of people just use the basic stack of tools they are familiar with. So Microsoft people will just use C#, <span class="caps">MSSQL</span> and <span class="caps">ISS</span> and lots of people just use <span class="caps">PHP</span>, MySQL and Apache. I&#8217;m not saying their is anything wrong with those tools, but if they are all you have in your tool box you&#8217;re limited how well designed your software can be.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I&#8217;d knocked the presentation together in my hotel room pretty quickly before heading down to barcamp and the lack of an internet connection meant I didn&#8217;t have links and didn&#8217;t cover a few tools I should have. It did seem to have the desired result in any case as several people spoke to me afterwards about wanting to use one of the tools I mentioned for something specific.</p>
+<ul>
+	<li><a href="http://www.danga.com/memcached/">Memcached</a></li>
+	<li>Non relational databases (<a href="http://hadoop.apache.org/hbase/">Hbase</a>, <a href="http://couchdb.apache.org/">Couchdb</a>)</li>
+	<li><a href="http://tokyocabinet.sourceforge.net/tyrantdoc/">Tokyo Tyrant</a></li>
+	<li><a href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache Bench</a></li>
+	<li><a href="http://integrityapp.com/">Continuous Integration</a></li>
+	<li><a href="http://djangoproject.com/">Django</a> (specifically for nearly free admin interfaces)</li>
+	<li>Small web servers &#8211; <a href="http://nginx.net/">Nginx</a>, <a href="http://code.macournoyer.com/thin/">Thin</a> and <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a></li>
+	<li>Message queues &#8211; <a href="http://www.rabbitmq.com/">RabbitMQ</a> and <a href="http://stompserver.rubyforge.org/">Stompserver</a></li>
+	<li><span class="caps">HTTP</span> tools &#8211; <a href="http://www.apsis.ch/pound/">Pound</a>, <a href="http://varnish.projects.linpro.no/">Varnish</a> and <a href="http://www.squid-cache.org/">Squid</a></li>
+	<li><a href="http://hadoop.apache.org/core/">Hadoop</a></li>
+</ul>
+<p>We also had a good discussion afterwards and people mentioned a few other tools.</p>
+<ul>
+	<li><a href="http://reductivelabs.com/products/puppet/">Puppet</a></li>
+	<li><a href="http://www.nagios.org/">Nagios</a></li>
+	<li><a href="http://ganglia.info/">Ganglia</a></li>
+	<li><a href="http://www.mortbay.org/jetty/">Jetty</a></li>
+	<li><a href="http://lucene.apache.org/solr/">Solr</a></li>
+</ul>
+<p>Now it&#8217;s possible to spend too much time playing with small tools that are likely to be peripheral to the bulk of your application. But the number of stories I&#8217;ve head of people writing their own messages queuing systems in <span class="caps">PHP</span>, or using PHPMyAdmin as an application admin interface or ignoring the fact that their fancy new application only supports a few people at once.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/05/21/universal-ie6-css-and-different-types-of-sites/">
         Universal Internet Explorer 6 CSS and different types of sites
       </a>
@@ -145,33 +180,6 @@
 <p>So that&#8217;s where <a href="http://gitbug.appspot.com">GitBug</a> comes in. Bug tracking for people with minimal needs.</p>
 <p>The only real <em>feature</em> past a very minimal bug tracker is the ability to close bugs via a GitHub webhook. Oh and lots of <span class="caps">JSON</span> and <span class="caps">RSS</span> feeds for everything but that&#8217;s just the way we should build things now anyway.</p>
 <p>Their are areas of the interface that could do with some streamlining and a couple of open bugs that don&#8217;t yet cause me enough pain to fix. I have however opened it up for anyone with a Google account to use and a few people have started adding their own projects and issues already. I&#8217;m hoping that for the most part by keeping it as simple as possible I can avoid having to do any work on <em>it</em> and work on bugs in other projects instead, of which I&#8217;m sure there are many.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/04/10/support-revcanonical/">
-        Support for Rev=Canonical
-      </a>
-    </h1>
-
-    <span class="post-date">10 Apr 2009</span>
-
-    <p>There has been <a href="http://adactio.com/journal/1566/">lots of talk</a> recently about <span class="caps">URL</span> shortening. Services like <a href="http://tinyurl.com/">TinyURL</a> have been around for a good while, offering shortened versions of URLs like <a href="http://tinyurl.com/dd7w2m">tinyurl.com/dd7w2m</a> which are easier to put in a tweet or an email. The problem with this is that not only does the shorter version mask any information about the destination, but if TinyURL or one of the other shortening services goes away, or loses control of it&#8217;s domain name, a large number of links are going to stop working the way they should.</p>
-<p><a href="http://laughingmeme.org/">Kellan</a> in particular has been proposing some simple steps that might get us out of this hole. You can read more about the ideas behind using <a href="http://revcanonical.wordpress.com/">Rev=Canonical</a> and try out the future (maybe) of these services at <a href="http://revcanonical.appspot.com">revcanonical.appspot.com</a>.</p>
-<p>The nicest thing from my point of view about this idea is how simple it is to implement. This blog is running a custom Django based blogging engine called <a href="http://github.com/garethr/django-train/tree/master">Train</a>.</p>
-<p>The posts on this site exist at urls like the following: <a href="http://morethanseven.net/2009/04/04/mixing-it-programming-language-choice/">morethanseven.net/2009/04/04/mixing-it-programming-language-choice/</a>. With only a small view function, a change to a template and the addition of a url this blog should now work with Kellans new url shortener.</p>
-<p>I decided to use the ids for the articles on the blog as the key for the short versions. So if you were to visit <a href="http://morethanseven.net/284">morethanseven.net/284</a> you would get the article above. I decided to issue a redirect from the short version to the long version in the end rather than serve duplicate content with the canonical link, not sure which way is probably best though.</p>
-<p>The markup for each article contains the required link in the head of the document:</p>
-<pre>&lt;link rel="alternate shorter" href="http://morethanseven.net/284"&gt;&lt;/pre&gt;</pre>
-<p>And the django view looks something like this:</p>
-<pre>def tiny(request, id):
-    "Provide tiny urls based on ids for articles"
-    # get the article or throw a 404
-    article = get_object_or_404(Article, id=id, status='live')
-    url = article.get_absolute_url()
-    # redirect to the relevant
-    return HttpResponsePermanentRedirect(url)</pre>
-<p>All in all, incredible simply to implement, especially in something like Rails or Django which make this sort of wire up urls to view stuff easy. So what&#8217;s stopping you adding this to you site or current project? If enough people just do it we can make the web a slightly better place in reasonably short order.</p>
   </div>
   
 </div>

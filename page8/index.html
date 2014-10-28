@@ -68,6 +68,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/12/26/First-experience-building-something-with-clojure/">
+        First Experience Building Something With Clojure
+      </a>
+    </h1>
+
+    <span class="post-date">26 Dec 2011</span>
+
+    <p>I nearly always try and grab some time over Christmas to try something new and this year I&#8217;d been planning on spending some time with Clojure. I have several friends who are big fans, but dipping in and out of a book hadn&#8217;t really worked. What I needed was an itch to scratch.</p>
+<p>I stuck with a domain I&#8217;m pretty familiar with for this first project, namely building a little web application. It renders a web page, makes <span class="caps">HTTP</span> requests, parses <span class="caps">JSON</span> into native data structures and does a bit of data juggling. Nothing fancy or overly ambitious, I was mainly interested in picking up the syntax, understanding common libraries and getting something built. Here&#8217;s what I&#8217;ve got:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjBuAIM" alt="Dasboard for Jenkins builds"/></p>
+<p>Jenkins has various <span class="caps">API</span> endpoints, but most dashboards I&#8217;ve seen concentrate on showing you the current status of all the builds. This is hugely useful when it comes to the simple case of continuous integration, but I&#8217;ve also been using Jenkins for other automation tasks, and making extensive use of parameterized builds. What the dashboard above concentrates on is showing recent builds for a specific job, along with the parameters used to run them.</p>
+<p>Overall it was a fun project. Clojure made much more sense to me building this application than it had from simple examples. The <a href="http://webnoir.org/">Noir</a> web framework is excellent and proved easy enough to jump into and simple enough that I could read the source code if I was interested in how something worked. The <a href="https://github.com/technomancy/leiningen">Leiningen</a> build tool made getting started, downloading and managing dependencies and running tests and the application itself easy.</p>
+<p>What I didn&#8217;t find particularly appealing was the lack of a strong standard library coupled with the difficulty of tracking down suitable libraries. <span class="caps">JSON</span> parsing, dealing with <span class="caps">HTTP</span> requests and date handing are very common activities in web programming and all needed me to jump around looking at the best way of dealing with the common case. I settled on <a href="https://github.com/dakrone/clj-http">clj-http</a>, <a href="https://github.com/dakrone/cheshire">chesire</a> and using Java interop for date formatting. clj-http suffered from having lots of forks on GitHub to navigate through. I started with clojure-json before discovering it had been deprecated. And neither clj-time or date-clj appeared to support unix timestamps as far as I could tell from the source. Throw in some uncertainty over the status of clojure-contrib that isn&#8217;t well documented on the official site and it needs some effort to get started.</p>
+<p>The working code for this is already up on <a href="https://github.com/garethr/jenkins-build-list">GitHub</a> and I&#8217;d be interested in any Clojure experts showing me the error of my ways.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/12/13/Setting-puppet-class-using-environment-variables/">
         Setting Puppet Class Using Environment Variables
       </a>
@@ -232,26 +250,6 @@ end
 {"_id"=&gt;"LongerPublication", "value"=&gt;{"type"=&gt;"LongerPublication", "count"=&gt;12.0, "published"=&gt;10.0}}]
 </pre>
 <p>I&#8217;ve been pretty impressed with both Mongo and Mongoid here. I like the feel of mapreduce jobs for this sort of reporting task. In particular it&#8217;s suprising how writing two languages mixed together like this doesn&#8217;t really affect the readability of the code in my view. Given that with a relational database you&#8217;d probably be writing <span class="caps">SQL</span> anyway maybe that&#8217;s not that suprising &#8211; the syntactic differences between Javascript and Ruby are much smaller than pretty much anything and <span class="caps">SQL</span>. Lots of folks have written about the increase of polyglot programming, but I wonder if we&#8217;ll see an increase in the embedding of one language in another?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
-        Rundeck And Nagios Nrpe Checks
-      </a>
-    </h1>
-
-    <span class="post-date">11 Sep 2011</span>
-
-    <p>I&#8217;ve been playing with <a href="http://rundeck.org/">Rundeck</a> recently. For those that haven&#8217;t seen it yet it&#8217;s an application for running commands across a cluster of machines and recording the results. It has both a command line client and a very rich web interface which boths allows you to trigger commands and shows the results.</p>
-<p>I&#8217;ve played with a few different jobs so far, including triggering Puppet runs across machines triggered by a Jenkins plugin. I&#8217;ve also been looking at running all my monitoring tasks at the click of a button (or again as part of a smoke test triggered by Jenkins) and I thought that might make a nice simple example.</p>
-<p>My checks are written as Nagios plugins, and run periodically by Nagios. I also trigger them manually, using Dean&#8217;s <a href="http://www.unixdaemon.net/tools/commandline/introducing-nrpe-runner.html"><span class="caps">NRPE</span> runner script</a>.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiJoQIM" alt="Rundeck showing a job output"/></p>
-<p>The above shows a successful run across a few machines I use for experimenting with tools. Hopefully you can see the summary of the run on each of the four machines, each ran five <span class="caps">NRPE</span> checks and all passed. On failure we&#8217;d see the results as well as different symbols and colous. We can easily save the output to a file if we need to, rerun or duplicate the job (maybe to have it run against a different group of machines) or we can export the job definition file to load into another instance.</p>
-<p>The same job can also be run on the command line (which makes use the of Rundeck <span class="caps">API</span>)</p>
-<pre>./run -j "Run NRPE checks" -p PRGMR</pre>
-<p>This example shows running a specific pre-defined job, but it&#8217;s also equally possible to fire of adhoc commands to some or all of the machines rundeck knows about.</p>
-<p>One thing in particular that I prefer about this approach to say using Capistrano or Fabric for remote execution tasks is that you have a centralised authentication and logging capability. It would be easy enough to encapsulate the jobs into cap or fabric tasks (and manage that in source control) which means you&#8217;re not stuck if Rundeck isn&#8217;t available.</p>
   </div>
   
 </div>

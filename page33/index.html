@@ -68,6 +68,18 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/29/jsonpickle/">
+        Jsonpickle
+      </a>
+    </h1>
+
+    <span class="post-date">29 Jan 2009</span>
+
+    <p><a href="http://code.google.com/p/jsonpickle">Jsonpickle</a> is a Python library for serializing any arbitrary object graph into <span class="caps">JSON</span>. The advantage over something like simplejson is the <em>arbitrary</em> part, simplejson throws errors when you try and serialize some types of objects. I also prefer the jsonpickle <span class="caps">API</span> (encode, decode) over simplejson (dump, dumps, load, loads).</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/28/git-issue-tracking/">
         Git Issue Tracking
       </a>
@@ -205,22 +217,6 @@ prev: get details about the previous track in the list
 next: get details about the next track in the list</pre>
 <p>More instructions, and the code behind the bot, can be found in the <a href="http://github.com/garethr/lastbot/tree/master"><span class="caps">README</span></a>.</p>
 <p>As developers we spend a lot of time using command line interfaces &#8211; mainly for speed and because you can cram a lot of functionality into a small amount of screen real estate. We&#8217;re increasingly spending time debugging <span class="caps">API</span> calls as well and exposing your <span class="caps">API</span> calls for use by instant messaging clients has the potential to make development easier. Think of the Python interactive shell or of <span class="caps">IRB</span>, but for APIs.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/15/are-xmpp-and-offline-processing-coming-google-app-/">
-        Are XMPP and offline processing coming to Google App Engine?
-      </a>
-    </h1>
-
-    <span class="post-date">15 Jan 2009</span>
-
-    <p>Google <a href="http://google-code-updates.blogspot.com/2009/01/changes-for-jaiku-and-farewell-to.html">just announced</a> that, once the port of <a href="http://www.jaiku.com">Jaiku</a> to App Engine is complete they will be Open Sourcing the code and stopping official development. I only used Jaiku sporadically in the heady days when everyone had to sign up for a new web 2.0 service every week or be mocked by their colleagues. What really interests me about this move though is what it means for App Engine.</p>
-<p>If memory serves <a href="http://www.jaiku.com/blog/2007/08/30/jaiku-from-your-instant-messenger/">Jaiku had an instant message interface</a>. Does that mean App Engine is going to get an <span class="caps">XMPP</span> interface?</p>
-<p>I&#8217;m also presuming the original Jaiku application had at least some features powered by offline processing or used a message based architecture behind the scenes? Or used scheduled batch jobs for reporting or data mungling?</p>
-<p>All of these issues are high up on the <a href="http://code.google.com/p/googleappengine/issues/list">App Engine issues list</a> and solutions to these two outstanding problems would move App Engine, in my opinion, to being very cool to being very useful. I&#8217;ve been impressed with the simple, well designed and well documented current set of APIs and I&#8217;d love to see a few more added for <span class="caps">XMPP</span> and offline processing. If the Jaiku code is open source but relies on Google only APIs it would seem a little odd.</p>
-<p>So does anyone have any more information on this? Any passing Googlers who can get us an answer?</p>
   </div>
   
 </div>

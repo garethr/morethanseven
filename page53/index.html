@@ -68,6 +68,35 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/04/07/working-example-of-microformats-as-an-api/">
+        Working example of Microformats as an API
+      </a>
+    </h1>
+
+    <span class="post-date">07 Apr 2007</span>
+
+    <p><a href="http://allinthehead.com/">Drew</a> posted a while ago asking <a href="http://allinthehead.com/retro/301/can-your-website-be-your-api">can-your-website-be-your-api</a>. The simple idea is that you just might be able to live without a dedicated <span class="caps">API</span> in favour of good use of microformats.</p>
+<p>It also turns out <a href="http://tantek.com/">Tantek</a> has also been on the case with his presentation <a href="http://tantek.com/presentations/20040928sdforumws/semantic-xhtml.html">Can your website be your <span class="caps">API</span>? &#8211; Using semantic <span class="caps">XHTML</span> to show what you mean</a> and</p>
+<p><a href="http://www.glennjones.net">Glenn</a> has <a href="http://www.webdd.org.uk/ViewSession.aspx?SessionID=60">spoken on the subject too</a> at <a href="http://www.webdd.org.uk">WebDD</a> and <a href="http://barcamp.org/BarCampLondon2">BarCamp</a>.</p>
+<p>This has interested me for a while and I&#8217;ve finally gotten around to writing some code, in fact I wrote the bulk of it during <a href="http://thehighlandfling.com/2007/">The Highand Fling</a> and then the rest before the <a href="http://refreshedinburgh.com/">Refresh</a> event after I got to te venue an hour early.</p>
+<p>I used Drew&#8217;s <a href="http://allinthehead.com/hkit">hKit</a> for the microformat parsing so everything that follows is PHP5 only I&#8217;m afraid. The also means I dont have a working example on this server at the moment but you can <a href="http://morethanseven.net/_assets/downloads/microformatsapi/microformatsapi.zip">grab the code</a> and try it out yourself. It also makes use of a couple of <a href="http://pear.php.net"><span class="caps">PEAR</span></a> modules; <span class="caps">PEAR</span> <a href="http://pear.php.net/package/Validate">Validate</a> and <span class="caps">PEAR</span> <a href="http://pear.php.net/package/HTTP_Request">HTTP_Request</a>.</p>
+<p>At the moment I&#8217;ve worked on a simple hCard example. It demonstrates the idea of a website exposing methods based on the presense of microformats, plus using that exposed method to extract the information we&#8217;re looking for.</p>
+<p>First we create objects for the parser and the website:</p>
+<pre><code>$parser = new hKit;
+$website = new Website('http://morethanseven.net',$parser);</code></pre>
+<p>Then we&#8217;ll ask what methods the website exposes:</p>
+<pre><code>$website-&gt;expose();</code></pre>
+<p>In this example we get back an array of the available methods, in this case <em>getContacts</em>. Then just as an example lets print out some contact details:</p>
+<pre><code>foreach ($website-&gt;getContacts() as $contact) {
+   echo $contact-&gt;getFN();
+}</code></pre>
+<p>This is a very early release, more of a proof of concept and as such their is no documentation and only a portion of hCard is supported. Hell, their&#8217;s not even a name beginning with h! Having said that I have a plan for a little project to kick the tyres and so I&#8217;l l be adding to it and hopfully have a proper release at some point.</p>
+<p>The plan is to introduce methods like getReviews, getEvents, etc. which allow for the extraction of the relevant details. The part I find most interesting however is the idea of the expose method &#8211; asking a web page if it has an <span class="caps">API</span>, and if it does then what information you can extract automagically. If you&#8217;re interested let me know what you think.</p>
+<p><a href="http://morethanseven.net/_assets/downloads/microformatsapi/microformatsapi.zip">Download example</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/04/02/software-i-installed-on-my-n800/">
         Software I Installed on my N800
       </a>
@@ -181,26 +210,6 @@
 <p>Head over to <a href="http://morethanseven.net/presents/werewolf">morethanseven.net/presents/werewolf</a> for a set of printable cards based on Flickr Machine Tags.</p>
 <p>In the future I may enhance this with a nifty interface which lets visitors select the number of each card they want &#8211; and I spoke briefly with <a href="http://www.whitelabel.org/">Stefan</a> from <a href="http://www.moo.com/">Moo</a> about if it&#8217;s possible to link into printing them on those lovely Moo cards.</p>
 <p>If you want anyone to appear just add the relevant werewolf machine tag!</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/03/04/parsing-erdf/">
-        Parsing ERDF
-      </a>
-    </h1>
-
-    <span class="post-date">04 Mar 2007</span>
-
-    <p>Now we&#8217;ve got some <a href="http://morethanseven.net/posts/microformats-and-erdf-sitting-in-a-tree/">eRDF in our pages</a> we need to extract it out in preparation for doing someting with it.</p>
-<h3>With <span class="caps">XSL</span></h3>
-<p>First up we want to try and extract the eRDF in our page into an <span class="caps">RDF</span> document. <a href="http://iandavis.com">Ian Davis</a> has already created a nice <span class="caps">XSL</span> document to do just that. and I&#8217;ve implemented a <a href="http://morethanseven.net/presents/erdf/">nice service wrapper</a> to extract the <span class="caps">RDF</span> from a given <span class="caps">URL</span>. Try pointing it at <a href="http://morethanseven.net">morethanseven.net</a> or <a href="http://iandavis.com">iandavis.com</a> for an example of it in action. Next step here is to extend it to allow extracting a simple vcard from the <span class="caps">RDF</span> in a similar manner to <a href="http://suda.co.uk/">Brian Suda&#8217;s</a> <a href="http://suda.co.uk/projects/X2V/">Microformats extractor</a>.</p>
-<h3>With Javascript</h3>
-<p><a href="http://www.danwebb.net/">Dan Webb</a> has recently written up his <a href="http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript">Sumo! microformas parser</a> and boy is it really rather fancy. At the moment he&#8217;s only got profiles for hCard, hCalendar and hResume but writing profiles is relatively simple. Accoring to one of Dans comments he&#8217;s working on adding support for rel and rev style microformats like rel-tag and <span class="caps">XFN</span>.</p>
-<p>Although billed as a Microformats parser, in reality what Dan&#8217;s created is pretty generic. You can use it to parse out any information marked up with any semantic class names &#8211; just like our eRDF.</p>
-<p>I&#8217;ve set up a very basic Sumo! profile for <span class="caps">FOAF</span> and some <a href="http://morethanseven.net/presents/foaf/">simple tests to extract eRDF data from a test page</a>. This is very much a proof of concept of extracting eRDF using Javascript but would be relatively simple to extend for the full <span class="caps">FOAF</span> spec once Dan or someone else extends Sumo! to support rel and rev.</p>
-<p>On a related note the combination of Sumo! and the <a href="http://www.getfirebug.com/">Firebug</a> javascript console is just perfect. Anyone who hasn&#8217;t yet downloaded the latest version should get over there quick.</p>
-<p><img src="http://morethanseven.net/_assets/media/imgFirebug.png" title="Firebug" alt="Firebug" /></p>
   </div>
   
 </div>

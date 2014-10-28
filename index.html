@@ -68,6 +68,133 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/10/28/docker-puppet-shared-volumes/">
+        Docker, Puppet and shared volumes
+      </a>
+    </h1>
+
+    <span class="post-date">28 Oct 2014</span>
+
+    <p>During one of the openspace sessions at Devopsdays we talked about docker and configuration management,
+and one of the things we touched on was using dockers shared volumes support. This is easier to explain
+with an example.</p>
+
+<p>First, lets create a docker image to run puppet. I&#39;m also installing r10k for managing third party
+modules.</p>
+
+<h2>Docker</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">FROM ubuntu:trusty
+
+RUN apt-get update -q
+RUN apt-get install -qy wget
+RUN wget http://apt.puppetlabs.com/puppetlabs-release-trusty.deb
+RUN dpkg -i puppetlabs-release-trusty.deb
+RUN apt-get update
+
+RUN apt-get install -y puppet ruby1.9.3 build-essential git-core
+RUN echo &quot;gem: --no-ri --no-rdoc&quot; &gt; ~/.gemrc
+RUN gem install r10k
+</code></pre></div>
+<p>Lets build that and tag it locally. Feel free to use whatever name you like here.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">docker build -t garethr/puppet .
+</code></pre></div>
+<p>Lets now use that image as a base for another image.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">FROM garethr/puppet
+
+RUN mkdir /etc/shared
+ADD Puppetfile /
+RUN r10k puppetfile check
+RUN r10k puppetfile install
+ADD init.pp /
+CMD [&quot;puppet&quot;, &quot;apply&quot;, &quot;--modulepath=/modules&quot;, &quot;/init.pp&quot;,&quot;--verbose&quot;, &quot;--show_diff&quot;]
+</code></pre></div>
+<p>This image will be used to create containers that we intend to run. Here we&#39;re including a
+Puppetfile (a list of module dependencies) and then running r10k to download those dependencies.
+Finally we add a simple puppetfile (this would likely be an entire manifests directory in most cases).
+The final line means that when we run a container based on this image it will run puppet and then exit.</p>
+
+<p>Again lets build the image and tag it.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">docker build -t garethr/puppetshared .
+</code></pre></div>
+<p>Just as a demo, here&#39;s a sample <code>Puppetfile</code> which includes the puppetlabs stdlib module.</p>
+
+<h2>Puppet</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mod &#39;puppetlabs/stdlib&#39;
+</code></pre></div>
+<p>And again as an example here&#39;s a simple puppet <code>init.pp</code> file. All we&#39;re doing is creating a file
+at a specific location.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">file { &#39;/etc/shared/client&#39;:
+  ensure =&gt; directory,
+}
+
+file { &#39;/etc/shared/client/apache.conf&#39;:
+  ensure  =&gt; present,
+  content =&gt; &quot;not a real config file&quot;,
+}
+</code></pre></div>
+<h2>Fig</h2>
+
+<p><a href="http://fig.sh">Fig</a> is a tool to declare container types in a text file, and then run and manage
+them from a simple CLI. We could do all this with straigh docker calls too.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">master</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">garethr/puppetshared</span>
+  <span class="l-Scalar-Plain">volumes</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">/etc/shared:/etc/shared:rw</span>
+
+<span class="l-Scalar-Plain">client</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ubuntu:trusty</span>
+  <span class="l-Scalar-Plain">volumes</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">/etc/shared/client:/etc/:ro</span>
+  <span class="l-Scalar-Plain">command</span><span class="p-Indicator">:</span> <span class="s">&#39;/bin/sh</span><span class="nv"> </span><span class="s">-c</span><span class="nv"> </span><span class="s">&quot;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">hello</span><span class="nv"> </span><span class="s">world;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&quot;&#39;</span>
+</code></pre></div>
+<p>The important part of the above is the volumes lines. What we&#39;re doing here is:</p>
+
+<ul>
+<li>Sharing the <code>/etc/shared</code> directory on the host with the container called master. The container will be able to write to the host filesystem.</li>
+<li>Sharing a subdirectory of of <code>/etc/shared</code> with the client container. The client can only read this information.</li>
+</ul>
+
+<p>Note the client container here isn&#39;t running Puppet. Here it&#39;s just running sleep in a loop to simulate a long running process like
+your custom application.</p>
+
+<p>Let&#39;s run the master. Note that this will run puppet and then exit. But with the above manifest it will create
+a config file on the host.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">fig run master
+</code></pre></div>
+<p>Then run the client. This won&#39;t exit and should just print <code>hello world</code> to stdout.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">fig run client
+</code></pre></div>
+<p>Docker 1.3 adds the handy exec command, which allows for one-off commands to be executed within a running container.
+Lets use that to see our new config file.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">docker exec puppetshared_client_run_1 cat /etc/apache.conf
+</code></pre></div>
+<p>This should output the contents of the file we created by running the master container.</p>
+
+<h2>Why?</h2>
+
+<p>This is obviously a very simple example but I think it&#39;s interesting for a few reasons.</p>
+
+<ul>
+<li>We have completely separated our code (in the container) from the configuration</li>
+<li>We get to use familiar tools for managing the configuration in a familiar way</li>
+</ul>
+
+<p>It also raises a few problems:</p>
+
+<ul>
+<li>The host needs to know what types of container are going to run on it, in order to have the correct configuration. If you&#39;re using <a href="https://forge.puppetlabs.com/garethr/docker">Puppet module</a> then this is simple enough to solve.</li>
+<li>The host ends up with all of the configuration for all the containers in one place, you could also do things with encrypting the data and having the relevant keys in one image and not others. Given how if you&#39;re on the host you own the container anyway this isn&#39;t as odd as it sounds.</li>
+<li>We&#39;re just demonstrating files here, but if we change our manifest and rerun the puppet container then we change the config files. But depending on the application it  won&#39;t pick that up unless we restart it or create a new container.</li>
+</ul>
+
+<p>Given enough time I may try build a reference implementation using this approach, anyone with ideas about that let me know.</p>
+
+<p>This post was inspired by a conversation with <a href="https://twitter.com/kelseyhightower">Kelsey</a> and <a href="http://twitter.com/botchagalupe">John</a>, thanks guys.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/10/12/using-puppet-with-key-value-config-stores/">
         Using Puppet with key/value config stores
       </a>
@@ -294,57 +421,6 @@ to do the following:</p>
 </code></pre></div>
 <p>And now any of your existing applications will be able to use your
 consul instance for service discovery via DNS.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/15/testing-vagrant-runs-with-cucumber/">
-        Testing Vagrant runs with Cucumber
-      </a>
-    </h1>
-
-    <span class="post-date">15 Mar 2014</span>
-
-    <p>I&#39;ve been a big fan of <a href="http://www.vagrantup.com/">Vagrant</a> since it&#39;s
-initial release and still find myself using it for various tasks.</p>
-
-<p>Recently I&#39;ve been using it to test collections of Puppet modules. For a
-single host
-<a href="https://github.com/jvoorhis/vagrant-serverspec">vagrant-serverspec</a> is
-excellent. Simply install the plugin, add a provisioner and write your
-<a href="http://serverspec.org/">serverspec</a> tests. The serverspec provisioner
-looks like the following:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:serverspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
-  <span class="n">spec</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;*_spec.rb&#39;</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>But I also found myself wanting to test behaviour from the host
-(serverspec tests are run on the guest), and also wanted to write tests
-that checked the behaviour of a multi-box setup. I started by simply
-writing some <a href="http://cukes.info/">Cucumber</a> tests which I ran locally,
-but I decided I wanted this integrated with vagrant. Enter
-<a href="https://github.com/garethr/vagrant-cucumber-host">vagrant-cucumber-host</a>.
-This implements a new vagrant provisioner which runs a set of cucumber
-features locally.</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:cucumber</span> <span class="k">do</span> <span class="o">|</span><span class="n">cucumber</span><span class="o">|</span>
-  <span class="n">cucumber</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="o">[]</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Just drop your features in the features folder and run <code>vagrant
-provision</code>. If you just want to run the cucumber features, without any
-of the other provisioners running you can use:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">vagrant provision --provision-with cucumber
-</code></pre></div>
-<p>Another advantage of writing this as a vagrant plugin is that it uses
-the Ruby bundled with vagrant, meaning you just install the plugin
-rather than faff about with a local Ruby install. </p>
-
-<p>A couple of other vagrant plugins that I&#39;ve used to make the testing
-setup easier are <a href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a>
-and <a href="https://github.com/adrienthebo/vagrant-hosts">vagrant-hosts</a>. Both
-help with managing hosts files, which makes writing tests without
-knowing the IP addresses easier.</p>
 
   </div>
   
