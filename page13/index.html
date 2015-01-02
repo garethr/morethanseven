@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/03/12/Site-for-vagrant-base-boxes/">
+        Site For Vagrant Base Boxes
+      </a>
+    </h1>
+
+    <span class="post-date">12 Mar 2011</span>
+
+    <p>A brief <a href="https://twitter.com/#!/garethr/status/40785392445685760">conversation with Matt Keating</a> on Twitter finally pushed me over the edge and I&#8217;ve built a site I&#8217;d been meaning to do for a while.</p>
+<p>I&#8217;m a huge <a href="http://vagrantup.com">Vagrant</a> fan, but one thing that often comes up is where to find base boxes. My newly launched site <a href="http://vagrantbox.es">Vagranbox.es</a> provides just that. At the moment that just means user submitted boxes being checked and then posted. I&#8217;ll likely add comments and ratings and the like if things become popular but that&#8217;s for later.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjBuwEM" alt="vargrantbox.es homepage"/></p>
+<p>So, if you know of or host a useful box please let me know. I&#8217;ll try to keep up with any submissions.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/03/02/Devops-more-than-marketing-talk-by-james-turnbull/">
         Devops - More Than Marketing - Talk By James Turnbull
       </a>
@@ -298,38 +313,6 @@ The following packages are currently pending an upgrade:
 </blockquote>
 <p>We need better documentation aimed at developers. I&#8217;m going to try and write some brief tutorials soon (otherwise I&#8217;d feel like this rant was just me complaining) but I&#8217;m not an expert. I&#8217;ll hapily help <a href="http://devopsweekly.com">promote</a> or collate good material as well. Maybe it already exists and I just can&#8217;t find it?</p>
 <p>I&#8217;m a git user and a big <a href="http://github.com">GitHub</a> fan, but one of the features of Launchpad I really like is the <a href="https://help.launchpad.net/Packaging/PPA">Personal Package Archive</a>. This lets you upload source code and have it automatically built into a package. This is specific to Ubuntu but that&#8217;s understandable given Launchpad is also operated by Canonical. What I&#8217;d like is the same feature in GitHub but that allowed building debs and RPMs for different architectures. Alternatively a webhook based third party that could do the same would be awesome (anyone fancy building one? I might pitch in). The only real advantage of it being GitHub would be it would make packages immediately cool, which hopefully you all now realise that they are.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/01/10/My-default-recipes-for-vagrant-virtual-machines/">
-        My Default Recipes For Vagrant Virtual Machines
-      </a>
-    </h1>
-
-    <span class="post-date">10 Jan 2011</span>
-
-    <p>I&#8217;ve written about <a href="http://morethanseven.net/2010/11/04/Why-you-should-be-using-virtualisation.html">Vagrant previously</a> and the more I use it the more it impresses me and the more it changes how I work. For those that haven&#8217;t yet used <a href="http://vagrantup.com">vagrant</a> the brief summary is, it&#8217;s a way of managing, creating and destroying headless virtualbox virtual machines. So when I&#8217;m sat at my computer and I want a new 32 bit virtual machine based on Maverick I just type.</p>
-<pre>vagrant init maverick32
-vagrant up</pre>
-<p>It has some other magic tricks as well, like automatically setting up <span class="caps">NFS</span> shares between the host and guest and allowing you to specify ports to forward in the configuration file. You access the machine via ssh, either using the handy <em>vagrant ssh</em> command or by using <em>vagrant ssh-config</em> to dump the relevant configuration to place in ~/.ssh/config.</p>
-<p>I&#8217;ve been using virtualisation for a few years, initially purely for testing and experimentation, and then eventually for all my development. I&#8217;d have a few VMware images, I&#8217;d use snapshots and occasionally rollback, but I very rarely created new virtual machines. It was quite a manual process. With vagrant that&#8217;s changing. Everytime I start investigating a new tool or new technology or work on a pet project I create a new virtual machine. That way I know exactly what I&#8217;m dealing with, and with vagrant the cost of doing that is the 30s waiting for the new machine to boot.</p>
-<p>Or rather it would be if I didn&#8217;t then have to install and configure the same few things on every machine. Pretty much whatever I might be doing I found myself installing the same things, namely zsh, vim, git and utils like ack, wget, curl and lynx. This is exactly what the provisioning support in vagrant is for, so I set out to use chef to do this for me.</p>
-<p>I decided to use a remote tar file for the recipes. I&#8217;m not really bothered about managing a chef server just for my personal virtual machines, but I did want to have a canonical source of the cookbooks that wasn&#8217;t local to just one of my machines. Plus this means anyone else who shares my opinions about what you want on a new virtual machine can use them too.</p>
-<p>My Vagrantfile now looks like this:</p>
-<pre>Vagrant::Config.run do |config|
-  config.vm.box = "maverick32"
-  config.vm.provisioner = :chef_solo
-  config.chef.recipe_url = "http://cloud.github.com/downloads/garethr/chef-repo/cookbooks.tar.gz"
-  config.chef.add_recipe "garethr"
-  config.chef.cookbooks_path = [:vm, "cookbooks"]
-  config.chef.json.merge!({ :garethr =&gt; {
-      :ohmyzsh =&gt; "https://github.com/garethr/oh-my-zsh.git",
-      :dotvim =&gt; "https://github.com/garethr/dotvim.git"
-    }})
-end</pre>
-<p>You can see the cookbook on GitHub at <a href="https://github.com/garethr/chef-repo/">github.com/garethr/chef-repo</a>. By default it uses the <a href="https://github.com/robbyrussell/oh-my-zsh.git">official oh-my-zsh repo</a> and the <a href="https://github.com/jtimberman/dotvim.git">vim configuration from jtimberman</a>. My own versions are very minor personal preference modifications of those. The Vagrantfile example above shows how you can override the defaults and use your own configs instead if you choose.</p>
-<p>One question I was asked about this approach was why I didn&#8217;t just create a basebox with all these things installed by default, this would reduce the time taken on first boot as software wouldn&#8217;t have to be installed each time. However it would also mean maintaining the basebox&#8217;s myself, and as I use different Linux distributions or versions this would be a headache. While doing this and working with vagrant I&#8217;ve been thinking about the ecosystem around the tool and I&#8217;m planning on writing my thoughts on that subject over the next week or so.</p>
   </div>
   
 </div>

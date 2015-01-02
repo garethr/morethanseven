@@ -68,6 +68,38 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/12/31/Ec2-tasks-for-fabric/">
+        EC2 Tasks For Fabric
+      </a>
+    </h1>
+
+    <span class="post-date">31 Dec 2011</span>
+
+    <p>For running ad-hoc commands across a small number of servers you really can&#8217;t beat <a href="http://fabfile.org">Fabric</a>. It requires nothing other than ssh installed on the servers, is generally just a one-line install and requires next to no syntaxtic fluff between you and the commands you want running. It&#8217;s much more of a swiss army knife to Capistranos bread knife.</p>
+<p>I&#8217;ve found myself doing more and more EC2 work of late and have finally gotten around to making my life easier when using Fabric with Amazon instances. The result of a bit of hacking is <a href="https://github.com/garethr/cloth">Cloth</a> (also <a href="http://pypi.python.org/pypi/cloth">available on PyPi</a>). It contains some utility functions and a few handy tasks for loading host details from the EC2 <span class="caps">API</span> and using them in your Fabric tasks. No more static lists of host names that constantly need updating in your fabfile.</p>
+<p>Specifically, with a fabfile that looks like:</p>
+<pre>#! /usr/bin/env python
+from cloth.tasks import *</pre>
+<p>You can run:</p>
+<pre>fab all list</pre>
+<p>And get something like:</p>
+<pre>instance-name-1 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-2 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-3 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-4 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-5 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-6 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-7 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+instance-name-8 (xx.xxx.xxx.xx, xxx.xx.xx.xx)
+...</pre>
+<p>And then you could run:</p>
+<pre>fab -P all uptime</pre>
+<p>And you&#8217;d happily get the load averages and uptime for all your EC2 instances.</p>
+<p>A few more tricks are documented in the <a href="https://github.com/garethr/cloth">GitHub <span class="caps">README</span></a>, including filtering the list by a regex and some convention based mapping to Fabric roles. I&#8217;ll hopefully add a few more features as I need them and generally tidy up a few things but I&#8217;m pretty happy with it so far.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/12/26/First-experience-building-something-with-clojure/">
         First Experience Building Something With Clojure
       </a>
@@ -188,68 +220,6 @@ Puppet has the concept of an external node classifier which can be used to solve
 <p><a href="https://github.com/garethr/web-puppet">Web Facter</a> is a gem which takes the output from <a href="https://github.com/puppetlabs/facter">Facter</a> and exposes this as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. In theory you could run this on a configurable port on each of your machines and have a <span class="caps">URL</span> you can hit to get information on uptime, networking setup, hostnames or anything else exposed by Facter. It comes with a simple built-in web server and optional http basic authentication if you&#8217;re not going to do this via a proxy. The <span class="caps">JSON</span> display should be both human and machine readable, and I have a few ideas for projects which needed this information.</p>
 <p>The other project is very similar, and even has a similar name, <a href="https://github.com/garethr/web-facter">Web Puppet</a>. You can run this on your puppet master and it exposes the node information (currently including the facts and tags) again as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. I&#8217;m still working on this to make it a little more usable. At the moment it just shows you all nodes and all information, if you&#8217;re working with a larger cluster this isn&#8217;t really sensible. Recent versions of Puppet do have an <a href="http://docs.puppetlabs.com/guides/rest_api.html"><span class="caps">HTTP</span> based <span class="caps">API</span></a> but it requires some hoops to be jumped through and I&#8217;m not quite sure from the docs it lets me do what I want (I have a specific usecase, of which more soon all being well).</p>
 <p>Both projects have had me reading the source code of Puppet and Facter, which for the most part has been enjoyable and informative. Puppet in particular has some great comments lying around :) Both of the above projects are available as gems for anyone else to play around with and build on, but my main aim is a little more high level. All being well I&#8217;ll have a couple of projects built atop these APIs shortly.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/10/10/Javascript-in-your-ruby-mongoid-map-reduce/">
-        Javascript In Your Ruby: Mongoid Map Reduce
-      </a>
-    </h1>
-
-    <span class="post-date">10 Oct 2011</span>
-
-    <p>We&#8217;re pretty fond of <a href="http://mongodb.org/">Mongodb</a> at work and I&#8217;ve been getting an opportunity to kick some of the more interesting tyres recently. I thought I&#8217;d document something I found myself doing here, half hoping it might be useful for anyone else with a similar problem and also to see if anyone else has a much neater approach. The examples are obviously pretty trivial, but hopefully you get the idea.</p>
-<p>So, we&#8217;re making using of the rather nice <a href="http://mongoid.org/">Mongoid</a> Ruby library for defining our models as Ruby classes. Here&#8217;s a couple of very simple classes. Anyone familiar with DataMapper or Django&#8217;s <span class="caps">ORM</span> should be right at home here.</p>
-<pre>class Publication
-  include Mongoid::Document
-
-  field :name,            :type =&gt; String
-  field :section,         :type =&gt; String
-  field :body,            :type =&gt; String
-  field :is_published,    :type =&gt; Boolean
-end
-
-class LongerPublication &lt; Publication
-  field :extra_body,      :type =&gt; String
-end
-</pre>
-<p>So we now have a good few publications and longer publications in our system. And folks have been creating sections with wild amandon. What I&#8217;d like to do now is do some reporting, specifically I want to know the numbers of Publications by type and publication status. And lets allow a breakdown by section while we&#8217;re at it.</p>
-<p>One approach to this is using Mongo&#8217;s built in map-reduce capability. Mongoid exposes this pretty cleanly in my view, by allowing you to write the required javascript functions (a mapper and a reducer) inline in the Ruby code. This might feel evil, but seems the best of the available options. I can see for much larger functions that splitting this out into separate javascript files for ease of testing might be nice, but were you can just test the input/output of the whole job this works for me.</p>
-<pre>KLASS = "this._type"
-SECTION = "this.section"
-
-def self.count_by(type)
-  map = &lt;&lt;EOF
-    function() {
-      function truthy(value) {
-        return (value == true) ? 1 : 0;
-      }
-      emit(#{type}, {type: #{type}, count: 1, published: truthy(this.is_published)})
-    }
-EOF
-
-  reduce = &lt;&lt;EOF
-    function(key, values) {
-      var count = 0; published = 0;
-      values.forEach(function(doc) {
-        count += parseInt(doc.count);
-        published += parseInt(doc.published);
-        type = doc.type
-      );
-      return {type: type, count: count, published: published}
-    }
-EOF
-
-  collection.mapreduce(map, reduce).find()
-
-end
-</pre>
-<p>In our case that will return something like the following, or rather more specifically it will return a Mongo::Cursor that allows you to get at the following data.</p>
-<pre>[{"_id"=&gt;"Publication", "value"=&gt;{"type"=&gt;"Publication", "count"=&gt;42.0, "published"=&gt;29.0}},
-{"_id"=&gt;"LongerPublication", "value"=&gt;{"type"=&gt;"LongerPublication", "count"=&gt;12.0, "published"=&gt;10.0}}]
-</pre>
-<p>I&#8217;ve been pretty impressed with both Mongo and Mongoid here. I like the feel of mapreduce jobs for this sort of reporting task. In particular it&#8217;s suprising how writing two languages mixed together like this doesn&#8217;t really affect the readability of the code in my view. Given that with a relational database you&#8217;d probably be writing <span class="caps">SQL</span> anyway maybe that&#8217;s not that suprising &#8211; the syntactic differences between Javascript and Ruby are much smaller than pretty much anything and <span class="caps">SQL</span>. Lots of folks have written about the increase of polyglot programming, but I wonder if we&#8217;ll see an increase in the embedding of one language in another?</p>
   </div>
   
 </div>

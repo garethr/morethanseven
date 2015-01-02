@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/18/python-rest-client/">
+        Python REST Client
+      </a>
+    </h1>
+
+    <span class="post-date">18 Feb 2009</span>
+
+    <p>I&#8217;m working on a small project involving using RESTful APIs and wanted a simple <span class="caps">HTTP</span> client, something that sat a little higher in the stack than <a href="http://code.google.com/p/httplib2/">httplib2</a> or similar. I turned initially to the <a href="http://www.djangoproject.com/documentation/models/test_client/">Django Test Client</a> which now <a href="http://code.google.com/p/python-rest-client/">supports all the required methods</a> but it turned out that I&#8217;d have to unpick it from django a little.</p>
+<p>With a little bit of looking around I found the <a href="http://code.google.com/p/python-rest-client/">python-rest-client</a> which certainly sounded like it would do what I wanted. It lets you make <span class="caps">HTTP</span> requests in as straight forward a manner as possible and fitted the bill perfectly.</p>
+<pre>from restful_lib import Connection
+conn = Connection("http://morethanseven.net")
+response = conn.request_get("/")</pre>
+<p>It supports authentication, nice helper methods and gives you the response in a nice format.</p>
+<pre>conn = Connection("http://example.org", username="XXX", password="XXX")
+conn.request_delete('/items/11232344')</pre>
+<p>As an added benefit it also comes with a Google App Engine compatible version.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/15/looking-new-job-june/">
         Looking for a New Job in June
       </a>
@@ -181,26 +201,6 @@ DATABASE_NAME = os.path.join(SITE_ROOT, 'db') + '/development.db'</pre>
     (r'^log/$', log_viewer),
 )</pre>
 <p>Django has lots of useful bits of magic for doing the right thing, but unless you know what they <em>actually</em> do you either end up recreating functionality yourself, or find features don&#8217;t work in quite the way you thought. It&#8217;s a good argument for keeping frameworks small whenever possible, and for developers to at least know their way around the code of their respective framework.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/07/xmpp-and-offline-processing-coming-google-app-engi/">
-        XMPP and offline processing coming to Google App Engine
-      </a>
-    </h1>
-
-    <span class="post-date">07 Feb 2009</span>
-
-    <p>Three weeks ago I pondered whether <a href="http://morethanseven.net/2009/01/15/are-xmpp-and-offline-processing-coming-google-app-/"><span class="caps">XMPP</span> and offline processing were coming to Google App Engine?</a>. It was a hunch based on the upcoming release of Jaiku on App Engine. I reasoned you couldn&#8217;t really do it without <span class="caps">XMPP</span> and offline processing APIs. Looks like I was right.</p>
-<p>Today <a href="http://bitworking.org/news/">Joe Gregorio</a> announced on the <a href="http://googleappengine.blogspot.com/">App Engine Blog</a> an <a href="http://googleappengine.blogspot.com/2009/02/roadmap-update.html">update to the roadmap for the next 6 months</a>; including</p>
-<ul>
-	<li>Support for running scheduled tasks</li>
-	<li>Task queues for performing background processing</li>
-	<li>Ability to receive and process incoming email</li>
-	<li>Support for sending and receiving <span class="caps">XMPP</span> (Jabber) messages</li>
-</ul>
-<p>Colour me excited. This could be the point were we start seeing more and more interesting IM interfaces. And this ticks off several of my must haves for App Engine.</p>
   </div>
   
 </div>

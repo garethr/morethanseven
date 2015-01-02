@@ -68,6 +68,50 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/02/23/keyboards-and-web-applications/">
+        keyboards and web applications
+      </a>
+    </h1>
+
+    <span class="post-date">23 Feb 2006</span>
+
+    <p>Web applications are still evolving. This we know. One thing any power user tends to pick up on pretty quickly in desktop applications is the keyboard shortcuts. We just cant get enought of them. Why dont we see them more in web applications? Well a couple of reasons as it happens:</p>
+<ul>
+ <li>Potential clashes with browser or OS shortcuts</li>
+  <li>Many web applications are still evolving from more promotional websites. The learning curve for a website <em>needs</em> to be instantaneous, otherwise your potential customer just left. But what about a web application? The users may <em>have</em> to use it, as well as having documentation and maybe even training.</li>
+  <li>Because we dont see them in web applications? The circular argument.</li>
+</ul>
+ <p>Personally I think in some cases keyboard shortcuts would be nice, I have a little plan for something in mind as well so started experimenting. The clash issue I&#8217;m going to leave for another post as it will take a bit of brute force experimenting but I did start playing with a simple way of assigning functions to keys.</p>
+ <p>The following code creates an object to store the lookup/hash/two dimensional array (pick one you like). This is a simple associate between a key, and a function to run when it&#8217;s pressed. A function is then assigned to the onkeyup and onkeydown events which monitors them, checks for one of the keys in the lookup to be pressed (in this case along with the ctrl key) and runs the assigned function.</p>
+<div>
+<p><code>
+&lt;pre&gt;
+&amp;lt;txp:php&amp;gt;
+include('/www/htdocs/morethanseven/scripts/sample/keyPress.js');
+&amp;lt;/txp:php&amp;gt;
+&lt;/pre&gt;
+</code></p>
+</div>
+ <p>A simple library function is used to add the event to the document onload. My library obviously includes other helper functions but we dont need any of those for this example.</p>
+<div>
+<p><code>
+&lt;pre&gt;
+&amp;lt;txp:php&amp;gt;
+include('/www/htdocs/morethanseven/scripts/sample/lib.js'); 
+&amp;lt;/txp:php&amp;gt;
+&lt;/pre&gt;
+</code></p>
+</div>
+ <p>Some improvements I can spot from here which I&#8217;ll implement as I actually take this out of the lab and into something production like.</p>
+<ul>
+ <li><span class="caps">JSON</span> (or <span class="caps">YAML</span>) data storage. Either one makes configuration simpler and scores geek points. It&#8217;s a win win.</li>
+  <li>Abstract the use of the ctrl key from the function and allow other modifiers to be set when used.</li>
+</ul>
+ <p>I&#8217;ll try get round to the look at keyboard shortcut clashes, or link to someone who already has, as I get round to it. In the mean time, what do people think about the use of keyboard shortcuts in web applications? Any good or bad examples welcome.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/02/19/last-week-with-ajax/">
         Last Week with Ajax
       </a>
@@ -155,33 +199,6 @@ Room 149 Northumberland Building, Northumbria University, City Campus, Newcastle
  <p>We need people along for this so tell you employers, whoop to your colleagues, threaten you employees and be there.</p>
  <p>I&#8217;ll post more details as they are confirmed. If your from outside the region and want to come along let me know. It&#8217;s short notice but sometimes these things are &#8211; and you know you dont want to miss out.</p>
  <p>To help us gauge interest a little it would be grate if you interested  to leave a comment below. If you cant come along because say, <a href="http://xlab.co.uk">it&#8217;s your birthday</a>, then what questions would you like asking?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/02/01/small-software/">
-        Small Software
-      </a>
-    </h1>
-
-    <span class="post-date">01 Feb 2006</span>
-
-    <p>Of late I&#8217;ve found myself making quite a few smaller purchases of software. I&#8217;ve always been a fan of Open Source (and before that shareware &#8211; mainly on the ZX Spectrum) and still use lots of open source apps (anyone say Firefox) but for some really specific jobs it&#8217;s nice to have something you know is maybe a little more polished.</p>
- <p>I dont know if it&#8217;s just me getting older and having more disposable income, or a greater appreciation of what it takes to make really good software (probably a bit of both) but it&#8217;s sort of snuck up on me? Anyone else finding the same? I know <a href="http://hicksdesign.co.uk">Jon</a> has been mentioning some <a href="http://www.hicksdesign.co.uk/journal/happy-old-man">cool new apps</a> he&#8217;s using. What about everyone else?</p>
- <p>Recent purchase have included the following, nearly all bought with <a href="http://paypal.com">PayPal</a> as it happens:</p>
-<ul>
- <li><a href="http://www.rogueamoeba.com/airfoil/">Airfoil</a> allows any sounds (mainly music) to be send round the house to speakers connected to my AirPort. Lovely.</li>
-  <li><a href="http://www.nullriver.com/index/products/pspware">PSPWare</a> Like iSync but for my <span class="caps">PSP</span>. Also converts movies.</li>
-  <li><a href="http://www.griffintechnology.com/products/radioshark/">radioShark</a> Ok, software and hardware but useful at times.</li>
-  <li><a href="http://www.haveamint.com">Mint</a> I&#8217;ve mentioned before. Lovely stats.</li>
-</ul>
- <p>I&#8217;m also evaluating (and at the moment being impressed by) a few other apps. Upcoming purchases probably.</p>
-<ul>
- <li><a href="http://standalone.com/palmos/quick_news/">QuickNews</a> <span class="caps">RSS</span> reader (and podcasting app) for Palm OS.</li>
-  <li><a href="http://www.pocket-tunes.com/">PocketTunes</a> Good quality audio player for Palm OS, much better than the bundled Real Audio.</li>
-  <li><a href="http://macromates.com/">TextMate</a> The missing editor for OS X? Maybe. It&#8217;s toying with me at the moment to sit aside <a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a></li>
-</ul>
- <p>On a blog related point, I&#8217;m aware I&#8217;ve been blogging more technology related stuff of late. I&#8217;ll be back with alot more web design and development banter soon, and some things happening up this neck of the woods (including a revamped <a href="http://newcastlenewmedia.org">newcastlenewmedia</a> site hopefully) &#8211; it&#8217;s a matter of having the ideas but not having the time! Hope it&#8217;s still all interesting to everyone.</p>
   </div>
   
 </div>

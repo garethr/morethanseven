@@ -68,6 +68,63 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/01/30/simple-deployment-with-svn-and-phing/">
+        Simple deployment with SVN and Phing
+      </a>
+    </h1>
+
+    <span class="post-date">30 Jan 2008</span>
+
+    <p>Another approach to deploying web apps is to use <a href="http://phing.info/">Phing</a>. Phing is at heart a <span class="caps">PHP</span> clone of Ant,  another common build and deployment tool. The main advantage of using Phing, at least if you&#8217;re already using <span class="caps">PHP</span>, is close integration with other <span class="caps">PHP</span> specific tools (PHPDocumentor, PHPLint and PHPUnit to name a few) and ease of install.</p>
+<p>Speaking to installation Phing has it&#8217;s own <span class="caps">PEAR</span> channel. I still think <span class="caps">PEAR</span> is great in so many different ways &#8211; it always makes me frown when I see people cussing at <span class="caps">PEAR</span> (especiallly the installer). You can install Phing as follows.</p>
+<pre><code>pear channel-discover pear.phing.info
+pear install phing/phing</code></pre>
+<p>The <a href="http://phing.info/docs/guide/current/">Phing documentation</a> is nothing if not comprehensive. Unfortunately, unless you are pretty familiar with Ant or you&#8217;re trying to do something complex (and willing to invest the time) the chances are you&#8217;ll be a little lost. More and simpler examples for common problems would be useful for those beginners.</p>
+<p>I might publish a few little recipes down the line or even a full commented production recipe but for the moment lets start simple. The following build script is designed to be run on your remote web server and relies on a subversion repository (hopefully you&#8217;re using source control, if not that&#8217;s another post I&#8217;m afraid). It simply exports the specified repository to the specified export directory on the server. Note that you need to set your own <span class="caps">SVN</span> details and replace the capitalised properly values. The following should be saved as <em>build.xml</em> on your web server, outside the web root.</p>
+<pre><code>&lt;?xml version="1.0"?&gt;
+&lt;project name="build" default="main"&gt;
+  
+  &lt;property name="exportdir"  value="WEB_ROOT" /&gt;
+  &lt;property name="svnpath" value="YOUR_SVNPATH" /&gt;
+  &lt;property name="username" value="YOUR_SVN_USERNAME" /&gt;
+  &lt;property name="password" value="YOUR_SVN_PASSWORD" /&gt;
+  &lt;property name="repo" value="YOUR_SVN_REPO" /&gt;
+        
+  &lt;target name="main" depends="svnexport"/&gt;
+  
+  &lt;target name="svnexport"&gt;
+    &lt;svnexport
+       svnpath="${svnpath}"
+       username="${username}"
+       password="${password}"
+       nocache="true"
+       repositoryurl="${repo}"
+       todir="${exportdir}"/&gt;
+  &lt;/target&gt;
+&lt;/project&gt;</code></pre>
+<p>Let&#8217;s break some of that down. Property definitions allow you to specify variables for use in your build script. In this example we only have one task specified so maybe we don&#8217;t need the extra abstraction but the moment we start reusing scripts or adding more tasks it&#8217;s a good idea.</p>
+<pre><code>&lt;property name="exportdir"  value="./web" /&gt;</code></pre>
+<p>The other major point of interest is the task itself. Here we make use of the properties we have already specified to run a subversion export. The <em>svnexport</em> task is build in to Phing.</p>
+<pre><code>&lt;target name="svnexport"&gt;
+  &lt;svnexport
+     svnpath="${svnpath}"
+     username="${username}"
+     password="${password}"
+     nocache="true"
+     repositoryurl="${repo}"
+     todir="${exportdir}"/&gt;
+&lt;/target&gt;</code></pre>
+<p>Also of note is the setting of a default task, <em>main</em>, as a property of the project element and specifying that the main task depends on another task, <em>svnexport</em>. Again, we could avoid that at this stage but the moment we add another few tasks then we&#8217;ll want more control over execution order.</p>
+<p>Phing should be run from the directory containing the build script. You can run the command without any arguments, in which case the default task will be run (in our case <em>main</em>) or you can pass an argument to specify a specific task. For our simple build script  the two following commands do the same thing:</p>
+<pre><code>phing</code></pre>
+
+<pre><code>phing svnexport</code></pre>
+<p>Given the above build script simple runs a subversion export command you might be wondering what use it is. The answer is not much at this stage. You <em>do</em> get a simple build script which can be stored in your source control system and used by the whole team. The real advantage is where you might go from here. If everyone in your team deploys in the same way (ie. using the build script) then anyone can add extra tasks and everyone gets the benefit. Simple example might be generating code documentation, running Unit tests (and not running the export if the tests fail) and creating a zip file of the deployed source for backup purposes.</p>
+<p>Build scripts can get complicated quickly, but if you start out small and add tasks as you need and understand them, you should be able to raise the quality of your application and avoid easy to make mistakes.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/01/27/questions-pointers-and-reality/">
         Questions, Pointers and Reality
       </a>
@@ -164,53 +221,6 @@
 <p>The <a href="http://www.designcouncil.org.uk">Design Council</a> published a pretty good resource <a href="http://www.designcouncil.org.uk/en/About-Design/">About Design</a> but I haven&#8217;t seen much other real literature on a modern design process. <a href="http://www.communicatingdesign.com/">Communicating Design</a> is a fantastic book on design documentation, but doesn&#8217;t frame this in terms of a discussion of process. If anyone knows of any books or blogs out their on the subject I&#8217;d love to know about them. I&#8217;d love to be proved wrong and end up with a good reading list.</p>
 <p><a href="http://www.pragprog.com/titles/mjwti">My Job Went to India</a> (which is excellent by the way) contains 52 hints and tips for your career as a programmer. In reality most of these ideas apply to any creative discipline, only the examples and analogies need changing. You could probably argue the same for books like <a href="http://pragmaticprogrammer.com/the-pragmatic-programmer">The Pragmatic Programmer</a>, <a href="http://www.pragprog.com/titles/pad">Practices of an Agile Developer</a> and <a href="http://en.wikipedia.org/wiki/Peopleware">Peopleware</a>. I&#8217;m also thinking whether or things like <a href="http://en.wikipedia.org/wiki/The_Mythical_Man-Month">the mythical man month</a> apply? Or if other <em>truths</em> of the design practice exist?</p>
 <p>The importance of design in any discipline is becoming increasingly well recognised. But where will the next generation of managers learn about how to manage designers and the design process? One of the problems with front end web development and design work has been the difficulty of learning the craft. Is this the same for managing the web design process?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/07/how-to-deploy-php-sites-with-the-pake-build-tool/">
-        How to deploy PHP sites with the Pake build tool
-      </a>
-    </h1>
-
-    <span class="post-date">07 Jan 2008</span>
-
-    <p>So in case you hadn&#8217;t guessed project automation is the new black. I&#8217;ve been getting back into some development work recently with <a href="http://isitbirthday.com">Is it Birthday?</a> and <a href="http://getjobsin.com">getjobsin</a> and trying to automate as much of the repetitive and boring work as possible.</p>
-<p>I&#8217;m not absolutely sure that that many people outside large or particularly organised teams realise that large web sites are not generally <em>deployed</em> by someone with an <span class="caps">FTP</span> client and crossed fingers. This sort of effort, along with other repetitive tasks like running tests or generating documentation, can be automated. This is a win-win for everyone. It&#8217;s more reliable (scripts don&#8217;t forget to restart a service before they go home), quicker and removes the need for having one person in charge of deployments.</p>
-<p>Even where people know about this build process idea they might not use it for their projects, probably for similar reasons why not everyone uses source control. I think the reason is probably that most web designers and developers (even particularly geeky ones) thing this software engineering stuff is maybe a step too far. Their is also something of a barrier to entry, knowing where to look and how to get started without reading lots of documentation (often filled with <span class="caps">XML</span> examples) and trial and error. Also project automation is apparently not sexy?</p>
-<p>Anyway, if you&#8217;ve been working with Rails you will have come across <a href="http://rake.rubyforge.org/">Rake</a>, which is a build tool used to automate various tasks. Well the nice <a href="http://www.symfony-project.org/">symfony</a> people have written a <span class="caps">PHP</span> version called <a href="http://www.pake-project.com/">Pake</a> for use as part of the framework. It&#8217;s used for all the command line action, from running tests to clearing the cache and <a href="http://www.symfony-project.org/book/1_0/16-Application-Management-Tools#Using%20rsync%20for%20Incremental%20File%20Transfer">automating deployments</a>. Pake is however a separate tool that you can use in your own projects, whatever framework or hand rolled codebase you are using.</p>
-<p>Pake can be downloaded using <a href="http://pear.php.net"><span class="caps">PEAR</span></a> on the command line:</p>
-<pre><code>pear upgrade PEAR
-pear channel-discover pear.symfony-project.com
-pear install symfony/pake</code></pre>
-<p>The documentation for Pake is pretty much non-existent as far as I can tell, but it is a really handy tool so worth a little effort. The best source of knowledge is to look through the default Pake tasks that are provided as part of symfony. One of my favourites, which we&#8217;ll look at now, allows for incremental deployments via Rsync over <span class="caps">SSH</span>. I&#8217;ve been using this with non-symfony projects too.</p>
-<p>Rsync is a command line tool for syncronising two file structures. The Rsync command that does most of the heavy lifting for the deployment looks like the following. Note I&#8217;ve used {} to denote placeholders in the following examples.</p>
-<pre><code>rsync --progress --azC --force \
---delete -e ssh ./ {user}@{host}:{dir}</code></pre>
-<p>The sync task I&#8217;m using is straight from symfony, but the licence allows for distribution so here is an <a href="http://morethanseven.net/_assets/downloads/pake/pake.zip">example zip of all the files needed to follow along</a>. You&#8217;ll need these to follow along as I haven&#8217;t printed the full sourcecode for the pakefile here.</p>
-<p>First a little configuration. Using <a href="http://www.yaml.org/"><span class="caps">YAML</span></a> we define an environment, <em>staging</em> in this case_ and specify a host, port, user and the full path on the remote server. You can of course specify multiple environments in this file, we&#8217;ll see how to use them shortly.</p>
-<pre><code>[staging]
-  host={host}
-  port=22
-  user={user}
-  dir={dir}</code></pre>
-<p>You can also include an <em>rsync_exclude.txt</em> or an <em>rsync_include.txt</em> file. This gives you control over the files being synced when you run the Pake task. The following example is a good starting point, it stops you pushing those pesky .DS_Store files that <span class="caps">OSX</span> creates to you web server, as well as avoiding subversion metadata and the configuration files for the Pake task.</p>
-<pre><code>.svn
-.DS_Store
-/config/properties.ini
-/config/rsync_exclude.txt
-/config/rsync_include.txt
-/config/rsync.txt</code></pre>
-<p>We can now run the following command, from the directory containing the pakefile.php script, using Pake. The first example will do a dry run, showing you what will happen. You&#8217;ll be prompted for your <span class="caps">SSH</span> password as part of the command unless you&#8217;re using keys for authentication.</p>
-<pre><code>pake sync staging</code></pre>
-<p>When you&#8217;re happy you can run the sync command with the go option which will instruct Rsync to do it&#8217;s thing.</p>
-<pre><code>pake sync staging go</code></pre>
-<p>Pake has a handy flag to find out what tasks are available.</p>
-<pre><code>pake -T</code></pre>
-<p>This should give you a list of tasks and a brief description, useful to find out what you can do if you&#8217;ve been away from a project for a while.</p>
-<p>This is a pretty simple example but one I&#8217;m already finding useful. Rsync is but one way of deploying apps but with Pake has the advantage of being simple and in lots of situations good enough. It&#8217;s certainly better than a manual deployment process. It would be simple enough to build into the task a simple logging system so you have a log of all deployments; when they happened and who did them for instance.</p>
-<p>If that has whet your appetite then their are other deployment tools you might want to look into; <a href="http://www.capify.org/">Capistrano</a> (Ruby), <a href="http://ant.apache.org/">Ant</a> (Java), <a href="http://maven.apache.org/">Maven</a> (Java) and <a href="http://phing.info">Phing</a> (<span class="caps">PHP</span>) spring to mind. If anyone knows of a Python equivalent that would be useful too? I&#8217;m also using Phing for a few tasks on projects at the moment, mainly for some nifty Subversion tasks (and you can use Phing with Pake as symfony does), but that will have to wait until another post.</p>
-<p>So, what are peoples experiences of build tools? Any good pointers? Or maybe reasons why you don&#8217;t use them in your projects?</p>
   </div>
   
 </div>

@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/04/19/Dibi-twitter-aggregator/">
+        DIBI Twitter Aggregator
+      </a>
+    </h1>
+
+    <span class="post-date">19 Apr 2010</span>
+
+    <p>So, <a href="http://dibiconference.com/"><span class="caps">DIBI</span></a> is just over a week away and lots of people seem to be getting excited. Personally I&#8217;m really looking forward to it. I get a nice trip back up to my old home of Newcastle and get to talk geek to an audience of likeminded (and not so likeminded) web professionals. I&#8217;m also going to catch up with quite a few people I haven&#8217;t seen in quite a while.</p>
+<p>Anyway, Twitter is at it&#8217;s best at conferences like this. It&#8217;s perfect for the <em>where to go now</em> situation. But I also like going back in time after the fact and looking at what people said, especially to get feedback about my talk. With that in mind I&#8217;ve build a <a href="http://dibiconf.appspot.com/">little aggregator</a> for all things #dibi. So far that appears to be a mixture of excitement and travel chaos.</p>
+<p>I specifically wanted something that ran on the server, which discounted an awful lot of pure javascript versions. I think Twitter clients generally do a good job of the <em>right now</em> anyway. I also like to collect data for mining later, assuming I have the time. After a number of discussions on Twitter, then just some wandering around GitHub I found <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> which is fantastic. I&#8217;ve hacked it around quite a bit into something more general purpose. I&#8217;ve added some caching, some other App Engine performance tweaks and some monitoring. I&#8217;ll commit those to GitHub when I get the chance. I&#8217;d forgotten quite how much fun App Engine development was.</p>
+<p>I still want to add a few more features before the conference. The styles work quite well on my Android but less well (text too small) on my iPod Touch. So I&#8217;ll fix that first. Any other requests?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/04/05/Hadoop-hive-web-interface/">
         Hadoop Hive Web Interface
       </a>
@@ -190,38 +205,6 @@ dumper -c people.ini dump
 <% end %>
 <p>The application supports a number of flags for specifying where you want the files to be generated, what your config file is called and to clean up any generated files if you want to try again. The output will let you know which files have been updated, which deleted and which added too. If you&#8217;d rather have a single file but with all your records in then that&#8217;s easy too &#8211; just add something to the config file.</p>
 <p>It&#8217;s somewhat early days for Dumper, and I&#8217;ve not seen anything similar so their are definately some rough edges that could do with some work. All of that will really come down to how much use it gets. I&#8217;d appreciate any feedback from anyone with a similar itch to scratch too.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/08/Piston-and-sanitising-json-callbacks/">
-        Piston And Sanitising Json Callbacks
-      </a>
-    </h1>
-
-    <span class="post-date">08 Mar 2010</span>
-
-    <p>I&#8217;m a big fan of <a href="http://bitbucket.org/jespern/django-piston">Piston</a>, the django app for creating RESTful web services. As part of a project at work I ended up looking through the source code, mainly at some of the neat tricks of serialisation of objects. While poking around I came across something in my mind that wanted fixing. This being open source rather than just file a bug report I setup a <a href="http://bitbucket.org">bitbucket</a> account and got hacking.</p>
-<% syntax_colorize :python, type=:coderay do %>
-def render(self, request):
-	cb = request.GET.get('callback')
-        seria = simplejson.dumps(self.construct(),
-		cls=DateTimeAwareJSONEncoder,
-		ensure_ascii=False, indent=4)
-
-        # Callback
-        if cb:
-            return '%s(%s)' % (cb, seria)
-
-        return seria
-<% end %>
-<p>Can you spot the problem? Note the use of the callback passed in the query string arguments and then used <em>without any checking</em> in the output.</p>
-<p>What we really want to do is something like this:</p>
-<% syntax_colorize :python, type=:coderay do %>
-if is_valid_jsonp_callback_value(cb):
-<% end %>
-<p>Which is exactly what has just <a href="http://bitbucket.org/jespern/django-piston/changeset/f558b2c66dcc/">gone into the code for Piston</a>. <a href="http://tav.espians.com/sanitising-jsonp-callback-identifiers-for-security.html">This article</a> contains lots of background information about why <span class="caps">JSONP</span> callbacks can be a security hole, and helpfully provides a <a href="http://github.com/tav/scripts/blob/master/validate_jsonp.py">nice Python module</a> to help with the sanitisation. Nice to be on the authors list for something I&#8217;m using actively.</p>
-<p>Thanks to <a href="http://twitter.com/jespern">Jesper Noehr</a> for Piston, for some pointers on bitbucket and for quickly taking the patch. If you&#8217;re accepting a callback on your site or application, especially if it&#8217;s a public service, you really want to do something like this or you just might have an exploitable security hole.</p>
   </div>
   
 </div>

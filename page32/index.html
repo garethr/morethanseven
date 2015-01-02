@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/07/xmpp-and-offline-processing-coming-google-app-engi/">
+        XMPP and offline processing coming to Google App Engine
+      </a>
+    </h1>
+
+    <span class="post-date">07 Feb 2009</span>
+
+    <p>Three weeks ago I pondered whether <a href="http://morethanseven.net/2009/01/15/are-xmpp-and-offline-processing-coming-google-app-/"><span class="caps">XMPP</span> and offline processing were coming to Google App Engine?</a>. It was a hunch based on the upcoming release of Jaiku on App Engine. I reasoned you couldn&#8217;t really do it without <span class="caps">XMPP</span> and offline processing APIs. Looks like I was right.</p>
+<p>Today <a href="http://bitworking.org/news/">Joe Gregorio</a> announced on the <a href="http://googleappengine.blogspot.com/">App Engine Blog</a> an <a href="http://googleappengine.blogspot.com/2009/02/roadmap-update.html">update to the roadmap for the next 6 months</a>; including</p>
+<ul>
+	<li>Support for running scheduled tasks</li>
+	<li>Task queues for performing background processing</li>
+	<li>Ability to receive and process incoming email</li>
+	<li>Support for sending and receiving <span class="caps">XMPP</span> (Jabber) messages</li>
+</ul>
+<p>Colour me excited. This could be the point were we start seeing more and more interesting IM interfaces. And this ticks off several of my must haves for App Engine.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/07/pdb-and-appengine/">
         PDB and AppEngine
       </a>
@@ -126,39 +146,6 @@ pdb.set_trace()</pre>
     <span class="post-date">02 Feb 2009</span>
 
     <p>The Python core developers are currently <a href="http://www.python.org/dev/peps/pep-0374/">discussing whether to move away from <span class="caps">SVN</span> to a distributed version control system</a>. It&#8217;s a worthwhile read for anyone involved in this sort of decision in any capacity. It features hands on examples of each of the contenders (Bazaar, Git and Mercurial), some interesting observations about all of them as well as  some benchmarks against a mature codebase. Lots of conversations keep cropping up on Twitter about why bother switching to Git or other distributed systems &#8211; this is a good place to start whether you use Python or not.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/01/sinatra-simple-example/">
-        Sinatra Simple Example
-      </a>
-    </h1>
-
-    <span class="post-date">01 Feb 2009</span>
-
-    <p>I&#8217;ve been playing around with the <a href="http://www.sinatrarb.com/">Sinarta</a> Ruby web development framework recently and building a <a href="http://github.com/garethr/sinatra-hello-world">larger than usual Hello World Example</a>. It&#8217;s describes itself as <em>a <span class="caps">DSL</span> for quickly creating web-applications in Ruby with minimal effort</em> (what is it about Ruby people and their obsession with calling everything a <span class="caps">DSL</span>?). In reality it&#8217;s a great little web framework. It deals with a minimal set of the things you really need to do as part of any application &#8211; <span class="caps">URL</span> handling and routing, <span class="caps">HTTP</span> request and response handling, etc. It reminds me of <a href="http://webpy.org/">web.py</a> in it&#8217;s minimalist approach which is definitely a good thing.</p>
-<p>The following example is the hello world given on the site</p>
-<pre>require 'rubygems'
-require 'sinatra'
-get '/' do
-  'Hello world!'
-end</pre>
-<p>Which isn&#8217;t a million miles away from a web.py example:</p>
-<pre>import web
-urls = (
-    '/', 'hello'
-)
-app = web.application(urls, globals())
-class hello:        
-    def GET(self, name):
-        return 'Hello World'
-if __name__ == "__main__":
-    app.run()</pre>
-<p>The only real difference is the separate mapping of URLs to views in web.py, which is closer to how Rails or Django do things.</p>
-<p>Their is quite a bit of <a href="http://www.sinatrarb.com/documentation.html">documentation</a> already for Sinatra, including the start of a <a href="http://www.sinatrarb.com/book.html">book</a>. The code (as with all good code these days) is on <a href="http://github.com/sinatra/sinatra/tree/master">github</a> for your forking pleasure.</p>
-<p>As for what I&#8217;ve been up to I have a more advanced <a href="http://github.com/garethr/sinatra-hello-world">Hello World</a> example up on GitHub. I&#8217;m wanting to get a running application that demonstrates all the basic features (except <a href="http://morethanseven.net/2008/04/11/dsls-for-html-and-css-the-future-or-just-plain-wro/"><span class="caps">HAML</span> and <span class="caps">SASS</span></a> support). So far I&#8217;ve got a simple bit of Rack middleware, several views demonstrating different url handling techniques, basic erb templates, before methods, configuration settings, error handling, decent unit test coverage, a rake file with a tasks for documentation, code coverage, etc. I&#8217;ve also got configuration files for running the application with <a href="http://code.macournoyer.com/thin/">Thin</a> and using <a href="http://god.rubyforge.org/">God</a>. I&#8217;m going to add some simple database connectivity in at some point (either <a href="http://datamapper.org">DataMapper</a> or <a href="http://sequel.rubyforge.org/">Sequel</a>, I haven&#8217;t decided yet) and play around with writing spec tests and a capistrano recipe file. All in it&#8217;s a nice way of learning something new at the same time as producing something that might be useful. Once I have the rest of the bits and pieces I might even right a full tutorial.</p>
-<p>I think the sweet spot for these sorts of mini frameworks are small services or little applications that just sit their are run. Both <a href="http://integrityapp.com/">Integrity</a> and <a href="http://irclogger.com">IRCLogger</a> both use Sinatra for instance and I think it&#8217;s used for the <a href="http://github.com/guides/post-receive-hooks">GitHub WebHooks</a> as well. It&#8217;s exactly the sort of thing Google AppEngine is useful for in fact and Sinatra would likely be a closer fit that Rails if Google ever feel like adding Ruby support. Although it does depress me a little that the <a href="http://code.google.com/p/googleappengine/issues/list">top four items in the public issue tracker</a> are <em>I want my own language</em>.</p>
   </div>
   
 </div>

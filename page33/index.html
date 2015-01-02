@@ -68,6 +68,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/01/sinatra-simple-example/">
+        Sinatra Simple Example
+      </a>
+    </h1>
+
+    <span class="post-date">01 Feb 2009</span>
+
+    <p>I&#8217;ve been playing around with the <a href="http://www.sinatrarb.com/">Sinarta</a> Ruby web development framework recently and building a <a href="http://github.com/garethr/sinatra-hello-world">larger than usual Hello World Example</a>. It&#8217;s describes itself as <em>a <span class="caps">DSL</span> for quickly creating web-applications in Ruby with minimal effort</em> (what is it about Ruby people and their obsession with calling everything a <span class="caps">DSL</span>?). In reality it&#8217;s a great little web framework. It deals with a minimal set of the things you really need to do as part of any application &#8211; <span class="caps">URL</span> handling and routing, <span class="caps">HTTP</span> request and response handling, etc. It reminds me of <a href="http://webpy.org/">web.py</a> in it&#8217;s minimalist approach which is definitely a good thing.</p>
+<p>The following example is the hello world given on the site</p>
+<pre>require 'rubygems'
+require 'sinatra'
+get '/' do
+  'Hello world!'
+end</pre>
+<p>Which isn&#8217;t a million miles away from a web.py example:</p>
+<pre>import web
+urls = (
+    '/', 'hello'
+)
+app = web.application(urls, globals())
+class hello:        
+    def GET(self, name):
+        return 'Hello World'
+if __name__ == "__main__":
+    app.run()</pre>
+<p>The only real difference is the separate mapping of URLs to views in web.py, which is closer to how Rails or Django do things.</p>
+<p>Their is quite a bit of <a href="http://www.sinatrarb.com/documentation.html">documentation</a> already for Sinatra, including the start of a <a href="http://www.sinatrarb.com/book.html">book</a>. The code (as with all good code these days) is on <a href="http://github.com/sinatra/sinatra/tree/master">github</a> for your forking pleasure.</p>
+<p>As for what I&#8217;ve been up to I have a more advanced <a href="http://github.com/garethr/sinatra-hello-world">Hello World</a> example up on GitHub. I&#8217;m wanting to get a running application that demonstrates all the basic features (except <a href="http://morethanseven.net/2008/04/11/dsls-for-html-and-css-the-future-or-just-plain-wro/"><span class="caps">HAML</span> and <span class="caps">SASS</span></a> support). So far I&#8217;ve got a simple bit of Rack middleware, several views demonstrating different url handling techniques, basic erb templates, before methods, configuration settings, error handling, decent unit test coverage, a rake file with a tasks for documentation, code coverage, etc. I&#8217;ve also got configuration files for running the application with <a href="http://code.macournoyer.com/thin/">Thin</a> and using <a href="http://god.rubyforge.org/">God</a>. I&#8217;m going to add some simple database connectivity in at some point (either <a href="http://datamapper.org">DataMapper</a> or <a href="http://sequel.rubyforge.org/">Sequel</a>, I haven&#8217;t decided yet) and play around with writing spec tests and a capistrano recipe file. All in it&#8217;s a nice way of learning something new at the same time as producing something that might be useful. Once I have the rest of the bits and pieces I might even right a full tutorial.</p>
+<p>I think the sweet spot for these sorts of mini frameworks are small services or little applications that just sit their are run. Both <a href="http://integrityapp.com/">Integrity</a> and <a href="http://irclogger.com">IRCLogger</a> both use Sinatra for instance and I think it&#8217;s used for the <a href="http://github.com/guides/post-receive-hooks">GitHub WebHooks</a> as well. It&#8217;s exactly the sort of thing Google AppEngine is useful for in fact and Sinatra would likely be a closer fit that Rails if Google ever feel like adding Ruby support. Although it does depress me a little that the <a href="http://code.google.com/p/googleappengine/issues/list">top four items in the public issue tracker</a> are <em>I want my own language</em>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/29/jsonpickle/">
         Jsonpickle
       </a>
@@ -166,57 +199,6 @@
 <p>For a presentation done in less than a day while at work I felt it went OK. testing is a hard sell at the best of times and trying to talk to both those without experience of writing tests and at the same time trying to get in a few of the more interesting things we&#8217;ve done at work was maybe a bit of an ask.</p>
 <p>It not being a blog post round here these days unless I include a link to GitHub I did mention a small project last night in the talk &#8211; <a href="http://github.com/garethr/django-test-extensions/">Django Test Extensions</a>. It&#8217;s more just a collection of useful common testing code: additional assertions, custom test runners, etc. Thanks to <a href="http://agileweb.org/">Ross</a> for the last minute patch with a couple of bug fixes as well.</p>
 <p>The other two presentations went great. Andrew talking about the South migrations system and Aral talking about real world Google App Engine were both up my street of things I&#8217;m interested in. We have video of all the talks as well so hopefully that will make it out into the wild at some point once it&#8217;s been edited.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/18/simple-python-jabber-bot/">
-        A Simple Python Jabber Bot
-      </a>
-    </h1>
-
-    <span class="post-date">18 Jan 2009</span>
-
-    <p>I&#8217;ve been knocking together various little instant messaging bots recently, partly as a way to play around with <span class="caps">XMPP</span>. As well as using the low level <a href="http://xmpppy.sourceforge.net/">xmppy</a> and <a href="http://code.google.com/p/xmpp4r-simple/">XMPP4R-Simple</a> libraries I&#8217;ve been having lots of fun with the <a href="http://thpinfo.com/2007/python-jabberbot/">JabberBot</a> framework.</p>
-<p>Jabberbot lets you write simple bots incredibly quickly, using simple conventions to determine what commands the bot exposes. It&#8217;s easier to explain with a simple example. The following bot lets you send the command <em>time</em> to it and returns the current time on the server on which the bot is running. The magic is in the name of the method <em>bot_time_. Any methods that start bot</em> are automatically exposed as commands for the bot to accept.</p>
-<p>You&#8217;ll need an xmpp server for the bot to connect to but you could always just register an additional google account and use it over gtalk if you wanted to. Personally I&#8217;m running <a href="http://www.ejabberd.im">ejabberd</a> on a local Ubuntu VM as well for testing.</p>
-<pre>from jabberbot import JabberBot
-import datetime
-class SystemInfoJabberBot(JabberBot):
-    def bot_time( self, mess, args):
-        """Displays current server time"""
-        return str(datetime.datetime.now())
-username = 'my-jabberid@jabberserver.example.org'
-password = 'my-password'
-bot = SystemInfoJabberBot(username,password)
-bot.serve_forever()</pre>
-<p>The JabberBot site has a few more examples as well with fancier features. At the recent Last.fm hackday I spent a bit of time knocking together a bot which talks to the Last.fm <span class="caps">API</span> (using the <a href="http://code.google.com/p/pylast/">PyLast</a> library for the <span class="caps">API</span> backwards and forwards.) I did this mainly as a demonstration of how simple it can be to create a useful command line interface to your <span class="caps">API</span> using an instant messaging client.</p>
-<p>The code for <a href="http://github.com/garethr/lastbot/tree/master">LastBot</a> is on GitHub. It has a few limitations and doesn&#8217;t intent to cover anywhere near all the <span class="caps">API</span>. When up and running you should be able to talk to it with your IM client. Simply send the user specified in the settings file a message like so:</p>
-<pre>search {query}</pre>
-<p>So if you wanted to search for “astley” you would type:</p>
-<pre>search astley</pre>
-<p>Which would probably give you:</p>
-<pre>you probably mean Never Gonna Give You Up by Rick Astley
-http://www.last.fm/music/Rick_Astley/_/Never_Gonna_Give_You_Up
-Richard Paul Astley (born February 6, 1966) is an English dance-pop singer,
-songwriter and musician. He was born in Newton-le-Willows, St Helens,
-Lancashire, England. Astley currently resides in Richmond, Surrey with his 
-Danish girlfriend, Lene Bausager, and their daughter, Emilie. In 1985, Astley 
-was playing the club circuit as a singer with a soul band named FBI, when he 
-was seen by the record producer Pete Waterman and persuaded to come to London 
-to work at the PWL recording studio.</pre>
-<p>If the first result that comes back isn’t the one you wanted you can ask for the next result by simply sending next in another message. You can use prev as well to come back through the set.</p>
-<pre>next</pre>
-<p>You can always send it a call for help at any time which should return the instructions to you via an IM message.</p>
-<pre>help</pre>
-<p>Which should return something like:</p>
-<pre>Personal LastFM search bot. Useful for looking for tracks you can't 
-remember the full name of. Or for findind out who sung a track.
-search: do a search for tracks
-prev: get details about the previous track in the list
-next: get details about the next track in the list</pre>
-<p>More instructions, and the code behind the bot, can be found in the <a href="http://github.com/garethr/lastbot/tree/master"><span class="caps">README</span></a>.</p>
-<p>As developers we spend a lot of time using command line interfaces &#8211; mainly for speed and because you can cram a lot of functionality into a small amount of screen real estate. We&#8217;re increasingly spending time debugging <span class="caps">API</span> calls as well and exposing your <span class="caps">API</span> calls for use by instant messaging clients has the potential to make development easier. Think of the Python interactive shell or of <span class="caps">IRB</span>, but for APIs.</p>
   </div>
   
 </div>

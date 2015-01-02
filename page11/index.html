@@ -68,6 +68,25 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/06/04/Getting-http-headers-right/">
+        Debugging HTTP Headers with RedBot
+      </a>
+    </h1>
+
+    <span class="post-date">04 Jun 2011</span>
+
+    <p>I&#8217;ve been using the <a href="http://www.vagrantbox.es">Vagrantbox.es</a> site as a bit of a playground recently and I&#8217;ve been meaning to blog about some of the overengineering I&#8217;ve been doing. Here&#8217;s a smaller starter.</p>
+<p>Getting the headers returned by your web server correct is both easy to do and easy to forget about. Unless you go actively looking for headers with curl or similar you&#8217;ll probably miss them, and even then will you spot an incorrect header by eye? <a href="http://redbot.org">RedBot</a> is an excellent online tool that not only shows you the headers but makes recommendations about what might be missing, invalid or things you haven&#8217;t considered.</p>
+<p>For instance the <a href="http://redbot.org/?uri=http%3A%2F%2Fwww.vagrantbox.es">RedBot results for vagrantbox.es</a> look like this:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjJ4gEM" alt="Debugging information from Redbot"/></p>
+<p>Or at least they do now after a few tweaks to my nginx configuration. In particular I&#8217;ve added</p>
+<pre>add_header Vary Accept-Encoding;</pre>
+<p>I&#8217;d assumed that enabling gzip compression with gzip_vary would have set this automatically and never checked. The way RedBot provides a checklist of recommendations is very handy.</p>
+<p>As well as checking the page itself you can also check all the assets associated with a page by adding a query string argument. For instance here is the <a href="http://redbot.org/?descend=True&amp;uri=http://www.vagrantbox.es">assets view for Vagrantbox.es</a>. RedBot also provides a <a href="http://redbot.org/?id=o5GXZe&amp;descend=True&amp;format=har"><span class="caps">JSON</span> encoded version of the result</a> which might be useful in a CI system. If you&#8217;d rather run your own instance of the software you can, the code can be found on github at <a href="http://mnot.github.com/redbot/">mnot.github.com/redbot/</a>. It currently doesn&#8217;t work with <span class="caps">HTTPS</span> resources but that&#8217;s about the only thing I&#8217;d like to see added.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/05/15/Python-on-cloudfoundry/">
         Python On Cloudfoundry
       </a>
@@ -224,19 +243,6 @@ Generating with project generator:
      [ADDED]  README
      [ADDED]  features/steps
      [ADDED]  features/support</code></pre>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/04/17/Devops-weekly-archive/">
-        Devops Weekly Archive
-      </a>
-    </h1>
-
-    <span class="post-date">17 Apr 2011</span>
-
-    <p>Since I launched it back in November my <a href="http://devopsweekly.com">Devops Weekly</a> email has been pretty well received I think. Folks on twitter seem to like it, as do a few people I&#8217;ve met at recent events who have said nice things. One thing a few people have been after though is an online archive, either because email just doesn&#8217;t work for them or more often because they missed out on the earlier issues.</p>
-<p>With a little time this weekend and the help of <a href="https://github.com/mojombo/jekyll">Jekyll</a> I&#8217;ve just added the seventeen iss§ues to date to the new <a href="http://devopsweekly.com/archive">Devops Weekly archive</a>. I&#8217;d have liked to do something a bit more useful, maybe introduce per link tags or a nifty search feature, but I&#8217;m pretty busy at present and reason this should serve the main purpose of getting these links online.</p>
   </div>
   
 </div>

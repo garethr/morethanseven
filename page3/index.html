@@ -68,6 +68,104 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/01/12/shell-provisioner-for-test-kitchen/">
+        Shell provisioner for Test Kitchen
+      </a>
+    </h1>
+
+    <span class="post-date">12 Jan 2014</span>
+
+    <p>As of a few weeks ago <a href="http://kitchen.ci/">Test Kitchen</a> has a <a href="https://github.com/test-kitchen/test-kitchen/blob/master/lib/kitchen/provisioner/shell.rb">shell provisioner</a> as well as the original Chef provisioners. This opens up all sorts of interesting testing potential.</p>
+
+<p>If you&#39;ve not already seen Test Kitchen, probably because you&#39;re not using Chef, it&#39;s a tool for integration testing infrastructure code. Configured by a simple YAML file it will setup a matrix of virtual machines, using Virtualbox, AWS, OpenStack and more, run some setup code (normally applying Chef recipes) and then run a test suite (with support for Bats, ShUnit2, Rspec and Serverspec). It&#39;s all very pluggable. With the addition of the shell provisioner it&#39;s useful to just about anyone. To try and prove that here&#39;s a hello world style example.</p>
+
+<h2>Dependencies</h2>
+
+<p>First we need to install Test Kitchen. We&#39;ll use vagrant and virtualbox for our example too so we need a few extra dependencies. I&#39;m going to assume you have bundler installed, if not you may be able to do so with <code>gem install bundler</code> but as the number of ways of setting a ruby environment up is greater than the number of people on the planet I&#39;ll have to defer to instructions elsewhere for getting that far.</p>
+
+<p>First create a file called <code>Gemfile</code> with the following contents:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+
+<span class="n">gem</span> <span class="s2">&quot;test-kitchen&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://github.com/test-kitchen/test-kitchen.git&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;kitchen-vagrant&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;vagrant-wrapper&quot;</span>
+</code></pre></div>
+<p>Then run:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle install
+</code></pre></div>
+<p>This should install the above software. Note that the shell provisioner is not yet in an official release so where installing direct from GitHub for the moment.</p>
+
+<h2>Configuration</h2>
+
+<p>Next we&#39;ll tell Test Kitchen what we want to do. As much for demonstration purposes I&#39;m going to grab one of the Puppetlabs boxes. This is just plain <a href="http://vagrantup.com">Vagrant</a> so feel free to substitude the <code>box</code> and <code>box_url</code> for alternatives you already have installed locally. Otherwise the first run will take a little longer as it downloads a large file.</p>
+
+<p>Pull all of the following in a file called `.kitchen.yml&#39;.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">vagrant</span>
+
+<span class="l-Scalar-Plain">provisioner</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">shell</span>
+
+<span class="l-Scalar-Plain">platforms</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+    <span class="l-Scalar-Plain">driver_config</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">box</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
+      <span class="l-Scalar-Plain">box_url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box</span>
+
+<span class="l-Scalar-Plain">suites</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">default</span>
+</code></pre></div>
+<p>The shell provisioner is going to look for a file called <code>bootstrap.sh</code> by default. You can overide this but we&#39;ll leave it for the moment. Our bootstrap script is going to do something very simple, install the ntp package. But the important part is it could do anything; run Salt, run Ansible, run Puppet, execute any arbitrary code we choose. In this case our script is completely self contained but if it needed some additional files we could put them in a directory called <code>data</code> and they would be copied to the newly created virtual machine under <code>/tmp/kitchen</code>.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+apt-get install ntp -y
+</code></pre></div>
+<h2>Tests</h2>
+
+<p>The last step is to write a test. I&#39;m suddently finding lots of excuses to use <a href="http://serverspec.org/">Serverspec</a> so we&#39;ll use that, but if you prefer you can use pretty much anything. The following file should be saved as  <code>test/integration/default/serverspec/ntp_spec.rb</code>. Note the <code>default</code> in the path which matches our suite above in the <code>.kitchen.yml</code> file. Test Kitchen allows for multiple suites all with separate tests based on a strong set of file path conventions.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;serverspec&#39;</span>
+
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">Exec</span>
+<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">DetectOS</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">before</span> <span class="ss">:all</span> <span class="k">do</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/sbin:/usr/sbin&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2>Running the tests</h2>
+
+<p>With all of that in place we&#39;re ready to run our tests.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bundle exec kitchen test
+</code></pre></div>
+<p>This should:</p>
+
+<ul>
+<li>download the virtual machine image if you don&#39;t already have it locally</li>
+<li>create a new virtual machine based on the image</li>
+<li>run the bootstrap.sh script</li>
+<li>run our serverspec test suite</li>
+</ul>
+
+<p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
+
+<p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/01/01/testing-packer-created-images-with-serverspec/">
         Testing Packer created images with serverspec
       </a>
@@ -389,142 +487,6 @@ nice commercial products exist. <a href="http://www.circonus.com/">Circonus</a>,
 <p>And that’s just the boring matter of tools. Now you get into alert design and other gnarly people stuff.</p>
 
 <p>If you got this far you should watch all the <a href="http://vimeo.com/monitorama">Monitorama videos</a> too.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/08/11/platform-as-a-service-and-the-network-gap/">
-        Platform as a Service and the network gap
-      </a>
-    </h1>
-
-    <span class="post-date">11 Aug 2013</span>
-
-    <p><em>Originally published on <a href="https://medium.com/p/817849715f0a">Medium</a>.</em></p>
-
-<p>I&#39;m a big fan of the Platform as a Service (PaaS) model of operating web
-application infrastructure. But I&#39;m a much bigger user and exponent of
-Infrastructure as a Service (IaaS) products within my current role
-working for the UK Government. This post describes why that is, and
-hopefully helps anyone else inside other large enterprise organisations
-reason about the advantages and disadvantages, and helps PaaS vendors
-and developers understand what I personally thing is a barrier to
-adoption in that type of organisation.</p>
-
-<p>A quick word of caution, I don’t know every product inside out. It’s
-very possible a PaaS product exists that deals with the problems I will
-describe. If you know of such a product do let me know.</p>
-
-<h2>A simple use case</h2>
-
-<p>PaaS products make for the very best demos. Have a working application?
-Deployment is probably as simple as:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">git push azure master 
-</code></pre></div>
-<p>Your app has started to run slowly because visitors are flooding in?
-Just scale out with something like:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">heroku ps:scale web+2
-</code></pre></div>
-<p>The amount of complexity being hidden is astounding and the ability to
-move incredibly quickly is obvious for anyone with experience of doing
-this in a more traditional organisation.</p>
-
-<h2>A not so simple use case</h2>
-
-<p>Even small systems are often being built out of many small services
-these days. Many large organisations have been up to this for a while
-under the banner of Service Orientated Architecture. I&#39;m a big fan of
-this approach, in my view it moves operational and organisational
-complexity back into the development team where its impact can often be
-minimised by automation. But that’s a topic for another post.</p>
-
-<p>In a PaaS world having many services is fine. We just have more
-applications running on the Platform which can be independently scaled
-out to meet our needs. But services need to communicate with each other
-somehow, and this is where our problems start. We’ll keep things simple
-here by assuming communication is over HTTPS (which should be pretty
-typical) but I don’t think other protocols make the problem I have go
-away. The same problem applies if you’re using a SaaS database for
-example.</p>
-
-<h2>It’s the network, stupid</h2>
-
-<p>Over what network does my HTTPS internal service call travel? The
-internet? The internal PaaS vendor’s network? If the latter, is my
-traffic travelling over the same network as other clients on the
-platform? Maybe I&#39;m running my own PaaS in-house. But do I trust
-everyone else in my very large organisation and want my traffic on the
-same network as other things I don’t even know about? Even if it’s just
-me do I want internal service traffic mixing with requests coming from
-the internet? And are all my services created equally with regards what
-they can and cannot access?</p>
-
-<p>Throw in questions like: is the PaaS supplier running on infrastructure
-provided by a public IaaS suppliers who you don’t have a relationship
-with and you start to question the suitability of the current public
-PaaS products for building secure service based systems.</p>
-
-<h2>A journey into Enterprise Architectures</h2>
-
-<p>You might be thinking, pah, what’s the worst that can happen? If you
-work for a small company or a shiny startup that might be completely
-valid. If on the other hand you’re working in a regulated environment
-(say PCI) or dealing with large volumes of highly sensitive information
-you’re very likely to have to build systems that provide layers of
-trust, and to be doing inspection, filtering and integrity checking as
-requests flow between those layers.</p>
-
-<p>Imagine that I have a service dealing with some sensitive data. If I
-control the infrastructure (virtualised or not, IaaS provided or not)
-I’ll make sure that service endpoint isn’t available to anything that
-doesn’t need access to it via my network configuration. If I’m being
-more thorough I’ll filter traffic through some sort of proxy that does
-checking of the content; It should be JSON (or XML), it should meet this
-schema, It shouldn’t exceed this rate, it shouldn’t exceed this payload
-size or response size, etc. That is before anything even reaches the
-services application. And that’s on top of SSL and maybe client
-certificates.</p>
-
-<p>If I don’t control the infrastructure, for example when running on a
-PaaS, I lose some of the ability to have the network protect me. I can
-probably get some of this back by running my own PaaS on my own
-infrastructure, but without awareness and a nice interface to that
-functionality at the PaaS layer I’m going to lose lots of the benefits
-of running the PaaS in the first place. It’s nice that I can scale my
-application out, but if new instances can’t connect to the required
-backend services without some additional network configuration that’s
-invisible to the PaaS what use is that?</p>
-
-<p>The question becomes; how to implement security layers within existing
-PaaS products (without changing them). And my answer is “I don’t know”.
-Yet.</p>
-
-<h2>Why isn’t SSL enough?</h2>
-
-<p>SSL doesn’t help as much as you’d like to think here because if I’m an
-attacker what I’m probably going to attack is your buggy code rather
-than the transport mechanism. SSL doesn’t protect you from SQL injection
-or unpatched software or zero-day exploits. If the only thing that my
-backend service will talk to is my frontend application, an attacker has
-to compromise two things rather than just ignore the frontend and go
-after the data. Throw in a filter as described above and it’s really
-three things that need to be overcome.</p>
-
-<h2>The PaaS/IaaS interface</h2>
-
-<p>I think part of the solution lies in exposing some of the underlying
-infrastructure via the PaaS interface. IaaS is often characterised as
-compute, storage and network. In my experience everyone forgets the
-network part. In a PaaS world I don’t want to be exposed to storage
-details (I just want it to appear infinite and pay for what I use) or
-virtual machines (I just care about computing power, say RAM, not the
-number of machines I’m running on) but I think I do, sometimes, want to
-be exposed to the (virtual) network configuration.</p>
-
-<p>Hopefully someone working on OpenShift or CloudFoundry or Azure or
-Heroku or DotCloud or insert PaaS here is already working on this. If
-not maybe this post will prompt someone to do so.</p>
 
   </div>
   

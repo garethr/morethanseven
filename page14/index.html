@@ -68,6 +68,38 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/01/10/My-default-recipes-for-vagrant-virtual-machines/">
+        My Default Recipes For Vagrant Virtual Machines
+      </a>
+    </h1>
+
+    <span class="post-date">10 Jan 2011</span>
+
+    <p>I&#8217;ve written about <a href="http://morethanseven.net/2010/11/04/Why-you-should-be-using-virtualisation.html">Vagrant previously</a> and the more I use it the more it impresses me and the more it changes how I work. For those that haven&#8217;t yet used <a href="http://vagrantup.com">vagrant</a> the brief summary is, it&#8217;s a way of managing, creating and destroying headless virtualbox virtual machines. So when I&#8217;m sat at my computer and I want a new 32 bit virtual machine based on Maverick I just type.</p>
+<pre>vagrant init maverick32
+vagrant up</pre>
+<p>It has some other magic tricks as well, like automatically setting up <span class="caps">NFS</span> shares between the host and guest and allowing you to specify ports to forward in the configuration file. You access the machine via ssh, either using the handy <em>vagrant ssh</em> command or by using <em>vagrant ssh-config</em> to dump the relevant configuration to place in ~/.ssh/config.</p>
+<p>I&#8217;ve been using virtualisation for a few years, initially purely for testing and experimentation, and then eventually for all my development. I&#8217;d have a few VMware images, I&#8217;d use snapshots and occasionally rollback, but I very rarely created new virtual machines. It was quite a manual process. With vagrant that&#8217;s changing. Everytime I start investigating a new tool or new technology or work on a pet project I create a new virtual machine. That way I know exactly what I&#8217;m dealing with, and with vagrant the cost of doing that is the 30s waiting for the new machine to boot.</p>
+<p>Or rather it would be if I didn&#8217;t then have to install and configure the same few things on every machine. Pretty much whatever I might be doing I found myself installing the same things, namely zsh, vim, git and utils like ack, wget, curl and lynx. This is exactly what the provisioning support in vagrant is for, so I set out to use chef to do this for me.</p>
+<p>I decided to use a remote tar file for the recipes. I&#8217;m not really bothered about managing a chef server just for my personal virtual machines, but I did want to have a canonical source of the cookbooks that wasn&#8217;t local to just one of my machines. Plus this means anyone else who shares my opinions about what you want on a new virtual machine can use them too.</p>
+<p>My Vagrantfile now looks like this:</p>
+<pre>Vagrant::Config.run do |config|
+  config.vm.box = "maverick32"
+  config.vm.provisioner = :chef_solo
+  config.chef.recipe_url = "http://cloud.github.com/downloads/garethr/chef-repo/cookbooks.tar.gz"
+  config.chef.add_recipe "garethr"
+  config.chef.cookbooks_path = [:vm, "cookbooks"]
+  config.chef.json.merge!({ :garethr =&gt; {
+      :ohmyzsh =&gt; "https://github.com/garethr/oh-my-zsh.git",
+      :dotvim =&gt; "https://github.com/garethr/dotvim.git"
+    }})
+end</pre>
+<p>You can see the cookbook on GitHub at <a href="https://github.com/garethr/chef-repo/">github.com/garethr/chef-repo</a>. By default it uses the <a href="https://github.com/robbyrussell/oh-my-zsh.git">official oh-my-zsh repo</a> and the <a href="https://github.com/jtimberman/dotvim.git">vim configuration from jtimberman</a>. My own versions are very minor personal preference modifications of those. The Vagrantfile example above shows how you can override the defaults and use your own configs instead if you choose.</p>
+<p>One question I was asked about this approach was why I didn&#8217;t just create a basebox with all these things installed by default, this would reduce the time taken on first boot as software wouldn&#8217;t have to be installed each time. However it would also mean maintaining the basebox&#8217;s myself, and as I use different Linux distributions or versions this would be a headache. While doing this and working with vagrant I&#8217;ve been thinking about the ecosystem around the tool and I&#8217;m planning on writing my thoughts on that subject over the next week or so.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/01/01/Solr-libraries-and-good-api-design/">
         Solr Libraries and Good API Design
       </a>
@@ -202,48 +234,6 @@ vagrant config chef.recipe_url=http://cloud.github.com/downloads/garethr/chef-re
     <span class="post-date">20 Dec 2010</span>
 
     <p>I wrote a quick article last week for the excellent <a href="http://sysadvent.blogspot.com">sysadvent</a> advent calendar, <a href="http://sysadvent.blogspot.com/2010/12/day-17-smoke-testing-deployments-using.html">Smoke Testing Deployments with Cucumber</a> talks a bit more about using a few of my favourite tools to check whether a deployment just broke anything important.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/11/28/Sinatra-on-glassfish-example/">
-        Sinatra On Glassfish Example
-      </a>
-    </h1>
-
-    <span class="post-date">28 Nov 2010</span>
-
-    <p>I magically turned into a Java developer last week for a bit when I had to do some integration with a <span class="caps">SOAP</span> based <span class="caps">API</span> that really really wanted me to write Java on client as well. That led me down the route of having a good look at Jruby (which I&#8217;ve used before, mainly for testing using celerity) and in particular how easy it was to use native Java classes in Jruby (very, very easy as it turns out).</p>
-<p>All that meant I&#8217;ll probably end up writing a nice Jruby application in the not too distant future, and not knowing too much about running such a thing in a production environment I thought I&#8217;d take a quick look. I went with Glassfish as the application server for no other reason that it took my fancy. I&#8217;d definately be interested in hearing about any positive or negative experiences people may have with it or other similar servers. My quick look turned into running a tiny Sinatra application.</p>
-<p>First install the required gems for our little experiment. You&#8217;ll obviously need jruby which is sort of the point, I&#8217;d recommend using <span class="caps">RVM</span> for that.</p>
-<pre><code>gem install sinatra warbler</pre><p></code></p>
-<p>Now create a sinatra app. OK, it could be any Ruby rack based application but I like Sinatra. First we need a rackup file.</p>
-<pre><code># config.ru
-require 'init'
-
-set :run, false
-set :environment, :production
-
-run Sinatra::Application</pre><p></code></p>
-<p>Now for our application itself.</p>
-<pre><code># init.rb
-require 'rubygems'
-require 'sinatra'
-get '/' do
-  "Hello World!"
-end</pre><p></code></p>
-<p>Warble is the gem we&#8217;re going to use to create a <span class="caps">WAR</span> file, which is basically an all in one bundle of our application and it&#8217;s dependencies which we can deploy to a java application server.</p>
-<pre><code># config/warble.rb
-Warbler::Config.new do |config|
-  config.dirs = %w(config)
-  config.includes = FileList["init.rb"]
-  config.gems += ["sinatra"]
-  config.gems -= ["rails"]
-  config.gem_dependencies = true
-end</pre><p></code></p>
-<p>Now we&#8217;re ready to generate our <span class="caps">WAR</span> file.</p>
-<pre><code>warble</pre><p></code></p>
-<p>This should create a file called sample.war or similar. Then just deploy that to your application server and away you go. I got this working very easily with Glassfish which seemed to be the recommended tool for such things. Installing Glassfish was time consuming but <a href="http://www.nabisoft.com/tutorials/glassfish/installing-glassfish-301-on-ubuntu">well documented here</a>. Uploading to Glassfish was done via the web interface for the moment. I just selected a Ruby project from the deployment drop down and uploaded the war file.</p>
   </div>
   
 </div>

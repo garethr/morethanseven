@@ -68,6 +68,28 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/12/28/local-continuous-integration-integrity/">
+        Local Continuous Integration with Integrity
+      </a>
+    </h1>
+
+    <span class="post-date">28 Dec 2008</span>
+
+    <p><a href="http://integrityapp.com/">Integrity</a> is ace. I&#8217;m a huge fan of working under the ever watchful eye of a <a href="http://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> server. I&#8217;m also becoming more and more of a fan of Git, and <a href="http://github.com">GitHub</a>, for my <a href="http://github.com/garethr">personal projects</a>. At work we run <a href="http://cruisecontrol.sourceforge.net/">CruiseControl</a> and it does it&#8217;s job well, but locally I only use it for larger projects. It comes with a little overhead and if I&#8217;m just hacking on the train I rarely check on it&#8217;s status.</p>
+<p>Integrity is an unashamedly lightweight and straightforward continuous integration server written in Ruby. It comes with Git integration as well as a nifty notifications framework. There are already notification plugins available for jabber, <span class="caps">IRC</span> and email. If I get time and inclination I&#8217;d love to hack together a webhooks plugin too. It&#8217;s a simple app to get up and running with and you can always <a href="http://github.com/foca/integrity/tree/master">browse the code</a> if something isn&#8217;t clear. All in all it&#8217;s perfect for my type of smaller project.</p>
+<p>So, with a local <em>CI</em> server up and running you&#8217;re left with one problem; having to click the _Manual Build&quot; button whenever you want a build. Now Integrity comes with a mechanism to allow pushes to GitHub to trigger a build. But this only works when you have an internet connection and are using GitHub and are pushing frequently. Personally I often make lots of local commits and then push at a later date. Also not all of my projects are on GitHub for various reasons.</p>
+<p>Well it turns out that all the build button does is sent an empty HTTPpost request to a <span class="caps">URL</span> of the following format:</p>
+<pre>http://{integrity-url}:8910/{project-name}/builds</pre>
+<p>That means with a little bit of Git magic we can have our integration server run a new build whenever we commit our code. All we need to do is write a very simple post-commit git hook script. I&#8217;ve written the script in Python but you could write it in anything. This script is from a real project so adjust the server address and path as needed.</p>
+<pre>#! /usr/bin/env python
+import httplib
+conn = httplib.HTTPConnection("localhost:8910")
+conn.request("POST", "/appengine-books/builds")</pre>
+<p>All you need to do is drop this script in your .git/hooks folder as <em>post-commit</em>. Make sure you set the executable bit with <em>chmod +x</em> as well, otherwise you&#8217;ll be wondering why it&#8217;s not working and probably blaming me.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/12/21/web-developers-and-tools-programmers/">
         Web developers and Tools Programmers
       </a>
@@ -140,22 +162,6 @@
 <p>The real question I guess is what does the demand for skilled professional web developers look like in ten to twenty years? In reality most of the people currently doing the job won&#8217;t be getting to retirement age any time soon. That means every newly trained graduate or kid with a computer getting their first job adds to the size of the workforce. And how big do we think that workforce can get before it reaches a nice equilibrium? Certainly in London at the moment their are jobs aplenty. Many good friends have just left Yahoo! rather promptly and I&#8217;d be worried for them if I didn&#8217;t know how many people will be knocking down their doors.</p>
 <p>I&#8217;d love it if their were numbers somewhere on this that you could graph. Maybe spot a plateau coming. It&#8217;s the sort of thing the Institute of Physics or the Chartered Institute of Marketing do. But as I said, we don&#8217;t have anything similar.</p>
 <p>So maybe their is another option when the workforce has expanded as much as it&#8217;s going to do. We could get all work for The Institute of Web Development.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/11/29/spyder/">
-        Spyder
-      </a>
-    </h1>
-
-    <span class="post-date">29 Nov 2008</span>
-
-    <p><a href="http://muffinresearch.co.uk/">Stuart</a> at work has been playing with a nice <a href="https://edge.launchpad.net/spyder">Python web crawler</a> recently. I&#8217;ve used <a href="http://www.harvestmanontheweb.com/">Harvestman</a> before but it&#8217;s not the most straightforward thing to work with. Spyder has a really nifty callback based approach and a couple of hooks which allows you to write code like:</p>
-<pre>crawler = Spyder()
-crawler.register(my_custom_method, 'post_fetch_html')
-crawler.run(URL)</pre>
-<p>On a side note I wish <a href="http://launchpad.net">Launchpad</a> was as clean and tidy as <a href="http://github.com">GitHub</a> though. I can see GitHub adding some of the features that Launchpad has eventually, but I hope they fit them in around the existing features.</p>
   </div>
   
 </div>
