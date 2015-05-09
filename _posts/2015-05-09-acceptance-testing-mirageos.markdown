@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Automating windows development environments"
+title: "Acceptance testing MirageOS installs"
 date: 2015-05-09
 ---
 
