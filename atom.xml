@@ -4,7 +4,7 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-05-09T11:46:59+01:00</updated>
+ <updated>2015-05-09T11:54:56+01:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>Automating windows development environments</title>
+   <title>Acceptance testing MirageOS installs</title>
    <link href="http://www.morethanseven.net/2015/05/09/acceptance-testing-mirageos/"/>
    <updated>2015-05-09T00:00:00+01:00</updated>
    <id>http://www.morethanseven.net/2015/05/09/acceptance-testing-mirageos</id>
