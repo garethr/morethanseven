@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/09/21/learnings-september/">
+        Learnings from September
+      </a>
+    </h1>
+
+    <span class="post-date">21 Sep 2009</span>
+
+    <p>I&#8217;m keep meaning to get around to writing about why I think the future of web developers is operations but in lieu of a proper post here&#8217;s a list of things I&#8217;ve been spending my work life getting to know this month:</p>
+<ul>
+	<li><a href="http://reductivelabs.com/products/puppet">Puppet</a> &#8211; It&#8217;s brilliant. Define (with a Ruby <span class="caps">DSL</span> of course) what software and services you want running on all your machines, install a daemon on each of them, and hey presto central configuration management.</li>
+	<li><a href="http://www.vmware.com/products/vsphere/">VMWare vsphere</a> &#8211; puppet makes more sense the more boxes you have. With vsphere I can have as many boxes as I want (nearly). Command line scripts and an actually very nice windows gui for settings up virtual machines is all pretty nice, especially running on some meaty hardware.</li>
+	<li><a href="http://nagios.org/">Nagios</a> &#8211; With lots of boxes comes lots of responsibility (or something). Nagios might look a bit ugly, and bug me with it&#8217;s needless frames based admin, but I can see what people see in it. Which frankly is the ability to monitor everything everywhere for any change what-so-ever.</li>
+	<li><a href="http://lucene.apache.org/solr/">Solr</a> &#8211; I&#8217;m now also pretty well versed in using Solr. I&#8217;ve used it in the past, but always behind a Ruby or Python library. Now I know my way around all the <span class="caps">XML</span> based configuration inards. Heck, I&#8217;m even running a nighly release from a couple of days ago in a production environment because I wanted a cool new feature. A special mention to the Solr community on the mailing list, twitter and irc for being great when I had questions.</li>
+	<li>Solaris &#8211; I nearly forgot, I spend more time than I care to remember working out how to use Open Solaris (conclusion: OK, but not Debian) and eventually Solaris 10 (conclusion: hope I don&#8217;t have to do that again). My installation notes read like some hideous hack but everything works fine in production and it&#8217;s scarily repeatable so I&#8217;ll live with it for now.</li>
+</ul>
+<p>I do wonder if it&#8217;s just me that&#8217;s drawn to knowing how everything in the full web stack works. But personally I can&#8217;t just write code if I don&#8217;t understand how to deploy it or what it&#8217;s running on. Front end types know this all too well. Being a master of <span class="caps">CSS</span>, <span class="caps">HTML</span> and Javascript simply isn&#8217;t enough. You need to understand the browser to get anything done. I&#8217;m not sure it&#8217;s the same for all backend inclined folk; how many <span class="caps">PHP</span> programmers really understand Apache and a few other useful bits of web tech?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/09/13/no-database-test-runner-added-test-extensions/">
         No database test runner added to test extensions
       </a>
@@ -182,25 +202,6 @@ svcadm enable memcached</pre>
 	<li>http://blog.hendrikvolkmer.de/2009/1/29/deploying-a-rails-application-on-opensolaris-with-passenger-aka-modrails/</li>
 </ul>
 <p>I&#8217;m not a Solaris admin. I&#8217;m not really a sysadmin at all, I just end up pretending to be one of late. Any experienced Solaris people with experience of these tools reading this I&#8217;d be grateful for any hints and tips. Hopefully this saves a few people from the head scratching I&#8217;ve been doing for the last few days.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/08/15/your-own-pypi-server/">
-        Your Own PyPi server
-      </a>
-    </h1>
-
-    <span class="post-date">15 Aug 2009</span>
-
-    <p>So one of the problems with using pip or easy_install as part of an automated deployment process is they rely on an internet connection. More than that, they rely on PyPi being up as it&#8217;s a centralised system, unlike all the apt package mirrors.</p>
-<p>The best solution seems to be to host your own PyPi compliant server. Not only can you load all the third party modules you use onto it, but you could also upload any internal applications or libraries that you like. By running this on your local network you ensure your not dependent on pypi or an internet connection.</p>
-<p>At the moment I&#8217;m playing with <a href="http://github.com/ask/chishop/tree/master">Chishop</a> which is a django application for maintaining a PyPi compatible server. Another alternative if that doesn&#8217;t work out is <a href="http://pypi.python.org/pypi/EggBasket/">EggBasket</a></p>
-<p>To install from your own PyPi server you can specify the location of your Chishop instance with the -i flag.</p>
-<pre>easy_install -i http://localhost:8000/ PACKAGE_NAME</pre>
-<p>This will fall back to the PyPi server if it doesn&#8217;t find the relevant package. If you want to stop that behaviour and make sure you have a local package then you can limit the hosts with the -H flag like so.</p>
-<pre>easy_install -H localhost:8000 -i http::/localhost:8000/ PACKAGE_NAME</pre>
-<p>I&#8217;m not yet sure how to do this with pip, if someone wants to enlighten me in the comments then I&#8217;d be most grateful.</p>
   </div>
   
 </div>

@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2005/10/06/northern-geekender/">
+        Northern Geekender
+      </a>
+    </h1>
+
+    <span class="post-date">06 Oct 2005</span>
+
+    <p>Peter J Lambert of <a href="http://pixelicious.co.uk/">Pixelicious</a> fame has had a great idea. At least the best idea I heard today. Pretty short notice but if anyone fancies a trip down (or up?) to York for something of a geek get together let me know.</p>
+ <p>I can&#8217;t say I&#8217;m definately going as I just found out but decided to spread the word anyway &#8211; and with any luck will definately try and make the trip. I had been feeling (and I think I even complained once) about the lack of a sense of Northerness (not that southerners, or Scots for that matter, aren&#8217;t nice people or anything but&#8230;) amongst web design. Real Ale, Grit, Coal, that sort of thing &#8211; you just dont see that much web design that looks like it was inspired by that.</p>
+ <p>Anyway, the 15th (Saturday) looks to be the date of choice. Head over to <a href="http://pixelicious.co.uk/">pixelicious.co.uk</a> to express an interest or complain or find out more information.</p>
+ <p>If anyone from around Newcastle does fancy it let me know as well &#8211; I&#8217;d probably be even more inclined to go and meet strangers if other strangers (or <a href="http://randomcat.co.uk">Chris</a>) who live and work near me where going.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2005/10/04/another-great-looking-magazine/">
         Another great looking magazine
       </a>
@@ -130,48 +145,6 @@
  <p>I&#8217;d recently got myself a reasonable digital camera. Nothing expensive or fancy &#8211; in the past whenever I&#8217;ve thought about taking photo&#8217;s I&#8217;ve always got bored and given up. This time is going to be different. Hopefully.</p>
  <p>I&#8217;ve only really got round to one proper shoot and in non ideal conditions (well, in terms of photography &#8211; basically in a room under a pub) but I&#8217;m pretty happy with a couple of the photo&#8217;s. But maybe that&#8217;s because I like somewhat abstract orange/red shots?</p>
  <p>Anyway, hopefully I&#8217;ll get round to taking and uploading some more shots. And maybe using some of them on this site.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/08/29/nice-urls-and-php/">
-        Nice URLs and PHP
-      </a>
-    </h1>
-
-    <span class="post-date">29 Aug 2005</span>
-
-    <p>I all one for nice url&#8217;s, that is removing all the  gumf involving question marks and ampersands and the like for something that is both shorter, more human readable and more search engine friendly.</p>
- <p>Doing it in <span class="caps">PHP</span> is actually pretty straightforward once you get the hang of it and can be pretty powerful &#8211; so here goes with a short tutorial of sorts. It&#8217;s will probably be brief and make too many assumptions of the reader &#8211; any questions just let me know and I may even try and write it up properly.</p>
- <p>The basic principle is to stop using the <span class="caps">GET</span> array (accessible from $_SERVER[&#8216;<span class="caps">GET</span>&#8217;]) to make descisions with. The question then becomes what to replace it with. A simple class borrowed from the <a href="http://www.sitepoint.com">Sitepoint</a> <a href="http://www.sitepoint.com/books/phpant1/"><span class="caps">PHP</span> Anthology</a> book written by <a href="http://www.sitepoint.com/books/phpant1/about.php">Harry Fuecks</a> is at least my answer. The PathVars class does pretty much what is says in the name, specifically providing access to the path contents in the form of an array. I&#8217;ll provide a link to a <a href="/code/dispatcher.zip">code archive</a> for this article rather than just copy and paste whole classes &#8211; download it now if you are interested in the behind the scenes bits.</p>
- <p>So we now create a new PathVars instance like so:</p>
-<p><code>
-&lt;pre&gt;
-/* Pathvars object */
-$pathvars = new PathVars($_SERVER['SCRIPT_NAME']);
-&lt;/pre&gt;
-</code></p>
- <p>And we can now magically get access to each element of the path (separated by a /) from the instance variable pathvars:</p>
-<p><code>$params = $pathvars-&amp;gt;pathVars;</code></p>
- <p>Or more correctly by using the method provided:</p>
-<p><code>$pathvars-&amp;gt;fetchByIndex(0)</code></p>
- <p>Where the fetchByIndex parameter is the element you want from the array.</p>
- <p>Ok, so so far I&#8217;m really just repeating the work of others, if you like this sort of thing I&#8217;d really recommend the book. The next step on top of this is however is to decide what to do with the information when you have it. The following shows a very simple example &#8211; potentially for use in a simple blog or news site:</p>
-<p><code>
-&lt;pre&gt;
-switch ($pathvars-&amp;gt;fetchByIndex(0)) {</p>
-case &#8220;article&#8221;:
-include(views/article.view.php);
-case &#8220;page&#8221;:
-include(views/page.view.php);
-default:
-include(&#8216;views/home.view.php&#8217;);
-<p>}<br />
-</pre><br />
-</code></p>
- <p>In this example where we have www.example.com/article or www.example.com/article/a_sample_article_name the article view include file is used.</p>
- <p>What these include files then do is up to you, in my case each of them passes different parameters to a simple templating system which then outputs the page. Again, have a look at the code samples to see that in action.</p>
- <p>Let me know if anyone found this interesting, useful or informative and I might post other titbits, otherwise it&#8217;s probably back to inane ramblings and misplaced conjecture.</p>
   </div>
   
 </div>

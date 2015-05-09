@@ -68,6 +68,27 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/02/apis-2009-xmpp-and-webhooks/">
+        APIs in 2009 - XMPP and WebHooks
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jan 2009</span>
+
+    <p>Everyone has to have a post with a year in the title at the start of the year so I thought I better write something. Rather than one of those personal retrospective emails I thought I&#8217;d go for something different &#8211; a look at what I&#8217;d like to see in APIs in the coming year.</p>
+<h2>Webhooks</h2>
+<p>I&#8217;m pretty interested in the idea of applications exposing <a href="http://webhooks.pbwiki.com/">Webhooks</a> at the moment. It&#8217;s a pretty simple idea. As a user of a service you can register your own <span class="caps">HTTP</span> end points to receive information whenever events occur in the service.  Both <a href="http://wiki.shopify.com/WebHook">Shopify</a> and <a href="http://github.com/guides/post-receive-hooks">GiHub</a> have pretty nifty hooks for extending their capabilities for instance. When someone pushes code to a git repository you could send a ping to trigger a process to update the documentation for example.</p>
+<p>With the rise of hosted application development environments like <a href="http://code.google.com/appengine/">AppEngine</a> writing small, nearly throwaway, apps to subscribe to these hooks could become incredibly powerful. It&#8217;s a lot like how unix programmers think, by piping lots of small applications together to get to the expected end result. It&#8217;s not a replacement for the more standard read/write <span class="caps">API</span>, but it&#8217;s a potential solution to the need to constantly poll that <span class="caps">API</span> for some types of applications.</p>
+<p>The idea of public webhooks would be hugely powerful, but would also likely be a scalability nightmare. Imagine if Flickr exposed a hook that you could subscribe to whenever anyone added a public photo. Or Twitter added a hook for when anyone tweeted. These sorts of hooks would quickly be swamped with subscribers. The number of <span class="caps">HTTP</span> requests being sent by a service like Flickr under these circumstances would be <em>rather large</em> to say the least. Which is where another technology that&#8217;s designed for this sort of problem becomes useful.</p>
+<h2><span class="caps">XMPP</span> Interfaces</h2>
+<p><a href="http://xmpp.org/"><span class="caps">XMPP</span></a> or the Extensible Messaging and Presence Protocol has been around for a while, although originally under the name Jabber. It&#8217;s predominantly being used at the moment as a instant messaging protocol, but in reality it&#8217;s far more general purpose than that. Or rather, IM is generally considered to be between two or more people. But their is no reason that either or all the participants in an <span class="caps">XMPP</span> session can&#8217;t be programs.</p>
+<p>On my local machine I&#8217;m a big fan of the command line for all sorts of simple, and sometimes complex, tasks.  If applications expose their APIs via an <span class="caps">XMPP</span> bot then you basically have a ready made command line interface to online services via your IM client of choice. Combined with a solution to the public webhook problem mentioned above and you can hopefully see why I find <span class="caps">XMPP</span> pretty interesting.</p>
+<p>I&#8217;ve been playing with writing <span class="caps">XMPP</span> bots recently, both at our internal hackday and at the recent <a href="http://github.com/garethr/lastbot/tree/master">Last.fm event</a>. Their are various libraries and code examples lying around the internet that make getting started easy enough. With services like <a href="http://imified.com/">Imified</a> getting setup last year I&#8217;d imagine it will get easier still this year.</p>
+<p>As for what I&#8217;m going to be up to along these lines, we&#8217;ll have to wait and see. I have a few pet projects that I&#8217;d like to get off the ground which might be good test beds for this sort of thing. Apart from that I&#8217;d like to write some <em>getting started</em> style tutorials on some of the technologies involved or maybe a full blown article on the theory if I can find somewhere to publish it. A barcamp presentation or two might also fall off the back if I do get the time to play around a little more. But that&#8217;s just me. If you&#8217;re building, or planning on developing, an <span class="caps">API</span> for a product at the moment I&#8217;d suggest having a look at these two areas. They might turn out to just be potential extensions to what you had planned. Or they might turn out to be just the right approach to the problems you&#8217;ll face getting people to use your <span class="caps">API</span>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/12/28/local-continuous-integration-integrity/">
         Local Continuous Integration with Integrity
       </a>
@@ -139,29 +160,6 @@ conn.request("POST", "/appengine-books/builds")</pre>
 <blockquote>
 <p>gmemsess is a secure lightweight memcache-backed session class for Google appengine.</p>
 </blockquote>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/11/30/where-will-all-web-developers-go/">
-        Where will all the web developers go?
-      </a>
-    </h1>
-
-    <span class="post-date">30 Nov 2008</span>
-
-    <p>I&#8217;ve been thinking recently about what happens when we all get older. Now, I&#8217;m not actually referring to everyone here but more specifically what I&#8217;m going to call second generation web developers. I don&#8217;t mean Tim and friends here, or the early entrepreneurs of Yahoo! and Netscape. I mean the people who came along when the commercial web design and development industry had settled down a little bit, lets say 10 years ago. People like me.</p>
-<p>Work seems to exist in lots of places; big in-house teams, small in-house teams, agencies, startups and freelancers. Where the jobs are at any given point seems to be tied to economic conditions and location. Most people I seem to speak to have tended to work in one of these areas, but I&#8217;ve not really got anything but vague memories to back that accusation up. I&#8217;m a little odd here in having previously worked mainly for agencies followed by a stint of freelancing, and now work for a decent sized in-house team at Global Radio.</p>
-<p>As I see it the industry rules are predominantly made up by people involved as they go along. Their is no real impetus behind any trade body that I&#8217;m aware of, no real understanding within education and no consensus on organisational structure and jobs within it. That means, unlike accountants or people in many other professions, we&#8217;ve very little idea about what will happen in the long term.</p>
-<p>So. What happens in 10-20 years time to the now quite large number of professional web developers.</p>
-<p>Do we all just do the same thing we&#8217;re doing now. Just with higher version numbers? The problem with this is maintaining the challenge. If the core problems remain the same will it be much fun? I fear their are only so many times you can learn a new programming language and then solve the same problem you worked on at your last job before the world catches on.</p>
-<p>Do we all become managers? The problem then is who do we manage? If the industry just gets bigger and bigger this works. But that sounds unreasonable. So if their are a limited number of managerial positions who gets them? The people their first?</p>
-<p>Is their another industry that will have us? Computer games are starting to look to the web for ideas about community and collaboration, pretty much at the same time as the web is looking at games for thoughts on experience and engagement. But long term I can&#8217;t see a mass exodus or a huge cross over of people, just a huge overlap of ideas.</p>
-<p>Do some of the areas like agencies, in-house teams, etc. disappear, or at least employ less skilled people? Experience costs money, and not always because it&#8217;s worth the extra expense.</p>
-<p>Or is it simply that the world in twnety years time will be so different to now that we don&#8217;t really have a clue. And that a large group of computer savvy problem solvers will find something to do?</p>
-<p>The real question I guess is what does the demand for skilled professional web developers look like in ten to twenty years? In reality most of the people currently doing the job won&#8217;t be getting to retirement age any time soon. That means every newly trained graduate or kid with a computer getting their first job adds to the size of the workforce. And how big do we think that workforce can get before it reaches a nice equilibrium? Certainly in London at the moment their are jobs aplenty. Many good friends have just left Yahoo! rather promptly and I&#8217;d be worried for them if I didn&#8217;t know how many people will be knocking down their doors.</p>
-<p>I&#8217;d love it if their were numbers somewhere on this that you could graph. Maybe spot a plateau coming. It&#8217;s the sort of thing the Institute of Physics or the Chartered Institute of Marketing do. But as I said, we don&#8217;t have anything similar.</p>
-<p>So maybe their is another option when the workforce has expanded as much as it&#8217;s going to do. We could get all work for The Institute of Web Development.</p>
   </div>
   
 </div>

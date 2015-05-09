@@ -68,6 +68,110 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/09/14/using-python-and-stompserver-get-started-message-q/">
+        Using Python and Stompserver to Get Started With Message Queues
+      </a>
+    </h1>
+
+    <span class="post-date">14 Sep 2008</span>
+
+    <p>Message Queues are cool. It&#8217;s official. Now, banks and financial institutions have been using big Enterprise Java message systems for years. But it&#8217;s only really over the last year or two that the web community at large have got interested. Wonder what all the interest is in Erlang, Scala or Haskell? Distributed systems and a lack of shared state &#8211; hopefully leading to some sort of scalability nirvana &#8211; that&#8217;s what.</p>
+<p>Matt Biddulph of Dopplr has spoken at varying levels of technical detail on the subject over the last year or so. At <a href="http://adamcohenrose.blogspot.com/2007/11/messaging-scales-matt-biddulph.html">barcamps</a> and more recently at <a href="http://2008.dconstruct.org/">dconstruct</a>. But you still don&#8217;t find that many people actually starting to use any of this stuff. Looking around the internet I couldn&#8217;t find that many examples of how to get started. Their are some pretty mature standards, good libraries, server interoperability, but few tutorials aimed at people who don&#8217;t know all about it.</p>
+<p>The first problem is looking for a simple use case that most developers will have experienced problems with. The example I like to give is sending email. If you have a simple form on your site that sends email you probably just submit the request to the backend, it sends the email and then renders the success page back to the user. The problem here comes with scale. How many connections can your mailserver sustain? How many emails can you send from it before you start looking like you&#8217;ve been turned into a spam factory? At what point does the time taken for the mail server to respond to the web server cause the web server to time out or respond so slowly the user left or pressed refresh? If you&#8217;re sending lots of emails you need to think about this sort of stuff. For your average site this might not be a problem, but for the newer breed of applications or social networks this might bite you sooner than you think. You can gain more control over this process by introducing a message queue. Submitting the form simply adds a work task to the queue. A listener reads from the queue and sends the email. The advantage comes when you realise by removing the rendering of the page form the same process as sending the email you can throttle the system without affecting page rendering time.</p>
+<p>So onto a simple working example. I&#8217;ve decided to use Python as that&#8217;s my language of choice at the moment. It&#8217;s also easy to read in a -sudo-<ins>pseudo</ins> code sort of way. Writing these examples using equivalent libraries in Ruby or <span class="caps">PHP</span> should be straightforward enough. As for the message queue itself I&#8217;ve opted for <a href="http://stompserver.rubyforge.org/">stompserver</a> which is available as a Ruby gem. So assuming you have Ruby and gem installed (good instructions for this on the <a href="http://wiki.rubyonrails.com/rails/pages/GettingStartedWithRails">Rails wiki</a>) you can just run:</p>
+<pre><code>sudo gem install stompserver</code></pre>
+<p>Starting the queue is as simple as running:</p>
+<pre><code>stompserver</code></pre>
+<p>This will get you up and running quickly. Stompserver has a number of arguments you can pass in to use different ports or backends but for the purposes of getting started it&#8217;s enough to just run it. This ease of use is the thing I love about stompserver. ApacheMQ is something of a tricky beast to setup, though you might want to use that in a production environment.</p>
+<p>So now we have the server up and running we can get on with talking to it. I used the Python <a href="http://www.briggs.net.nz/log/projects/stomppy/">stomp.py</a> library to deal with the heavy lifting. All the other modules are in the standard library. Their are equivalents for <a href="http://stomp.codehaus.org/PHP"><span class="caps">PHP</span></a> and <a href="http://stomp.codehaus.org/Ruby+Client">Ruby</a> available as well.</p>
+<p>The first script is a listener. Its job is to listen for activity on the queue and then act upon it. You pass the script an argument of the name of the queue to listen to.</p>
+<pre><code>./stomp_listen.py /queue/test</code></pre>
+<p>This example simply prints the messages from the queue to the console, but in reality the on_message handler would be were you act upon the message received. In our email example above it would be were you parse out the email address, subject line and message and actually send the email.</p>
+<p>Stompserver currently exposes a queue for monitoring the queue server at <em>/queue/monitor</em>. You can use this script to subscribe to that queue and get information about the current state of the server. It will tell you which queues currently have items in them and if these are currently being processed.</p>
+<p>You can run multiple instances of this script subscribing to a single queue. This is one of the real advantage of message based systems, two listeners should clear a queue in half the time. This sort of horizontal scaling is hugely useful as you grow a site or application.</p>
+<pre>#!/usr/bin/python
+import time
+import sys
+import logging
+import socket
+import stomp
+# the stomp module uses logging so to stop it complaining
+# we initialise the logger to log to the console
+logging.basicConfig()
+# first argument is the que path
+queue = sys.argv[1]
+# defaults for local stompserver instance
+hosts=[('localhost', 61613)]
+# we want the script to keep running
+def run_server():
+    while 1:
+        time.sleep(20)
+class listener(object):
+    '''define the event handlers'''
+    # if we recieve an error from the server
+    def on_error(self, headers, message):
+        print 'received an error %s' % message
+    # if we retrieve a message from the server
+    def on_message(self, headers, message):
+        print 'received a message %s' % message
+# do we have a connection to the server?
+connected = False
+while not connected:
+    # try and connect to the stomp server
+    # sometimes this takes a few goes so we try until we succeed
+    try:
+        conn = stomp.Connection(host_and_ports=hosts)
+        # register out event hander above
+        conn.add_listener(listener())
+        conn.start()
+        conn.connect()
+        # subscribe to the names que
+        conn.subscribe(destination=queue, ack='auto')
+        connected = True
+    except socket.error:
+        pass
+# we have a connection so keep the script running
+if connected:
+    run_server()</pre>
+<p>The second script allows us to send messages to the queue:</p>
+<pre><code>./stomp_send.py /queue/test "test message 1"</code></pre>
+<p>The script takes a couple of arguments, the first one is the name of the queue, the second is the message you want to send.</p>
+<pre>#!/usr/bin/python
+import time
+import sys
+import logging
+import socket
+import stomp
+# the stomp module uses logging so to stop it complaining
+# we initialise the logger to log to the console
+logging.basicConfig()
+# first argument is the queue
+queue = sys.argv[1]
+# second argument is the message to send
+message = sys.argv[2]
+# defaults for local stompserver instance
+hosts=[('localhost', 61613)]
+# do we have a connection to the server?
+connected = False
+while not connected:
+    try:
+        # connect to the stompserver
+        conn = stomp.Connection(host_and_ports=hosts)
+        conn.start()
+        conn.connect()
+        # send the message
+        conn.send(message,destination=queue)    
+        # disconnect from the stomp server
+        conn.disconnect()
+        connected = True
+    except socket.error:
+        pass</pre>
+<p>Both these scripts are pretty simple examples. In the real world you would probably want to make them a little more robust and user friendly. Both could probably do with checking they have the relevant arguments and providing help information if you run them without. I&#8217;d also probably move the hosts into a config file as it&#8217;s currently hardcoded into the scripts. I&#8217;ve also not tested them with other stomp compatible servers like ApacheMQ. In theory they should work fine assuming stomp.py works as advertised.</p>
+<p>Overall, it&#8217;s surprisingly easy to get started with message queues. If you&#8217;ve been hearing about the advantages of distributed message based architectures but assumed you had to be <a href="http://www.hackdiary.com/">Matt Biddulph</a> to use them, think again.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/09/14/imified/">
         Imified
       </a>
@@ -123,26 +227,6 @@
     <p>In maybe a more constructive manner than <a href="http://morethanseven.net/posts/media-designers-vs-developers/">yesterday</a> I started wondering where the rock star web project managers hang out? I think we&#8217;re all aware of something of a celebrity culture within web circles. Their are a hardcore of people who&#8217;s blogs, books and conference appearances we&#8217;ve all seen several times over. And in the main I think this has had a positive effect on everyone involved. People like <a href="http://adaction.com">Jeremy</a>, <a href="http://molly.com">Molly</a> and <a href="http://simonwillison.net">Simon</a> have at different times acted as pretty useful barometers and yard sticks for lots of people. But these people are invariably designers and developers &#8211; not product managers or project managers.</p>
 <p>The only person I can think of who has talked a little about the topic of project management is <a href="http://blog.geekmanager.co.uk/">Meri</a> with her new book <a href="http://www.sitepoint.com/books/project1/">Principles of Project Management</a>. The topic occasionally comes up in conversation, or is mentioned by the designers and developers noted above. And their are lots of blogs (more often by developers it seems) about Agile, XP and Scrumm. But what about the practice of web product management? You can point to countless blogs written by designers and developers at the likes of last.fm, flickr and Yahoo. But where are the managers?</p>
 <p>So, my question to you is: do you know of any great web product or project managers that blog about the discipline?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/06/01/media-designers-vs-developers/">
-        @media: Designers Vs Developers
-      </a>
-    </h1>
-
-    <span class="post-date">01 Jun 2008</span>
-
-    <p>Another successful <a href="http://vivabit.com/atmedia2008/">@media</a> conference comes to a close and as usual interesting things were said and hopefully everyone learned something. As usual I have a few more things on my <em>must find time to play with</em> list. More on those if they happen.</p>
-<p>But one part of the conference I felt needed addressing straight away was the first days panel. <a href="http://www.vivabit.com/atmedia2008/london/sessions/#hottopics">The Hot Topics</a> panels bring together a few of the days speakers to answer questions posed by the audience. This year each day had it&#8217;s own panel discussion, with the first days session having a design theme. So far so good, and before I getting going I have to say I think <a href="http://www.veen.com/jeff/">Jeffrey Veen</a> did a sterling job of prodding and prompting the session along. The rest of the panel composed of <a href="http://www.stuffandnonsense.co.uk">Andy Clarke</a>, <a href="http://superfluousbanter.org/">Dan Rubin</a>, <a href="http://presentimperfect.com/">Bronwyn Jones</a> and <a href="http://www.indiyoung.com/">Indi Young</a>.</p>
-<p>The panel fielded a few interesting questions (and The Beatles in-joke was highly entertaining) but the whole thing took an odd turn part way through &#8211; odd in the sense that everything suddenly became very anti-developer.</p>
-<p>Andy Clarke seemed to be the ring leader here saying things like (I&#8217;m paraphrasing here) &#8220;I hate daily stand-ups, we should do Agile&#8221;. Dan Rubin was involved too, seemingly saying all developers prefer the rigid nine to five because they&#8217;re logical people, while designers want to be able to work whenever they choose. This and other comments caused a few good friends and web developers on the front row to literally shake their fists in anger. The audience got involved too, cheering the anti-developer or anti-engineer statements on. In my mind damage had just been done to <del>out</del> <ins>our</ins> industry.</p>
-<p>Buidling web sites or applications is a pretty multidisciplinary exercise, and in any team environment good communication is often the difference between executing well and failing badly. Conferences like @media are a great place to come together with people from different disciplines and similar jobs in different organisations and share stories. I&#8217;m not saying either Dan or Andy haven&#8217;t had bad experiences with developers or stand-ups. I&#8217;m not saying bad individuals or bad process don&#8217;t exist (I have scars from both). I&#8217;m saying that generalising these experiences and then promoting them to impressionable designers is dangerous.</p>
-<p>I have the good fortune of working with a great designer, <a href="http://csensedesign.co.uk/blog/">Alex Lee</a>, at GCap at the moment. He&#8217;s involved in our stand-up meetings every morning and without him there we would waste untold amounts of time and effort. If he turned up on monday and said &#8220;I&#8217;m not going to come to stand-ups anymore, Andy Clarke says they aren&#8217;t cool&#8221;. We have a massive problem. My fear is this is exactly what&#8217;s going to happen somewhere tomorrow.</p>
-<p>I&#8217;m something of a hybrid; I&#8217;ve run the whole gamut of design and development activities during my career to-date (I&#8217;ve even touched on project management) and have worked in small and medium sized agencies, as an independent freelancer and now in a decent sized in-house team. All of these roles pose different communication challenges which require different solutions. What works for three people in a distributed team doesn&#8217;t work for fifteen people working in-house. Some types and sizes of team work best with stand-ups, others work best being in the same small room together. Sometimes you need a centralised audit trail of everything that has happened on a project, other times it&#8217;s overkill. Somethings everyone has to be working on the project at the same time, at other times as long as tasks get done it really doesn&#8217;t matter.</p>
-<p>I&#8217;m not saying I <em>like</em> all of those working conditions &#8211; I&#8217;m saying that if you understand where they work best you can work in the environment that suits you. Andy Clarke runs a <a href="http://www.stuffandnonsense.co.uk/index.php/">boutique agency</a> doing high quality work, working with a very small team where individual flexibility and minimal process is definitely the best approach. I now work in a cross disciplinary team of maybe sixty people and it&#8217;s a different ball game completely.</p>
-<p>This isn&#8217;t an attack on Andy, or Dan, or even an anti-designer rant. The web is a young industry filled with young people. We&#8217;re learning as we go and stealing what we can from other disciplines. Also not that many of us really like the idea of project management, never mind the reality. Agile methods like Scrumm are hot at the moment but that&#8217;s not to say we won&#8217;t find something that better suites our discipline in the future. Iterative development, while often annoying to designers, appears to be producing better results. If designers, and developers, want to change how we work together for the better, then get interested in project management and lets have a discussion in public. If you want to complain about individual experiences then that&#8217;s why you have a blog.</p>
   </div>
   
 </div>

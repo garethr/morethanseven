@@ -68,6 +68,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/10/28/php-asset-packager/">
+        PHP Asset Packager
+      </a>
+    </h1>
+
+    <span class="post-date">28 Oct 2007</span>
+
+    <p>Performance used to be something other people thought about. If you were working on a high traffic site for a large company, chances are they would throw inordinate amounts of expensive hardware at the problem. If you had a personal site only if you got really popular would you need more than a shared host. But the number of web applications being launched by small companies or individuals from their bedrooms is raising the awareness of the importance of performant websites.</p>
+<p>Credit to <span class="caps">YAHOO</span>! here. Google and Amazon might be the first companies that spring to mine when it comes to thinking about infrastructure but <span class="caps">YAHOO</span>! have been publishing lots of useful, practical and interesting information in this area. <a href="http://stevesouders.com/">Steve Souders</a>, the Chief Performance <span class="caps">YAHOO</span>! has a <a href="http://www.amazon.co.uk/o/ASIN/0596529309/">new book</a> going into detail about <a href="http://developer.yahoo.com/performance/rules.html"><span class="caps">YAHOO</span>!s performance rules</a>. The recent release of the <a href="http://developer.yahoo.com/yslow/">YSlow</a> extension and another <a href="http://website-performance.org/">upcoming book</a> from <a href="http://muffinresearch.co.uk/archives/2007/09/27/css-sprite-generator-tool/">Stuart Colville</a> and <a href="http://www.ejeliot.com/">Ed Eliot</a> cap things off nicely.</p>
+<p>According to <a href="http://developer.yahoo.com/performance/rules.html#num_http"><span class="caps">YAHOO</span>!</a></p>
+<blockquote>
+<p>Combined files are a way to reduce the number of <span class="caps">HTTP</span> requests by combining all scripts into a single script, and similarly combining all stylesheets into a single stylesheet. It&#8217;s a simple idea that hasn&#8217;t seen wide adoption. The ten top U.S. web sites average 7 scripts and 2 stylesheets per page. Combining files is more challenging when the scripts and stylesheets vary from page to page, but making this part of your release process improves response times.</p>
+</blockquote>
+<p>While all that has been going on I&#8217;ve been working with a <a href="http://rbd.shiftnetwork.co.uk/">few</a> <a href="http://www.bofh.org.uk/">people</a> on a Rails project and come across a great plugin; <a href="http://synthesis.sbecker.net/pages/asset_packager">asset_packager</a> from <a href="http://synthesis.sbecker.net/">Scott Becker</a>. Inspired by the <a href="http://www.thinkvitamin.com/features/webapps/serving-javascript-fast">Vitamin article</a> by <a href="http://www.iamcal.com/">Cal Henderson</a> (of Flickr and <a href="http://www.amazon.co.uk/Building-Scalable-Web-Sites-Henderson/dp/0596102356">another good book</a> fame), asset_packager compresses and merges <span class="caps">CSS</span> and Javascript based on a prescribed configuration.</p>
+<p>I&#8217;m also working on a few <span class="caps">PHP</span> projects and wanted the same experience in these as well, so  I&#8217;ve gone a put together a quick release of <a href="http://code.google.com/p/php-asset-packager/">php asset packager</a>. At the moment this is a <span class="caps">CSS</span> only release, with Javascript features coming later, along with all the rest of the features of the Rails plugin and anything else I can think of or need.</p>
+<p>First off you define your stylesheet setup. I used <a href="http://www.yaml.org/"><span class="caps">YAML</span></a> as my goal was to stick as close as possible to the Rails plugin.</p>
+<p><code>&lt;pre&gt;stylesheets:
+- base:
+  - screen
+  - header
+- secondary:
+  - foo
+  - bar&lt;/pre&gt;</code></p>
+<p>The above simply states that you want to merge screen and header <span class="caps">CSS</span> files together to form a base stylesheet, and merge foo and bar together to create a secondary <span class="caps">CSS</span> file.</p>
+<p>All you then have to do is include the following:</p>
+<p><code>&lt;pre&gt;// define("ENVIRONMENT", "production");</p>
+<p>echo Asset_packager::stylesheet_link_merged();</pre></code></p>
+<p>If the <span class="caps">ENVIRONMENT</span> constant is set to <em>production</em> the line includes the merged stylesheet links, otherwise each file is included seperately. This again mirrors the behaviour of the Rails plugin. A command line script is also included in the <a href="http://code.google.com/p/php-asset-packager/source">source</a> to actually merge (and <a href="http://csstidy.sourceforge.net/">tidy</a>) the <span class="caps">CSS</span> files.</p>
+<p>The vague plan is to add the rest of the features and then maybe package up as a plugin for whatever software or frameworks I&#8217;m working with at the time. At the moment that probably means wordpress, <a href="http://www.symfony-project.com/">symfony</a> and <a href="http://codeigniter.com/">code igniter</a>. Everything is open source and available from svn over on the <a href="http://code.google.com/p/php-asset-packager">Google Code site</a>. Contributions, in the way of code, bugs, documentation or thoughts welcome.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/10/23/my-trac-ticket-setup/">
         My Trac Ticket setup
       </a>
@@ -247,23 +280,6 @@ symfony propel-insert-sql&lt;/pre&gt;</code></p>
 <p><code>&lt;pre&gt;symfony init-app backend
 symfony propel-generate-crud backend items Item&lt;/pre&gt;</code></p>
 <p>All in all not bad going. And that&#8217;s basically the same for most of the apps you&#8217;re likely to develop. It could probably be a little easier in the database and apache config areas in fairness. Rails&#8217; use of an inbuild webserver really helps here. But the use of <span class="caps">YAML</span> to define the model is, in my mind, more straightforward that using Ruby in Rails migrations. I&#8217;ve an app in the works at the moment and I&#8217;m looking at using Symfony. If that pans out I&#8217;ll blog more about the bits I&#8217;m interested in &#8211; the inbuilt unit testing framework high on my list.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/09/10/brighton-rocks/">
-        Brighton Rock(s)
-      </a>
-    </h1>
-
-    <span class="post-date">10 Sep 2007</span>
-
-    <p>Back from a madcap weekend in Brighton for the <a href="http://2007.dconstruct.org/">dconstruct</a> BarCamp Brighton double header. If I was to write down everything I can remember we&#8217;d be here for a week. If I was to write down simply everything then we&#8217;d be here longer still. Information packed just doesn&#8217;t cover it.</p>
-<p>I&#8217;ll likely sort some more detailed posts on some particular topics that piquet my interest in the coming weeks or months, for instance user centred design vs agile methodologies (thanks to <a href="http://www.disambiguity.com/">Leisa Reichelt</a>), some more rambling posts on web application frameworks, microformats for write APIs, OAuth and countless other things I&#8217;ve no doubt forgotten.</p>
-<p>One thing you can get now is my BarCamp presention which I&#8217;ve uploaded to <a href="http://slideshare.net">SlideShare</a>. I&#8217;ve not used this much previously but I&#8217;m smitten and will be uploading a few other past presentions in the next few weeks as soon as I can find them. If you&#8217;re interested in RESTful architectures or Rabbits then this might float your boat:</p>
-<p><object type="application/x-shockwave-flash" data="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=106632&doc=restful-rabbits310" width="425" height="348"><param name="movie" value="http://s3.amazonaws.com/slideshare/ssplayer.swf?id=106632&doc=restful-rabbits310" /></object></p>
-<p>I also took lots of photos (some with <a href="http://cackhanded.net">Norm&#8217;s</a> very nice 1.4f 50mm lens, thanks Norm) whick I&#8217;ll get on <a href="http://flickr.com">Flickr</a> when I get a moment. Expect lots of portraits of people (maybe including you?) for once instead of odd abstract architecture and textures.</p>
-<p>Final thing I&#8217;ll say for now is a big thankyou to anyone or everyone who sorted all this out. The 600-700 geeks descending on brighton all got fed, watered/beered and educated without anything appearing to go wrong (except when the hotel bar ran out of beer &#8211; I blame <a href="http://nascentguruism.com/">Steve Marshall</a>). I&#8217;m looking at you <a href="http://clearleft.com">clearlefties</a> and <a href="http://www.glennjones.net/Home/">Glenn</a> and everyone from Madgex. Good job everyone involved.</p>
   </div>
   
 </div>

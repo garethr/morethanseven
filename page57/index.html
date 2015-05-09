@@ -68,6 +68,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/01/17/colorburnified/">
+        Colorburnified
+      </a>
+    </h1>
+
+    <span class="post-date">17 Jan 2007</span>
+
+    <p>If you visited the site previously since the Radiant move you might notice a new colour scheme. Come to mention it if you visit tomorrow, or the day after you should get a different colour scheme too.</p>
+ <p>I mentioned that I planned on a few experiments around these parts and this is the first one. I&#8217;m a big fan of <a href="http://www.firewheeldesign.com/widgets/">ColorBurn</a> from <a href="http://www.firewheeldesign.com/">Firewheel</a>. For those that haven&#8217;t seen it it&#8217;s a desktop widget that displays a new four colour colour scheme every day that looks a little something like:</p>
+ <p><img src="http://morethanseven.net/_assets/media/imgColorBurn.jpg" alt="ColorBurn OS X Widget" /></p>
+ <p>I often use it for inspiration for colour sets, or just to appreciate interesting colour combinations. This just takes it a step further. A little reverse engineering and I have a script (<span class="caps">PHP</span> this time, running from a cron job) that writes out a new stylesheet once every day with the colours from ColorBurn (using the magic of <span class="caps">XSL</span> if you&#8217;re interested). I&#8217;ve used an alpha transparency on the image to the top left of the page which might result in strange effects in browsers that I dont care about too much. Sorry, but I did warn you.</p>
+ <p>I have a feeling that some days I&#8217;ll wake up and regret this experiment and others I&#8217;ll be pleasantly suprised. I&#8217;m not going to cheat either. ColorBurn provides me with four colours and the script will use them in the order they come in.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/01/16/opml-feeds-using-radiant/">
         OPML Feeds using Radiant
       </a>
@@ -191,46 +207,6 @@ var stageListener = new Object ( );
 stageListener.onResize = resizeEvent
 Stage.addListener ( stageListener );</code></pre>
 <p><a href="/_assets/downloads/fluidflash/fluidflash.zip">Download example</a></p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/01/03/webphp/">
-        Web.php
-      </a>
-    </h1>
-
-    <span class="post-date">03 Jan 2007</span>
-
-    <p><a href="http://webpy.org">Web.py</a> is a really nice lightweight web framework written in Python. It&#8217;s not trying to be Rails or Django, it&#8217;s trying to be as simple as possible. Web.php is my homage to Web.py. I&#8217;ve unashamedly copied the ideas and build a very simple web framework in <span class="caps">PHP</span>. It&#8217;s not a complete port, nor does it do everything in the same way.</p>
-<p>The code example from the project home page was what originally piqued my interest:</p>
-
-<pre><code>import web
-urls = (
-   '/(.*)', 'hello'
-)
-class hello:        
-   def GET(self, name):
-       i = web.input(times=1)
-       if not name: name = 'world'
-       for c in xrange(int(i.times)): print 'Hello,', name+'!'
-if __name__ == "__main__": web.run(urls, globals())</code></pre>
-<p>My <span class="caps">PHP</span> versions goes something like this, I&#8217;m sure you can see the similarities:</p>
-
-<pre><code>&amp;lt;?php
-require('webphp/web.php');
-$urls = array(
-   '/' =&amp;gt; 'hello',
-);
-class hello {
-   function GET($path) {
-      echo 'hello world';
-   }
-}
-web::run($urls);
-?&amp;gt;</code></pre>
-<p>I&#8217;ve used it so far on a couple of projects, but it&#8217;s never been properly tested as such nor do I have lots of time to develop it. It&#8217;s purposely feature and code light (the core file is only 80 odd lines of code, includig comments).</p>
-<p><a href="/_assets/downloads/web-php/web-php.zip">Download Zip</a></p>
   </div>
   
 </div>

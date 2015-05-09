@@ -68,6 +68,18 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/02/pep-374/">
+        PEP 374
+      </a>
+    </h1>
+
+    <span class="post-date">02 Feb 2009</span>
+
+    <p>The Python core developers are currently <a href="http://www.python.org/dev/peps/pep-0374/">discussing whether to move away from <span class="caps">SVN</span> to a distributed version control system</a>. It&#8217;s a worthwhile read for anyone involved in this sort of decision in any capacity. It features hands on examples of each of the contenders (Bazaar, Git and Mercurial), some interesting observations about all of them as well as  some benchmarks against a mature codebase. Lots of conversations keep cropping up on Twitter about why bother switching to Git or other distributed systems &#8211; this is a good place to start whether you use Python or not.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/01/sinatra-simple-example/">
         Sinatra Simple Example
       </a>
@@ -181,24 +193,6 @@ if __name__ == "__main__":
 <p>For bigger projects I tend to create more complex backup and deployment tasks, or more often than not add in various dependencies. But you hopefully get the idea. Even for simple commands like this that would be a single line bash script I tend to use ant. I find by putting things together into a build script I&#8217;m more likely to add useful functionality to it later, and to remember and therefore run the commands more often.</p>
 <p>A good reference for finding out more than is in the <a href="http://ant.apache.org/manual/index.html">manual</a> is the <a href="http://wiki.apache.org/ant/FrontPage">Apache Ant Wiki</a>. More than anything it features real examples that you can learn from which with Ant is definitely the best way to discover new tricks.</p>
 <p>I know their are a number of other tools in languages I like more. On occasion I use <a href="http://rake.rubyforge.org/">Rake</a>, <a href="http://savannah.nongnu.org/projects/fab">Fabric</a> and <a href="http://www.capify.org/">Capistrano</a>. I&#8217;ve looked at <a href="http://www.zedshaw.com/projects/vellum/">Vellum</a> and good old make. I know others who swear by just writing simple bash scripts or using straight Ruby, <span class="caps">PHP</span> or Python (or not writing build scripts at all and doing everything by hand. But I like having my build scripts separate and simple. It might not be pretty or fashionable, but Ant does almost perfectly what I want it to do.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/20/django-testing-presentation-djugl/">
-        Django Testing Presentation at DJUGL
-      </a>
-    </h1>
-
-    <span class="post-date">20 Jan 2009</span>
-
-    <p>The second <a href="http://upcoming.yahoo.com/event/1463406" title="DJUGL">Django User Group</a> meeting was last night and was a great success as far as I could tell. Our boardroom at work was chock full of budding Django developers and interested parties &#8211; 70 people or so in all. Good work by Rob to get everything back on track at the start of the year and the next event is already planned for the back end of February so I hear. More news soon on the <a href="http://groups.google.com/group/django-london">mailing list</a> hopefully.</p>
-<p>Rather unfortunately <a href="http://simonwillison.net">Simon</a> had to pull out at the last minute and I stepped in to do a quick 20 minutes or so talk on writing tests for your Django applications.</p>
-<div style="width:425px;text-align:left" id="__ss_933741"><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=testingdjangoapps-1232444197115958-3&rel=0&stripped_title=testing-django-applications-presentation" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=testingdjangoapps-1232444197115958-3&rel=0&stripped_title=testing-django-applications-presentation" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></div>
-<p>I was rather surprised that only about a third of the people coming along were using Django in some work related capacity, and when I asked who was writing tests for their code a few more hands went down. Very few of the people <em>not</em> using Django at work are writing tests which is unfortunate (and contrasts rather interestingly with my experiences of the Ruby community).</p>
-<p>For a presentation done in less than a day while at work I felt it went OK. testing is a hard sell at the best of times and trying to talk to both those without experience of writing tests and at the same time trying to get in a few of the more interesting things we&#8217;ve done at work was maybe a bit of an ask.</p>
-<p>It not being a blog post round here these days unless I include a link to GitHub I did mention a small project last night in the talk &#8211; <a href="http://github.com/garethr/django-test-extensions/">Django Test Extensions</a>. It&#8217;s more just a collection of useful common testing code: additional assertions, custom test runners, etc. Thanks to <a href="http://agileweb.org/">Ross</a> for the last minute patch with a couple of bug fixes as well.</p>
-<p>The other two presentations went great. Andrew talking about the South migrations system and Aral talking about real world Google App Engine were both up my street of things I&#8217;m interested in. We have video of all the talks as well so hopefully that will make it out into the wild at some point once it&#8217;s been edited.</p>
   </div>
   
 </div>

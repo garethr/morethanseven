@@ -68,6 +68,22 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/06/11/introducing-hedgehog-lab/">
+        Introducing hedgehog lab
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jun 2007</span>
+
+    <p>For both of you who care what I get up to during my work hours this post is for you. I&#8217;ve finally gotten involved in a new startup with a couple of friends. Look out for <a href="http://hedgehoglab.com">hedgehog lab</a> related goings on in a Newcastle near you. We&#8217;ve got plans being drawn up as I type (multi-tasking) but a smattering of training and consultancy on web standards design and development and a very health dose of some of those new fangled online products (all with as many microformats as I can sneak in) sounds like fun to me.</p>
+<p><a href="http://hedgehoglab.com/"><img src="http://morethanseven.net/_assets/media/imgHedgehogLab.jpg" title="hedgehog lab" alt="hedgehog lab" /></a></p>
+<p>Bye bye to all the people at TH_NK. It&#8217;s been great for two years and I&#8217;ll miss the cunning hit and run attacks on asp.net that have yielded some pretty good results. I&#8217;m sure you&#8217;ll get more done without me being quite so obstinate!</p>
+<p>It&#8217;s not just the impending job move that has been keeping me so busy. I finally, after much useful feedback and patience from <a href="http://thewatchmakerproject.com">Matt</a> got my first <a href="http://www.digital-web.com">Digital Web</a> article done: <a href="http://www.digital-web.com/articles/apis_and_mashups/">APIs and Mashups For The Rest Of Us</a>. As the title suggests it&#8217;s a quick run through the various goings on, in particular on what I find so interesting about the concepts of Open APIs and this web of data thing. I even squeezed in some talk of <a href="http://microformats.org">Microformats</a> <a href="http://www.digital-web.com/articles/apis_and_mashups/comments/">Let me know what you think</a>. Thanks to <a href="http://sam.aaron.name/">Sam</a> as well for a useful early proof read and to <a href="http://www.tiffehr.com/">Tiff</a> at Digital Web (who also has some interesting things to say on this here industry on her new blog, <a href="http://www.lostcog.com/">Lost Cog</a>.)</p>
+<p>End of self reverential post. The list of <em>real</em> things I have to blog about is frankly too long to wait around. And it&#8217;s not helped by these <a href="http://vivabit.com/atmedia2007">trips</a> to <a href="http://hackday.org">london</a> which frankly just give me even more to write about. Incase anyone is interested (and more to remind me), expect something on automated site testing, some musings and code (!) for doing useful things with microformats, some cool CSS3 (or is it CSS2.2 now?) tricks and something involving flickr which should actually be quite interesting if I get the time.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/06/02/json-configuration-example-printing/">
         JSON configuration example - Printing
       </a>
@@ -200,44 +216,6 @@
 <p>Andy&#8217;s suggestion of an interim step (or steps) between now and CSS3 modules raises a problem. If the working group do the work then it takes their eye further off getting CSS3 modules out. If they don&#8217;t, will they accept suggestions from outside? Will outsiders be able to grok the whole standardisation process?</p>
 <p>What we need is a commercial company with lots of smart people and lots of cash &#8211; with a track record of working with standards. A member of the W3C would be a plus. Ideally they should have something invested in the web as a platform, maybe even in a smarter, cleverer, semantic web.</p>
 <p>Google to the rescue maybe? If you&#8217;re really cynical you could see Silverlight as an end run around Google&#8217;s apparent dominance of the web as a platform. Lock content away in proprietary silos and traditional search becomes less appealing? And surely Google has lots to gain from the long term adoption of anything that increases the semantic nature of the web. If <span class="caps">CSS</span> is a battleground then maybe they need to come out and make a stand(ard)?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/04/28/if-computer-scientists-managed-birth-certificates/">
-        If computer scientists managed birth certificates
-      </a>
-    </h1>
-
-    <span class="post-date">28 Apr 2007</span>
-
-    <p>I&#8217;ve been pondering <a href="http://morethanseven.net/posts/authoritative-hcards-authority-in-microformats/">authority in microformats</a> and as a result been taking a closer look at <a href="http://microid.org">microID</a>.</p>
-<p>The situation I want to find a solution for is; If their are lots of published hcards for a given person they might be different, either out of date or more sinisterly fraudulent. If I do a search for contact details, lets say using the <a href="http://kitchen.technorati.com/contact/search/">technorati hcard search engine</a>, how do I know which one is to be trusted?</p>
-<p>If I publish an hcard on <a href="http://morethanseven.net">my site</a> using the following markup, including a microID using the included email and url details to form the hash.</p>
-<pre><code>&lt;div 
-   class="vcard microid-mailto+http:sha1:a52b4f86cfa4190b53634d99198c0f56970c8d83"&gt;
-   &lt;h2 class="fn"&gt;gareth rushgrove&lt;/h2&gt;
-   &lt;a href="http://morethanseven.net" class="url" rel="me"&gt;
-      morethanseven.net
-   &lt;/a&gt;
-   &lt;a href="mailto:gareth@morethanseven.net" class="email"&gt;
-      gareth@morethanseven.net
-   &lt;/a&gt;
-&lt;/div&gt;</code></pre>
-<p>If the hcard search engine reads that hcard on the morethanseven.net domain it could check the hash in the vcard against doings it&#8217;s own hash with the specified email address and url (checking the url is the same as the one on which the vcard lives). &#8220;Ah ha&#8221;. It can say. This looks like an authoritive hcard.</p>
-<p>This does however raise a couple of issues. In order for the search engine or external reader to be able to create its hash you have to include the email in your hcard. I&#8217;m also not sure it does solve the issue of evil me:</p>
-<pre><code>&lt;div 
-   class="vcard microid-mailto+http:sha1:40b46e5c349453bddd0dbd022fb33488494699cb"&gt;
-   &lt;h2 class="fn"&gt;evil gareth rushgrove&lt;/h2&gt;
-   &lt;a href="http://spammer.com" class="url" rel="me"&gt;
-      spammer.com
-   &lt;/a&gt;
-   &lt;a href="mailto:gareth@spammer.com" class="email"&gt;
-      gareth@spammer.com
-   &lt;/a&gt;
-&lt;/div&gt;</code></pre>
-<p>Assuming the above is published on spammer.com then I&#8217;m sunk. It&#8217;s another authorative hcard with the same name, in this case <em>my</em> name. Of course therein lies another problem, when we name our children we tend to just do it on a whim, we even copy names we like from other people! And we change or subvert these names when we dont like them with nick names and the like. Domain names are unique so we avoid this problem.</p>
-<p>So, a possible solution does present itself; using the uniqueness of domain names combined with the fact that most people aren&#8217;t evil spammers. Lets postulate a search engine finds lots of hcards for a given name. Most of these hcards probably point back to the url of the entity they are describing (so most hcards on the web describing me point back to this site). We can then check if one of the hcards is from that domain, and if it has a valid microID. In other words we use the lazy web to identify the most likely location of an authorative hcard.</p>
   </div>
   
 </div>

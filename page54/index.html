@@ -68,6 +68,47 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/03/18/semantic-web-acronym-links-primer/">
+        Semantic Web acronym links primer
+      </a>
+    </h1>
+
+    <span class="post-date">18 Mar 2007</span>
+
+    <p>One thing you hit pretty rapidly when you start having a look into all this Semantic Web malarkey is the number of rather <em>silly</em> acronyms and abbreviations. In fairness it&#8217;s true of pretty much every technical or academic discipline I&#8217;ve come across and you can ask the people I work with what I think about that &#8211; I wont ramble on here.</p>
+<p>And dont think this is all because I&#8217;m not technical enough for ya, I have code on my blog and a faintly scary collection of technical tomes. I just think acronyms tend to breed elitism and make the world less penetrable, especially when they are often described in relation to other acronyms. So, after pointing out a problem here&#8217;s a stab at a solution; a web designers guide (with the relevant links) to my understanding of the different things involved. I&#8217;m not an expert on this yet mind, so if I&#8217;m wrong and someone more knowlegable can provide a better description then please comment. If the descriptions from the relevant links I have are good enough I&#8217;ll just use those as well.</p>
+<p>Most people will probably have come across <a href="http://www.w3.org/XML/"><span class="caps">XML</span></a> so hopefully this is an easy one. <span class="caps">XML</span> is the eXtensible Markup Language. For me that means it&#8217;s a set of rules for defining your own markup language; from simple data exchange formats to whole programming languages. The W3C says (which I think nicely highlights my problem from above)</p>
+<blockquote>
+<p>Extensible Markup Language (<span class="caps">XML</span>) is a simple, very flexible text format derived from <span class="caps">SGML</span> (<span class="caps">ISO</span> 8879)</p>
+</blockquote>
+<p><a href="http://www.w3.org/TR/xslt"><span class="caps">XSLT</span></a> is another quite common tool. The W3C again defines it in relation to another acronym but this time I dont mind as much and we&#8217;ve got a defintion of <span class="caps">XML</span> here anyway.</p>
+<blockquote>
+<p>[<span class="caps">XSLT</span> is] a language for transforming <span class="caps">XML</span> documents into other <span class="caps">XML</span> documents</p>
+</blockquote>
+<p>This is a pretty straighforward description, the only real problem for the outsider is wondering why you would want to do that!</p>
+<p><a href="http://www.w3.org/RDF/"><span class="caps">RDF</span></a> <a href="http://www.w3schools.com/rdf/default.asp">W3Schools says</a> is really where the Semantic Web stuff starts. The W3C start off with:</p>
+<blockquote>
+<p>The Resource Description Framework (<span class="caps">RDF</span>) integrates a variety of application&#8230;</p>
+</blockquote>
+<p>Ah. It integrates applications&#8230; What! But wait:</p>
+<blockquote>
+<p>The <span class="caps">RDF</span> specifications provide a lightweight ontology system to support the exchange of knowledge on the Web</p>
+</blockquote>
+<p>This is pretty good actually, as long as you&#8217;re happy with the word <a href="http://en.wikipedia.org/wiki/Ontology_%28computer_science%29">ontology</a>. Their is a <a href="http://www.xml.com/pub/a/2001/01/24/rdf1.html">good article</a> that takes a stab at the question from Tim Bray. I think, simply put, <span class="caps">RDF</span> is common set of rules for defining your own meta data (information about information) so it&#8217;s interopable with everyone else doing the same thing.</p>
+<p>But how are we going to get all that <span class="caps">RDF</span> into our web pages (Semantic or otherwise)? <a href="http://www.w3.org/TR/xhtml-rdfa-primer/">RDFa</a> is one possibility (not going there right now) which involves extending <span class="caps">HTML</span> (all varieties) with some additional attributes with the purpose of being able to embed <span class="caps">RDF</span> in the document. Or from the W3C:</p>
+<blockquote>
+<p>RDFa is a syntax that expresses this structured data using a set of elements and attributes that embed <span class="caps">RDF</span> in <span class="caps">HTML</span></p>
+</blockquote>
+<p><a href="http://www.w3.org/TR/2004/NOTE-grddl-20040413/"><span class="caps">GRDDL</span></a> is probably the worst offender here in terms of someone spending too much time coming up with the acronym. It stands for <em>Gleaning Resource Descriptions from Dialects of Languages</em>. From looking it appears to be a standard way of saying:</p>
+<blockquote>
+<p>Here be some <span class="caps">RDF</span>. If you want the <span class="caps">RDF</span> for this document please use this <span class="caps">XSL</span> transformation.</p>
+</blockquote>
+<p><a href="http://research.talis.com/2005/erdf/wiki/Main/RdfInHtml">eRDF</a>, or embedded <span class="caps">RDF</span> is a simpler approach to RDFa which involves no additional custom attributes but does not aim to be able to represent all the possible <span class="caps">RDF</span> constructs.</p>
+<p>Of course their are many more, but at least that&#8217;s a start. Let me know what you think.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/03/10/im-not-a-werewolf/">
         I&#39;m not a Werewolf!
       </a>
@@ -176,28 +217,6 @@
 <p><img src="http://morethanseven.net/_assets/media/imgMapSample.jpg" title="Sample map of UK Meetups" alt="Sample map of UK Meetups" /></p>
 <p>I&#8217;d like to make this even more flexible, ideally all I should have to do is point the page at the group urls and then parse out the geo-coded microformats data and then display it on the map and page, rather than duplicate this information and maintain it by hand. So if any of the owners of these sites want to geo-code up their sites and let me know that would be great. Some <a href="http://upcoming.org">Upcoming</a> integration might be on the cards too.</p>
 <p>Hopefully it should be of some use to anyone looking for things going on in their area, or if you find yourself in a strange part of the country for whatever reasons then you&#8217;ll know how to find the local geek community without risking life and limb with an odd T-Shirt.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/02/26/what-erdf-can-learn-from-microformats/">
-        What eRDF can learn from Microformats 
-      </a>
-    </h1>
-
-    <span class="post-date">26 Feb 2007</span>
-
-    <p>Quite a bit of time at <a href="http://barcamp.org/BarCampLondon2">BarCamp</a> was spent thinking, talking and in running skirmishes about the Semantic Web. Or the semantic web depending which <em>side</em> you&#8217;re on.</p>
-<p>Now I&#8217;m a big fan and perpetual user of <a href="http://microformats.org">Microformats</a>. They make sense, are simple to add everywhere (by stealth if needs be) and the potential is pretty interesting to boot. They are designed in the open, allowing everyone to participate and have a strong emphasis on solving every day problems in the real world.</p>
-<p>Contrast that with <a href="http://www.w3.org/RDF/"><span class="caps">RDF</span></a> and the Semantic Web. Most of the work here has been going on for years in academic institutions and W3C working groups. It&#8217;s all rather grandiose. Everything I&#8217;d seen previously horribly broke <span class="caps">HTML</span>. But someone seems to have seen the light. <a href="http://blogs.opml.org/tommorris/">Tom Morris</a> mentioned in one of his talks <a href="http://research.talis.com/2005/erdf/wiki/Main/RdfInHtml">eRDF</a>, which is a method for embedding <span class="caps">RDF</span> in <em>valid</em> <span class="caps">HTML</span>.</p>
-<p>After one of the talks I got chatting with Tom Morris and <a href="http://www.kid666.com/blog/">Tom Croucher</a>, both card carrying <span class="caps">RDF</span> folk, and <a href="http://niquimerret.com/">Niqui Merret</a> another interested bystander. Toms argument basically comes down to Microformats solve the 80% problem, <span class="caps">RDF</span> trys to solve the other 20%. I sort of think the Microformats group would probably agree with that. I also like the idea of creating your own formats off the cuff. I&#8217;ve seen enough to at least have a further look see and hopefully try out a few experiements myself.</p>
-<p><a href="http://ben-ward.co.uk/">Ben Ward</a> had a <a href="http://ben-ward.co.uk/journal/fao-rdf/">few things to say on the subject</a> which are worth a good read. I agree with the majority of his arguments but coudn&#8217;t resist commenting on at least one:</p>
-<blockquote>
-<p>If youâ€™re working with <span class="caps">RDF</span>, show me something new. Donâ€™t just rehash vcard and icalendar into your own format; Iâ€™m not interested</p>
-</blockquote>
-<p>I disagree. One of the best thinks about Microformats, that draw people (including me) in from the get go, is the unquestionable ease with which you can add <a href="http://microformats.org/wiki/hcard">hcard</a> or <a href="http://gmpg.org/xfn/">xfn</a> and get on with your day. Weeks or months later, after a few feel good projects you&#8217;ll be keeping an eye on the wiki when you come across something in need of structure. And even then you find it&#8217;s a <a href="http://microformats.org/wiki/hresume">composite</a> of something you&#8217;ve seen before.</p>
-<p>Right now I&#8217;d love to find that. A simple example of how to mark up a few very simple examples of eRDF. Hey, if that means contact details and a calendar event then so be it. If all that&#8217;s wrapped up in a lovely shiny green coat of pain with an icon logo so much the better. Until I can experiment with simple I cant do anything else, never mind anything new. So that&#8217;s two posts for the future sorted then.</p>
-<p>Tom has set up a wiki over at <a href="http://www.getsemantic.com/wiki/Main_Page">GetSemantic</a> to start to collate information together in one place which from my initial research seems like a good idea. If and when I get enough together (and the <a href="http://openid.net">OpenId</a> authentication is up and running) I&#8217;ll make sure to add everything there. If I get carried away and find interesting voices on the blogosphere I might event get a planet up and running. Or I might find way too much <span class="caps">XML</span> and leave it at that.</p>
   </div>
   
 </div>

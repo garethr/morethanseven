@@ -4,13 +4,90 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-01-02T15:36:02+00:00</updated>
+ <updated>2015-05-09T11:46:59+01:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Automating windows development environments</title>
+   <link href="http://www.morethanseven.net/2015/05/09/acceptance-testing-mirageos/"/>
+   <updated>2015-05-09T00:00:00+01:00</updated>
+   <id>http://www.morethanseven.net/2015/05/09/acceptance-testing-mirageos</id>
+   <content type="html">&lt;p&gt;I&amp;#39;m pretty interested in &lt;a href=&quot;http://openmirage.org/&quot;&gt;MirageOS&lt;/a&gt; at the
+moment. Partly because I find the idea behind unikernels interesting and
+partly because I keep bumping into the nice folks &lt;a href=&quot;http://www.cl.cam.ac.uk/projects/ocamllabs/&quot;&gt;OCaml
+Labs&lt;/a&gt; in Cambridge.&lt;/p&gt;
+
+&lt;p&gt;In order to write and build your MirageOS unikernel application you need
+an OCaml development environment. Although this is
+&lt;a href=&quot;http://openmirage.org/wiki/install&quot;&gt;documented&lt;/a&gt; I wanted something a
+little more repeatable. I also found and reported a few bugs in the
+documentation which got me thinking about acceptance testing. I&amp;#39;m not
+(yet) an OCaml programmer, but infrastructure automation and testing I
+can do.&lt;/p&gt;
+
+&lt;h2&gt;Into Puppet&lt;/h2&gt;
+
+&lt;p&gt;I started out writing a Puppet module to install and manage everything,
+which is now available on
+&lt;a href=&quot;https://github.com/garethr/garethr-mirageos&quot;&gt;GitHub&lt;/a&gt; and on the
+&lt;a href=&quot;https://forge.puppetlabs.com/garethr/mirageos&quot;&gt;Forge&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This lets you do something like the following, and have a fully working
+MirageOS setup on Ubuntu 12.04 or 14.04.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-puppet&quot; data-lang=&quot;puppet&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;mirageos&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;user&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;vagrant&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;opam_root&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;/home/vagrant/.opam&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Given time, inclination or pull requests I&amp;#39;ll add support for other
+operating systems in the future.&lt;/p&gt;
+
+&lt;h2&gt;But how do you know it works?&lt;/h2&gt;
+
+&lt;p&gt;The module has a small unit test suite, but it&amp;#39;s nice to know test the
+actual running of Puppet and installation of the software. For this I&amp;#39;ve
+used &lt;a href=&quot;http://kitchen.ci/&quot;&gt;Test Kitchen&lt;/a&gt; and
+&lt;a href=&quot;http://serverspec.org/&quot;&gt;ServerSpec&lt;/a&gt;. This allows for spinning up 2
+virtual machines (one for each supported operating system), applying the
+Puppet manifest and then making some assertions:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/a8d090b5d7f7a190f7d9.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;The above is simply checking whether certain packages are installed, the
+PPA is setup correctly and whether &lt;code&gt;mirage&lt;/code&gt; and &lt;code&gt;opam&lt;/code&gt; can be executed
+cleanly.&lt;/p&gt;
+
+&lt;h2&gt;Can it produce a working unikernel?&lt;/h2&gt;
+
+&lt;p&gt;The above tells us whether the installation worked, but not whether the
+resulting software allows us to build MirageOS unikernels. For this I
+used &lt;a href=&quot;https://github.com/sstephenson/bats&quot;&gt;Bats&lt;/a&gt; running in the same
+Test Kitchen setup.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/191c4c0676b471f9b986.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;The above configures and builds a simple HTTP server unikernel, and then
+checks that when run it returns the expected response on the correct
+port.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I like the separation of concerns above. I can use the Puppet code
+without the test code, or even swap the Puppet code out for a shell
+script if I wanted. I could also run the serverspec tests anywhere I
+want to check state, which is the reason for separating those tests from
+the one&amp;#39;s building and running a unikernel. Overall the tool chain for ad-hoc
+infrastructure testing (quick mention of
+&lt;a href=&quot;http://infrataster.net/&quot;&gt;Infrataster&lt;/a&gt; too) is really quite powerful and
+approachable. I&amp;#39;d love to see more software ship with a user-facing test
+suite for people to verify their installation works.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Automating windows development environments</title>

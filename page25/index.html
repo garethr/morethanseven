@@ -68,6 +68,35 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/06/17/less-css/">
+        Less CSS
+      </a>
+    </h1>
+
+    <span class="post-date">17 Jun 2009</span>
+
+    <p>Ruby people <em>really</em> don&#8217;t like <span class="caps">CSS</span> do they? But <a href="http://lesscss.org/">Less</a> is actually pretty cool. It&#8217;s basically an attempt to bootstrap features, specifically Variables, Mixins, Operations and Nested Rules, into <span class="caps">CSS</span>. The best part about this is it uses <span class="caps">CSS</span> syntax and a simple one step compiler. I&#8217;d be interested to know what the folks at the W3C think about this.</p>
+<p>So for instance you can do:</p>
+<pre>/* LESS */
+@brand_color: #4D926F;
+#header {
+  color: @brand_color;
+}
+h2 {
+  color: @brand_color;
+}</pre>
+<p>and compile it down to:</p>
+<pre>/* CSS */
+#header {
+  color: #4D926F;
+}
+h2 {
+  color: #4D926F;
+}</pre>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/06/11/message-queues-cambridge-geek-night/">
         Message Queues at Cambridge Geek Night
       </a>
@@ -141,34 +170,6 @@
     <span class="post-date">05 Jun 2009</span>
 
     <p>It&#8217;s the first <a href="http://cambridgegeeknights.net/">Cambridge Geek Night</a> next week, on Wednesday the 10th to be precise. You can find more information on <a href="http://upcoming.yahoo.com/event/2735951/">Upcoming</a> or on the <a href="http://cambridgegeeknights.wordpress.com/">Cambridge Geek Night blog</a>. The event also has a <a href="http://twitter.com/camgeeknights">twitter feed</a> to keep up with goings on. If you&#8217;re in Cambridge you don&#8217;t want to miss the perfect combination of geeks and beer.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/06/04/testing-wsgi-application-urltest/">
-        Testing WSGI Application with Urltest
-      </a>
-    </h1>
-
-    <span class="post-date">04 Jun 2009</span>
-
-    <p>I found myself wanted something to make writing high level, functional tests for <span class="caps">WSGI</span> application easier and quicker. If I liked the term I&#8217;d call it a domain specific language for testing URLs. Basically I found myself writing a lot of tests like:</p>
-<pre>def test_404_handler(self):  
-    response = self.app.get('/does-not-exist', expect_errors=True)        
-    self.assertEquals("404 Not Found", response.status)</pre>
-<p>Testing more than a view URLs like this got boring quickly. What I wanted was a short hand syntax for defining this sort of simple test and then running them all individually. So was born <a href="http://github.com/garethr/urltest/tree/master">Urltest</a>. It uses the rather nifty <a href="http://pypi.python.org/pypi/WebTest/0.9">Webtest</a> module and hooks into unittest from the standard library. You&#8217;re test script then looks a little like:</p>
-<pre>#!/usr/bin/env python
-from example_app import application
-from urltest import verify_urls
-if __name__ == "__main__":
-    urls = (
-        {'url':"/", 'code':200},
-        {'url':"/bob", 'code':200},
-        {'url':"/jim", 'code':404},
-        {'url':"/jim", 'method': "POST", 'code':405},
-    )    
-    verify_urls(urls, application)</pre>
-<p>Let me know if you use it as at the moment this is <em>works for me</em> ware, although it&#8217;s reasonably well tested and commented.</p>
   </div>
   
 </div>

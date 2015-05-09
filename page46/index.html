@@ -68,6 +68,25 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/12/26/nice-bits-of-symfony-web-debug-toolbar/">
+        Nice bits of symfony: Web Debug Toolbar
+      </a>
+    </h1>
+
+    <span class="post-date">26 Dec 2007</span>
+
+    <p>I <a href="http://morethanseven.net/posts/getting-going-with-symfony/">mentioned previously</a> that I&#8217;d been playing with the <a href="http://www.symfony-project.org/">symfony</a> framework on a couple of projects and I have to admit to being more and more impressed as I wade in looking for things. I&#8217;ve worked with enough <span class="caps">MVC</span>-like frameworks to know they are all quite similar in more ways than they are dramatically different. So it&#8217;s the little bits and pieces that win you over.</p>
+<p>One of my favourite little bits in symfony has to be the Web Debug Toolbar. When running in development mode you get a little menu floating above your application like so (top right hand corner).</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonyToolbar.png" title="Web page showing the symfony web debug toolbar in the top right corner" alt="Web page showing the symfony web debug toolbar in the top right corner" /></p>
+<p>This gives you all sorts of useful information as you&#8217;re developing your application &#8211; from the number of database queries to the rendering time, with a full logger built in. It&#8217;s also been particularly useful in learning symfony &#8211; being able to follow the entire request through the stack from the logger is really handy when you don&#8217;t know what is going on.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonyToolbar2.png" title="Web page showing the symfony web debug toolbar fully expanded" alt="Web page showing the symfony web debug toolbar fully expanded" /></p>
+<p>With the increasing use of object relational mapping in web frameworks it&#8217;s quite easy to end up with a <em>working</em> application on your development box that turns out to absolutely hammer your database when used in the real world by only a few hundred people (I&#8217;m looking at you tagging). The database utilities, showing the number of queries and the <span class="caps">SQL</span> for those queries, is particularly handy for finding bottlenecks here.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgSymfonySQL.png" title="Web page showing the symfony web debug toolbar SQL view" alt="Web page showing the symfony web debug toolbar SQL view" /></p>
+<p>I&#8217;ve not come across something similar in other frameworks, <span class="caps">PHP</span> or otherwise. I&#8217;d be interested to know if similar things do exist for Rails or Django in particular.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/12/23/happy-with-my-eeepc/">
         Happy with my eeepc
       </a>
@@ -163,33 +182,6 @@
 <p>&#8220;Drew&#8221; and <a href="http://suda.co.uk">Brian</a> are doing a great job of gathering together some really good articles in a silly time-scale over on <a href="http://24ways.org">24ways.org</a> at the moment. <a href="http://24ways.org/2007/minification-a-christmas-diet">My little ditty on minification</a> was day 6.</p>
 <p><a href="http://my.opera.com/chrismills/blog/">Chris Mills</a>, in his new position as Opera mascot, has also rapidly started to build up a great collection of articles over on <a href="http://dev.opera.com">dev.opera</a>. My contribution to what is looking like a great new resource is a piece on <a href="http://dev.opera.com/articles/view/json-configuration-for-javascript/">using <span class="caps">JSON</span> for configuration in your Javascript applications</a>.</p>
 <p>Writing for other people is different to just posting interesting stuff on your blog. And it wouldn&#8217;t work at all without some pretty dedicated people editing, compiling and chasing to get us all those high quality articles for sites such as <a href="http://alistapart.com">alistapart</a>, <a href="http://digital-web.com">Digital Web</a> and <a href="http://sitepoint.com">Sitepoint</a>. So if you meet any of these people on your travels then pat them on the back and <a href="http://foamee.com">buy them a beer</a>. Without the information sharing community we probably wouldn&#8217;t be doing all this for a living.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/12/08/insert-dojo-and-yui-bookmarklets/">
-        Insert Dojo and YUI bookmarklets
-      </a>
-    </h1>
-
-    <span class="post-date">08 Dec 2007</span>
-
-    <p>I&#8217;ve talked about <a href="http://morethanseven.net/posts/debug-web-pages-with-jquery-and-jash/">having fun with jQuery</a> using <a href="http://www.billyreisinger.com/jash/">Jash</a> and Firebug before after seeing <a href="http://simonwillison.net">Simon</a> throw the Google homepage around at barcamp. I&#8217;m no more a one javascript framework person than a one programming language person and recently I&#8217;ve seen cool things I want to play with in lots of the main contenders.</p>
-<p>I&#8217;ve put together a couple of bookmarklets which load <a href="http://developer.yahoo.com/yui/"><span class="caps">YUI</span></a> or <a href="http://dojotoolkit.org/">Dojo</a> from their respective content delivery networks and insert them into your current browser context. You can then play around with them in Jash or Firebug or any other Javascript console.</p>
-<p>Dojo is particularly interesting here due to it&#8217;s cunning loading mechanism for additional parts of the framework. Basically you can gain access to the entire (huge) framework simply by using the bookmarklet and then dynamically loading the rest via the command line.</p>
-<p><a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert Dojo</a></p>
-<pre><code>javascript:void(function(){
- var%20s=document.createElement('script');
- s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';
- document.getElementsByTagName('head')[0].appendChild(s);
-}())</code></pre>
-<p><a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert <span class="caps">YUI</span></a></p>
-<pre><code>javascript:void(function(){
- var%20s=document.createElement('script');
- s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';
- document.getElementsByTagName('head')[0].appendChild(s);
-}())</code></pre>
-<p>The code simply inserts a script element into the page which loads the relevant framework. I&#8217;ve shown the code on multiple lines for the sake of the example, but your bookmarklet should be on one line. Alternatively you can drag the <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert <span class="caps">YUI</span></a> or <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert Dojo</a> links to your bookmark bar.</p>
   </div>
   
 </div>
