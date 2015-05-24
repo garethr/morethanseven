@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/08/11/Talking-configuration-management-vagrant-and-chef-at-lrug/">
+        Talking Configuration Management, Vagrant And Chef At Lrug
+      </a>
+    </h1>
+
+    <span class="post-date">11 Aug 2011</span>
+
+    <p>I stepped in at the last minute to do a talk at the last London Ruby User Group. From the feedback afterwards folks seemed to enyoy it and I certainly had fun. Thanks to everyone who came along.</p>
+<p><object id="__sse8828889" width="595" height="497"> <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironmentsii-110811103611-phpapp02&rel=0&stripped_title=config-managament-for-development-environments-ii&userName=garethr" /> <param name="allowFullScreen" value="true"/> <param name="allowScriptAccess" value="always"/> <embed name="__sse8828889" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironmentsii-110811103611-phpapp02&rel=0&stripped_title=config-managament-for-development-environments-ii&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="595" height="497"></embed> </object></p>
+<p>As well as the slides the nice Skills Matter folks have already uploaded the <a href="http://skillsmatter.com/podcast/home/chef-vagrant">videos from the night</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/07/31/Vim-with-ruby-support-using-homebrew/">
         Vim With Ruby Support Using Homebrew
       </a>
@@ -202,33 +216,6 @@ Transfer rate:          161.82 [Kbytes/sec] received</pre>
 <p>If you&#8217;re working on a larger project hopefully you&#8217;ll have the time to investigate other approaches too. I&#8217;m quite a fan of using production logs to replay requests for instance, and of using <a href="http://funkload.nuxeo.org/">Funkload</a> for running scenarios under load. I&#8217;ll hopefully write more about those later. I&#8217;ve heard good things about <a href="http://tsung.erlang-projects.org/">Tsung</a> as well, <a href="http://www.hpl.hp.com/research/linux/httperf/">HTTPerf</a> is excellent and <a href="http://jakarta.apache.org/jmeter/">JMeter</a> has many fans. I&#8217;m using ab for examples because it&#8217;s point and shoot and you probably already have it installed without knowing.</p>
 
 <p>Hopefully that&#8217;s a useful list of tools to get a baseline of where you&#8217;re at with performance. The rest of the articles in this series will show approaches to improve performance, and come back to one or more of these tools to confirm we&#8217;re heading in the right direction.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/06/26/New-ganglia-web-interface-improvements/">
-        New Ganglia Web Interface Improvements
-      </a>
-    </h1>
-
-    <span class="post-date">26 Jun 2011</span>
-
-    <p>So I&#8217;m a huge <a href="http://ganglia.sourceforge.net/">Ganglia</a> fan. It&#8217;s my go-to tool for standard low level metrics and for more ad-hoc higher level stuff as well. So I&#8217;m very happy to see the <a href="http://ganglia.info/?p=393">newly released</a> version of the Ganglia Web interface.</p>
-<p>Here&#8217;s the old look and feel:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiZ8gEM" alt="Old Ganglia UI"/></p>
-<p>And here&#8217;s the new version:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRix6gEM" alt="New Ganglia UI"/></p>
-<p>The first thing that stands out to me is the wide range of new options. We have a navigation bar with items like search, views, agregate graphs, events and mobile. And we have dynamic date ranges, and filtering and sorting options for metrics.</p>
-<ul>
-	<li>Search is what you&#8217;d expect. A search as you type facility for hosts and metrics, great if you have a large cluster and want to find something quickly.</li>
-	<li>Views are interesting. Basically a way of putting together a specific set of metrics on one screen and linking to them, rather than always having to go via the node or grid overview.</li>
-	<li>You could always create agregate graphs in Ganglia, but you had to delve into writing some <span class="caps">PHP</span> to get what you wanted. Not you can do certain types of graph on the fly, simply by specifying what you want.</li>
-	<li>I&#8217;m cheating slightly here and using the very latest code rather than the 2.0.0 release. But it&#8217;s worth it for the Events feature. Events gives you the ability to record events like a deploy or a daily backup onto your graphs, immediately making some types of diagnosis easier. More about how I&#8217;m using this when I finish automating it.</li>
-	<li>Gnaglia always worked OK on a mobile device mainly because all you really wanted was the graphs. The new mobile UI however just makes navigating much easier. It&#8217;s not yet doing device detection and automatically redirecting my iphone to that view which would be nice but it&#8217;s definately a good addition.</li>
-	<li>Combined with views, automatic rotation shows a series of graphs, one every 30 seconds. Particularly useful for big screen dashboards, in fact I&#8217;ve built this exact feature before more than once before.</li>
-</ul>
-<p>I&#8217;ve concentrated here on the new visual features, but the new UI also contains <span class="caps">CSV</span> and <span class="caps">JSON</span> output for all metrics as well as a much easier <span class="caps">JSON</span> based approach to defining custom metrics. The amount of stuff in this release is huge. Massive thanks to the folks behind all the new features, in particular <a href="http://vuksan.com/">Vladimir Vuksan</a>.</p>
-<p>Ganglia is such a staple that I&#8217;m used to just using whatever is in the latest distro provided packages. When it comes to the web UI however I&#8217;m going to make an exception from now on. Not only can you run the new UI in parallel with the old, deployment is simply copying a directory into place (It&#8217;s easy to forget just how simple <span class="caps">PHP</span> deployment is sometimes). If you&#8217;re already using Ganglia spend a few minutes installing the new UI. If you&#8217;ve rejected Ganglia previously because it didn&#8217;t have one feature or another then now is the time to look again.</p>
   </div>
   
 </div>

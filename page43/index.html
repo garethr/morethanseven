@@ -68,6 +68,33 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/03/14/accepted-for-xtech/">
+        Accepted for Xtech
+      </a>
+    </h1>
+
+    <span class="post-date">14 Mar 2008</span>
+
+    <p>So, while sat with a few people at the WaSP panel at <span class="caps">SXSW</span> (of which more later when I&#8217;m fully caught up) I got a nice email from the folks at <a href="http://2008.xtech.org">Xtech</a> accepting my presentation idea. The abstract is below. If any of that sounds interesting or up your street I&#8217;d love to hear other peoples experiences or ideas on the subject.</p>
+<h2>Design Strategies for a Distributed Web</h2>
+<h3>From language frameworks to APIs</h3>
+<p>Everyone is making use of mature and stable web application or javascript frameworks these days. That means weâ€™ve stopped reinventing things such as routing and object relational mapping, but weâ€™re all still building very similar components again and again. Frameworks might allow us to solve lots of fine grained problems but APIs could let us solve common course grained problems quicker.</p>
+<h3>Building blocks for your applications</h3>
+<p>Their are already a few examples in the wild of APIs designed to be used as part of your application development process. Amazon has been leading the way in providing remote services such as S3, EC2 and SimpleDB. Their are also options when it comes to hosting these services yourself, the mint analytics software and the CouchDb database service are both good examples.</p>
+<h3>Quality engineering for free</h3>
+<p>The real value of outsourcing a discreet portion of your application to a third party <span class="caps">API</span> lies in quality. You could always use local storage and your programming language of choice to deal with a large volume of file read and write operations. But do you really think youâ€™ll beat Amazon for reliability, scalability and speed?</p>
+<h3>Functionality vs Data</h3>
+<p>Itâ€™s not just high quality functionality that we could leverage from other providers. Weâ€™re all fed up with entering and re-entering our personal data into each new service. With advancements like OAuth and Microformats and lots of focus on data portability at the moment we might just be able to share data too.</p>
+<h3>Change the client as well as the server</h3>
+<p>Sometimes itâ€™s not enough to just change the server. The rise of specialised browsers such as Joost and Songbird allows for functionality that would be impossible otherwise. Site specific browser, along with advancements such as local storage, may prove<br />
+Problems</p>
+<p>Itâ€™s not all in place just yet. The reliability of your application is likely to be important, and making use of a distributed set of APIs could leave you in the unenviable position of being less stable than your least stable partner. The issue of lock-in could also raise itâ€™s head, without a vibrant ecosystem of different providers that is.</p>
+<h3>The Future</h3>
+<p>The use of third party commercial APIs has the potential to change the development landscape â€“ bringing high quality middleware to the web. It could be the original web services dream realised. But without critical mass and an active market it could also be a new achilles heel for successful startups.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/03/02/generating-charts-using-google-charts-api/">
         Generating Charts using Google Charts API
       </a>
@@ -270,56 +297,6 @@ PUT     /books/{book-id}</code></pre>
 
     <p>I had a great time at <a href="http://semanticcamp.tommorris.org/">SemanticCamp</a> over the weekend which was not too much of a surprise. What was a surprise was getting back home to find out that I&#8217;ve been invited to join the <a href="http://www.webstandards.org/">Web Standards Project</a> (WaSP) on the <a href="http://www.webstandards.org/action/edutf">Education Task Force</a>. I even have my <a href="http://www.webstandards.org/about/members/grushgrove/">own page</a>.</p>
 <p>Thanks for inviting me guys. Anyone who has had the misfortune of having me present during a discussion of the current state of web education knows it&#8217;s one of my favourite subjects. Hopefully I can make myself useful around the place and help with getting a few things done. More on this when I know more but in the meantime feel free to pester me endlessly if you have a particular axe to grind.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/02/13/example-of-the-yahoo-live-api/">
-        Example of the Yahoo Live Api
-      </a>
-    </h1>
-
-    <span class="post-date">13 Feb 2008</span>
-
-    <p><a href="http://live.yahoo.com/">Yahoo! Live</a> launched recently along with a nice <a href="http://developer.yahoo.com/ylive/rest_api/">RESTful <span class="caps">API</span></a>. I&#8217;ve spoken before about the beauty of <span class="caps">REST</span> being in lowering the barrier to hacking and when I wanted a quick feature for Live it was simplicity itself to put together.</p>
-<p>A few friends are using it far too much it seems, <a href="http://ben-ward.co.uk/">Ben</a> has 7.6 hours and <a href="http://simonjobling.com">Si</a> has already clocked up 15 hours. But for the most part I keep missing their no-doubt highly entertaining antics. One thing that Live misses I feel is a favourite users or previously viewed channels list. Basically I want to see which of my friends who use the service are broadcasting right now. Something like:</p>
-<p><a href="http://morethanseven.net/presents/yahoolive/"><img src="http://img.skitch.com/20080213-q7ntrbip3rhwbkdbykuwt4an5.render.png" alt="Yahoo! Live Online"/></a></p>
-<p>The <span class="caps">API</span> request we&#8217;re interested in is the <a href="http://developer.yahoo.com/ylive/rest_api/channel.html">/channel/<span class="caps">PERMALINK</span></a> method. This lets us get information about whether the user is broadcasting at the moment.</p>
-<pre><code>&lt;?php
-$api = 'http://api.live.yahoo.com/api/v1/channel';
-$friends = array(
-  'garethr',
-  'benward',
-  'sijobling'
-);
-$statuses = array();
-foreach ($friends as $friend) { 
-  $response = simplexml_load_file($api . '/' . $friend);
-  $name = $response-&gt;name; 
-  if ($response-&gt;broadcast) {
-    $status = 'live';
-  } else {
-    $status = 'offline';
-  }
-  $statuses["$name"] = $status;
-}
-function displaylist($array) {
-  $output = '';
-  if (count($array) &gt;= 0) {
-    $output .= '&lt;ul&gt;';
-    foreach ($array as $key =&gt; $value) {
-      $output .= "&lt;li class=\"$value\"&gt;";
-      $output .= "&lt;a href=\"http://live.yahoo.com/$key\"&gt;";
-      $output .= "$key&lt;/a&gt;";
-      $output .= "&lt;span&gt;$value&lt;/span&gt;&lt;/li&gt;";
-    }
-    $output .= '&lt;/ul&gt;';
-  }
-  return $output;
-}
-echo displaylist($statuses);
-?&gt;</code></pre>
-<p>I&#8217;ll add a few more people to <a href="http://morethanseven.net/presents/yahoolive/">my list</a> when I discover other people using the service. If you have an account leave a comment. I&#8217;ve added a touch of javascript as well so as to avoid having to reload the page manually. This way I can loiter on my little aggregator until someone I know starts broadcasting and head over to Live for whatever Si has been spending 15 hours doing.</p>
   </div>
   
 </div>

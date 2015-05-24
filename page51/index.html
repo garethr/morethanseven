@@ -68,6 +68,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/07/31/some-thoughts-on-good-conferences-to-attend-uk/">
+        Some Thoughts on Good Conferences to Attend - UK
+      </a>
+    </h1>
+
+    <span class="post-date">31 Jul 2007</span>
+
+    <p><a href="http://benmetcalfe.com/blog/index.php/2007/07/31/some-thoughts-on-good-conferences-to-attend/">Ben Metcalfe</a> just posted a run down of some thoughts on conferences to attend. With all my travels this year I thought I&#8217;d join in.</p>
+<p>I&#8217;ve spend quite a bit of time this year travelling the UK for various get togethers, conferences, meetups and the like and had great fun doing so. I go mainly because nowhere else do I find quite such a critical mass of smart interesting people to have a pint with and discuss the intricacies of the web. For 2007, in roughly chronological order: <a href="http://www.webdd.org.uk/">WebDD</a>, <a href="http://barcamp.org/BarCampLondon2">Barcamp London</a>, <a href="http://www.futureofwebapps.com/">Future of Web Apps</a>, <a href="http://thehighlandfling.com">Highland Fling</a>, Refresh Edinburgh, <a href="http://vivabit.com/atmedia2007/">@media</a>, <a href="http://www.hackday.org/">Hackday</a>. I&#8217;ll be at <a href="http://2007.dconstruct.org/">dConstruct</a>, Future of Web Apps (again) and possibly <a href="http://www.future-of-mobile.com">Future of Mobile</a> and a Rails meetup in London as well to finish off the year.</p>
+<p>I won&#8217;t go on about how cool <a href="http://barcamp.org/">Barcamp</a> was. I actually think the whole unconference thing sits alongside the more formal conference scene quite nicely rather than acting as a direct challenge. Safe to say if you have yet to make a Barcamp then be on the lookout (although if you could not pick brighton please. I really want to go and it&#8217;s going to be hard enough to get tickets anyway!)</p>
+<p>Highland Fling was excellent. Alan did a bang up job of picking a pretty focused topic and getting a gang of safe hands in to do the talking. Everything seemed to follow on from the previous talk, or catch a thread only touched on earlier in the day. This turned out to be down to the specific topic rather than some pre-conference collusion which I thing bodes well for other such topic centric mini-conferences. It was all rounded off (as all conferences must be) with a rousing talk from <a href="http://www.stuffandnonsense.co.uk/">Andy Clarke</a> and a panel chaired by <a href="http://adactio.com/">Jeremy <del>Paxman</del> <ins>Keith</ins></a>.</p>
+<p>@media is still the daddy of the UK web standards scene. Personally I want more advanced materials and I&#8217;d love to see more audience interaction, but the scale of it makes that a little difficult I acknowledge. I&#8217;ll keep going as long as I learn something new and come away feeling a little bit inspired. I&#8217;ll be going next year. Maybe it&#8217;s not going to hit the heights of the very first @media a couple of years back but that was my first trip out into the world. Oh, and <a href="http://www.htmldog.com/">patrick</a> throws good parties in pubs with beer.</p>
+<p>I think dConstruct is basically a grown up Highland Fling. It was great fun last year so here&#8217;s hoping it&#8217;s as much fun this year. Again, the idea of a particular topic is in place. I&#8217;m still thinking about <a href="http://vivabit.com/atmediaAjax/">@media Ajax</a> if I can get enough work together to pay for it (note to people trying to keep up &#8211; I now <a href="http://garethrushgrove.com">work for myself as a freelancer</a>) and I have a sneaking suspicion I&#8217;ll want to get along to <a href="http://www.future-of-mobile.com/">Future of Mobile</a> in a couple of months too.</p>
+<p>My plan for next year is to try and get out of the country and hopefully to some of the events in the US and Europe that offer something different. <a href="sxsw.com/"><span class="caps">SXSW</span></a> is an obvious choice, but I&#8217;d be interested in any other ideas on top of Ben&#8217;s list. I&#8217;d also like to think in a year of so I might even end up talking at some nice event or other &#8211; but I need to pick a topic and stick to it I reckon instead of flitting between whatever I feel like that afternoon. Oh and probably practice.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/07/18/nabaztag-rest-api/">
         Nabaztag REST API
       </a>
@@ -155,37 +173,6 @@
 <p>I&#8217;ve set up a couple of examples over on <a href="http://morethanseven.net/presents/target">morethanseven.net/presents/target</a>.</p>
 <p>These examples basically remove the need for Javascript implementations but I&#8217;m not sure whether I&#8217;d actually use either of these. But you get the general idea. One thing about the examples was their simplicity compared with similar approaches though.</p>
 <p>It&#8217;s already pretty well implemented according to this handy <a href="http://www.css3.info/modules/selector-compat">compatability table</a> from <a href="http://www.css3.info/">CSS3.info</a> and I would imagine an ideal candidate for <a href="http://andybudd.com">Andy Budd&#8217;s</a> <a href="http://www.andybudd.com/archives/2007/05/css22/">CSS2.2</a>.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/06/22/encoded-characters-in-css3-generated-content/">
-        Encoded Characters in CSS3 Generated Content
-      </a>
-    </h1>
-
-    <span class="post-date">22 Jun 2007</span>
-
-    <p>A quick, but hopefully informative post on something that took me a little time to work out and I thought might trip a few others up too.</p>
-<p>I&#8217;m playing with quite a bit of CSS3 at the moment for our <a href="http://hedgehoglab.com">new company</a> site. It seemed like a good excuse to put into practice lots of progressive enhancement and the like and so far is going nicely if I do say so my self.</p>
-<p>The <a href="http://www.w3.org/TR/css3-content/">CSS3 Generated Content Module</a> has some nice little bits in and I decided to use it to put some icons after external link ala wikipedia (but with nicer icons). Actually what I wanted was simply an arrow and I didn&#8217;t really need an image for that did I?</p>
-<p>Well my first try went a little something like this:</p>
-<pre><code>p a[href^="http:"]:after {
-    content: "#8594;";
-}</code></pre>
-<p>Nope, no luck. By the time it hits the browser it&#8217;s not what I was looking for. I didn&#8217;t think old style named entities would work but what the heck?</p>
-<pre><code>p a[href^="http:"]:after {
-    content: "&amp;rarr;";
-}</code></pre>
-<p>Nope. As I thought. No luck their either. I also tried the character itself (but forgot to put that in the first post &#8211; thanks <a href="http://joeclarke.org/weblogs/">Joe</a>) but again to no avail.</p>
-<pre><code>p a[href^="http:"]:after {
-    content: "â†’";
-}</code></pre>
-<p>Some digging around and I managed to infer the correct syntax from some hidden away examples about something else.</p>
-<pre><code>p a[href^="http:"]:after {
-    content: "\2192";
-}</code></pre>
-<p>You need to use the Unicode encoding. Doh. Job done.</p>
   </div>
   
 </div>

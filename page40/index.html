@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/06/02/where-are-the-rock-star-web-project-managers/">
+        Where are the Rock Star Web Project Managers?
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jun 2008</span>
+
+    <p>In maybe a more constructive manner than <a href="http://morethanseven.net/posts/media-designers-vs-developers/">yesterday</a> I started wondering where the rock star web project managers hang out? I think we&#8217;re all aware of something of a celebrity culture within web circles. Their are a hardcore of people who&#8217;s blogs, books and conference appearances we&#8217;ve all seen several times over. And in the main I think this has had a positive effect on everyone involved. People like <a href="http://adaction.com">Jeremy</a>, <a href="http://molly.com">Molly</a> and <a href="http://simonwillison.net">Simon</a> have at different times acted as pretty useful barometers and yard sticks for lots of people. But these people are invariably designers and developers &#8211; not product managers or project managers.</p>
+<p>The only person I can think of who has talked a little about the topic of project management is <a href="http://blog.geekmanager.co.uk/">Meri</a> with her new book <a href="http://www.sitepoint.com/books/project1/">Principles of Project Management</a>. The topic occasionally comes up in conversation, or is mentioned by the designers and developers noted above. And their are lots of blogs (more often by developers it seems) about Agile, XP and Scrumm. But what about the practice of web product management? You can point to countless blogs written by designers and developers at the likes of last.fm, flickr and Yahoo. But where are the managers?</p>
+<p>So, my question to you is: do you know of any great web product or project managers that blog about the discipline?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/06/01/media-designers-vs-developers/">
         @media: Designers Vs Developers
       </a>
@@ -133,38 +147,6 @@
 <p>I&#8217;m not saying that had anything to do with it, but I&#8217;m happy to announce I&#8217;m moving to London in a permanent manner very very soon. I&#8217;m taking up a job at <a href="http://www.gcapmedia.com"><span class="caps">GCAP</span></a>, working with quite a few people I know from various web goings on; Hi to <a href="http://simonwillison.net">Simon</a>, <a href="http://thecssdiv.co.uk/">Ross</a>, <a href="http://intranation.com/">Brad</a>, <a href="http://www.ejeliot.com/">Ed</a> and <a href="http://muffinresearch.co.uk/">Stuart</a> amongst others.</p>
 <p>Freelancing for the last year has been great. I&#8217;d been able to work on the variety of projects I&#8217;d wanted after leaving my previous job, and I&#8217;ve had more time to myself when I wanted to get involved with other projects. <a href="http://webstandards.org">WaSP</a>, <a href="http://sxsw.com/"><span class="caps">SXSW</span></a>, <a href="http://thehighlandfling.com/">Highland Fling</a>, <a href="http://barcamp.org/BarCampNorthEast">BarCamp</a>, <a href="http://thinkingdigital.co.uk/">Thinking Digital</a> to name a few things I&#8217;ve been up to in the past 6 months. But something about working with a super smart team of people won me over. The fact that I&#8217;ll get to focus on Python and Django is an added bonus.</p>
 <p><a href="http://htmldog.com/">Patrick</a> apparently closed the book on this happening some time ago. I&#8217;m just hoping someone got the date about right and won the money. I&#8217;m sure I&#8217;ll write more about the whole thing as time permits and lots of specific topics spring to mind. I have a number of events in the next month to get along to before all this happens however; if you&#8217;re along at Xtech, Thinking Digital, London Web Week, BarCamp NorthEast, BarCamp London 4 or @media then remember to say hi. My addiction to attending web events can only get worse with me being nearer London I fear.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/04/26/a-really-simple-capistrano-recipe/">
-        A Really Simple Capistrano Recipe
-      </a>
-    </h1>
-
-    <span class="post-date">26 Apr 2008</span>
-
-    <p>Build scripts. I think I&#8217;ve probably mentioned before; everyone knows they should but not many actually do. I&#8217;m not talking about your large in-house development teams or your sexy web startups; both probably have a good-enough build process for different reasons. But smaller teams, web design agencies or freelancers often rely on <span class="caps">FTP</span> and a prayer. One of the problems is definitely finding <em>suitable</em> documentation. It&#8217;s not that their isn&#8217;t a lot of good quality documentation &#8211; it&#8217;s the suitability of it for those with only a passing interest and a limited systems administration experience.</p>
-<p><a href="http://capify.org/">Capistrano</a> is a tool for automating tasks on remote servers. It can be used for all sorts of useful things but we&#8217;ll concentrate on it&#8217;s utility for web site deployment. It&#8217;s been popular with the <a href="http://rubyonrails.com/">Rails</a> crowd for a while and is written in Ruby, but it can be used for deploying sites in Python, <span class="caps">PHP</span>, Django, whatever you happen to be using at the time.</p>
-<p>You&#8217;ll first need to install Ruby and Capistrano. The Capistrano site has <a href="http://capify.org/install">installation instructions</a> which should get you up and running. You&#8217;ll need to be able to use a console on your machine and have a passing acquaintance with your webserver. I&#8217;ve also assumed that you&#8217;re using source control, mainly because if you&#8217;re not you should start their. Automation becomes much more useful and practical on the back of a good source control system.</p>
-<p>Right, lets get started. Create a file called <em>capfile</em> somewhere on your local machine. The following two code snippets should go in that file.</p>
-<pre><code>set :username, "&lt;username&gt;"
-set :host, "&lt;host&gt;"
-set :path, "&lt;path&gt;"
-set :restart, "/etc/init.d/apache2 restart"
-set :checkout, "svn export --force"
-set :repo, "&lt;repository address&gt;"</code></pre>
-<p>Just replace the variables (marked with angle brackets) with your own values. The path is the full path on the remote server where you want to deploy your files to. Note that I&#8217;ve abstracted out the webserver restart command and the source control checkout command. The above example values assume you&#8217;re using apache and subversion (and want to do a subversion export). It should be easy enough to change these for your preferred combination of source control system and webserver.</p>
-<pre><code>desc "Remote checkout and restart of webserver"
-task :deploy, :hosts =&gt; "#{username}@#{host}" do
-  run "#{checkout} #{repo} #{path}; #{restart}"
-end</code></pre>
-<p>If your platform of choice doesn&#8217;t require a server restart (say <span class="caps">PHP</span>) you can always remove the <em>; #{restart}</em> portion of the command.</p>
-<p>Now we&#8217;re all set up just bring up a console in the folder containing the <em>capfile</em> and run the following command:</p>
-<pre><code>cap deploy</code></pre>
-<p>After prompting for a password to access the remote machine this should display the output from the commands being run. Depending on the size of the repository you&#8217;re checking out</p>
-<p>Of course for most projects you would want to expand this basic recipe. Maybe you have database updates to run or need to deploy to multiple machines at once? You&#8217;ll might have machine specific configuration files which aren&#8217;t in the source control system. You will also probably want to be able to revert back if something goes wrong and you might want to only change files that have been altered. Capistrano has lots of powerful features built in that will let you do just that, and once you get started with this sort of build scripting you&#8217;ll find lots of areas to improve. And you&#8217;ll find lots of good tutorials online that will take you further.</p>
-<p>The difficult part with project automation and build scripts is often the <em>getting started</em> in the first place; especially if you&#8217;re not the server admin type. Unfortunately the documentation and articles written on the subject tend to be somewhat arcane and aimed at the more hardcore developer. Hopefully this simple, usable, example convinces someone else to give it a try.</p>
   </div>
   
 </div>

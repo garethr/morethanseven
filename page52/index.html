@@ -68,6 +68,37 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/06/22/encoded-characters-in-css3-generated-content/">
+        Encoded Characters in CSS3 Generated Content
+      </a>
+    </h1>
+
+    <span class="post-date">22 Jun 2007</span>
+
+    <p>A quick, but hopefully informative post on something that took me a little time to work out and I thought might trip a few others up too.</p>
+<p>I&#8217;m playing with quite a bit of CSS3 at the moment for our <a href="http://hedgehoglab.com">new company</a> site. It seemed like a good excuse to put into practice lots of progressive enhancement and the like and so far is going nicely if I do say so my self.</p>
+<p>The <a href="http://www.w3.org/TR/css3-content/">CSS3 Generated Content Module</a> has some nice little bits in and I decided to use it to put some icons after external link ala wikipedia (but with nicer icons). Actually what I wanted was simply an arrow and I didn&#8217;t really need an image for that did I?</p>
+<p>Well my first try went a little something like this:</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "#8594;";
+}</code></pre>
+<p>Nope, no luck. By the time it hits the browser it&#8217;s not what I was looking for. I didn&#8217;t think old style named entities would work but what the heck?</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "&amp;rarr;";
+}</code></pre>
+<p>Nope. As I thought. No luck their either. I also tried the character itself (but forgot to put that in the first post &#8211; thanks <a href="http://joeclarke.org/weblogs/">Joe</a>) but again to no avail.</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "â†’";
+}</code></pre>
+<p>Some digging around and I managed to infer the correct syntax from some hidden away examples about something else.</p>
+<pre><code>p a[href^="http:"]:after {
+    content: "\2192";
+}</code></pre>
+<p>You need to use the Unicode encoding. Doh. Job done.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/06/11/introducing-hedgehog-lab/">
         Introducing hedgehog lab
       </a>
@@ -195,27 +226,6 @@
 <p><a href="http://www.hackday.org" style="border: none; padding: 0px; margin: 0px"><img src="http://l.yimg.com/us.yimg.com/i/us/ydn/hackday/hack_day_pattern_four.gif" alt="Hack Day: London, June 16/17 2007" width="180" height="105" style="border: none; margin: 0; padding: 0;"/></a></p>
 <p>So, who else is going along and does anyone have any ideas they want team mates for? I&#8217;m thinking something mobile or microformats related or alternatively something I know very little about. Any ideas?</p>
 <p>Oh, and I know I&#8217;ve been quite around the place lately, more on that when I can talk about it.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/05/07/cssxx/">
-        CSSx.x
-      </a>
-    </h1>
-
-    <span class="post-date">07 May 2007</span>
-
-    <p><a href="http://andybudd.com">Andy</a> gave a great thought provoking presentation (exactly what conference presentations should be) at the recent <a href="http://thehighlandfling.com/2007/">Highland Fling</a> shindig on the future of <span class="caps">CSS</span> which he&#8217;s written up into a good thought provoking blog post on <a href="http://www.andybudd.com/archives/2007/05/css22/index.php">CSS2.2</a></p>
-<h3>The Problem</h3>
-<p>As web standards developers we want new toys! I took to <span class="caps">CSS</span> because <em>it made sense</em> set against the madness of table based layouts, not necessarily because it appeared easy or flexible. <span class="caps">CSS</span> has turned out to be hugely flexible, but some of that flexibility has come at the expense of some weird and wonderful and successful techniques. I love this ingenuity, I&#8217;d like to think that the original <span class="caps">CSS</span> specification allowed for this cleverness in real world use.</p>
-<p>CSS3 has stalled. CSS3 is trying to solve a whole host of massive problems that others are better placed to comment on, but I&#8217;d love to hear some comment from members of the working group. If I&#8217;ve missed a regular blog by a working group member please leave a comment and let me know.</p>
-<p>I&#8217;m a real believer in open standards and I think that it&#8217;s this issue that worries me more about the pace of <span class="caps">CSS</span> development. Yes, I want new toys, or more specifically I want to be more efficient (yes rounded corners, I&#8217;m looking at you) but actually, I&#8217;d rather have a good CSS3 spec than a fast and loose one. But the immenent fight between Flash/Adobe and Silverlight/Microsoft is showing how productive huge commercial companies can be when it wants to get something done. Both are introducing interesting new tools and allowing for what could be improvements to usability (or horribly confusing interfaces but hey). <span class="caps">CSS</span> and <span class="caps">HTML</span> should be the glue that binds all this together in a web where everything plays nicely together. But if <span class="caps">CSS</span> provides too little or too late then this is put in doubt. And if <span class="caps">CSS</span> falls I dont see microformats, rdf, html5 or whatever making a real dent &#8211; and I really want a semantic web (upper <strong>and</strong> lower case).</p>
-<h3>The Solution?</h3>
-<p>Well, I&#8217;d like to say the solution isn&#8217;t <em>Browser Wars II &#8211; A good idea this time?</em></p>
-<p>Andy&#8217;s suggestion of an interim step (or steps) between now and CSS3 modules raises a problem. If the working group do the work then it takes their eye further off getting CSS3 modules out. If they don&#8217;t, will they accept suggestions from outside? Will outsiders be able to grok the whole standardisation process?</p>
-<p>What we need is a commercial company with lots of smart people and lots of cash &#8211; with a track record of working with standards. A member of the W3C would be a plus. Ideally they should have something invested in the web as a platform, maybe even in a smarter, cleverer, semantic web.</p>
-<p>Google to the rescue maybe? If you&#8217;re really cynical you could see Silverlight as an end run around Google&#8217;s apparent dominance of the web as a platform. Lock content away in proprietary silos and traditional search becomes less appealing? And surely Google has lots to gain from the long term adoption of anything that increases the semantic nature of the web. If <span class="caps">CSS</span> is a battleground then maybe they need to come out and make a stand(ard)?</p>
   </div>
   
 </div>

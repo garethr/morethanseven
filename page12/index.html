@@ -68,6 +68,42 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/05/07/Version-control-and-deployment-of-cron-jobs/">
+        Version Control And Deployment Of Cron Jobs
+      </a>
+    </h1>
+
+    <span class="post-date">07 May 2011</span>
+
+    <p>A recent question on Twitter prompted me to write a quick blog post about managing cron jobs. As more and more people want to automate provisioning and deployment of web applications some, maybe previously manually managed, items come into the fold.</p>
+<p>Cron jobs are interesting because you may prefer to see them as part of the infrastructure (like apache or mysql) or as part of your application code. I think both are valid, sometimes at the same time. For instance you might have a cron job which deals with scheduled database backups. All that requires is the database and the script to be present. At other times your cron jobs might require your entire application stack. For instance a rake task which uses a Rails application model, or a django management command.</p>
+<h2>Configuration Management and Cron</h2>
+<p>Both <a href="http://opscode.com/chef/">Chef</a> and <a href="http://puppetlabs.com/puppet/">Puppet</a> provide a cron resource type. This is particularly handy for things like database backup scripts or ganglia gmetric scripts. You probably want these scripts and cron jobs to be installed on machines that have the related software installed, and you&#8217;re probably already describing this in your Chef recipes or Puppet manifests. If you&#8217;re not already using one of these tools using them to manage just your cron jobs is a nice way of starting out.</p>
+<p>Using the <a href="http://docs.puppetlabs.com/references/latest/type.html#cron">Puppet Cron Type</a> looks like this:</p>
+<pre><code>cron { command:
+  command =&gt; "/usr/local/sbin/command",
+  hour =&gt; 2,
+  minute =&gt; 0
+}</code></pre>
+<p>And the equivalent <a href="http://wiki.opscode.com/display/chef/Resources#Resources-Cron">Chef Reasource</a> looks like:</p>
+<pre><code>cron "describe your job" do
+  hour "2"
+  minute "0"
+  command "/usr/local/sbin/command"
+end</code></pre>
+<p>The important part is that by describing your cron jobs in code you can then version control them easily, and both Chef and Puppet have mechanisms to push these jobs out to be installed by the relevant hosts. With cron jobs you might not want all your machines to be running the same jobs for instance.</p>
+<h2>Using Whenever</h2>
+<p>An alternative, or complimentary, approach to versioning and deploying cron jobs would be to tie it in with your application code. This makes sense when those jobs are tightly coupled to your application, for instance rails specific rake tasks or django management commands. <a href="https://github.com/javan/whenever">Whenever</a> is a tool I&#8217;ve been using recently that makes this pretty simple. You describe your cron jobs in a file called schedule.rb like so:</p>
+<pre><code>every 3.hours do
+  command "/usr/local/sbin/command"
+end</code></pre>
+<p>And then running the provided whenever command line application will generate a working crontab. Whenever ships with capistrano integration and some useful shortcuts for running rake tasks or accessing Ruby code, but it&#8217;s simple to write your own command shortcuts without having to write ruby code too.</p>
+<h2>Other Approaches</h2>
+<p>I have seen some tools which replace cron completely, but I&#8217;ve never liked that idea much. Cron works pretty well, and is clever enough to deal with things like daylight saving time and leap years inteligently if needed. I know other folks who are centralising all regular jobs into something like Jenkins. I can see advantages to that, although I&#8217;ve yet to find a really nice way of automating this outside the gui interface or manually modifying configuration files.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/04/29/Creating-a-cucumber-nagios-package-with-fpm/">
         Creating A Cucumber Nagios Package With Fpm
       </a>
@@ -176,31 +212,6 @@ Generating with project generator:
 <p><object id="__sse7492405" width="595" height="497"> <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=metricswithganglia-110402103441-phpapp01&rel=0&stripped_title=metrics-with-ganglia&userName=garethr" /> <param name="allowFullScreen" value="true"/> <param name="allowScriptAccess" value="always"/> <embed name="__sse7492405" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=metricswithganglia-110402103441-phpapp01&rel=0&stripped_title=metrics-with-ganglia&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="595" height="497"></embed> </object></p>
 <p>The audience of web developers, the odd sysadmin and business folk seemed to enjoy it and we had lots of time for questions at the end. The main point I tried to get across was that Ganglia makes a great platform for ad-hoc metrics gathering due to the ability to just throw values at it and get time series graphs without any extra configuration.</p>
 <p>The slides include a few bits of code I&#8217;ve been using that I&#8217;ll throw onto GitHub as a proper project when I get the time. These are very simple Python servers, one which allows for sending metrics information over <span class="caps">HTTP</span>, the other using <span class="caps">TCP</span> instead. Both really handy for getting more people to add hooks into applications.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/03/26/Devops-isnt-a-methodology/">
-        Devops Isn't A Methodology
-      </a>
-    </h1>
-
-    <span class="post-date">26 Mar 2011</span>
-
-    <p>I was reading <a href="http://teddziuba.com/2011/03/devops-scam.html">Devops is a poorly executed scam</a> and just couldn&#8217;t resist a reply. Not because of the entertaining title, but because I both agree and disagree quite strongly with parts of the post. Read it first if you haven&#8217;t already. And yes I know I&#8217;m feeding the internet.</p>
-<p>I&#8217;m going to pick parts of the post out and then comment. Hopefully I&#8217;m not quoting these in any way out of context.</p>
-<h2>&#8220;It&#8217;s got the potential to make a handful of people a lot of money in the same way that Agile did, but nobody is really executing on.&#8221;</h2>
-<p>People are pretty aware of this fact I think, but watch what happens when people post on the mailing lists or turn up at community events with a purely marketing hat on. They just get no traction and even damage their product brand amongst the early adopters. The fact the term is starting to get used in job adverts and marketing materials isn&#8217;t really being driven by the people talking about what devops might or might not be. I think the main reason for this is that most of the people I talk to in person or online are actually pretty happy with their jobs and generally work inside companies rather than as independent consultants. They have often reached an age where they want to improve within a given field but would like a wider network than their current colleagues to discuss things with.</p>
-<h2>&#8220;How do you implement Devops?&#8221;</h2>
-<p>I don&#8217;t think you do. The comparisons with Agile are interesting from a community point of view but Scrum is a methodology. To me at least devops isn&#8217;t, it&#8217;s just a banner or tag under which interesting conversations are happening. The argument that &#8220;You should be doing this anyway. Not earth shattering.&#8221; is a good thing. You&#8217;d be suprised by how many people don&#8217;t do all the things they should be doing, especially in small and young companies. And one of the reasons for that is no one bothered writing a list of these things down anywhere and then discussing them. I&#8217;m not saying this huge list exists or even whether it should, but the discussion is happening.</p>
-<h2>&#8220;The underlying problem, however, is that dev and ops have different goals&#8221;</h2>
-<p>This is spot on. I think this maybe does get missed in talk that focuses more on tools but not in the wider discussion happening about business improvements. Devops quite litterally brings those two things together. You&#8217;ll always have individual goals but where you have separate operations and development teams they should have the same fundamental goals.</p>
-<h2>&#8220;Developers develop in the same environment production runs in If you deploy to Linux, you develop on Linux. No more of this coding on your Macbook Pro and deploying to Ubuntu: that is why you can&#8217;t have nice things.&#8221;</h2>
-<p>Yes, yes and yes again. I&#8217;m definitely from the developer side of the tracks and I&#8217;m constantly telling people this and it&#8217;s definitely something I don&#8217;t see enough people doing. What I&#8217;d love is for all the operations people to state this to their development team and most importantly to help them set that up. Just saying <em>work like me or I won&#8217;t let you near the production machines</em> is just being obstructive. Educating and helping with tooling helps build those bridges and trust. And with trust comes the access the developers want. And less stupid bugs and less deployment issues with differing package dependencies.</p>
-<h2>&#8220;None of this amounts to a methodology, as the Devops people would have you believe.&#8221;</h2>
-<p>Still unsure which Devops people are saying it&#8217;s a bonefide methodology. I see the word used sometimes but generally in passing and not I don&#8217;t think meant how you mean here. And I don&#8217;t think I&#8217;ve heard people speak about it in person. &#8220;Scrum methodology&#8221; returns more than 113,000 results in Google. &#8220;Devops methodology&#8221; returns about 150, some of which 404 and half of which are agregators pointing at the other half.</p>
-<h2>&#8220;The Devops movement smells of a scam in the making&#8221;</h2>
-<p>Some company or other is definitely going to be scammed into paying over the odds for a consultant because they used the word Devops in the sales pitch. That will have next to nothing to do with what I&#8217;d see as the Devops movement and everything to do with human nature (and sales people).</p>
   </div>
   
 </div>
