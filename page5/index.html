@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,70 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/04/23/web-application-security-tools/">
+        Web application security tools
+      </a>
+    </h1>
+
+    <span class="post-date">23 Apr 2013</span>
+
+    <p>I&#8217;ve become increasingly interested in web application security issues over the last year or so. Working in Government will do that to you. And I&#8217;ve come to the conclusion that a) there are lots of good open source security tools, b) many of them are terribly packaged and c) most developers don&#8217;t use any of them.</p>
+<p>I&#8217;ve been having related conversations at recent events I&#8217;ve made it along to, including Devopsdays London which featured some good open spaces discussions on the subject. Security is one of those areas that, for many organisations, is basically outsourced to third party penetration testing firms or consultants. Specialists definitely have a role to play, but with a move towards increasingly rapid releases I think in-house security testing and monitoring is going to get more and more important.</p>
+<h2>A collection of security tools</h2>
+<p>I&#8217;ve started to build a <a href="https://github.com/garethr/pentesting-playground">collection of tools on GitHub</a>, along with a vagrant setup to test them out. Full instructions are available on that repository but the short version is you can run one command and have one virtual machine filled with security testing tools and, if useful, another machine running a vulnerable web application with which to test. The current list of tools runs to:</p>
+<ul>
+	<li><a href="http://code.google.com/p/skipfish/">skipfish</a></li>
+	<li><a href="http://nmap.org/">nmap</a></li>
+	<li><a href="http://www.cirt.net/nikto2">nikto</a></li>
+	<li><a href="http://w3af.org/">w3af</a></li>
+	<li><a href="https://github.com/mozilla/Garmr">garmr</a></li>
+	<li><a href="https://github.com/iSECPartners/sslyze">sslyze</a></li>
+	<li><a href="https://github.com/metachris/wpscanner">wpscanner</a></li>
+	<li><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">owasp zap</a></li>
+	<li><a href="http://arachni-scanner.com/">arachni</a></li>
+	<li><a href="https://github.com/gauntlt/gauntlt">gauntlt</a></li>
+	<li><a href="http://sqlmap.org/">sqlmap</a></li>
+	<li><a href="http://wpscan.org/">wpscan</a></li>
+	<li><a href="http://sourceforge.net/projects/sslscan/">sslscan</a></li>
+	<li><a href="http://blog.taddong.com/2013/02/tlssled-v13.html">TLSSLed</a></li>
+</ul>
+<p>But I&#8217;ll add more tools as I discover them or as people file issues or pull requests.</p>
+<h2>What about Backtrack?</h2>
+<p>When I started investigating tools for security and penetration testing most roads led to <a href="http://www.backtrack-linux.org/">Backtrack</a>. This is a complete Linux distribution packed with a huge number of security tools, including many if not all of the above. Why then did I write puppet code rather than create a Vagrant box from Backtrack? Firstly, Backtrack is probably great if you&#8217;re a professional penetration tester, but the barrier to entry to installing a new distibution for most developers is too high in my view. And with a view to using some of these tools as part of monitoring systems I don&#8217;t always want a separate virtual machine. I want to be able to install the tools wherever I want. A good configuration management tool gives you that portability, and Vagrant gives you all the benefits of a local virtual machine.</p>
+<h2>Future plans</h2>
+<p>As mentioned I&#8217;d like to expand how some of these tools are used to include automated monitoring of applications, maybe look at ways of extracting data for metrics or possibily writing a Sensu plugin or two. The first step to that is probably breaking down the monolithic puppet manifest into separate modules for each tool. Along the way I can add support for more operating systems as required. I&#8217;ve already done that for the <a href="http://forge.puppetlabs.com/garethr/wackopicko">wackopicko module which is up on the Forge</a>.</p>
+<p>I&#8217;m also soliciting any and all feedback, especially from developers who don&#8217;t do any security related testing but feel like they should.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/03/23/government-service-design-manual/">
+        Government Service Design Manual
+      </a>
+    </h1>
+
+    <span class="post-date">23 Mar 2013</span>
+
+    <p>I&#8217;ve not been writing many blog posts lately, but I have been doing quite a bit of writing elsewhere. One of the things I&#8217;ve had a hand in at work is the new <a href="https://www.gov.uk/service-manual">Government Service Design Manual</a>. This is the work of many people I work with as well as further afield. It&#8217;s intended to be a good starting place to find information about building high quality digital services.</p>
+<p>The manual is in beta and we&#8217;re looking for as much feedback as possible on the whole thing. It&#8217;s already proving useful and a good way of framing the scope of discussions, but it has lots of room for improvement.</p>
+<p>If you&#8217;re reading this post I&#8217;m going to wager you&#8217;re interest lies in or around devops flavoured content. The following are guides I&#8217;ve written in this area that I&#8217;d love any and all feedback on.</p>
+<ul>
+	<li><a href="https://www.gov.uk/service-manual/the-team/web-operations.html">Web Operations</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/configuration-management.html">Configuration Management</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/hosting.html">Hosting</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/information-security.html">Information Security</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/monitoring.html">Monitoring</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/load-and-performance-testing.html">Load and Performance Testing</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/release-strategies.html">Releasing Software</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/penetration-testing.html">Vulnerability and Penetration Testing</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/choosing-technology.html">Choosing Technology</a></li>
+</ul>
+<p>If you&#8217;re interested in the background to this endeavour then a couple of blog posts from some of my colleagues might be of interest too. First Richard Pope talks about <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">how the manual came about</a> and here&#8217;s a post from Andrew Greenway about this <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">beta testing of the service standard</a>.</p>
+<p>The source for all this is on <a href="https://github.com/alphagov/government-service-design-manual">GitHub</a> so if you prefer you can just sent a pull request. Or I&#8217;m happy to get emails or comments on this post. In particular if people have good references or next steps for these guides then let me know as several of them in particular are lacking in that area.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -109,45 +173,6 @@
 
     <p>About a month ago I had the good fortune of speaking at the <a href="http://www.meetup.com/London-Web-Performance-Group/">London Web Performance</a> meetup. This was one of the first talks I&#8217;ve done about our work at The Government Digital Service since the luanch of <span class="caps">GOV</span>.UK back in October. The topic was all about moving quickly in a large organisation (The UK Civil Service is about 450,000 people so I think it counts) and featured just a hand full of technical and organisational tricks we used.</p>
 <script async class="speakerdeck-embed" data-id="bc48ed2042c20130b322123138156909" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/01/13/django-and-rails-presentation-from-qcon/">
-        Django and Rails presentation from QCon
-      </a>
-    </h1>
-
-    <span class="post-date">13 Jan 2013</span>
-
-    <p>I had great fun back in November at the <a href="http://qconsf.com/">QCon</a> conference in San Francisco. As well as currating one of the tracks and catching up with people in the area I managed to give the following talk.</p>
-<script async class="speakerdeck-embed" data-id="7e1dd5a03efc0130083b123139173def" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script><p>In hindsight it might have been a bit odd to try and cover both Rails and Django examples in the one presentation but it was quite good fun putting together code examples using both of them at the same time. As well as a large set of tips, tricks and tools I settled on a few things that I think any web (or other) framework should support out of the box.</p>
-<ul>
-	<li>A debug toolbar</li>
-	<li>Transparent caching support</li>
-	<li>Hooks for instrumentation</li>
-	<li>Configurable logging</li>
-</ul>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/12/30/my-personal-package-repository/">
-        my personal package repository
-      </a>
-    </h1>
-
-    <span class="post-date">30 Dec 2012</span>
-
-    <p>I&#8217;m a <a href="http://www.morethanseven.net/2011/01/16/Why-developers-should-care-about-system-packages/">big fan of system packages for lots of reasons</a> and have often ended up rolling my own debian package repository at work, or working with others that have done so. Recently I finally got round to setting up a personal package repo, at <a href="http://packages.garethrushgrove.com">packages.garethrushgrove.com</a>. More interesting than the repo is probably the tool chain I used, oh and the rather nice bootstrap based styling.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjh1wIM" alt="nice looking package repository"/></p>
-<p>The source code for everything is <a href="https://github.com/garethr/packages">on GitHub</a> although not much documentation exists yet. In the middle are a few shell scripts that generate the repo. Around them is a Vagrant box (which makes it easier to build packages for different achitectures or distros) and some Rake commands</p>
-<pre><code>bundle exec rake -T
-rake recipes:build[recipe]  # Build a package from one of the available recipes
-rake recipes:list           # List available recipes
-rake repo:build             # Build the repository</code></pre>
-<p>The recipes commands allow for building new packages based on scripts. A few examples are included which use fpm, but you could use anything. The repo:build command triggers the debian repository to be rebuilt.</p>
-<p>The vagrant configuration shares various folders between and guest and host which also opens up a few useful features. One is I can just drop any old debian package into the debs folder and run the repo:build command and it will be in my repository. The other useful capability is that the resulting repo is shared back to the host, which means I can then check it into Git and in my case push it up to Heroku.</p>
   </div>
   
 </div>

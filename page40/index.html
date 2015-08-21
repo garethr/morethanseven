@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,39 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/08/31/django-powered/">
+        Django Powered
+      </a>
+    </h1>
+
+    <span class="post-date">31 Aug 2008</span>
+
+    <p>A short break from blogging ends with a new site design. As with all these things their will no doubt be a few kinks still to work out and I&#8217;ll be adding to the design a little over the coming months. The main reason for all this change? A move to a custom <span class="caps">CMS</span> build using Django. This was something of an excuse to play around with Django outside <a href="http://www.gcapmedia.com/">work</a> and I&#8217;m pretty happy with the results. I have all the bits of wordpress I actually used, plus a few bits I didn&#8217;t have before. More importantly I have something I want to hack on. Wordpress is a kick ass blogging tool, but keeping it updated or adding new features never seemed much like fun.</p>
+<p>It seems like it&#8217;s the week for Django related site launches in the UK. We released the <a href="http://www.capitalradio.co.uk/">new Capital Radio site</a> on the world last week and Nat beat me by a day or so with <a href="http://natbat.net/">her new Django powered site</a>. Look for more in the future too I would wager.</p>
+<p>I have a whole range of posts brewing about what I found out along the way, both building a personal blog and building a large site with a big team. Keeping up with the bleeding edge of Django ahead of the 1.0 release took some doing (I&#8217;m running the latest Trunk release here at the moment). Deciding to use a combination of <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a> and <a href="http://nginx.net/">Nginx</a> for serving is a nice break from Apache as well. But that is all for later when I have a little more time.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2008/06/21/of-hacking-continuous-integration-and-django/">
+        Of Hacking, Continuous Integration and Django
+      </a>
+    </h1>
+
+    <span class="post-date">21 Jun 2008</span>
+
+    <p>I&#8217;ve not written anything here for a good few weeks, my tweeting has slowed down some and I&#8217;m behind on my feed reading. I&#8217;m going to blame the new job and the daily commute from Cambridge to London I think. I&#8217;ve definitely not been any less busy that usual:</p>
+<h3>Hacking</h3>
+<p>We had an internal hackday on Thursday and Friday last week where lots of us over at GCap/Global downed tools and build cools stuff for a couple of days. This is exactly the sort of reason I took the job in London &#8211; for the opportunity to build interesting things quickly with other smart people. I got to play around with an event driven, music orientated, <span class="caps">API</span> hack and a more useful but less sexy documentation hack. Yes, I said documentation hack. I might be able to release the latter all being well but I need to finish it off first and kick the tyres on some internal projects</p>
+<h3>Django</h3>
+<p>As a development team we&#8217;re using <a href="http://djangoproject.com/">Django</a> for everything which is proving to be huge fun. It&#8217;s a decent size project and we&#8217;re pushing Django (and in particular new-forms admin) in interesting ways. Having worked previously with <span class="caps">PHP</span>, <span class="caps">ASP</span>.<span class="caps">NET</span> and Rails I&#8217;m loving lots of bits of Django. I mentioned the <a href="http://morethanseven.net/posts/why-the-webstandards-world-appears-to-be-choosing-django/">template system</a> before but their are lots of other things to appreciate. Some of this just comes from working with people like <a href="http://simonwillison.com">Simon</a> and <a href="http://www.siudesign.co.uk/">Rob</a> who know Django pretty well. Some of it just from being able to write Python every day.</p>
+<h3>Continuous Integration</h3>
+<p>When not working on Django, or writing <span class="caps">HTML</span>, <span class="caps">CSS</span> or Javascipt (now mainly using <a href="http://jquery.com">JQuery</a>), I&#8217;ve been busy pushing the benefits of Continuous Integration. As someone who is actually pretty bad at writing unit tests I like the process of working with <a href="http://cruisecontrol.sourceforge.net/">Cruise Control</a> as a gatekeeper. I also like automation in general so have been busy with Ant scripts and some Twill scripts as well for more functional testing. Django&#8217;s test suite is pretty nifty and easy to use. <a href="http://www.djangoproject.com/documentation/testing/">The official documentation</a> is a pretty good starting point but I&#8217;m still on the lookout for some more in depth best practices articles.</p>
+<p>So, between writing lots of code I&#8217;ve had less time to write words other than internal documentation. I&#8217;m finding the change pretty refreshing at the moment but want to keep up with writing every now and again. Who knows how that will work out? I have a feeling that I might blog more geeky code related stuff but time will see how that plays out.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -114,39 +147,6 @@
 <p>It really is great to see thing happening at this end of the country, and a real shame I&#8217;m leaving the area so soon afterwards. I really hope the local community gets behind all these events and they act as a catalyst for interesting things. I&#8217;ve always been of the mind that if you can get enough smart, interested people together in one place then good things will happen. It&#8217;s why I enjoy going along to conferences, hackdays and barcamps. It&#8217;s also one of the main reasons I joined GCap.</p>
 <p>Once I&#8217;ve recovered from the next two weeks (which may take a while as next week I&#8217;m in London for <a href="http://www.vivabit.com/atmedia2008/london/">@media</a>, <a href="http://barcamp.org/BarCampLondon4">BarCampLondon4</a> and anything else I can get along to) I&#8217;ll hopefully write more about trying to organise a barcamp and, if I really get time to think, about knowledge workers outside and inside London.</p>
 <p>But in the meantime leave a comment if you&#8217;re going to be around in Newcastle over the next week. It should be a great opportunity to meet new and old friends alike.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/05/09/design-strategies-for-a-distributed-web/">
-        Design Strategies for a Distributed Web
-      </a>
-    </h1>
-
-    <span class="post-date">09 May 2008</span>
-
-    <p>I just finished my presentation on the last day of the Xtech conference in Dublin. I&#8217;d chosen to ramble on about the advantages, problems and a few solutions of building applications atop of lots of APIs. The presentation is now up on <a href="http://slideshare.net">slideshare</a> at <a href="http://www.slideshare.net/garethr/design-strategies-for-a-distributed-web/">slideshare.net/garethr/design-strategies-for-a-distributed-web/</a>.</p>
-<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=design-strategies-for-a-distributed-web-1210328995794127-8"/><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=design-strategies-for-a-distributed-web-1210328995794127-8" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
-<p>Lots of interesting conversations have been occurring all week and a few people have mentioned a near barcamp feel at times. It&#8217;s a pretty small, clued-up, technical audience and as always some of the best bits have been conversations in the corridors.<br />
-<a href="http://adactio.com">Jeremy</a> has been <a href="http://adactio.com/journal/tag/xtech08">live blogging many of the talks</a> which should be a worth a read later on. Although with three tracks most of the time that&#8217;s only some of the great talks on offer.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/04/29/moving-to-london-working-for-gcap/">
-        Moving to London, Working For GCAP
-      </a>
-    </h1>
-
-    <span class="post-date">29 Apr 2008</span>
-
-    <p>On departing <a href="http://www.pubstandards.co.uk/">pubstandards</a> in London a few weeks ago <a href="http://blog.ginader.de/">Dirk Ginader</a> said something along the lines of:</p>
-<blockquote>
-<p>According to Dopplr you&#8217;ve spent 40 odd days in London in the last 8 months. Don&#8217;t you think you might as well just move here?</p>
-</blockquote>
-<p>I&#8217;m not saying that had anything to do with it, but I&#8217;m happy to announce I&#8217;m moving to London in a permanent manner very very soon. I&#8217;m taking up a job at <a href="http://www.gcapmedia.com"><span class="caps">GCAP</span></a>, working with quite a few people I know from various web goings on; Hi to <a href="http://simonwillison.net">Simon</a>, <a href="http://thecssdiv.co.uk/">Ross</a>, <a href="http://intranation.com/">Brad</a>, <a href="http://www.ejeliot.com/">Ed</a> and <a href="http://muffinresearch.co.uk/">Stuart</a> amongst others.</p>
-<p>Freelancing for the last year has been great. I&#8217;d been able to work on the variety of projects I&#8217;d wanted after leaving my previous job, and I&#8217;ve had more time to myself when I wanted to get involved with other projects. <a href="http://webstandards.org">WaSP</a>, <a href="http://sxsw.com/"><span class="caps">SXSW</span></a>, <a href="http://thehighlandfling.com/">Highland Fling</a>, <a href="http://barcamp.org/BarCampNorthEast">BarCamp</a>, <a href="http://thinkingdigital.co.uk/">Thinking Digital</a> to name a few things I&#8217;ve been up to in the past 6 months. But something about working with a super smart team of people won me over. The fact that I&#8217;ll get to focus on Python and Django is an added bonus.</p>
-<p><a href="http://htmldog.com/">Patrick</a> apparently closed the book on this happening some time ago. I&#8217;m just hoping someone got the date about right and won the money. I&#8217;m sure I&#8217;ll write more about the whole thing as time permits and lots of specific topics spring to mind. I have a number of events in the next month to get along to before all this happens however; if you&#8217;re along at Xtech, Thinking Digital, London Web Week, BarCamp NorthEast, BarCamp London 4 or @media then remember to say hi. My addiction to attending web events can only get worse with me being nearer London I fear.</p>
   </div>
   
 </div>

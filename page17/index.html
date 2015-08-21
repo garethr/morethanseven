@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,36 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/09/09/Script-running-web-interface-with-websockets/">
+        Script Running Web Interface With Websockets
+      </a>
+    </h1>
+
+    <span class="post-date">09 Sep 2010</span>
+
+    <p>After something of a break I found a bit of time for some hacking at the weekend and decided to scratch a personal itch. I like writing shell scripts for everything from checking on things to deploying code. For anything that is more than just executing one command, or anything with detailed output or that takes a while I like to be able to see what&#8217;s going on. I also like to (OK, only sometimes) let other people run those commands and not all those people want to check something out and run a console. The web maks a pretty good interface for this sort of situation.</p>
+<p>Enter <a href="http://github.com/garethr/bolt/">Bolt</a>. It&#8217;s my first proper go at using websockets for the communication between client and server, and my first stab at EventMachine. The code at the moment needs some improvement (tests, configurability, deployment options) but it works as a proof of concept.</p>
+<p>It&#8217;s pretty simple, designed for running a single command at the push of a button and showing the results scroll past as they happen.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5lAEM" alt="Bolt script running interface"/></p>
+<p>Hopefully it&#8217;s useful to a few more people, or at least it will be when I clean it up a bit. For more information head over to the <a href="http://github.com/garethr/bolt/">GitHub page</a>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/07/11/Git-pre-recieve-hook-for-integrity/">
+        Git Pre Recieve Hook For Integrity
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jul 2010</span>
+
+    <p>I&#8217;m getting married rather soon so time has been somewhat short (in a good way) for just hacking on stuff, but I&#8217;ve finally found a little bit of time to play with something I&#8217;ve been mulling over for a while. Namely a continuous deployment workflow using the integrity continous integration server.</p>
+<p>I&#8217;m hoping to have an incredibly simple but fully operation example available at some point &#8211; mainly to act as a good discussion point. For now here&#8217;s my current pre-receive hook.</p>
+<script src="http://gist.github.com/471711.js?file=pre-receive"></script>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -135,52 +165,6 @@
 <% end %>
 <p>The <a href="http://github.com/garethr/gmetric-web">code is up on GitHub</a> and is completely self contained. I&#8217;ve been running it mainly using spawning but any small <span class="caps">WSGI</span> server could surfice. I looked very briefly at the <span class="caps">API</span> for Ganglia but found the gmetric approach to be much simpler.</p>
 <p>And if you&#8217;re a Ganglia expert and know a much better way of doing this then let me know. Ganglia is awesome, and collecting metrics is both useful and fun (for me at least) but it&#8217;s not always obvious how to get into creating simple custom metrics which tell you something about your own appliction code.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/05/26/Devops-twitter-aggregator/">
-        Devops Twitter Aggregator
-      </a>
-    </h1>
-
-    <span class="post-date">26 May 2010</span>
-
-    <p>I&#8217;ve been hacking on appengine again and have thrown up a simple <a href="http://devopstweets.appspot.com/">twitter aggregator for devops</a>. It&#8217;s again based on <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> with an increasing number of additions and changes.</p>
-<p>As well as just the tweets I want to build a few other small features. The first of which is link extraction, so at the moment you&#8217;ll see recent links a the top of the page. I&#8217;ll hopefully make that a little more useful, with better browing and converting short urls into the real ones. I also have vague plans for providing exports, listing people talking about devops and some useful graphs to track general activity around devops.</p>
-<img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjphAEM" alt="Devops aggregator on Twitter"
-<p>I&#8217;m really interested to see if the whole discussion around the term devops grows over the next year or so, and I&#8217;m hoping this will make it a little easier to see that change happen.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/05/18/Installing-integrity-on-debianubuntu/">
-        Installing Integrity On Debian/Ubuntu
-      </a>
-    </h1>
-
-    <span class="post-date">18 May 2010</span>
-
-    <p>I&#8217;ve been playing with <a href="http://integrityapp.com">Integrity</a> again as a simple continuous integration server and have installed it on a few debian and ubuntu machines in the last few weeks. The current site has good installation instructions for the Ruby side of things but leaves it as an excercise for the installer to make sure all the system level dependencies are installed.</p>
-<p>So probably as much for me in the future, here is what I had to install to get the installation instructions to work for me.</p>
-<% syntax_colorize :bash, type=:coderay do %>
-apt-get install build-essential
-apt-get install ruby
-apt-get install rdoc
-apt-get install sqlite3
-apt-get install libdbd-sqlite3-ruby
-apt-get install libdataobjects-sqlite3-ruby1.8 
-apt-get install libsqlite3-dev
-apt-get install libxml2
-apt-get install libxml2-dev
-apt-get install libxsl-dev
-apt-get install libopenssl-ruby
-<% end %>
-<p>I also needed to install the following package on Ubuntu:</p>
-<% syntax_colorize :bash, type=:coderay do %>
-apt-get install ruby1.8-dev
-<% end %>
-<p>If you want to use a database other than the default SQLite then you won&#8217;t need those packages and I&#8217;ll assume you know what you&#8217;re doing.</p>
   </div>
   
 </div>

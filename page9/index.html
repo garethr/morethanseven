@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,87 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/12/26/First-experience-building-something-with-clojure/">
+        First Experience Building Something With Clojure
+      </a>
+    </h1>
+
+    <span class="post-date">26 Dec 2011</span>
+
+    <p>I nearly always try and grab some time over Christmas to try something new and this year I&#8217;d been planning on spending some time with Clojure. I have several friends who are big fans, but dipping in and out of a book hadn&#8217;t really worked. What I needed was an itch to scratch.</p>
+<p>I stuck with a domain I&#8217;m pretty familiar with for this first project, namely building a little web application. It renders a web page, makes <span class="caps">HTTP</span> requests, parses <span class="caps">JSON</span> into native data structures and does a bit of data juggling. Nothing fancy or overly ambitious, I was mainly interested in picking up the syntax, understanding common libraries and getting something built. Here&#8217;s what I&#8217;ve got:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjBuAIM" alt="Dasboard for Jenkins builds"/></p>
+<p>Jenkins has various <span class="caps">API</span> endpoints, but most dashboards I&#8217;ve seen concentrate on showing you the current status of all the builds. This is hugely useful when it comes to the simple case of continuous integration, but I&#8217;ve also been using Jenkins for other automation tasks, and making extensive use of parameterized builds. What the dashboard above concentrates on is showing recent builds for a specific job, along with the parameters used to run them.</p>
+<p>Overall it was a fun project. Clojure made much more sense to me building this application than it had from simple examples. The <a href="http://webnoir.org/">Noir</a> web framework is excellent and proved easy enough to jump into and simple enough that I could read the source code if I was interested in how something worked. The <a href="https://github.com/technomancy/leiningen">Leiningen</a> build tool made getting started, downloading and managing dependencies and running tests and the application itself easy.</p>
+<p>What I didn&#8217;t find particularly appealing was the lack of a strong standard library coupled with the difficulty of tracking down suitable libraries. <span class="caps">JSON</span> parsing, dealing with <span class="caps">HTTP</span> requests and date handing are very common activities in web programming and all needed me to jump around looking at the best way of dealing with the common case. I settled on <a href="https://github.com/dakrone/clj-http">clj-http</a>, <a href="https://github.com/dakrone/cheshire">chesire</a> and using Java interop for date formatting. clj-http suffered from having lots of forks on GitHub to navigate through. I started with clojure-json before discovering it had been deprecated. And neither clj-time or date-clj appeared to support unix timestamps as far as I could tell from the source. Throw in some uncertainty over the status of clojure-contrib that isn&#8217;t well documented on the official site and it needs some effort to get started.</p>
+<p>The working code for this is already up on <a href="https://github.com/garethr/jenkins-build-list">GitHub</a> and I&#8217;d be interested in any Clojure experts showing me the error of my ways.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/12/13/Setting-puppet-class-using-environment-variables/">
+        Setting Puppet Class Using Environment Variables
+      </a>
+    </h1>
+
+    <span class="post-date">13 Dec 2011</span>
+
+    <p>I&#8217;m not sure how novel this approach is but a few folks at work hadn&#8217;t seen it before so I thought it worth jotting down.</p>
+<p>If you have even a small but dynamic set of servers then a problem arises with how those nodes are defined in puppet. A node remember is defined in puppet like so:</p>
+<pre>node web3.example.com {
+  include web_server
+}</pre>
+<p>The problem is twofold. If you have a growing infrastructure, that list of nodes is going to get quickly out of hand. The other problem is around provisioning new hosts, the obvious approach to which is something like:</p>
+<p>1. Summon new EC2 instance<br />
+2. Change the node definition to include the new hostname<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Step 2 stands out. The others are easily automated, but do you want to automate a change to your puppet manifests and a redeploy to the puppetmaster for a new instance? Probably not.<br />
+Puppet has the concept of an external node classifier which can be used to solve this problem, but another simpler approach is to use an environment variable on the new machine.</p>
+<p>Lets say we define our nodes something like this instead:</p>
+<div class='bogus-wrapper'><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span><br />
+<span class='line-number'>2</span><br />
+<span class='line-number'>3</span><br />
+<span class='line-number'>4</span><br />
+<span class='line-number'>5</span><br />
+<span class='line-number'>6</span><br />
+<span class='line-number'>7</span><br />
+<span class='line-number'>8</span><br />
+<span class='line-number'>9</span><br />
+<span class='line-number'>10</span><br />
+</pre></td><td class='code'><pre><code class=''>&lt;span class='line'&gt;node default {
+&lt;/span&gt;&lt;span class='line'&gt;  case $machine_role {
+&lt;/span&gt;&lt;span class='line'&gt;    frontend:           { include web_server }
+&lt;/span&gt;&lt;span class='line'&gt;    backend:            { include app_server }
+&lt;/span&gt;&lt;span class='line'&gt;    data:               { include db_server }
+&lt;/span&gt;&lt;span class='line'&gt;    monitoring:         { include monitoring_server }
+&lt;/span&gt;&lt;span class='line'&gt;    development:        { include development }
+&lt;/span&gt;&lt;span class='line'&gt;    default:            { include base }
+&lt;/span&gt;&lt;span class='line'&gt;  }
+&lt;/span&gt;&lt;span class='line'&gt;}&lt;/span&gt;</code></pre></td><p></tr></table></div></figure></notextile></div></p>
+<p>If a machine runs and sets the $machine_role variable to frontend it includes the web_server class, if that variable equals &#8216;data&#8217; it&#8217;s going to include the db_server class instead. Much cleaner and more maintainable in my view. Now to set that variable.</p>
+<p>Facter is the tool used by Puppet to get system information like the operating system or processor count. You can use these facter provided variables anywhere in your manifests. And one way of adding a new fact is via an environment variable on the client. Any environment variable prefixed with FACTER_ will be available in Puppet manifests. So in this case we can:</p>
+<pre>export FACTER_machine_role=frontend</pre>
+<p>So our steps from above become something like:</p>
+<p>1. Summon new machine<br />
+2. echo &#8220;export FACTER_machine_role=backend&#8221; &gt;&gt; /etc/environment<br />
+3. Install puppet on instance and so the ssl certificate signing dance<br />
+4. Run puppet</p>
+<p>Much easier to automate. And if you&#8217;re looking at a box and want to know what it&#8217;s role is you can check the relevant environment variable.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -169,40 +250,6 @@ end
 {"_id"=&gt;"LongerPublication", "value"=&gt;{"type"=&gt;"LongerPublication", "count"=&gt;12.0, "published"=&gt;10.0}}]
 </pre>
 <p>I&#8217;ve been pretty impressed with both Mongo and Mongoid here. I like the feel of mapreduce jobs for this sort of reporting task. In particular it&#8217;s suprising how writing two languages mixed together like this doesn&#8217;t really affect the readability of the code in my view. Given that with a relational database you&#8217;d probably be writing <span class="caps">SQL</span> anyway maybe that&#8217;s not that suprising &#8211; the syntactic differences between Javascript and Ruby are much smaller than pretty much anything and <span class="caps">SQL</span>. Lots of folks have written about the increase of polyglot programming, but I wonder if we&#8217;ll see an increase in the embedding of one language in another?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
-        Rundeck And Nagios Nrpe Checks
-      </a>
-    </h1>
-
-    <span class="post-date">11 Sep 2011</span>
-
-    <p>I&#8217;ve been playing with <a href="http://rundeck.org/">Rundeck</a> recently. For those that haven&#8217;t seen it yet it&#8217;s an application for running commands across a cluster of machines and recording the results. It has both a command line client and a very rich web interface which boths allows you to trigger commands and shows the results.</p>
-<p>I&#8217;ve played with a few different jobs so far, including triggering Puppet runs across machines triggered by a Jenkins plugin. I&#8217;ve also been looking at running all my monitoring tasks at the click of a button (or again as part of a smoke test triggered by Jenkins) and I thought that might make a nice simple example.</p>
-<p>My checks are written as Nagios plugins, and run periodically by Nagios. I also trigger them manually, using Dean&#8217;s <a href="http://www.unixdaemon.net/tools/commandline/introducing-nrpe-runner.html"><span class="caps">NRPE</span> runner script</a>.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiJoQIM" alt="Rundeck showing a job output"/></p>
-<p>The above shows a successful run across a few machines I use for experimenting with tools. Hopefully you can see the summary of the run on each of the four machines, each ran five <span class="caps">NRPE</span> checks and all passed. On failure we&#8217;d see the results as well as different symbols and colous. We can easily save the output to a file if we need to, rerun or duplicate the job (maybe to have it run against a different group of machines) or we can export the job definition file to load into another instance.</p>
-<p>The same job can also be run on the command line (which makes use the of Rundeck <span class="caps">API</span>)</p>
-<pre>./run -j "Run NRPE checks" -p PRGMR</pre>
-<p>This example shows running a specific pre-defined job, but it&#8217;s also equally possible to fire of adhoc commands to some or all of the machines rundeck knows about.</p>
-<p>One thing in particular that I prefer about this approach to say using Capistrano or Fabric for remote execution tasks is that you have a centralised authentication and logging capability. It would be easy enough to encapsulate the jobs into cap or fabric tasks (and manage that in source control) which means you&#8217;re not stuck if Rundeck isn&#8217;t available.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/08/19/On-her-majestys-digital-service/">
-        On Her Majesty's Digital Service
-      </a>
-    </h1>
-
-    <span class="post-date">19 Aug 2011</span>
-
-    <p>This blog post is mainly an excuse to use the pun in the title. It&#8217;s also an opportunity to tell folks that don&#8217;t already know I&#8217;ll be starting a new job on Monday working for the UK Government. I&#8217;m going to be work for the <a href="http://digital.cabinetoffice.gov.uk/">Government Digital Service</a>, a new department tasked with a pretty wide range of sorting the Government out online.</p>
-<p>The opportunity is huge. And when it came around I couldn&#8217;t turn it down. I&#8217;m going to be working with a bunch of people I&#8217;ve <a href="http://memespring.co.uk/">known</a> <a href="http://nicepaul.com/">and</a> <a href="http://fberriman.com/">respected</a> for a while, as well as other equally smart people. That means I&#8217;m going to be back in London again as well.</p>
-<p>Hopefully I&#8217;ll be able to talk lots about what we&#8217;re up to. The groundwork for that has already been laid by the <a href="http://alpha.gov.uk">alpha.gov</a> team who have been blogging furiously about topics of interest.</p>
   </div>
   
 </div>

@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,86 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/04/05/Hadoop-hive-web-interface/">
+        Hadoop Hive Web Interface
+      </a>
+    </h1>
+
+    <span class="post-date">05 Apr 2010</span>
+
+    <p>I&#8217;ve been playing with Hive recently and liking what I&#8217;ve found. In theory at least it provides a very nice, simple way of getting into analysing large data sets. To make it even easier to show other people what you&#8217;re up to Hive has a nascent web interface with a little documentation <a href="http://wiki.apache.org/hadoop/Hive/HiveWebInterface">on the wiki</a></p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiBfQw" alt="image of hive web ui"/></p>
+<p>On the one hand it&#8217;s rather simple at this point, but that should be easily enought to prettify given a bit of time. The bigger problem was getting it working in the first place. What follows worked for me using the latest cloudera packages on debian testing. I&#8217;m assuming you already have Hive and Hadoop installed, the basic packages worked fine for me here.</p>
+<p>Next up you&#8217;ll need the <span class="caps">JDK</span> (not just the <span class="caps">JRE</span>) as their is some compilation that will go on the first time you run the web interface.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install ant sun-java6-jdk
+<% end %>
+<p>Next up I had to modify the installed <em>/etc/hive/conf/hive-site.xml</em> file as follows:</p>
+<p>I changed this:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hivevar/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>To this. Note the hivevar path doesn&#8217;t exist so I&#8217;m not sure if this was a typo in the source.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>hive.metastore.uris</name>
+  <value>file:///var/lib/hive/var/metastore/metadb/</value>
+  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
+</property>
+<% end %>
+<p>I also change the following section regarding the metastore name:</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/${user.name}_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>To this, with a fixed name. When using the above confirguration the file was actually called ${user.name} rather than my username being subsituted in. Elsewhere this seems to work fine.</p>
+<% syntax_colorize :xml, type=:coderay do %>
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/metastore_db;create=true</value>
+  <description>JDBC connect string for a JDBC metastore</description>
+</property>
+<% end %>
+<p>I&#8217;m not convinced the above two changes are needed but have left them here just in case. The main tricky part is making sure a load of environment variables are correctly set. The following worked for me:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+export ANT_LIB=/usr/share/ant/lib
+export HIVE_HOME=/usr/lib/hive
+export HADOOP_HOME=/usr/lib/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+<% end %>
+<p>All being well that should allow you to run the hive command with the web interface like so:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+hive --service hwi
+<% end %>
+<p>That should bring up a webserver on port 9999 where you should see something similar to the screenshot above.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/03/28/More-django-project-templates/">
+        More Django Project Templates
+      </a>
+    </h1>
+
+    <span class="post-date">28 Mar 2010</span>
+
+    <p>Quite a while ago I released some handy scripts for building up Django project layouts. Part of the reason behind this was to kick off discussions about ideal pproject layouts and maybe even get a few user submitted layouts into the project. Paster makes this soft of thing really easy to do and I was interested in what people might come up with.</p>
+<p>Well, the team over at <a href="http://chicagotribune.com/">The Chicargo Tribune</a> have done just that, creating a branch of the original project and <a href="http://github.com/ryanmark/django-project-templates/">adding a very rich example project to it</a></p>
+<p>I&#8217;ve finally gotten around to merging that back into <a href="http://github.com/garethr/django-project-templates/">my branch</a> and releasing a new version to <a href="http://pypi.python.org/pypi/django-project-templates/0.11">PyPi</a>. It&#8217;s got a good number of PostGreSQL commands that might be of use, as well as several Amazon S3 and EC2 examples. Even if none of these complete templates fit what you&#8217;re looking for exactly their are lots of smaller fabric recipes worth taking a look at.</p>
+<p>You can read all about what is in the project over on their <a href="http://blog.apps.chicagotribune.com/2010/03/08/advanced-django-project-layout/">developer blog</a>, which if filled with other interesting web and operations goodness.</p>
+<p>So, huge thanks to <a href="http://blog.apps.chicagotribune.com/author/cgroskopf/">Chris</a>, <a href="http://blog.apps.chicagotribune.com/author/bboyer/">Brian</a>, <a href="http://blog.apps.chicagotribune.com/author/ryanthomasmark/">Ryan</a> and <a href="http://blog.apps.chicagotribune.com/author/joegermuskact/">Joe</a> for some great work.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -142,54 +222,6 @@ if is_valid_jsonp_callback_value(cb):
 <% end %>
 <p>Which is exactly what has just <a href="http://bitbucket.org/jespern/django-piston/changeset/f558b2c66dcc/">gone into the code for Piston</a>. <a href="http://tav.espians.com/sanitising-jsonp-callback-identifiers-for-security.html">This article</a> contains lots of background information about why <span class="caps">JSONP</span> callbacks can be a security hole, and helpfully provides a <a href="http://github.com/tav/scripts/blob/master/validate_jsonp.py">nice Python module</a> to help with the sanitisation. Nice to be on the authors list for something I&#8217;m using actively.</p>
 <p>Thanks to <a href="http://twitter.com/jespern">Jesper Noehr</a> for Piston, for some pointers on bitbucket and for quickly taking the patch. If you&#8217;re accepting a callback on your site or application, especially if it&#8217;s a public service, you really want to do something like this or you just might have an exploitable security hole.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/07/New-nanoc-powered-blog/">
-        New Nanoc Powered Blog
-      </a>
-    </h1>
-
-    <span class="post-date">07 Mar 2010</span>
-
-    <p>It&#8217;s taken longer than I would have liked but I&#8217;ve finally gotten around to relaunching this site on <a href="http://nanoc.stoneship.org/">nanoc</a>.</p>
-<p>After looking through lots of code from the <a href="http://projects.stoneship.org/trac/nanoc/wiki/Showcase">nanoc showcase</a> I had a pretty good feel for how I wanted things to work and I then used the excellent <a href="http://github.com/mgutz/nanoc3_blog">nanoc3_blog</a> template to get started. I&#8217;ve hacked around quite a bit with the code to get things how I wanted them. Using <a href="http://lesscss.org/">Less</a> to make the <span class="caps">CSS</span> more manageable, <a href="http://coderay.rubychan.de/">Coderay</a> for lovely syntax highlighting and making everything default to textile rather than markdown. I&#8217;ve also written import scripts for my old blog (in Python) and another one so I can use tumblr is I want to create items on here (in Ruby).</p>
-<p>Nanoc really is a joy to work with and I&#8217;m hoping that alone will get me back into writing more freqently than I have done for a while. The fact I can just write in Vim or WriteRoom or whatever editor I have to hand feels nice. And using Git, Rake and Rsync complete my little toolset. Everything is still served via Nginx.</p>
-<p>I&#8217;ve thrown the all the code, including all the content, up on <a href="http://github.com/garethr/morethanseven">GitHub</a> for anyone interested. Back to writing.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/07/Mysql-support-for-cucumber-nagios/">
-        Mysql Support For Cucumber Nagios
-      </a>
-    </h1>
-
-    <span class="post-date">07 Mar 2010</span>
-
-    <p>I just noticed Lindsay had <a href="http://github.com/auxesis/cucumber-nagios">committed</a> the amqp steps for cucumber-nagios and remembered I hadn&#8217;t mentioned on here some other work I&#8217;ve been doing on the same project. We use MySQL quite a bit at work and I&#8217;ve been wanting to extent our monitoring for a while. So I set about thinking how that would work with cucumber-nagios. What I&#8217;ve come up with looks something like this:</p>
-<pre>
-Feature: localhost
-  To make sure the rest of the system is in order
-  Our database server should not be overloaded
-
-  Scenario: check running processes count
-    Given I have a MySQL server on localhost
-    And I use the username root
-    Then it should have less than 10 processes
-
-  Scenario: check queries per second
-    Given I have a MySQL server on localhost
-    And I use the username root
-    Then it should have less than 200 select queries per second
-    Then it should have less than 300 queries per second
-    Then it should have less than 5 slow queries pers second
-    Then it should have at least 10 queries per second
-</pre>
-<p>The numbers, username details and host details are all variables. So you can write senarios for your specific deployments. The tests over time are based on a very short lived sampling mechanic which I&#8217;ve yet to test in anger. I&#8217;m not sure just yet is this approach will lead to too many false positives but we&#8217;ll have to see.</p>
-<p>This <a href="http://codeinthehole.com/archives/8-Monitoring-MySQL-with-Ganglia-and-gmetric.html">mysql gmetric script</a> gave me lots of the ideas for invidual steps. I&#8217;ll be writing more about some work I&#8217;ve been doing with cucumber-nagios and ganglia soon as well.</p>
-<p>For the moment if anyone want&#8217;s to try these steps out you can either check out <a href="http://github.com/garethr/cucumber-nagios">my cucumber-nagios</a> fork or just grab the steps from the <a href="http://github.com/garethr/cucumber-nagios/blob/master/lib/generators/project/features/steps/mysql_steps.rb">mysql_steps.rb</a> file. Any feedback much appreciated.</p>
   </div>
   
 </div>

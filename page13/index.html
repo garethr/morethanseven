@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,36 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/04/02/Vagrant-at-the-guardian/">
+        Vagrant At The Guardian
+      </a>
+    </h1>
+
+    <span class="post-date">02 Apr 2011</span>
+
+    <p>As recent blog posts on here make clear, I&#8217;m a big fan of <a href="http://vagrantup.com">Vagrant</a>. And when <a href="http://www.brunton-spall.co.uk/">Michael</a> asked if I&#8217;d fancy talking to some of his colleagues at The Guardian about how I use it I really couldn&#8217;t say no.</p>
+<p>I gave a short talk, running through the following slides, and running a few demos showing creating, destroying and provisioning new machines.</p>
+<p><object id="__sse7492432" width="595" height="497"> <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=vagrant-110402104037-phpapp01&rel=0&stripped_title=vagrant-and-configuration-management&userName=garethr" /> <param name="allowFullScreen" value="true"/> <param name="allowScriptAccess" value="always"/> <embed name="__sse7492432" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=vagrant-110402104037-phpapp01&rel=0&stripped_title=vagrant-and-configuration-management&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="595" height="497"></embed> </object></p>
+<p>More interesting I thought were the questions and conversations that followed. We talked a little about how Vagrant might fit into a continuous integration setup. Another aspect some of the systems folk took to was how flexible the network configuration was and whether they might be able to use this to more effectively test firewall configurations well before the final push into a production environment. It&#8217;s not something I&#8217;ve been doing but it sounds feasable and useful in some organisations. If anyone is doing interesting things with Vagrants network config I&#8217;d be interested to know.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/04/02/Collecting-metrics-with-ganglia-and-friends/">
+        Collecting Metrics With Ganglia And Friends
+      </a>
+    </h1>
+
+    <span class="post-date">02 Apr 2011</span>
+
+    <p>I had the pleasure of speaking at <a href="http://cambridgegeeknights.net/">Cambridge Geek Night</a> on Monday again, the topic of conversation being using Ganglia to collect more than just base systems metrics.</p>
+<p><object id="__sse7492405" width="595" height="497"> <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=metricswithganglia-110402103441-phpapp01&rel=0&stripped_title=metrics-with-ganglia&userName=garethr" /> <param name="allowFullScreen" value="true"/> <param name="allowScriptAccess" value="always"/> <embed name="__sse7492405" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=metricswithganglia-110402103441-phpapp01&rel=0&stripped_title=metrics-with-ganglia&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="595" height="497"></embed> </object></p>
+<p>The audience of web developers, the odd sysadmin and business folk seemed to enjoy it and we had lots of time for questions at the end. The main point I tried to get across was that Ganglia makes a great platform for ad-hoc metrics gathering due to the ability to just throw values at it and get time series graphs without any extra configuration.</p>
+<p>The slides include a few bits of code I&#8217;ve been using that I&#8217;ll throw onto GitHub as a proper project when I get the time. These are very simple Python servers, one which allows for sending metrics information over <span class="caps">HTTP</span>, the other using <span class="caps">TCP</span> instead. Both really handy for getting more people to add hooks into applications.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -154,98 +184,6 @@
 <p>I&#8217;m a huge <a href="http://vagrantup.com">Vagrant</a> fan, but one thing that often comes up is where to find base boxes. My newly launched site <a href="http://vagrantbox.es">Vagranbox.es</a> provides just that. At the moment that just means user submitted boxes being checked and then posted. I&#8217;ll likely add comments and ratings and the like if things become popular but that&#8217;s for later.</p>
 <p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjBuwEM" alt="vargrantbox.es homepage"/></p>
 <p>So, if you know of or host a useful box please let me know. I&#8217;ll try to keep up with any submissions.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/03/02/Devops-more-than-marketing-talk-by-james-turnbull/">
-        Devops - More Than Marketing - Talk By James Turnbull
-      </a>
-    </h1>
-
-    <span class="post-date">02 Mar 2011</span>
-
-    <p>I&#8217;ve just found my notes from <a href="http://kartar.net">James Turnbull&#8217;s</a> talk at <a href="http://fosdem.org"><span class="caps">FOSDEM</span></a>. I found the talk excellent, and I&#8217;m already part of the choir. But much of the audience I&#8217;d guess have only come across the devops term in passing, or worse had it pushed at them as part of marketing materials. Hopefully I captured the main points:</p>
-<h2>So what is devops all about?</h2>
-<ul>
-	<li>Cooperation (between development and operations teams)</li>
-	<li>Buzzword bingo?</li>
-	<li>Pop culture movement?</li>
-	<li>Discussion</li>
-	<li>It&#8217;s early days</li>
-	<li>No one has all the answers</li>
-	<li>Nothing is fixed in stone</li>
-	<li>It&#8217;s all about outreach</li>
-</ul>
-<h2>It&#8217;s about</h2>
-<ul>
-	<li>Simplicity &#8211; Repeatable, Reusable, Easy to communicate</li>
-	<li>Relationships &#8211; Engage early, engage often, &#8220;Toss it over the fence&#8221;, Talk to people</li>
-	<li>Process &#8211; Test everything, Automate everything, Redundancy and expectation of failure, Transparent and open to everyone</li>
-</ul>
-<h2>Tools</h2>
-<ul>
-	<li>Not just ops tools &#8211; Config mnagement, Deployment and orchestration, Monitoring, Security, Testing</li>
-	<li>Use for entire lifecycle dev &#8594; test &#8594; ops</li>
-	<li>Not just dev tools &#8211; Version control, Agile, Application architecture</li>
-	<li>Testing methodology &#8211; Low level vs functional</li>
-	<li>Documentation &#8211; &#8220;The only time the network diagram is up to date is after the post mortem&#8221;</li>
-</ul>
-<h2>Continuous improvement</h2>
-<ul>
-	<li>Nothing stands still &#8211; Customers, Products, Technology, Your team</li>
-	<li>Strike often, striek hard, be aggressive</li>
-</ul>
-<h2>It&#8217;s a culture change</h2>
-<ul>
-	<li>This is Hard</li>
-	<li>People hate change</li>
-	<li>People hate people who introduce change</li>
-	<li>Fear of change is irrational &#8211; Listen, Concrete examples</li>
-	<li>Make developers resonsible for uptime &#8211; Pagers</li>
-</ul>
-<h2><span class="caps">FUD</span></h2>
-<ul>
-	<li>&#8220;We&#8217;ve always done this&#8221;</li>
-	<li>&#8220;That can&#8217;t work here&#8221;</li>
-	<li>&#8220;This is all about one group or another&#8221;</li>
-	<li>&#8220;You&#8217;re an elitist bunch of Europeans&#8221;</li>
-</ul>
-<h2>Dangers</h2>
-<ul>
-	<li>Marketing speak</li>
-	<li>Lip service</li>
-	<li>Disenchantment</li>
-	<li>Disenfranchisement</li>
-</ul>
-<h2>Takeaway</h2>
-<ul>
-	<li>&#8220;Not about a person, or a team. About changing how your operations team works&#8221;</li>
-	<li>Automate away small boring repetative tasks to make time for interesting activities</li>
-	<li>Embed ops people into dev teams</li>
-	<li>Drag devs to ops standups</li>
-	<li>Build shared appreciation</li>
-	<li>Metrics conversations are really powerful</li>
-</ul>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/02/08/Configuration-management-for-development-environments/">
-        Configuration Management For Development Environments
-      </a>
-    </h1>
-
-    <span class="post-date">08 Feb 2011</span>
-
-    <p>I had the pleasure of speaking at <a href="http://www.fosdem.org/2011/">Fosdem</a> last weekend to a packed <a href="http://www.fosdem.org/2011/schedule/track/configuration_systems_management_devroom">Configuration amd systems management devroom</a>.</p>
-<p>My presentation covered some of the same ground as recent blog posts, namely why you should be using virtualisation and config management tools to manage your local development environment.</p>
-<p><object id="__sse6836888" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironments-110207033122-phpapp02&stripped_title=config-managament-for-development-environments-6836888&userName=garethr" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed name="__sse6836888" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironments-110207033122-phpapp02&stripped_title=config-managament-for-development-environments-6836888&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
-<p>People even said <a href="http://twitter.com/#!/unixdaemon/status/34209307390124033">nice things</a> about it:</p>
-<blockquote>
-<p>@garethr basically has this subject completely covered. He&#8217;s even advocating the correct editor. excellent #fosdem talk</p>
-</blockquote>
-<p>All in all another good event, I have notes about some of the other talks I went along to that I&#8217;ll try write up soon.</p>
   </div>
   
 </div>

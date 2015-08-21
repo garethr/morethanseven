@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,61 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/03/19/webapp-custom-filters/">
+        Webapp custom filters
+      </a>
+    </h1>
+
+    <span class="post-date">19 Mar 2009</span>
+
+    <p>The webapp framework wish ships with App Engine uses the Django templating system by default, but without Django apps doesn&#8217;t support the same mechanism for loading template tags and filters. <a href="http://javawonders.blogspot.com/2009/01/google-app-engine-templates-and-custom.html">This is how to do it though</a> using a few webapp.template methods.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/03/18/simple-wsgi-middleware-app-engine/">
+        Simple WSGI Middleware (for App Engine)
+      </a>
+    </h1>
+
+    <span class="post-date">18 Mar 2009</span>
+
+    <blockquote>
+<p><span class="caps">WSGI</span> is the Web Server Gateway Interface. It is a specification for web servers and application servers to communicate with web applications (though it can also be used for more than that). It is a Python standard, described in detail in <a href="http://www.python.org/dev/peps/pep-0333/"><span class="caps">PEP</span> 333</a>.</p>
+</blockquote>
+<p>For Ruby people <span class="caps">WSGI</span> is the <a href="http://rack.rubyforge.org/">Rack</a> in Python. In fact it was one of the inspirations behind Rack. Rack descriptions itself as:</p>
+<blockquote>
+<p>Rack provides an minimal interface between webservers supporting Ruby and Ruby frameworks.</p>
+</blockquote>
+<p>Which I think is a clearer explanation, except in WSGI&#8217;s case we replace Ruby with Python.</p>
+<p>As well as being able to write <span class="caps">WSGI</span> middleware for Django or Pylons we can also write <span class="caps">WSGI</span> middleware for App Engine applications &#8211; which is what I spent some time doing today. For the most part I found the examples and documentation interesting but overkill for what I needed to do. Specifically I wanted a piece of middleware which modified the response content, adding extra content into the response. Most of the examples I found didn&#8217;t focus on middleware, or where full blown examples making them hard to follow.</p>
+<p>So for anyone looking for a simple example of <span class="caps">WSGI</span> middleware which adds content into the response here goes. I used the <a href="http://pythonpaste.org/webob/">WebOb</a> framework because it provides a nicer interface to the request and response objects and it&#8217;s included in the standard App Engine <span class="caps">SDK</span>. The following sample middleware simple adds <em>Hello World</em> to the end of every response.</p>
+<pre>from webob import Request
+class SimpleMiddleware(object):
+    "Example middleware that appends a message to all 200 html responses"    
+    def __init__(self, app):
+        self.app = app
+    def __call__(self, environ, start_response):       
+        # deal with webob request and response objects
+        # due to a nicer interface
+        req = Request(environ)
+        resp = req.get_response(self.app)
+        # add a string to the end of the body
+        body = resp.body + "Hello World"
+        # set the body to the new copy
+        resp.body = body
+        return resp(environ, start_response)</pre>
+<p>In reality you might want to append something to a specific place in the response, or introduce conditionals. This is easy enough to do by parsing the initial value of <em>resp.body</em> in the example above.</p>
+<p>To use the middleware in your application you simple wrap your current WSGIApplication instance with the middleware class.</p>
+<pre>application = webapp.WSGIApplication(ROUTES, debug=settings.DEBUG)
+# add simple middleware
+application = SimpleMiddleware(application)
+run_wsgi_app(application)</pre>
+<p><span class="caps">WSGI</span> middleware is both a useful place for common functionality to live in your App Engine application as well as being a handy tool for anyone working across multiple Python frameworks to share code.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -133,45 +188,6 @@ QUEUE_VENDOR_SECRET = 'SECRET'</pre>
     <span class="post-date">13 Mar 2009</span>
 
     <p>Not sure how I missed this but apparently App Engine (as of 1.1.9) supports <a href="http://code.google.com/appengine/articles/remote_api.html">remote access to your live data store</a>. This means you can create administration applications more easily by running them locally, rather than within the limitations of the live platform. You can even run a local python prompt with access to your live datastore which is pretty neat.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/09/rewiredstate/">
-        RewiredState
-      </a>
-    </h1>
-
-    <span class="post-date">09 Mar 2009</span>
-
-    <p><a href="http://rewiredstate.org/">RewiredState</a> was awesome. 100 or so geeks plus a smattering of government types gathered in the shiny new Guardian offices in Kings Cross on Saturday to hack (the Government).</p>
-<p>Some events like this are more productive than others, and the end of day demos included some realy impressive stuff. See for your self on the <a href="http://projects.rewiredstate.org/">projects page</a></p>
-<p>My own little project even won a prize (an invisible bottle of Champagne no less). My complain was that if you want to report an issue about the over 7000 government websites you have to do it per site. All of the sites do their own thing, which might be a nice contact form, maybe an email address or in some cases a postal address hidden on a page that&#8217;s not linked to from anywhere.</p>
-<p>My solution was pretty simple &#8211; a centralised issue reporting and navigating tool. So you go along to the site you have an issue with and hit a bookmarklet (or a badge on the site if the site in question have been nice enough to add one). You fill in a very simple form which appears before your eyes and everything is tracked on a nice shiny website.</p>
-<p>The advantage of all that is transparency. You can see which sites people have issue with, and also ideally which issues get addresses or at least acknowledged by the support staff for the site in question. The hack had comments so others could follow up on individual issues. It would be simple enough to have league tables and the like as well, or add tagging for a little bit of categorisation &#8211; I did only have a few hours though.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRi7Fww" alt="screenshot of FeedbackGov website"/></p>
-<p>After a few nice comments I&#8217;m going to have to finish it off and get it up somewhere I think. All I really need to do is clean up the bookmarklet code (which was a hack in more ways than one) and add a bit of sanity checking to data entered into the system.</p>
-<p>A massive well done to everyone involved is in order as well, especially <a href="http://coupde.com/">James</a> who I remember talking to the idea about ages ago. Congratulations all &#8211; and hopefully be back next year.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/05/content-markup-ratio-bookmarklet/">
-        Content to Markup ratio bookmarklet
-      </a>
-    </h1>
-
-    <span class="post-date">05 Mar 2009</span>
-
-    <p><a href="http://www.phpied.com/">Stoyan Stefanov</a> just released an excellent little <a href="http://www.phpied.com/content-to-markup-ratio-bookmarklet/">bookmarklet to calculate a content to markup ratio</a></p>
-<p>It&#8217;s interesting browsing around a few sites and comparing ratios:</p>
-<ul>
-	<li>This site &#8211; 0.55</li>
-	<li><a href="http://bbc.co.uk">bbc.co.uk</a> &#8211; 0.26</li>
-	<li><a href="http://capitalradio.co.uk">capitalradio.co.uk</a> &#8211; 0.45</li>
-	<li><a href="http://clearleft.com">clearleft.com</a> &#8211; 0.48</li>
-	<li><a href="http://alistapart.com/">alistapart.com</a> &#8211; 0.44</li>
-</ul>
   </div>
   
 </div>

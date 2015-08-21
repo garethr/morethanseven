@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,40 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/07/31/new-designs-with-added-width/">
+        new designs with added width
+      </a>
+    </h1>
+
+    <span class="post-date">31 Jul 2005</span>
+
+    <p>Any previous visitors will notice something of a redesign which is pretty much finished &#8211; although no doubt their will be a few tweaks over the coming weeks as time permits.</p>
+ <p>The main reason was to bring in a liquid design that will allow more space &#8211; something I&#8217;m quite fond of as an idea.</p>
+ <p>The default for web pages, before we add any styles, is a liquid layout &#8211; where the site content fills the window whatever the width. This should be ideal for everyone, whatever resolution or monitor (or device) screen size. Why then do a great deal of sites use a fixed width design, my previous design included?</p>
+ <p>Design expediancy seems to me to be the main culprit in my view. Not always I&#8217;ll admit &#8211; lots of blog style sites use a fixed width centered column in order to get a readable number of words per line (whether they know it or not), which was my original excuse I&#8217;ll admit. For most designers, and most people, it&#8217;s simply easier to think in terms of thinks that dont change. Using percentages (in a liquid layout) or em&#8217;s (in a <a href="http://www.alistapart.com/articles/elastic">elastic</a> layout) simply takes a bit of getting your head round.</p>
+ <p>It&#8217;s the web, not print, and that is something that from my experience (second hand I&#8217;ll admit) is something that isn&#8217;t drilled home on the majority of university or college courses.</p>
+ <p>Attractive header graphics is something that lots of sites, in particular commercial sites, employ &#8211; and with good reasons. It&#8217;s a great way of getting across a brand ethos in an attractive and eye catching manner. It&#8217;s also sometimes used as an excuse to use a fixed width design &#8211; the question is why? Try resizing windows and text on www.vivabit.com, www.thebgroup.co.uk or www.capgemini.com .</p>
+ <p>One outstanding issue I see is using Flash in a similar way. With broadband usage, especially amongst companies, on the up and up, using Flash (and video) in a similar way becomes increasingly more attractive. So something I&#8217;m going to have a look at is how Flash and either <a href="http://adactio.com/atmedia2005/">unobtrusive javascript</a> or sliding doors techniques can be used to get the cake (attractive, flexible layouts which use Flash &#8211; without breaking the layout) and eat it. More soon.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2005/07/26/mobile-edition-sort-of/">
+        Mobile Edition (sort of)
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jul 2005</span>
+
+    <p>I&#8217;m something of a fan of mobile devices and really should do more mobile web stuff but hey, the support for mobile <span class="caps">CSS</span> is shody at best. Enter <a href="http://www.mikeindustries.com/blog/archive/2005/07/make-your-site-mobile-friendly">this article</a>.</p>
+ <p>The idea is really pretty simple. All you really want when your paying for bandwidth on your phone (or you <span class="caps">PDA</span> connected to your phone via bluetooth) is the content. So lets get rid of everything (and we mean everything) else. The solution is fairly devious &#8211; using some <span class="caps">PHP</span> jiggery pokery, a sub domain and some text parsing.</p>
+ <p>Have a look at <a href="http://mobile.morethanseven.net">mobile.morethanseven.net</a> for an example on this site.</p>
+ <p>In reality it&#8217;s a non ideal solution, but considerng it really does take two minutes I dont see that as a problem, and I think that was what the author of the article was getting at. We want to use mobile <span class="caps">CSS</span> but some browsers ignore it while others pretend they are grown up browsers and try and render the whole site <span class="caps">CSS</span> file.</p>
+ <p>I&#8217;m hopefully going to alter this a little, rather than removing all stylesheets leaving any  mobile media sheets intact. Assign these to the main site and we have an interim solution. Fancy devices that make use of the correct style sheets can use the main domain fine, others can get the same design by visiting the mobile sub domain.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -126,33 +160,6 @@
  <p>I&#8217;ve just got round to buying all the back issues of Design in Flight (<a href="http://www.designinflight.com">www.designinflight.com</a>) magazine &#8211; which features articles on design, web development and similar fields.</p>
  <p>For only 10 dollars (via Pay Pal) for the 4 issues it seems excellent value at about 150 pages or so, brimming with interesting information.</p>
  <p>I&#8217;ve obviously not read that much as yet but so far so good and for the price you cant really go wrong.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/07/02/all-the-news-from-media/">
-        all the news from @media
-      </a>
-    </h1>
-
-    <span class="post-date">02 Jul 2005</span>
-
-    <p>After a little work I&#8217;ve put together an app to keep up to date with all the news around @media. Based on the collection of feeds from <a href="http://kurafire.net">kurafire.net</a> it collects and filters for posts for @media references and displays them.</p>
- <p>I&#8217;m hoping it will proove useful to anyone else who wants to keep up to date. Especially when details start coming up about next year and in the lead up to that.</p>
- <p>Have a look at <a href="http://morethanseven.net/atmedia">morethanseven.net/atmedia</a>. If you have any more feeds just let me know &#8211; I want it to be as extensive as possible.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/06/29/aspnet-here-we-come/">
-        asp.net here we come
-      </a>
-    </h1>
-
-    <span class="post-date">29 Jun 2005</span>
-
-    <p>I now have an <span class="caps">ASP</span>.<span class="caps">NET</span> environment setup and ready to go and the will to use it. Depending on how it goes I&#8217;ll try and post any thoughts as I go. In particularly related to how I get on with good standards markup.</p>
- <p>I can knock together whatever I want in <span class="caps">PHP</span> reasonably well and with my new job focusing on <span class="caps">CSS</span> and <span class="caps">XHTML</span> amongst other related bits, and working at .<span class="caps">NET</span> shop I thought I now have a reason to play.</p>
   </div>
   
 </div>

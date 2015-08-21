@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Update to Puppet Module Skeleton &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Update to Puppet Module Skeleton</h1>
+  <span class="post-date">20 Aug 2015</span>
+  <p>Being on holiday last week meant I had a little time for some gardening
+of open source projects and I decided to update
+<a href="https://www.github.com/garethr/puppet-module-skeleton">puppet-module-skeleton</a>
+with some new opinions.</p>
+
+<p>The skeleton is a replacement for the default module skeleton that ships
+with Puppet and is used by puppet module generate. Unlike the default
+skeleton this one is super-opinionated. It comes bundled with lots of
+testing tools, suggestions for documentation, integration with <a href="http://travis-ci.org">Travis
+CI</a>, module coverage reports and more.</p>
+
+<p>Updates in the latest version include:</p>
+
+<ul>
+<li>Support for Puppet 4 paths</li>
+<li>The addition of Rubocop, which enforces parts of the Ruby style guide</li>
+<li>Adding a number of Puppet Lint plugins</li>
+<li>Allow installing various Puppet versions during integration tests</li>
+</ul>
+
+<p>I also fixed a few reported bugs and extended the test matrix to test
+across a range of Puppet and Ruby combinations.</p>
+
+<p>The skeleton is intended to help people with a basic understanding of
+Puppet write better modules, without having to setup everything
+themselves. You don’t have to agree with all the options to make use of
+the skeleton as it’s simple enough to delete a few files once you
+generate your new module. But a working out-of-the-box beaker install,
+and the ability to automatically run unit tests when files change are
+patterns worth adopting for most module developers I think.</p>
+
+<p>If anyone has any suggestions for extra tools, or changes to the
+skeleton itself, let me know.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/08/21/operating-unikernel-challenges/">
+            A Discussion of The Operational Challenges With Unikernels
+            <small>21 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/05/19/information-security-reading-list/">
+            Information Security Reading List
+            <small>19 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/05/09/acceptance-testing-mirageos/">
+            Acceptance testing MirageOS installs
+            <small>09 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,40 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
+        Rundeck And Nagios Nrpe Checks
+      </a>
+    </h1>
+
+    <span class="post-date">11 Sep 2011</span>
+
+    <p>I&#8217;ve been playing with <a href="http://rundeck.org/">Rundeck</a> recently. For those that haven&#8217;t seen it yet it&#8217;s an application for running commands across a cluster of machines and recording the results. It has both a command line client and a very rich web interface which boths allows you to trigger commands and shows the results.</p>
+<p>I&#8217;ve played with a few different jobs so far, including triggering Puppet runs across machines triggered by a Jenkins plugin. I&#8217;ve also been looking at running all my monitoring tasks at the click of a button (or again as part of a smoke test triggered by Jenkins) and I thought that might make a nice simple example.</p>
+<p>My checks are written as Nagios plugins, and run periodically by Nagios. I also trigger them manually, using Dean&#8217;s <a href="http://www.unixdaemon.net/tools/commandline/introducing-nrpe-runner.html"><span class="caps">NRPE</span> runner script</a>.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiJoQIM" alt="Rundeck showing a job output"/></p>
+<p>The above shows a successful run across a few machines I use for experimenting with tools. Hopefully you can see the summary of the run on each of the four machines, each ran five <span class="caps">NRPE</span> checks and all passed. On failure we&#8217;d see the results as well as different symbols and colous. We can easily save the output to a file if we need to, rerun or duplicate the job (maybe to have it run against a different group of machines) or we can export the job definition file to load into another instance.</p>
+<p>The same job can also be run on the command line (which makes use the of Rundeck <span class="caps">API</span>)</p>
+<pre>./run -j "Run NRPE checks" -p PRGMR</pre>
+<p>This example shows running a specific pre-defined job, but it&#8217;s also equally possible to fire of adhoc commands to some or all of the machines rundeck knows about.</p>
+<p>One thing in particular that I prefer about this approach to say using Capistrano or Fabric for remote execution tasks is that you have a centralised authentication and logging capability. It would be easy enough to encapsulate the jobs into cap or fabric tasks (and manage that in source control) which means you&#8217;re not stuck if Rundeck isn&#8217;t available.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/08/19/On-her-majestys-digital-service/">
+        On Her Majesty's Digital Service
+      </a>
+    </h1>
+
+    <span class="post-date">19 Aug 2011</span>
+
+    <p>This blog post is mainly an excuse to use the pun in the title. It&#8217;s also an opportunity to tell folks that don&#8217;t already know I&#8217;ll be starting a new job on Monday working for the UK Government. I&#8217;m going to be work for the <a href="http://digital.cabinetoffice.gov.uk/">Government Digital Service</a>, a new department tasked with a pretty wide range of sorting the Government out online.</p>
+<p>The opportunity is huge. And when it came around I couldn&#8217;t turn it down. I&#8217;m going to be working with a bunch of people I&#8217;ve <a href="http://memespring.co.uk/">known</a> <a href="http://nicepaul.com/">and</a> <a href="http://fberriman.com/">respected</a> for a while, as well as other equally smart people. That means I&#8217;m going to be back in London again as well.</p>
+<p>Hopefully I&#8217;ll be able to talk lots about what we&#8217;re up to. The groundwork for that has already been laid by the <a href="http://alpha.gov.uk">alpha.gov</a> team who have been blogging furiously about topics of interest.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -120,102 +154,6 @@
 <p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5kQIM" alt="Pipeline example showing build in progress"/></p>
 <p>Note that I&#8217;m only allowing the last build to be deployed given only that one can be checked on staging. Again this is configuration specific to my usage, the plugins lets you operate a number of different ways. There are a number of tweaks I want to make to this, mainly around experimenting with parameterized builds to pass useful information downstream and even allow parrallel execution. For the moment I have the <em>Block build when upstream project is building</em> flag checked on the deploy.</p>
 &nbsp;* Yes, this is a one page site. With a 5 step build process in Jenkins including a small suite of functional tests and a staging environment. This is what we call overengineering.
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/07/07/Varnish-at-refresh-cambridge/">
-        Varnish At Refresh Cambridge
-      </a>
-    </h1>
-
-    <span class="post-date">07 Jul 2011</span>
-
-    <p>I did a quick lightning talk at the Refresh Cambridge meetup last night, a very quick introduction to <a href="https://www.varnish-cache.org/">Varnish</a>. Given 10 minutes all I really wanted to do was get people to go away and take a look at it. Lots of folks in the room hadn&#8217;t come across it before so I think the talk was hopefully well pitched.</p>
-<p><iframe src="http://www.slideshare.net/slideshow/embed_code/8531073?rel=0" width="510" height="426" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></p>
-<p>Several people asked about slighly dynamic pages and I only got chance to mention support for <a href="https://www.varnish-cache.org/trac/wiki/ESIfeatures"><span class="caps">ESI</span></a> (Edge Side Includes) at the end. Conversation afterwards turned to various parts of the modern web stack and I had a pretty good time being opinionated. Hopefully more of the same next month.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/06/30/Django-performance-1-measuring-performance/">
-        Django Performance Patterns 1: Measuring Performance
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jun 2011</span>
-
-    <h2>Preface</h2>
-<p>As Django has matured it&#8217;s being used for bigger and bigger projects. At the same time it&#8217;s also being used by more and more people building relatively simple applications quickly. Everyone&#8217;s application is different, but I&#8217;d wager the vast majority of these have a range of common performance problems. Performance is often something only larger teams get to spend time really getting to grips with. This is sometimes because smaller projects can&#8217;t afford the time, or more often probably that things are thought to be <em>fast enough</em> anyway.</p>
-<p>One advantage of using a framework is the sharing of common solutions to common problems that happens as a community forms. In what is hopefully going to be a bit of a series I&#8217;m going to cover some simple things everyone can do to improve application performance. The patterns are generally applicable, but I&#8217;m going to focus on Django examples.</p>
-<p>I&#8217;m going to be pretty opinionated about the stack I&#8217;m using when necessary. I&#8217;m not looking to compare different web servers or databases or python versions. And I&#8217;d rather give concrete examples than generalise. If you&#8217;re using a different stack that&#8217;s fine, somethings will just work and others will need you to know how to configure the software you&#8217;ve already chosen. I&#8217;m also going to focus on a very small and simple to understand application. Most of these techniques scale up just fine, but I feel people don&#8217;t often use them on smaller projects because they thing you can <em>only</em> use them on larger ones. Or that you won&#8217;t see much impact on a smaller project. Both of these don&#8217;t ring true in my opinion and I&#8217;ll hopefully show why.</p>
-<h2>Measuring Performance</h2>
-<p>In this first part of the series lets take a quick detour to frame everything else. Lets talk about ways we can measure performance so we can see if the changes we&#8217;re making have the desired impact. If you&#8217;re not measuring performance already then start here.</p>
-<p>We&#8217;ll start out looking at a few tools which are useful when taking a view by view approach to analysing performance. These generally ignore the impact of load on the system but because of this are generally easier to understand and read.</p>
-<h2>Django Debug Toolbar</h2>
-<p>Most Django developers will hopefully already be using the excellent <a href="">Debug Toolbar</a>. It has a number of features relevant to our current quest but the most interesting is the query count. Less queries is nearly always better. That&#8217;s a whopping generalisation, but looking for unnecessary queries or duplicated queries or particularly slow running queries is a great way of making your application faster. The <span class="caps">ORM</span> makes it pretty easy to end up with a querysplosion if you&#8217;re not paying attention.</p>
-<p>It&#8217;s very simple to install:</p>
-<pre>pip install django-debug-toolbar</pre>
-<p>The query section shows you the number of queries, the individual queries themselves and the time taken. It&#8217;s designed to be run in debug mode, so the actual query times will likely be lower in production, but the query that&#8217;s taking ages in development will probably still be slow when you go live.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiB-gEM" alt="Django debug toolbar"/></p>
-<h2>YSlow</h2>
-<p><a href="http://developer.yahoo.com/yslow/">YSlow</a> is a browser extension for Firefox and Chrome that gives information and recommendations about a number of mainly <span class="caps">HTTP</span>, <span class="caps">CSS</span> or javascript issues individual pages might have. It will give you a score as well as suggestions for improvement:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiC-gEM" alt="YSlow showing a score of 96"/></p>
-<p>Also useful is the break down of the number of <span class="caps">HTTP</span> requests, and the affect of a primed cache on page loading.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjpgQIM" alt="YSlow showing http request breakdown"></p>
-<h2>Profiling Middleware</h2>
-<p>Sometimes you want to know the very low level calls that go into making a page render. For this you&#8217;ll want to look at profiling tools. The Django wiki has a <a href="https://code.djangoproject.com/wiki/ProfilingDjango">useful page on profiling</a> which is good if dispiriting reading.</p>
-<p>Django Snippets has several profiling middleware, one of which is packaged up in the excellent <a href="http://pypi.python.org/pypi/django-snippetscream">Django Snippetscream</a>. We can install that like so:</p>
-<pre>pip install django-snippetscream</pre>
-<p>Just include the middleware in your debug environment:</p>
-<pre>MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('snippetscream.ProfileMiddleware',)</pre>
-<p>You can then append ?prof to any of your URLs and instead of seeing the view you&#8217;ll see something like the following:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjRiQIM" alt="Profiling view"/></p>
-<p>Look at where your code spends it&#8217;s time and whether you have repeated calls to the same methods and functions. Sometimes getting down to this level of detail is the easiest way of finding the bottleneck in your application.</p>
-<h2>Nginx Logging</h2>
-<p>Here&#8217;s the first time I&#8217;m being opinionated about the stack, by choosing Nginx as my frontend server. I&#8217;ll talk a little about why this is a good idea later, but for the moment lets concentrate on why this is useful for measuring performance.</p>
-<p>Log files are wonderful things, and Nginx has quite a powerful syntax for <a href="http://wiki.nginx.org/HttpLogModule">adding extra information to log files</a>. Note the last line in the definition below.</p>
-<pre>log_format timed_combined '$remote_addr - $remote_user [$time_local]  '
-      '"$request" $status $body_bytes_sent '
-      '"$http_referer" "$http_user_agent" '
-      '$request_time $upstream_response_time $gzip_ratio';</pre>
-<p>We are adding the entire request time, the time taken by the upstream server (in my case gunicorn) to respond and also the gzip ratio. This is really handy if you&#8217;re optimising an application already in production. By collecting this data here it&#8217;s easy to then analyse the logs and pull out things like slow urls or assets not being gzipped effectively.</p>
-<h2>Django Timelog</h2>
-<p>Very similar to the above nginx logging, but implemented as a django 1.3 application (so it can be used in development as well) is one of my projects, <a href="https://github.com/garethr/django-timelog">django-timelog</a>. As well as logging the time taken for each request, django-timelog provides a management command to analyse the resulting log file. It produces output which can show in aggregate the average response time of either views or individual URLs.</p>
-<pre>
-+--------------------------+--------+--------+-------+---------+---------+-------+-------+
-| view                     | method | status | count | minimum | maximum | mean  | stdev |
-+--------------------------+--------+--------+-------+---------+---------+-------+-------+
-| boxes.viewsBoxDetailView | GET    | 200    | 9430  | 0.14    | 0.28    | 0.21  | 0.070 |
-+--------------------------+--------+--------+-------+---------+---------+-------+-------+
-| boxes.viewsBoxListView   | GET    | 200    | 66010 | 0.17    | 0.28    | 0.232 | 0.045 |
-+--------------------------+--------+--------+-------+---------+---------+-------+-------+
-| django.views.staticserve | GET    | 200    | 61295 | 0.00    | 0.02    | 0.007 | 0.006 |
-+--------------------------+--------+--------+-------+---------+---------+-------+-------+
-</pre>
-<p>It&#8217;s packaged so installation should be straightforward.</p>
-<pre>pip install django-timelog</pre>
-<p>Again this can be used in a production environment, or it can be used locally while developing. You can also use load testing tools as described in a moment to generate traffic which is then logged.</p>
-<h2>Load Testing</h2>
-<p>I&#8217;m mainly looking for a tool here which can easily generate <span class="caps">HTTP</span> traffic in volume, sending a decent number of concurrent requests against your application and returning some useful results. I mainly turn to ab (<a href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache bench</a>) because it&#8217;s available everywhere and it&#8217;s very simple to use.</p>
-<p>For example lets hit a site with 100 requests, with requests being sent in batches of 5.</p>
-<pre>ab -c 5 -n 100 http://www.vagrantbox.es/12/</pre>
-<p>This will print something like the following. For our purposes we&#8217;re mainly interested in the requests per second value and the mean request time.</p>
-<pre>Concurrency Level:      5
-Time taken for tests:   1.981 seconds
-Complete requests:      100
-Failed requests:        0
-Write errors:           0
-Total transferred:      328300 bytes
-HTML transferred:       297400 bytes
-Requests per second:    50.47 [#/sec] (mean)
-Time per request:       99.064 [ms] (mean)
-Time per request:       19.813 [ms] (mean, across all concurrent requests)
-Transfer rate:          161.82 [Kbytes/sec] received</pre>
-<p>Load testing is a pretty large topic. For instance even with the above simple example how do we know if 100 requests is enough? (it&#8217;s not.) Or whether a concurrency of 5 is useful? Often what you&#8217;re interested in is where your application starts to saturate or where it starts to error. But even without getting bogged down in the details a simple test like this can show changes have had a positive or negative effect. I&#8217;ll show examples of this as we investigate optimisation techniques.</p>
-<p>If you&#8217;re working on a larger project hopefully you&#8217;ll have the time to investigate other approaches too. I&#8217;m quite a fan of using production logs to replay requests for instance, and of using <a href="http://funkload.nuxeo.org/">Funkload</a> for running scenarios under load. I&#8217;ll hopefully write more about those later. I&#8217;ve heard good things about <a href="http://tsung.erlang-projects.org/">Tsung</a> as well, <a href="http://www.hpl.hp.com/research/linux/httperf/">HTTPerf</a> is excellent and <a href="http://jakarta.apache.org/jmeter/">JMeter</a> has many fans. I&#8217;m using ab for examples because it&#8217;s point and shoot and you probably already have it installed without knowing.</p>
-
-<p>Hopefully that&#8217;s a useful list of tools to get a baseline of where you&#8217;re at with performance. The rest of the articles in this series will show approaches to improve performance, and come back to one or more of these tools to confirm we&#8217;re heading in the right direction.</p>
   </div>
   
 </div>

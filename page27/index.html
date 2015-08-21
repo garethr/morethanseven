@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,73 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/05/25/beyond-basic-web-development/">
+        Beyond Basic Web Development
+      </a>
+    </h1>
+
+    <span class="post-date">25 May 2009</span>
+
+    <p>I did a talk at the recent barcamp North East on web development tools. Specifically I wanted to talk about the fact that an awful lot of people just use the basic stack of tools they are familiar with. So Microsoft people will just use C#, <span class="caps">MSSQL</span> and <span class="caps">ISS</span> and lots of people just use <span class="caps">PHP</span>, MySQL and Apache. I&#8217;m not saying their is anything wrong with those tools, but if they are all you have in your tool box you&#8217;re limited how well designed your software can be.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=beyondbasicwebdev-090525052654-phpapp02&stripped_title=beyond-basic-web-development" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I&#8217;d knocked the presentation together in my hotel room pretty quickly before heading down to barcamp and the lack of an internet connection meant I didn&#8217;t have links and didn&#8217;t cover a few tools I should have. It did seem to have the desired result in any case as several people spoke to me afterwards about wanting to use one of the tools I mentioned for something specific.</p>
+<ul>
+	<li><a href="http://www.danga.com/memcached/">Memcached</a></li>
+	<li>Non relational databases (<a href="http://hadoop.apache.org/hbase/">Hbase</a>, <a href="http://couchdb.apache.org/">Couchdb</a>)</li>
+	<li><a href="http://tokyocabinet.sourceforge.net/tyrantdoc/">Tokyo Tyrant</a></li>
+	<li><a href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache Bench</a></li>
+	<li><a href="http://integrityapp.com/">Continuous Integration</a></li>
+	<li><a href="http://djangoproject.com/">Django</a> (specifically for nearly free admin interfaces)</li>
+	<li>Small web servers &#8211; <a href="http://nginx.net/">Nginx</a>, <a href="http://code.macournoyer.com/thin/">Thin</a> and <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a></li>
+	<li>Message queues &#8211; <a href="http://www.rabbitmq.com/">RabbitMQ</a> and <a href="http://stompserver.rubyforge.org/">Stompserver</a></li>
+	<li><span class="caps">HTTP</span> tools &#8211; <a href="http://www.apsis.ch/pound/">Pound</a>, <a href="http://varnish.projects.linpro.no/">Varnish</a> and <a href="http://www.squid-cache.org/">Squid</a></li>
+	<li><a href="http://hadoop.apache.org/core/">Hadoop</a></li>
+</ul>
+<p>We also had a good discussion afterwards and people mentioned a few other tools.</p>
+<ul>
+	<li><a href="http://reductivelabs.com/products/puppet/">Puppet</a></li>
+	<li><a href="http://www.nagios.org/">Nagios</a></li>
+	<li><a href="http://ganglia.info/">Ganglia</a></li>
+	<li><a href="http://www.mortbay.org/jetty/">Jetty</a></li>
+	<li><a href="http://lucene.apache.org/solr/">Solr</a></li>
+</ul>
+<p>Now it&#8217;s possible to spend too much time playing with small tools that are likely to be peripheral to the bulk of your application. But the number of stories I&#8217;ve head of people writing their own messages queuing systems in <span class="caps">PHP</span>, or using PHPMyAdmin as an application admin interface or ignoring the fact that their fancy new application only supports a few people at once.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/05/21/universal-ie6-css-and-different-types-of-sites/">
+        Universal Internet Explorer 6 CSS and different types of sites
+      </a>
+    </h1>
+
+    <span class="post-date">21 May 2009</span>
+
+    <p>Andy Clarke, as only he can, has started something of a slagging match with his proposals for a <a href="http://forabeautifulweb.com/blog/about/universal_internet_explorer_6_css/">single, central IE6 stylesheet</a>. My first impression was that this is basically a much better version of the browser defaults.</p>
+<p>Between backslapping and shouts of heresy there are a few good comments floating on the post so far (I&#8217;d expect more). But most of them seem to assume only two types of website exist:</p>
+<ol>
+	<li>Websites for <em>clients</em>. You know, business to business or business to consumer sorts of things. Online stores, radio station websites, newspapers, company brochures, etc.</li>
+	<li>Personal blogs</li>
+</ol>
+<p>Obviously that covers only a fraction of web pages, but it covers a much larger proportion of web sites. What do I mean by that?</p>
+<ol>
+	<li>Admin interfaces. Available all over the place and often used by a very small number of people.</li>
+	<li>Intranets. If your company default browser isn&#8217;t IE6 then don&#8217;t spend more time that you have to supporting it.</li>
+	<li>Internal application interfaces. Everything from holiday to payroll to IT helpdesk requests are often built as well apps. Again if the audience using them isn&#8217;t using IE6 then don&#8217;t waste you&#8217;re time.</li>
+</ol>
+<p>Most people (ok so this might be my opinion) seem to work within small to medium sized agency style places. Smallish companies need to rely more on employees as part of their marketing effort, younger people tend to be more militant and people working for smaller organisations (like Andy) tend to benefit more from a little celebrity. But that ignores an army of people who work in house or in other types of company that just happen to build top notch web sites or applications. I&#8217;ve now worked in everything from small agencies, via medium sized agencies to freelance and inhouse. They are all different and all place different types of time pressure on the people involved.</p>
+<p>Another argument to be had here is summed up by Sion (<a href="http://twitter.com/sionnnn/status/1872141409">http://twitter.com/sionnnn/status/1872141409</a>)</p>
+<blockquote>
+<p>if u write code with all browsers in mind from the offset it doesn&#8217;t take any longer though? hows that commercially unsound?</p>
+</blockquote>
+<p>And this is pretty much how I used to work. But this means ignoring whole swathes of the unsupported parts of CSS2 and in particular CSS3. CSS3 doesn&#8217;t really allow you to make designs that you couldn&#8217;t make before (ok, that&#8217;s a little unfair, maybe) but it does allow you to do what you did before <em>much more efficiently</em>. Multi-column layout stuff, multiple background, rounded corners, opacity, RGBa. Smaller stylesheets are easier and quicker to write, test and maintain. And sometimes the time saved is worth more than the additional overhead of writing and maintaining <span class="caps">CSS</span> for IE6. Maybe not for a decent sized consumer project with a reasonable team and a few hundred thousand budget. Maybe not for a local council or government site. But for a surprisingly large range of other types of projects this might be a worthwhile approach.</p>
+<p>Something else I think that comes through in many of the comments is that it&#8217;s often seen as the web designers job to fight for things. So we fight to ensure time is spend on making something accessible. We fight to make sure we use valid code wherever possible. We fight for sensible fallbacks when javascript isn&#8217;t available. But we also get accused of not being able to see both sides and at times being unrealistic. Worth considering with regards peoples initial reactions to this, mine included.</p>
+<p>The only thing I would say to anyone looking to use this is don&#8217;t create your own version. Use the <a href="http://code.google.com/p/universal-ie6-css/">one from google code</a>. As Andy suggests, do suggest improvements, ideally by making the changes yourself presumably along with a solid test case. The time saving benefits basically disappear if we all have to maintain our own versions, before that means we have to test our own versions.</p>
+<p>I&#8217;m not saying <em>ignore IE6</em>, and neither is Andy (I don&#8217;t think). I&#8217;m saying pick your battles. I&#8217;ve build websites to support everything under the sun. Sometimes it&#8217;s been absolutely the right thing to do, sometimes in hindsight it&#8217;s probably been a little bit of wasted time. I&#8217;m sure you can think of similar times from the sites you&#8217;ve been involved in.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -113,49 +180,6 @@
 <p>So that&#8217;s where <a href="http://gitbug.appspot.com">GitBug</a> comes in. Bug tracking for people with minimal needs.</p>
 <p>The only real <em>feature</em> past a very minimal bug tracker is the ability to close bugs via a GitHub webhook. Oh and lots of <span class="caps">JSON</span> and <span class="caps">RSS</span> feeds for everything but that&#8217;s just the way we should build things now anyway.</p>
 <p>Their are areas of the interface that could do with some streamlining and a couple of open bugs that don&#8217;t yet cause me enough pain to fix. I have however opened it up for anyone with a Google account to use and a few people have started adding their own projects and issues already. I&#8217;m hoping that for the most part by keeping it as simple as possible I can avoid having to do any work on <em>it</em> and work on bugs in other projects instead, of which I&#8217;m sure there are many.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/04/10/support-revcanonical/">
-        Support for Rev=Canonical
-      </a>
-    </h1>
-
-    <span class="post-date">10 Apr 2009</span>
-
-    <p>There has been <a href="http://adactio.com/journal/1566/">lots of talk</a> recently about <span class="caps">URL</span> shortening. Services like <a href="http://tinyurl.com/">TinyURL</a> have been around for a good while, offering shortened versions of URLs like <a href="http://tinyurl.com/dd7w2m">tinyurl.com/dd7w2m</a> which are easier to put in a tweet or an email. The problem with this is that not only does the shorter version mask any information about the destination, but if TinyURL or one of the other shortening services goes away, or loses control of it&#8217;s domain name, a large number of links are going to stop working the way they should.</p>
-<p><a href="http://laughingmeme.org/">Kellan</a> in particular has been proposing some simple steps that might get us out of this hole. You can read more about the ideas behind using <a href="http://revcanonical.wordpress.com/">Rev=Canonical</a> and try out the future (maybe) of these services at <a href="http://revcanonical.appspot.com">revcanonical.appspot.com</a>.</p>
-<p>The nicest thing from my point of view about this idea is how simple it is to implement. This blog is running a custom Django based blogging engine called <a href="http://github.com/garethr/django-train/tree/master">Train</a>.</p>
-<p>The posts on this site exist at urls like the following: <a href="http://morethanseven.net/2009/04/04/mixing-it-programming-language-choice/">morethanseven.net/2009/04/04/mixing-it-programming-language-choice/</a>. With only a small view function, a change to a template and the addition of a url this blog should now work with Kellans new url shortener.</p>
-<p>I decided to use the ids for the articles on the blog as the key for the short versions. So if you were to visit <a href="http://morethanseven.net/284">morethanseven.net/284</a> you would get the article above. I decided to issue a redirect from the short version to the long version in the end rather than serve duplicate content with the canonical link, not sure which way is probably best though.</p>
-<p>The markup for each article contains the required link in the head of the document:</p>
-<pre>&lt;link rel="alternate shorter" href="http://morethanseven.net/284"&gt;&lt;/pre&gt;</pre>
-<p>And the django view looks something like this:</p>
-<pre>def tiny(request, id):
-    "Provide tiny urls based on ids for articles"
-    # get the article or throw a 404
-    article = get_object_or_404(Article, id=id, status='live')
-    url = article.get_absolute_url()
-    # redirect to the relevant
-    return HttpResponsePermanentRedirect(url)</pre>
-<p>All in all, incredible simply to implement, especially in something like Rails or Django which make this sort of wire up urls to view stuff easy. So what&#8217;s stopping you adding this to you site or current project? If enough people just do it we can make the web a slightly better place in reasonably short order.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/04/04/mixing-it-programming-language-choice/">
-        Mixing it Up - Programming Language Choice
-      </a>
-    </h1>
-
-    <span class="post-date">04 Apr 2009</span>
-
-    <p>So the <a href="http://www.theregister.co.uk/2009/04/01/twitter_on_scala/">Register article about Twitter</a> seems to have kicked over yet another Ruby/Rails doesn&#8217;t scale debate &#8211; mainly it seems from people who haven&#8217;t read any of the back story or the real meat of the story. For anyone catching up I&#8217;d suggest reading <a href="http://www.artima.com/scalazine/articles/twitter_on_scala.html">this recent interview</a> with three of the Twitter developers. Ikai Lan made some particular good points about <a href="http://ikaisays.com/2009/04/02/twitter-ruby-on-rails-scala-and-people-who-dont-rtfa/">people who don&#8217;t <span class="caps">RTFM</span></a> and the comments are well worth reading too. Tony Arcieri, of <a href="http://wiki.reia-lang.org/">Reia</a> fame, took another approach and wondered why <a href="http://unlimitednovelty.com/2009/04/twitter-blaming-ruby-for-their-mistakes.html">non of the open source message queues every got a look in</a></p>
-<p>What it really all comes down to is that Twitter are using more than one language to write their systems in. What I don&#8217;t understand is why this is a shock to anyone, or why it&#8217;s a bad think? Google appear to use Java and Python for most things. Yahoo! use Java and <span class="caps">PHP</span> (and C and Perl I think?). Microsoft use VB and C/C++/C# and probably F#. At work we use .<span class="caps">NET</span> and Python for different things.</p>
-<p>Big companies have been using multiple languages and platforms for good and bad reasons for ever. Sometimes it&#8217;s about legacy systems, but often it&#8217;s about using the right tool for the job. I think lots of people jumping in on the debate do so from a point of view that everyone uses one language for everything, mainly because most personal projects or small agency style jobs do just that. Why overcomplicate smaller projects with the need for people to know more than one language? In a small general purpose team it&#8217;s also going to make recruiting and getting people up to speed much harder.</p>
-<p>But for startups doing interesting things it&#8217;s potentially both more efficient and more interesting to use multiple platforms. I think Dopplr might be mainly Ruby with a smattering of Erlang, all built around an ApacheMQ message queue, and <a href="http://www.hackdiary.com/">Matt</a> has talked about that architecture at various conferences without being called out on it.</p>
-<p>So for your next personal project why not pick a handy message queue (personally I like <a href="http://www.rabbitmq.com/">RabbitMQ</a> and <a href="http://stompserver.rubyforge.org/">StompServer</a>), and at least two complimentary languages and see how it changes the architecture of what you build? Mix <span class="caps">PHP</span> with an Erlang backend or go for Twitters Ruby/Scala mix. It might very well be overkill for that blog or todo list application you had in mind, but it just might  teach you more about picking the right tools for the job when you come across non-trivial problems.</p>
   </div>
   
 </div>

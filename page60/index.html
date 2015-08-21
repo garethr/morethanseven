@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,56 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/12/03/well-how-did-i-do/">
+        Well, how did I do
+      </a>
+    </h1>
+
+    <span class="post-date">03 Dec 2006</span>
+
+    <p>Well, the year is ever so nearly over. Again. I&#8217;m sure their will be a good few round ups, I&#8217;ll probably even partake <a href="http://morethanseven.net/posts/obligatory-next-year-post">again</a>, but thought I&#8217;d start off with a quick look at how I got on with my <a href="http://morethanseven.net/posts/more-to-comestatement-of-intent">list of stuff to do</a>.</p>
+ <p>I did the conference thing again and I&#8217;m sure I will be back this coming year. <a href="http://www.vivabit.com/atmedia2006/">@media</a>, <a href="http://www.futureofwebapps.com/">Future of Web Apps</a> and <a href="http://2006.dconstruct.org/">dConstruct</a> all look like going from strength to strength. And all being different enought to be worth going along. And I stayed awake throughout the Ajax workshops and I&#8217;m pretty sure I got to everything @media had to offer. So that&#8217;s three ticked off.</p>
+ <p>On the article publishing thang. Well, I&#8217;m know writing for <a href="http://www.thinkvitamin.com/">Vitamin</a> &#8211; doing book reviews as often as I can do, two so far on <a href="http://www.thinkvitamin.com/reviews/coding/communicating-design-by-dan-brown/">Communicating Design</a> and <a href="http://www.thinkvitamin.com/reviews/dev/using-microformats-by-brian-suda/">Using Microformats</a> and more to come. Hopefully more to come on that front too. Another tick I reckon.</p>
+ <p>The next two, related to building and releasing stuff (specifically Rails and the feed syndicator) I sort of passed on. I actually have some things in the works but I&#8217;m not likely to get their this year. The reason was probably my flirtation with all sorts of other things &#8211; in particular Python. Releasing bits of code is something I&#8217;m going to do more of. Watch this space. Two crosses.</p>
+ <p>Locally I messed up the domain name but settled on the nicer <a href="http://refreshnewcastle.org">refreshnewcastle.org</a> and with a little help from <a href="http://thewatchmakerproject.com/">Matthew <del>Patterson</del> Pennell</a> have a nice new site. Next year I want to do more than just web site related bits an pieces. Maybe half a tick?</p>
+ <p>Now the &#8220;something vague&#8221; idea. Well, <a href="http://morethanseven.net/posts/teaching">teaching web design</a> at Newcastle College definately counts here I think. I didn&#8217;t see this coming and hopefully I&#8217;m doing a good job so far.</p>
+ <p>Ok, so not bad going, but I could do better. And looking back over a list I made a year ago is quite interesting. I guess I&#8217;m posting this early to encourage anyone reading it to post a list of things they want to do next year. Anyone got any ideas?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2006/11/15/mac-virtualhost-follow-up/">
+        Mac Virtualhost follow up
+      </a>
+    </h1>
+
+    <span class="post-date">15 Nov 2006</span>
+
+    <p>A couple of people asked for the details of the virtualhost script I modified for use with <span class="caps">MAMP</span> in a <a href="http://morethanseven.net/posts/virtualhosts-on-mac-os-x#comment">previous post</a>. Apologies for taking a bit of time.</p>
+ <p>First I had to make these changes to the original <a href="http://patrickgibson.com/utilities/virtualhost/">virtualhost script</a>:</p>
+<p><code>
+DOC_ROOT_PREFIX="/Applications/MAMP/htdocs" 
+</code></p>
+<p><code>
+&lt;pre&gt;APACHE_CONFIG="/Applications/MAMP/conf/apache" 
+APACHECTL="/Applications/MAMP/Library/bin/apachectl"&lt;/pre&gt;
+</code></p>
+ <p>I also made a few changes to httpd.conf in /Applications/<span class="caps">MAMP</span>/conf/apache. From memory first to allow local .htaccess files to override everything on a per directory basis.</p>
+<p><code>
+&lt;pre&gt;&amp;lt;Directory "/Applications/MAMP/htdocs"&amp;gt;
+oAllowOverride All
+&amp;lt;/Directory&amp;gt;&lt;/pre&gt;
+</code></p>
+ <p>and then to point to the virtual hosts directory.</p>
+<p><code>
+&lt;pre&gt;NameVirtualHost 127.0.0.1
+Include /Applications/MAMP/conf/apache/virtualhosts&lt;/pre&gt;
+</code></p>
+ <p>I keep meaning to do a screen capture tutorial of sorts, so maybe something like this would be a good starting point? We shall see as and when time permits. Probably this time next year. Any problems let me know and I&#8217;ll try and debug.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -116,39 +166,6 @@
  <p>Personally I&#8217;m too much of a fan of dynamic languages to be wholly impartial, but working in a mainly .<span class="caps">NET</span> shop I&#8217;m following IronPython when I get a chance, and a friendly Java officionando seemed pretty pleased with <a href="http://jruby.codehaus.org/">JRuby</a> (although why not <a href="http://www.jython.org/Project/index.html">Jython</a> I&#8217;m not sure?) when last I spoke with them.</p>
  <p>Java and .<span class="caps">NET</span> are the prime candidates when it comes to big companies buying software, and all of that investment isn&#8217;t going to go to waste any time soon. But the potential speed benefits of Python or Ruby, and the work already going on with the likes of JRuby, Jython and IronPython, could make for a smooth transition.</p>
  <p>I guess only time will tell, and I&#8217;m sure some people are still not convinced when it comes to dynamic languages (heathens). In the meantime I&#8217;ve ordered <a href="http://www.amazon.co.uk/Beyond-Java-Bruce-Tate/dp/0596100949">Beyond Java</a> by <a href="http://weblogs.java.net/blog/batate/">Bruce Tate</a> to do some swatting up.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/10/25/busy-but-at-least-something-to-show-for-it/">
-        Busy. But at least something to show for it.
-      </a>
-    </h1>
-
-    <span class="post-date">25 Oct 2006</span>
-
-    <p>In between personal projects, sleep and work I dont think time exists at the moment, but a few of those efforts are starting to bear fruit.</p>
- <p>I&#8217;ve just had my <a href="http://www.thinkvitamin.com/reviews/dev/using-microformats-by-brian-suda/">first book review published</a> over on <a href="http://www.thinkvitamin.com">Vitamin</a>, a review of <a href="http://suda.co.uk">Brian Suda&#8217;s</a> Using Microformats. Hopefully this will be the first of many.</p>
- <p>Let me know what you think.</p>
- <p>This will probably have some sort of effect on the hibernating <a href="http://webdesignbookshelf.com">webdesignbookshelf.com</a> that I&#8217;ve simply not had time to maintain. This was I just get to concentrate on writing reviews, although I have a few ideas for the site which dont clash with that.</p>
- <p>More personal web related news soon. If for no other reason than to prove I really am busy!</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/10/21/an-apology-to-xslt/">
-        An apology to XSLT
-      </a>
-    </h1>
-
-    <span class="post-date">21 Oct 2006</span>
-
-    <p>I have to admit to thinking that <span class="caps">XSL</span> was something of a waste of time a while back. I&#8217;ve changed my mine and wanted to muse about why.</p>
- <p><span class="caps">XML</span> is simple enough to jump right in, and a few years back it had a big enough band wagon to mean jumping on was pretty much required. I think in hindsight, at least in my mind, alot of this was just a little gratuitous. <span class="caps">XML</span> abstraction layers, <span class="caps">XML</span> content management systems, <span class="caps">SOAP</span>, etc.</p>
- <p>I&#8217;d often seen <span class="caps">XSLT</span> as the template layer in an <span class="caps">XML</span> based content management system and after several looks went back to using light weight systems that made sense. The idea of going from a database to <span class="caps">XML</span> then outputting <span class="caps">HTML</span> via <span class="caps">XSLT</span> just made me wonder why. The rationale that you could then output it as anything (<span class="caps">WML</span>, <span class="caps">PDF</span>, whatever) was very nice, but rarely actually realised from what I saw, and easy enough to do with any half decent templating system. You also always seemed to need more <span class="caps">XSLT</span> that it looked like you should.</p>
- <p><a href="http://rubyonrails.org">Ruby on Rails</a> even wore as a badge of honor that it didn&#8217;t need to do any <span class="caps">XML</span> pushups to deal with configuration. And even those with a penchant for Java seem to have problems with using <a href="http://www.sdtimes.com/printArticle/column-20060901-05.html"><span class="caps">XML</span> as a programming language</a>.</p>
- <p>Of late though I&#8217;ve been back playing with APIs, many of which produce <span class="caps">XML</span> in one way or another (whether that&#8217;s <span class="caps">RSS</span>, Atom or some custom format), and <span class="caps">XSL</span> actually comes in pretty handy here for just thowing around content. I did some work with a <a href="http://mini.google.co.uk">Google Mini</a> too using <span class="caps">XSLT</span> and their are some <a href="http://suda.co.uk/projects/X2V/">interesting tricks</a> with <a href="http://microformats.org">Microformats</a> to boot. I haven&#8217;t listened to the <a href="http://muffinresearch.co.uk/wsg/audio/index.xml">podcast</a> yet so I&#8217;m just guessing at the moment but I could see <a href="http://allinthehead.com/">Drew&#8217;s</a> &#8220;Your website as your <span class="caps">API</span>&#8221; talk at the <a href="http://muffinresearch.co.uk/archives/2006/10/21/following-the-wsg-microformats-event/">recent <span class="caps">WSG</span> meeting</a> making use of <span class="caps">XSLT</span>?</p>
- <p>So, I think I might have changed my mind a bit. <span class="caps">XSL</span>, I think, is going to be a useful skill to have in your toolkit in a world of microformats and APIs. The <a href="http://www.w3schools.com/xsl/">W3Schools <span class="caps">XSL</span> tutorial</a> is a pretty good starting place if you&#8217;ve not used it previously at all. Thought I&#8217;d still rather use a <a href="http://www.cheetahtemplate.org/">decent templating engine</a> for site rendering tasks.</p>
   </div>
   
 </div>

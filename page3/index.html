@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,208 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/15/testing-vagrant-runs-with-cucumber/">
+        Testing Vagrant runs with Cucumber
+      </a>
+    </h1>
+
+    <span class="post-date">15 Mar 2014</span>
+
+    <p>I&#39;ve been a big fan of <a href="http://www.vagrantup.com/">Vagrant</a> since it&#39;s
+initial release and still find myself using it for various tasks.</p>
+
+<p>Recently I&#39;ve been using it to test collections of Puppet modules. For a
+single host
+<a href="https://github.com/jvoorhis/vagrant-serverspec">vagrant-serverspec</a> is
+excellent. Simply install the plugin, add a provisioner and write your
+<a href="http://serverspec.org/">serverspec</a> tests. The serverspec provisioner
+looks like the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:serverspec</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+  <span class="n">spec</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;*_spec.rb&#39;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>But I also found myself wanting to test behaviour from the host
+(serverspec tests are run on the guest), and also wanted to write tests
+that checked the behaviour of a multi-box setup. I started by simply
+writing some <a href="http://cukes.info/">Cucumber</a> tests which I ran locally,
+but I decided I wanted this integrated with vagrant. Enter
+<a href="https://github.com/garethr/vagrant-cucumber-host">vagrant-cucumber-host</a>.
+This implements a new vagrant provisioner which runs a set of cucumber
+features locally.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:cucumber</span> <span class="k">do</span> <span class="o">|</span><span class="n">cucumber</span><span class="o">|</span>
+  <span class="n">cucumber</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Just drop your features in the features folder and run <code>vagrant
+provision</code>. If you just want to run the cucumber features, without any
+of the other provisioners running you can use:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vagrant provision --provision-with cucumber
+</code></pre></div>
+<p>Another advantage of writing this as a vagrant plugin is that it uses
+the Ruby bundled with vagrant, meaning you just install the plugin
+rather than faff about with a local Ruby install. </p>
+
+<p>A couple of other vagrant plugins that I&#39;ve used to make the testing
+setup easier are <a href="https://github.com/cogitatio/vagrant-hostsupdater">vagrant-hostsupdater</a>
+and <a href="https://github.com/adrienthebo/vagrant-hosts">vagrant-hosts</a>. Both
+help with managing hosts files, which makes writing tests without
+knowing the IP addresses easier.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/02/16/buy-vs-build-your-monitoring-system/">
+        Buy vs Build your Monitoring System
+      </a>
+    </h1>
+
+    <span class="post-date">16 Feb 2014</span>
+
+    <p>At the excellent <a href="http://www.theguardian.com/info/developer-blog/2014/feb/15/london-devops-meetup-held-at-the-guardian">London Devops meetup</a> last week I asked what was
+apparently a controversial question:</p>
+
+<blockquote>
+<p>should you just use software as a service monitoring products rather than integrate lots of open source tools?</p>
+</blockquote>
+
+<p>This got a few people worked up and I promised a blog post.</p>
+
+<p>Note that I wrote a post listing lots of <a href="http://www.morethanseven.net/2013/10/13/looking-into-monitoring-and-logging-tools/">open source monitoring tools</a>
+not that long ago. And I&#39;ve been to both the
+<a href="http://monitorama.com/">Monitorama</a> events about open source
+monitoring. And have a bunch of <a href="http://forge.puppetlabs.com/garethr?q=monitoring">Puppet modules for open source monitoring tools</a>. I&#39;m
+a fan of both open source and of open source monitoring. Please don&#39;t
+read this as an attack on either, and particularly on the work of
+awesome people working on  great open source monitoring products.</p>
+
+<h2>Some assumptions</h2>
+
+<ol>
+<li>No one product exists that does everything. I think this is true for
+SaaS as much as for open source.</li>
+<li>Lets work with about 200 hosts. This is a somewhat arbitrary number I
+know, some people will have more and others less.</li>
+<li>If it saves money we&#39;ll pay yearly, rather than monthly or hourly.</li>
+<li>We could probably get some volume discounts from some of the
+suppliers, but we&#39;ll use list prices for this post.</li>
+</ol>
+
+<h2>Show me the money</h2>
+
+<p>So what would it cost to get up and running with a state of the art
+software as a service monitoring system? In order to do this we need to
+choose our software. For this post that means I&#39;m going to pick products
+I&#39;ve used (sometimes only a bit) and like. This isn&#39;t a comprehensive
+study of all the alternatives I&#39;m afraid - though feel free to write
+your own alternative blog posts.</p>
+
+<ul>
+<li><p><a href="http://newrelic.com/">New Relic</a> provides a crazy amount of data about
+the running of both your servers and your applications. This includes
+application performance data, errors, low level metrics and even rolled
+up method or database query performance. $149 per host per month for our
+200 hosts gives us <em>$29,800</em> per month.</p></li>
+<li><p><a href="https://metrics.librato.com">Librato Metrics</a> provides a fantastic way
+of storing arbitrary time series data. We&#39;re already storing lots of
+data in New Relic but Metrics provides us with less opinionated software
+so we can use it for anything, for instance number of logins or searches
+or other business level metrics. We&#39;ll go for a plan with 200 data sources, 100 metrics each and at 10 second resolution for a cost of <em>$3,860</em> per month.</p></li>
+<li><p><a href="http://www.pagerduty.com/">Pagerduty</a> is all about the alerts side of
+monitoring. Most of the other SaaS tools we&#39;ve chosen integrate with it
+so we can make sure we get actionable emails and SMS messages to the
+right people at the right time. Our plan costs $18 per person per month, 
+so lets say we have 30 people at a cost of <em>$540</em> per month.</p></li>
+<li><p><a href="https://papertrailapp.com/">Papertrail</a> is all about logs. Simple setup
+your servers with syslog and Papertrail will collect, analyze and store
+all your log messages. You get a browser based interface, search tools
+and the ability to setup alerts. We like lots of logs so we&#39;ll have a
+plan for 2 weeks of search, 1 year archive and 100GB month of log
+traffic. That all costs <em>$575</em> per month.</p></li>
+<li><p><a href="https://www.getsentry.com">Sentry</a> is all about exceptions. We could be
+simply logging these and sending them to Papertrail but Sentry provides
+tools for tracking and rolling up occurences. We&#39;ll go for a plan with
+90 days of history and 200 events per minute at a cost of <em>$199</em> a
+month.</p></li>
+<li><p><a href="https://www.pingdom.com">Pingdom</a> used to provide a very simple
+external check service, but now they have added more complex multistage
+checks as well as real user monitoring to the basic ping. We&#39;ll choose
+the plan with 250 checks, 20 Real User Monitoring sites and 500 SMS
+alerts for <em>$107 a month</em>.</p></li>
+</ul>
+
+<h2>How much!</h2>
+
+<p>In total that all comes to <em>$35,080 (£20,922)</em> per month, or
+<em>$420,960 (£251,062)</em> per year.</p>
+
+<p>Now the first reaction of lots of people will be <em>that&#39;s a lot of money</em>
+and it is. But remember open source isn&#39;t free either. We need to pay
+for:</p>
+
+<ul>
+<li>The servers we run our monitoring software on</li>
+<li>The people to operate those servers</li>
+<li>The people to install and configure our monitoring software</li>
+<li>The office space and other costs of employing people (like management
+and hiring)</li>
+</ul>
+
+<p>I think people with the ability to build software tend to forget they
+are expensive, whether as a contractor or as a full time member of
+staff. And people without management experience tend to forget costs
+like insurance, rent, management overhead, recruitment, etc.</p>
+
+<p>And probably more important than these for some people we need to consider:</p>
+
+<ul>
+<li>The time taken to build a good open source monitoring system</li>
+</ul>
+
+<p>The time needed to put together a good monitoring stack based on for
+instance logstash, kibana, riemann, sensu, graphite and collectd isn&#39;t
+small. And don&#39;t forget the number of other moving parts like redis,
+rabbitmq and elasticsearch that need installing configuring and
+maintaining. That probably means compromising in the short term or
+shipping later. In a small team how core is building your monitoring
+stack to what you do as a business?</p>
+
+<h2>But I can&#39;t use SaaS</h2>
+
+<p>For some people, using a software as a service product just isn&#39;t going
+to cut it. Here&#39;s a list of reasons I can think of:</p>
+
+<ul>
+<li>Regulation constrains where your data can be stored, for instance it&#39;s
+not allowed out of the country</li>
+<li>Sheer size of infrastructure, although you may be able to get a volume
+discount it might not be enough</li>
+</ul>
+
+<p>I think everything else is a cost/benefit issue or personal preference
+(or bias). Happy to add more to that list, but I don&#39;t think it&#39;s a very
+long list.</p>
+
+<h2>Conclusions</h2>
+
+<p>I&#39;ve purposefully not talked about the quality of the tools here, just
+the cost. I&#39;ve also not mentioned that it&#39;s likely not an all or nothing
+decision, lots of people will mix SaaS products and open source tools.</p>
+
+<p>Whether taking a SaaS approach will be quicker, cheaper or better will
+depend on your specific business context. But try and make that about
+the organisation and not about the technology.</p>
+
+<p>If you&#39;ve never used the current crop of SaaS monitoring
+tools (and not just the one&#39;s mentioned above) then I think you&#39;re missing
+out. Even if you stick with a mainly open source monitoring stack you
+might look at your tools a bit differently after you&#39;ve experimented
+with some of the commercial competition.</p>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -345,226 +547,6 @@ apt-get install ntp -y
 <p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
 
 <p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/01/01/testing-packer-created-images-with-serverspec/">
-        Testing Packer created images with serverspec
-      </a>
-    </h1>
-
-    <span class="post-date">01 Jan 2014</span>
-
-    <p><a href="http://www.packer.io/">Packer</a> provides a great way of describing the steps for creating a virtual machine image. But it doesn&#39;t have a built-in way of verifying those images.</p>
-
-<p><a href="http://serverspec.org/">Serverspec</a> provides a nice framework for writing tests against infrastructure, asserting the operation of services or the installation of packages.</p>
-
-<p>I&#39;m interested at the moment in building continous delivery pipelines for infrastructure components and have a simple working example of <a href="https://github.com/garethr/packer-serverspec-example">testing Packer with Serverspec</a> on
-Github. The example uses the AWS builder and the Puppet provisioner but the approach should work with other combinations.</p>
-
-<p>This doesn&#39;t represent a complete infrastructure pipeline, but it does demonstrate an approach to automating one particular component - building base images.</p>
-
-<h2>Testing</h2>
-
-<p>In our example I&#39;m using the <a href="https://github.com/puppetlabs/puppetlabs-ntp">Puppetlabs NTP</a> module to install and configure NTP. Once the Puppet provisioner has run, but before we build the AMI (or other virtal machine image) we run a test suite. For our example the tests are pretty simple:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">describe package(&#39;ntp&#39;) do
-  it { should be_installed }
-end
-
-describe service(&#39;ntp&#39;) do
-  it { should be_enabled   }
-  it { should be_running   }
-end
-</code></pre></div>
-<p>If the tests fail, Packer will stop and the AMI won&#39;t be built. The combination of storing the code (Packer template) alongside a test suite (Serverspec) and building a new AMI whenever you change the code, makes this setup perfect for continuous integration. </p>
-
-<h2>Wercker builds</h2>
-
-<p>As an example of a continuous integration setup the repository contains a <a href="https://github.com/garethr/packer-serverspec-example/blob/master/wercker.yml">wercker.yml</a> configuration file for the excellent <a href="http://devcenter.wercker.com/">Wercker</a> service. Wercker makes setting up multi-step built pipelines easy and nicely configurable via a simple text file in your repository.</p>
-
-<p>The Wercker <a href="https://app.wercker.com/#applications/52c450e489daaf145f001ad8">build for this project is public</a>. Currently the build involves downloading Packer, running <code>packer validate</code> to check the template and eventually running <code>packer build</code> to boot an instance and run our serverspec tests. </p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/12/29/making-the-web-secure/">
-        Making the web secure, one unit test at a time
-      </a>
-    </h1>
-
-    <span class="post-date">29 Dec 2013</span>
-
-    <p><em>Originally written as part of <a href="http://sysadvent.blogspot.co.uk/2013/12/day-21-making-web-secure-one-unit-test.html">Sysadvent 2013</a>.</em></p>
-
-<p>Writing automated tests for your code is one of those things that,
-once you have gotten into it, you never want to see code without tests
-ever again. Why write pages and pages of documentation about how
-something should work when you can write tests to show exactly how something does work? Looking at the number and quality of testing tools and frameworks (like cucumber,
-rspec, <a href="https://github.com/test-kitchen/test-kitchen">Test Kitchen</a>,
-<a href="http://serverspec.org/">Server Spec</a>,
-<a href="https://github.com/puppetlabs/beaker">Beaker</a>,
-<a href="http://casperjs.org/">Casper</a> and
-<a href="http://pivotal.github.io/jasmine/">Jasmine</a> to name a few) that have
-popped up in the last year or so I&#39;m obviously not the only person who
-has a thing for testing utilities.</p>
-
-<p>One of the other things I am interested in is web application
-security, so this post is all about using the tools and techniques
-from unit testing to avoid common web application security issues. I&#39;m
-using Ruby in the examples but you could quickly convert these to other languages if you desire.</p>
-
-<h2>Any port in a storm</h2>
-
-<p>Lets start out with something simple. Accidentally exposing
-applications on TCP ports can lead to data loss or introduce a vector
-for attack. Maybe your main website is super secure, but you left the
-port for your database open to the internet. It&#39;s the server configuration equivalent of forgetting to lock the back door.</p>
-
-<p>Nmap is a tool lots of people will be familiar with for spanning for
-open ports. As well as a command line interface Nmap also has good
-library support in lots of languages so lets try and write a simple
-tests suite around it.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">require &quot;tempfile&quot;
-require &quot;nmap/program&quot;
-require &quot;nmap/xml&quot;
-
-describe &quot;the scanme.nmap.org website&quot; do
-  file = Tempfile.new(&quot;nmap.xml&quot;)
-  before(:all) do
-    Nmap::Program.scan do |nmap|
-      nmap.xml = file.path
-      nmap.targets = &quot;scanme.nmap.org&quot;
-    end
-  end
-
-  @open_ports = []
-  Nmap::XML.new(&quot;scan.xml&quot;) do |xml|
-    xml.each_host do |host|
-      host.each_port do |port|
-        @open_ports &lt;&lt; port.number if port.state == :open
-      end
-    end
-  end
-end
-</code></pre></div>
-<p>With the above code in place we can then write tests like:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">it &quot;should have two ports open&quot; do
- @open_ports.should have(2).items
-end
-
-it &quot;should have port 80 open&quot; do
- @open_ports.should include(80)
-end
-
-it &quot;should have port 22 closed&quot; do
- @open_ports.should_not include(22)
-end
-</code></pre></div>
-<p>We can run these manually, but also potentially as part of a
-continuous integration build or constantly as part of a monitoring
-suite.</p>
-
-<h2>Run the Guantlt</h2>
-
-<p>We had to do quite a bit of work wrapping Nmap before we could write
-the tests above. Wouldn&#39;t it be nice if someone had already wrapped
-lots of useful security minded tools for us? <a href="http://gauntlt.org/">Gauntlt</a> is pretty much just that, it&#39;s a security testing framework based on cucumber which currently supports curl, nmap, sslyze, sqlmap, garmr and a bunch more tools in master. Lets do something more advanced than our port scanning test above by testing a URL for a SQL injection vulnerability.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">@slow
-Feature: Run sqlmap against a target
-  Scenario: Identify SQL injection vulnerabilities
-    Given &quot;sqlmap&quot; is installed
-    And the following profile:
-      | name       | value                                      |
-      | target_url | http://localhost/sql-injection?number_id=1 |
-    When I launch a &quot;sqlmap&quot; attack with:
-      &quot;&quot;&quot;
-      python &lt;sqlmap_path&gt; -u &lt;target_url&gt; —dbms sqlite —batch -v 0 —tables
-      &quot;&quot;&quot;
-    Then the output should contain:
-      &quot;&quot;&quot;
-      sqlmap identified the following injection points
-      &quot;&quot;&quot;
-    And the output should contain:
-      &quot;&quot;&quot;
-      [2 tables]
-      +-----------------+
-      | numbers         |
-      | sqlite_sequence |
-      +-----------------+
-      &quot;&quot;&quot;
-</code></pre></div>
-<p>The Gauntlt team publish <a href="https://github.com/gauntlt/gauntlt/tree/master/examples">lots of examples</a> like this one alongside the source code, so getting started is easy. Gauntlt is very powerful, but as you&#39;ll see from the example above you need to know quite a bit about the underlying tools it is using. In the case above you need to know the various arguments to sqlmap and also how to interpret the output.</p>
-
-<h2>Enter Prodder</h2>
-
-<p><a href="https://github.com/garethr/prodder">Prodder</a> is a tool I put together
-to automate a few specific types of security testing. In many ways
-it&#39;s very similar to Gauntlt; it uses the cucumber testing framework
-and uses some of the same tools (like nmap and sslyze) under the hood.
-However rather than a general purpose security framework like Gauntlt,
-Prodder is higher level and very opinionated. Here&#39;s an example:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Feature: SSL
-  In order to ensure secure connections
-  I want to check the SSL configuration of my servers
-  Background:
-    Given &quot;sslyze.py&quot; is installed
-    Scenario: Check SSLv2 is disabled
-      When we test using the &quot;sslv2&quot; protocol
-      Then the exit status should be 0
-      And the output should contain &quot;SSLv2 disabled&quot;
-
-    Scenario: Check certificate is trusted
-      When we check the certificate
-      Then the output should contain &quot;Certificate is Trusted&quot;
-      And the output should match /OK — (Common|Subject
-</code></pre></div>
-<p>Alternative) Name Matches/
-          And the output should not contain &quot;Signature Algorithm: md5&quot;
-          And the output should not contain &quot;Signature Algorithm: md2&quot;
-          And the output should contain &quot;Key Size: 2048&quot;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check certificate renegotiations
-      When we test certificate renegotiation
-      Then the output should contain &quot;Client-initiated
-</code></pre></div>
-<p>Renegotiations: Rejected&quot;
-          And the output should contain &quot;Secure Renegotiation: Supported&quot;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    Scenario: Check SSLv3 is not using weak ciphers
-      When we test using the &quot;sslv3&quot; protocol
-      Then the output should not contain &quot;Anon&quot;
-      And the output should not contain &quot;96bits&quot;
-      And the output should not contain &quot;40bits&quot;
-      And the output should not contain &quot; 0bits&quot;
-</code></pre></div>
-<p>This is a little higher level than the Gauntlt example — it&#39;s not
-exposing the workings of sslyze that is doing the actual testing. All
-you need is an understanding of SSL certifcates. Even if you&#39;re not an
-expert on SSL you can accept the aforementioned opinions of Prodder
-about what good looks like. Prodder currently contains steps and
-exampes for port scanning, SSL certificates and security minded HTTP
-headers. If you already have a cucumber based test suite (including
-one based on Gauntlt) you can reuse the step definitions in that too.</p>
-
-<p>I&#39;m hoping to build upon Prodder, adding more types of tests and
-getting agreement on the included opinions from the wider systems
-administration community. By having a default set of shared assertions
-about the expected security of out system we can more easily move onto
-new projects, safe in the knowledge that a test will fail if someone
-messes up our once secure configuration.</p>
-
-<h2>I&#39;m convinced, what should I do next?</h2>
-
-<p>As well as trying out some of the above tools and techniques for
-yourself I&#39;d recommend encouraging more security conversations in your
-development and operations teams. Here&#39;s a few  places to start with:</p>
-
-<ul>
-<li><a href="http://www.slideshare.net/beehooze/devopsday-london-ben-hughes-security">Ben Hughes from Etsy talking about security culture at Devopsdays London</a></li>
-<li><a href="https://speakerdeck.com/garethr/security-monitoring-with-open-source-penetration-testing-tools">A presentation I gave at Velocity about using penetration testing tools for monitoring purposes</a></li>
-<li><a href="http://www.slideshare.net/wickett/gauntlt-velocity-eu2013">A workshop, again from Velocity all about getting started with Gauntlt</a></li>
-</ul>
 
   </div>
   

@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,45 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/01/13/django-and-rails-presentation-from-qcon/">
+        Django and Rails presentation from QCon
+      </a>
+    </h1>
+
+    <span class="post-date">13 Jan 2013</span>
+
+    <p>I had great fun back in November at the <a href="http://qconsf.com/">QCon</a> conference in San Francisco. As well as currating one of the tracks and catching up with people in the area I managed to give the following talk.</p>
+<script async class="speakerdeck-embed" data-id="7e1dd5a03efc0130083b123139173def" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script><p>In hindsight it might have been a bit odd to try and cover both Rails and Django examples in the one presentation but it was quite good fun putting together code examples using both of them at the same time. As well as a large set of tips, tricks and tools I settled on a few things that I think any web (or other) framework should support out of the box.</p>
+<ul>
+	<li>A debug toolbar</li>
+	<li>Transparent caching support</li>
+	<li>Hooks for instrumentation</li>
+	<li>Configurable logging</li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2012/12/30/my-personal-package-repository/">
+        my personal package repository
+      </a>
+    </h1>
+
+    <span class="post-date">30 Dec 2012</span>
+
+    <p>I&#8217;m a <a href="http://www.morethanseven.net/2011/01/16/Why-developers-should-care-about-system-packages/">big fan of system packages for lots of reasons</a> and have often ended up rolling my own debian package repository at work, or working with others that have done so. Recently I finally got round to setting up a personal package repo, at <a href="http://packages.garethrushgrove.com">packages.garethrushgrove.com</a>. More interesting than the repo is probably the tool chain I used, oh and the rather nice bootstrap based styling.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjh1wIM" alt="nice looking package repository"/></p>
+<p>The source code for everything is <a href="https://github.com/garethr/packages">on GitHub</a> although not much documentation exists yet. In the middle are a few shell scripts that generate the repo. Around them is a Vagrant box (which makes it easier to build packages for different achitectures or distros) and some Rake commands</p>
+<pre><code>bundle exec rake -T
+rake recipes:build[recipe]  # Build a package from one of the available recipes
+rake recipes:list           # List available recipes
+rake repo:build             # Build the repository</code></pre>
+<p>The recipes commands allow for building new packages based on scripts. A few examples are included which use fpm, but you could use anything. The repo:build command triggers the debian repository to be rebuilt.</p>
+<p>The vagrant configuration shares various folders between and guest and host which also opens up a few useful features. One is I can just drop any old debian package into the debs folder and run the repo:build command and it will be in my repository. The other useful capability is that the resulting repo is shared back to the host, which means I can then check it into Git and in my case push it up to Heroku.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -161,39 +200,6 @@ Finished in 0.01472 seconds
 </pre>
 <p>The <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/lograge_spec.rb">tests themselves</a> are just basic Rspec with most of the work done in the <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/spec_helper.rb">custom matcher</a>. This not only means I can be a bit more confident that my grok pattern works, it also provides a much nicer framework for writing more patterns for other log formats. Parsing rules like this are one area where test driven development is a huge boon in my experience. And with tests comes continuous integration, in this case via <a href="http://travis-ci.org/#!/garethr/logstash-patterns">Travis</a>.</p>
 <p>I&#8217;ll hopefully find myself writing more patterns and tests for them, and if anyone wants to send pull requests and to start collecting working grok patterns together so much the better.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/08/11/Riemann-puppet-module/">
-        Riemann Puppet Module
-      </a>
-    </h1>
-
-    <span class="post-date">11 Aug 2012</span>
-
-    <p>Thanks to an <a href="https://twitter.com/bitprophet/status/233626675307479040">errant tweet</a> I started playing with <a href="http://aphyr.github.com/riemann/">Riemann</a> again. It ticks lots of boxes for me, from the clojure to configuration as code and the overloadable dashboard application. What started as using Puppet and Vagrant to investigate Riemann turned into a full blown tool and module writing exercise, resulting in two related projects on GitHub.</p>
-<ul>
-	<li><a href="https://github.com/garethr/garethr-riemann/">garethr-riemann</a> is a Puppet module for installing and configuring Riemann. It allows for easily specifying your own server configuration and dashboard views.</li>
-	<li><a href="https://github.com/garethr/riemann-vagrant">riemann-vagrant</a> is a Vagrantfile and other code which uses above puppet module to setup a local testing environment.</li>
-</ul>
-<p>I like this combination, a separate Puppet module along with a vagrant powered test bed. I&#8217;ve written a reasonable rspec based test suite to check the module but it&#8217;s always easier to be able to run <em>vagrant provision</em> as well to check everything is working. This also turned out to be the perfect opportunity to use <a href="https://github.com/rodjek/librarian-puppet">Librarian-Puppet</a> to manage the dependencies and eventually to ship the module to the <a href="https://forge.puppetlabs.com/garethr/riemann">Puppet Forge</a>.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/07/01/The-vagrantbox.es-story/">
-        The Vagrantbox.es Story
-      </a>
-    </h1>
-
-    <span class="post-date">01 Jul 2012</span>
-
-    <p>A few weeks ago now <a href="http://www.vagrantbox.es/">Vagrantbox.es</a> (a website I maintain for third party hosted <a href="http://vagrantup.com/">Vagrant</a> base boxes) dissapeared from the internet for a few days. This was completely my fault, the (lovely) hosting people <a href="https://www.ep.io/">ep.io</a> had unfortunately closed down the service they had in beta and I&#8217;d been so busy that I hadn&#8217;t had chance to move it elsewhere.</p>
-<p>The original version of the site (I had the code and good backups of the data) was a pretty simple Django application, but I&#8217;d used it to experiment (read over-engineer) with various bits of tech including Varnish, Solr, some <span class="caps">ORM</span> caching and lots more. This had been great, but it made it less portable. I had everything described in Puppet, but with virtually no spare time I decided to go a different route.</p>
-<p>I threw a flat version of the site up on <a href="https://github.com/garethr/vagrantboxes-heroku">GitHub</a>, served it using Nginx on <a href="http://www.heroku.com/">Heroku</a> and added a quick <em>Fork me on GitHub</em> badge to the top. Suggest a box moved from being a web form to a pull request. It&#8217;s fair to say I did this pretty quickly and made a good few typos on the way. But within a couple of weeks I&#8217;ve had 8 pull requests either fixing my bugs, removing dead boxes and adding new ones.</p>
-<p>What I&#8217;m going to take from this is, if you&#8217;re building a community project that&#8217;s aimed at developers, then throw the content on GitHub. In my case I have the entire site on there too but I think that&#8217;s secondary. Pull requests are much better than any content management system or workflow you&#8217;re likely to build, and even more importantly the time to implement something drops hugely.</p>
-<p>With all the spare time I don&#8217;t have I&#8217;ll be thinking about a content management model using GitHub for content, pull requests for workflow and post commit hooks for loading that content into a site or service somewhere.</p>
   </div>
   
 </div>

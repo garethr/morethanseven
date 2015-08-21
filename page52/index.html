@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,55 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/07/11/a-round-up/">
+        A round-up
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jul 2007</span>
+
+    <p>Being busy is to be expected with this new start-up malarkey but whoa. The problem is I have even more ideas for real posts or articles (the type you research, play around with, then write properly) and, for the next few weeks, not the time to do them justice. I&#8217;ll be back with gusto when I find the time. In the interim here are a few things from the last month or so I consider <em>cool</em>.</p>
+<ul>
+	<li>I has <a href="http://www.nabaztag.com/en/index.html">Nabaztag</a>! Sorry, but I couldn&#8217;t resist after <a href="http://hackday.org">Hackday</a>. Expect <span class="caps">API</span> hacking and silly photos on flickr aplenty.</li>
+	<li>Oh, <a href="http://hackday.org">Hackday</a> was an absolute blast. Thanks to Matt, Ian, Tom and the cast of hundreds.</li>
+	<li>I&#8217;m working on a cool Ruby on Rails app in the real world, up here in Newcastle no less.</li>
+	<li><a href="http://vivabit.com/atmedia2007">@media</a> was, yet again, fab. A (very) late shout to Patrick and the umper lumpers. Can I make it to @media Ajax?</li>
+	<li><a href="http://refreshnewcastle.org/">Refresh Newcastle</a> got a minor update with more flickr and upcoming goodness. Tag things <em>refreshnewcastle</em> for some lovin.</li>
+	<li><a href="http://hedgehoglab.com">hedgehoglab.com</a> has a few more pages, a <a href="http://hedgehoglab.com/training/survey">survey on web training needs</a> and more microformats than you can shake a stick at.</li>
+	<li>I&#8217;ll be at <a href="http://dconstruct.org">dconstruct</a> (just). Another jigsaw piece of my increasingly bloody minded attempt to get to as many UK web get-togethers as possible.</li>
+	<li>I&#8217;ll be along to <a href="http://rubyandrails.org/usergroups/newcastle/">ncl.rb</a> tomorrow night (thursday) and in the pub afterwards if anyone is around. Their have been a few good events in Newcastle recently, only some of which I&#8217;ve managed to get along to. I&#8217;m considering getting an <a href="http://www.opencoffeeclub.org/">Open Coffee</a> do up and running in Newcastle as well. If anyone is interested let me know.</li>
+</ul>
+<p>More (interesting) work beckons&#8230;</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2007/06/24/targeting-on-css3/">
+        Target(ing) on CSS3
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jun 2007</span>
+
+    <p>Apologies up front for the bad pun but I&#8217;ve been busy playing with another little feature found in CSS3, namely the :target pseudo-class.</p>
+<p>It&#8217;s actually pretty well described in the <a href="http://www.w3.org/TR/2001/CR-css3-selectors-20011113/#target-pseudo">CSS3 Selectors module</a>, (although given that the specs make lots of use of partial URLs the spec style sheet is crying out for use of said selector to I digress).</p>
+<p>Put simply it allows you to style elements of a page that are the target of in page anchors, ie. <code>&amp;lt;a href="#target"&amp;gt;in page link&amp;lt;/a&amp;gt;</code></p>
+<p>For example. The following <span class="caps">CSS</span> hides all div children of an element with an id of <em>example3</em>.</p>
+<pre><code>#example3 &gt;div {
+    display: none;
+}</code></pre>
+<p>The we can say &#8220;if said element has been targetted then display them all&#8221;</p>
+<pre><code>#example3:target &gt;div {
+    display: block;
+}</code></pre>
+<p>So if you visiting #example3 you would see the divs, otherwise they will be hidden away.</p>
+<p>I&#8217;ve set up a couple of examples over on <a href="http://morethanseven.net/presents/target">morethanseven.net/presents/target</a>.</p>
+<p>These examples basically remove the need for Javascript implementations but I&#8217;m not sure whether I&#8217;d actually use either of these. But you get the general idea. One thing about the examples was their simplicity compared with similar approaches though.</p>
+<p>It&#8217;s already pretty well implemented according to this handy <a href="http://www.css3.info/modules/selector-compat">compatability table</a> from <a href="http://www.css3.info/">CSS3.info</a> and I would imagine an ideal candidate for <a href="http://andybudd.com">Andy Budd&#8217;s</a> <a href="http://www.andybudd.com/archives/2007/05/css22/">CSS2.2</a>.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -165,67 +214,6 @@
 <p>This is simply a <span class="caps">JSON</span> object of name/value pairs. You can easily alter the right hand values and change the workings of the app. You then reference the settings in  the rest of you&#8217;re code using dot notation:</p>
 <pre><code>Print.config.text</code></pre>
 <p>In the above example our configuration directives are stored in our Print object. Depending on the circumstances of use you might find it easier to have a seperate Config object which stores all the configuration settings for the entire site.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/05/29/unobtrusive-javascript-example-printing/">
-        Unobtrusive Javascript Example - Printing
-      </a>
-    </h1>
-
-    <span class="post-date">29 May 2007</span>
-
-    <p>In lieu of some real posts here&#8217;s a quick code sample to keep things ticking along.</p>
-<p>I&#8217;m sure you&#8217;ve had the need to place a nice print button on a web page from time to time. If you haven&#8217;t you&#8217;re probably alone. A quick google will throw up lots of results for print javascript &#8211; the problem is that most of them are horribly obtrusive.</p>
-<p>OK, so it&#8217;s easy to write something like:</p>
-<pre><code>&lt;a href="#" onclick="window.print();"&gt;print&lt;/a&gt;</code></pre>
-<p>But the problem is <em>What if you turn off javascript?</em> The following unobtrusive script automagically adds a print link to the page &#8211; in this case as part of a list item which is added to the unordered list with the id of <em>iNav</em> and a class of <em>has-print</em>.</p>
-<pre><code>var Print = {
-   init: new domFunction(function() {
-      if (list = document.getElementById("iNav")) {
-         if (list.nodeName.toLowerCase() === 'ul') {
-            if (Print.hasClass(list,'has-print')) {
-               var item = document.createElement("li");
-               item.className = "print";
-               var link = document.createElement("a");
-               link.href = "#";
-               link.onclick = Print.printpage;
-               var txt = document.createTextNode("Print");
-               link.appendChild(txt);
-               item.appendChild(link);
-               list.appendChild(item);
-            }
-         }
-      }
-   }),
-
-   hasClass: function(element,cName) { 
-      return new RegExp('\\b'&amp;#43;cName&amp;#43;'\\b').test(element.className);
-   },
-
-   printpage: function() {
-      window.print();
-      return false;
-   }
-}</code></pre>
-<p>With something like this you want it to load as soon as the dom is ready, rather than on page load. <a href="http://www.brothercake.com">Brothercake&#8217;s</a> <a href="http://www.brothercake.com/site/resources/scripts/domready/">domFunction</a> comes to the rescue here. The namespacing is based on <a href="http://www.kryogenix.org">Stuarts</a> technique which should make it more capable of just being dropped in to any site.</p>
-<p>The only problem with this is that it&#8217;s just a little longer than the original. I think this is down to one often missed fact, at least until recently &#8211; Javascript is a programming language and should be treated as such.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/05/18/some-good-news/">
-        Some good news
-      </a>
-    </h1>
-
-    <span class="post-date">18 May 2007</span>
-
-    <p>Yeah, I just got my confirmation email for <a href="http://hackday.org">hackday</a> in a months time.</p>
-<p><a href="http://www.hackday.org" style="border: none; padding: 0px; margin: 0px"><img src="http://l.yimg.com/us.yimg.com/i/us/ydn/hackday/hack_day_pattern_four.gif" alt="Hack Day: London, June 16/17 2007" width="180" height="105" style="border: none; margin: 0; padding: 0;"/></a></p>
-<p>So, who else is going along and does anyone have any ideas they want team mates for? I&#8217;m thinking something mobile or microformats related or alternatively something I know very little about. Any ideas?</p>
-<p>Oh, and I know I&#8217;ve been quite around the place lately, more on that when I can talk about it.</p>
   </div>
   
 </div>

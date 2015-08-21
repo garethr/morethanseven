@@ -4,13 +4,217 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-05-24T17:12:32+01:00</updated>
+ <updated>2015-08-21T16:42:21+01:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>A Discussion of The Operational Challenges With Unikernels</title>
+   <link href="http://www.morethanseven.net/2015/08/21/operating-unikernel-challenges/"/>
+   <updated>2015-08-21T00:00:00+01:00</updated>
+   <id>http://www.morethanseven.net/2015/08/21/operating-unikernel-challenges</id>
+   <content type="html">&lt;h2&gt;What are Unikernels&lt;/h2&gt;
+
+&lt;p&gt;Most of this post assumes a basic understanding of what unikernels are
+so I’d recommend reading &lt;a href=&quot;http://queue.acm.org/detail.cfm?id=2566628&quot;&gt;Unikernels – the rise of the virtual library
+operating system&lt;/a&gt; before moving
+on.&lt;/p&gt;
+
+&lt;h2&gt;Why are Unikernels interesting&lt;/h2&gt;
+
+&lt;p&gt;As a starting point: complexity. Managing infrastructure, and the
+software that runs on it, is too complicated. You can impose
+organisational rules to control this complexity (we only deploy on
+Debian, we only run JVM applications, the only allowed database is
+MySQL) but that limits you in other ways too, and in reality is nearly
+always broken somewhere in any non-trivial environment (this appliance
+uses Ubuntu, this software is only certified on Windows, PostgreSQL
+doesn’t run on the JVM). So you turn to software to manage that
+complexity; Puppet or Chef do a great job of allowing configuration
+complexity to be managed in code (where you can test it) and Docker
+allows for bundles of complexity to be isolated from other bundles of
+complexity. But there are still an awful lot of moving parts.&lt;/p&gt;
+
+&lt;p&gt;Another reason is the growing realisation that security is important.
+Securing systems on the internet is hard. Even though the basics are
+broadly understood they are often not implemented, and the people
+attempting to compromise systems are smart, well paid and highly
+incentivised (basically like you). It’s generally easier to break
+something than to build it. Part of this is a numbers game – to run a
+reasonable sixed system you might need to run 50 different services, and
+install 200 packages on every host. An attacker has to compromise just
+one of those to win.&lt;/p&gt;
+
+&lt;p&gt;A further reason, if one were needed, is the proliferation of many small
+internet connected devices, aka. The Internet of Things. Part of this
+relates to the above points about security concerns, but some of it is
+simply a matter of managing that many single purpose, low power,
+devices. The overhead of a typical general purpose operating system and
+application runtime just don’t fit this model.&lt;/p&gt;
+
+&lt;p&gt;Enter unikernels. Unikernels actually remove unneeded complexity. You’re
+running a hypervisor and the unikernel and that’s it. The unikernel
+contains only those libraries that you have specifically required. That
+drastically reduces the surface area for attack as well as meaning
+you’re running less software, hopefully enough less that your power
+needs are reduced too. By specifically requiring individual libraries
+you’re also making complexity visible. Rather than using a general
+purpose operating system with it’s 100s of packages and millions of
+lines of code you are at least choosing what to include.&lt;/p&gt;
+
+&lt;h2&gt;Operational challenges&lt;/h2&gt;
+
+&lt;p&gt;While I think some part of the future looks like unikernels their are
+some large operational challenges to overcome before they break out of
+very specific niches or research projects. Note that&lt;/p&gt;
+
+&lt;p&gt;there are architectural and software development challenges as well, I
+just happen to think they’re easier to deal with.&lt;/p&gt;
+
+&lt;h3&gt;Development environment&lt;/h3&gt;
+
+&lt;p&gt;There are a few properties of a development environment that I think are
+essential to modern development; development/production parity being one
+of the most important. Tools like Vagrant, and a move towards
+infrastructure as code, and more recently Docker have made great strides
+here in the past several years. The different unikernel implementations
+are generally based on lesser known software stacks (Haskell, OCaml,
+Erlang, etc) so some of this is familiarity. But what does
+development/production partity mean for a unikernel based system? We’re
+not just talking about the individual unikernel here either – how do I
+deploy unikernels? How do I compose several unikernels together to build
+an application? What does a Continuous integration or deployment
+pipeline look like? In my view the unikernel movement should focus some
+efforts here. Not only will this make it easier for people to get
+started, but having strong opinions early will allow the nascent
+community to solve the problem together, rather than everyone solving it
+just-in-time for themselves.&lt;/p&gt;
+
+&lt;h3&gt;Managing the hypervisor&lt;/h3&gt;
+
+&lt;p&gt;I’d argue today most developers don’t spent much time directly working
+with hypervisors. Either you’re running on an in-house VMware, KVM or
+Xen install with some (hopefully self-service, automated) provisioning
+mechanism in place or you’re using a public cloud like AWS, Azure, etc.
+The current generation of unikernel systems mainly target Xen. I think
+in the short term at least this means getting to know the hypervisor.
+Xen is solid software, but I don’t see a great deal of automation around
+it – say well maintained Puppet modules, API clients or a Terraform
+provider. In the long term we’ll hopefully have higher level interfaces,
+but in the short term efforts here would lower the barrier to entry
+considerably.&lt;/p&gt;
+
+&lt;h4&gt;Double down on AWS&lt;/h4&gt;
+
+&lt;p&gt;Given the above, and given the ubiquity of EC2 (which is based on Xen)
+it might be wise to build up first-class tools around using EC2 as a
+target environment for unikernel deployments. EC2 supports custom
+kernels, but these require a number of convoluted steps that could be
+automated away (note that I’m talking about more than just a shell
+script here). Also what are the best practices around autoscaling groups
+andunikernels? Or VPC networks and unikernels?&lt;/p&gt;
+
+&lt;h3&gt;The network&lt;/h3&gt;
+
+&lt;p&gt;With the explosion in containers and microservices it’s becoming clearer
+(if it wasn’t already) how important the network is. By removing the
+operating system we remove things like host firewalls and the new breed
+of overlay networks. At the same time if we are to tap the dynamic
+potential of unikernels we’ll need a similarly dynamic and automatable
+network. Maybe this becomes more of an application concern, with
+services communicating via other services which act as firewalls and
+intelligent proxies, but that still leaves the underlying network to be
+managed.&lt;/p&gt;
+
+&lt;h3&gt;Debugging&lt;/h3&gt;
+
+&lt;p&gt;However much testing you do beforehand you’ll still likely end up with
+problems in production, and as you scale up you’ll hit issues that you
+simply can’t recreate outside the live environment. This is were good
+debugging capabilities come in. While general purpose operating systems
+might be complex they are well know, and tools like ps, top, free, ping,
+telnet, netcat, dtrace, etc. are commonly used by anyone debugging
+systems. Note that in many cases you’re debugging a combination of
+systems; is the performance issue an application problem, a network
+problem, a storage problem or some interesting combination of several
+facters?&lt;/p&gt;
+
+&lt;p&gt;By removing the general purpose operating system, unikernel based
+environments remove most of the current debugging tools at the same
+time. Part of this Is good application development hygiene (logs,
+metrics and status endpoints for instance), but what about the more
+interactive debugging practices? What does debugging a system based on
+unikernels look like?&lt;/p&gt;
+
+&lt;h3&gt;Orchestration&lt;/h3&gt;
+
+&lt;p&gt;The word may be overloaded but the need to arrange and manage a number
+of components that make up a larger system is a real need. This might be
+something like Docker&amp;#39;s Compose file or &lt;a href=&quot;https://brooklyn.incubator.apache.org/learnmore/blueprint-tour.html&quot;&gt;Brooklyn&amp;#39;s
+Blueprints&lt;/a&gt;,
+or it could be something more akin to the APIs from Cloud Foundry,
+Kubernetes or Mesos. Testing some of these models with unikernel based systems
+will be an interesting test of how coupled to containers the existing models are.
+The lack of legacy again opens up the potential to come up with a truly
+modern alternative here too.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Unless you’re in an environment where security is your number 1 concern
+then the current state of Unikernels probably means choosing to adopt
+them now is a little bleeding edge. But I think that will change over
+time as the various projects mature and address some of the issues
+described above. In the meantime I’d love to see more discussion of some
+of the operational challenges. I think talking about the needs of
+operators at this early stage should make the resulting ecosystems more
+robust whsen it comes to future production deployments.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Update to Puppet Module Skeleton</title>
+   <link href="http://www.morethanseven.net/2015/08/20/puppet-module-skeleton-updates/"/>
+   <updated>2015-08-20T00:00:00+01:00</updated>
+   <id>http://www.morethanseven.net/2015/08/20/puppet-module-skeleton-updates</id>
+   <content type="html">&lt;p&gt;Being on holiday last week meant I had a little time for some gardening
+of open source projects and I decided to update
+&lt;a href=&quot;https://www.github.com/garethr/puppet-module-skeleton&quot;&gt;puppet-module-skeleton&lt;/a&gt;
+with some new opinions.&lt;/p&gt;
+
+&lt;p&gt;The skeleton is a replacement for the default module skeleton that ships
+with Puppet and is used by puppet module generate. Unlike the default
+skeleton this one is super-opinionated. It comes bundled with lots of
+testing tools, suggestions for documentation, integration with &lt;a href=&quot;http://travis-ci.org&quot;&gt;Travis
+CI&lt;/a&gt;, module coverage reports and more.&lt;/p&gt;
+
+&lt;p&gt;Updates in the latest version include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Support for Puppet 4 paths&lt;/li&gt;
+&lt;li&gt;The addition of Rubocop, which enforces parts of the Ruby style guide&lt;/li&gt;
+&lt;li&gt;Adding a number of Puppet Lint plugins&lt;/li&gt;
+&lt;li&gt;Allow installing various Puppet versions during integration tests&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I also fixed a few reported bugs and extended the test matrix to test
+across a range of Puppet and Ruby combinations.&lt;/p&gt;
+
+&lt;p&gt;The skeleton is intended to help people with a basic understanding of
+Puppet write better modules, without having to setup everything
+themselves. You don’t have to agree with all the options to make use of
+the skeleton as it’s simple enough to delete a few files once you
+generate your new module. But a working out-of-the-box beaker install,
+and the ability to automatically run unit tests when files change are
+patterns worth adopting for most module developers I think.&lt;/p&gt;
+
+&lt;p&gt;If anyone has any suggestions for extra tools, or changes to the
+skeleton itself, let me know.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Information Security Reading List</title>

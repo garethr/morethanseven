@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,51 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/02/28/http-debugging-server-django/">
+        HTTP Debugging Server in Django
+      </a>
+    </h1>
+
+    <span class="post-date">28 Feb 2009</span>
+
+    <p>I&#8217;ve been busy building and playing with various <span class="caps">HTTP</span> clients recently, mainly due to more playing with RESTful web services. I took a couple of hours out to build something to make my life easier &#8211; namely a very simple <a href="http://github.com/garethr/django-http-debug/tree/master">logging <span class="caps">HTTP</span> server in Django</a>.</p>
+<p>All the application does is accepts <span class="caps">HTTP</span> requests and log the results to a file. I&#8217;ve been using it to make sure the requests I&#8217;m sending from elsewhere are correct, before pointing the client at a web service that actually does something useful. It supports <span class="caps">POST</span>, <span class="caps">GET</span>, <span class="caps">PUT</span>, <span class="caps">DELETE</span>, etc. So far so simple.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjSDww" alt="screenshot showing us tailing the logs"/></p>
+<p>I ended up using Django mainly because I did most of the work on the train, and I know my way around it pretty well by now. I did originally thing it might have been better to use something simpler but I did end up learning a few new tricks that I&#8217;ll use for future projects.</p>
+<ul>
+	<li>In theory <a href="http://code.djangoproject.com/changeset/1807">Django doesn&#8217;t need a database</a>. While this is true for the most part, the in-built test runner does require a database. One thing I&#8217;ve talked about before is the usefulness of creating your own custom test runner. If anyone else runs into this specific problem have a look at the <a href="http://github.com/garethr/django-http-debug/blob/0ef82784abfc70cc63444e39f61807675acd5c29/http_debug/lib/nodatabase.py">nodatabase.py</a> file.</li>
+	<li>The logging is handled via Python&#8217;s inbuilt logging module. It has some nifty features (like log rotation, maximum file sizes and different logging levels) but is a little fiddly to get working correctly. Tales abound of log messages appearing multiple times, or permission errors causing problems. At least for this project I think I have everything working. I&#8217;ll try using this <a href="http://github.com/garethr/django-http-debug/blob/0ef82784abfc70cc63444e39f61807675acd5c29/http_debug/lib/log.py">module</a> on a couple of other projects and maybe spin it off into a small reusable app.</li>
+</ul>
+<p>For something that took only a few hours to write it was both good fun and a useful learning tool. And Django proved itself more useful that I though for smaller services like this.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2009/02/24/github-changelog/">
+        GitHub Changelog
+      </a>
+    </h1>
+
+    <span class="post-date">24 Feb 2009</span>
+
+    <p>It turns out the guys at GitHub publish the <a href="http://github.com/changelog">commit messages from their work on GitHub</a> itself. If you really have to keep up you can even subscribe to an <a href="http://github.com/changelog.atom">Atom feed</a>.</p>
+<p>OK, so this might not be hugely useful. But it <em>is</em> funny, and a just a nice sign of a small company being open in an interesting way. A few of my favourites:</p>
+<blockquote>
+<p>mmm pizza&#8230; guard against bad SHAs in Walker#commit</p>
+</blockquote>
+<blockquote>
+<p>really need to get a handle on this insane testing setup</p>
+</blockquote>
+<blockquote>
+<p>I guess ff3 linux is the worst browser ever made</p>
+</blockquote>
+<blockquote>
+<p>dont care</p>
+</blockquote>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -148,63 +193,6 @@ response = conn.request_get("/")</pre>
 <pre>conn = Connection("http://example.org", username="XXX", password="XXX")
 conn.request_delete('/items/11232344')</pre>
 <p>As an added benefit it also comes with a Google App Engine compatible version.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/15/looking-new-job-june/">
-        Looking for a New Job in June
-      </a>
-    </h1>
-
-    <span class="post-date">15 Feb 2009</span>
-
-    <p>As I think a few people are aware I&#8217;ll be leaving <a href="http://thisisglobal.com">Global</a> at the end of May.</p>
-<p>It&#8217;s going to have been a pretty good year all told. I got to work with some great people and we built some pretty good stuff from the group up. The <a href="http://www.capitalradio.co.uk/">Capital Radio</a> website was part of it but it&#8217;s the systems behind the scenes where all the interestingness lies. But as the team as a whole was just getting started the economy got bored of growing each year and went south. Global is first and foremost a radio company that makes money from advertising and, in need of cash, it decided to <a href="http://radiotoday.co.uk/news.php?extend.4270">cut lots of the interactive department</a>. All of that meant lots of redundancies and less interesting work and I decided I&#8217;d rather go now than wait around.</p>
-<p>It&#8217;s an odd situation to be in but I&#8217;m not going to dwell on that and I&#8217;m not bitter about any of the goings on. I got to play with Django full time in what, I think, was the biggest Django development team in the UK. I got to work, and argue, with smart people every day. We had two internal hackdays where I got to play with <span class="caps">XMPP</span> and messaging apps. And I&#8217;m definitely a far better programmer than a year ago.</p>
-<p>I&#8217;ll be sticking around at Global for the next three months to finish off a number of projects that I&#8217;ve been involved in and tidy up a few loose ends, as well as to work out what to do next. Which is where you (might) come in. Think of it like a job vacancy in reverse.</p>
-<ul>
-	<li>I&#8217;m looking for a job to start in June or thereabouts.</li>
-	<li>I live in Cambridge and have been working in London for the last 9 months, so I don&#8217;t mind a commute. I&#8217;d also consider something that had me working remotely and traveling further afield as needed.</li>
-	<li>My main focus is on finding something where I get to <em>build interesting things</em>. By that I mean a web development role that also involves bit of system design and other bits thrown in.</li>
-	<li>I&#8217;d like something that tallies with my current interests. This blog, <a href="http://slideshare.net/garethr">Slideshare</a> and <a href="http://github.com/garethr">my GitHub profile</a> should give you an idea about what they are but to name but a few: testing, <span class="caps">REST</span>, APIs, messaging, content distribution, aggregation and development team tools.</li>
-	<li>Technology wise I&#8217;d be more than happy with something using Python or Ruby. I&#8217;d love to do more than just play around at home with Erlang as well, or the opportunity to pick up Scala. Having said all that if it&#8217;s interesting enough I don&#8217;t mind too much, I learn new tricks for fun and have 3 months of free time to kill.</li>
-	<li>Big company or small? It depends on the company, and probably depends more on the people. I&#8217;d choose smart people over a fancy company name any day of the week. I also don&#8217;t mind the idea of getting involved with a startup where some salary is offset against equity &#8211; but only if the idea is good enough.</li>
-	<li>I&#8217;ve got around 8 years of wide ranging professional experience, I write articles, speak at conferences and get things done. I know roughly what the going rate for good professional web developers is as well.</li>
-	<li><a href="http://www.google.com/search?q=gareth+rushgrove">Ask the internet about me</a> if you want to know more.</li>
-</ul>
-<p>So if anyone knows of something that would be up my street I&#8217;d be grateful. Even better, if you or your company are looking for someone at the moment and don&#8217;t mind waiting a few months then I might be what you&#8217;re looking for. For those that don&#8217;t already have an email address you can find me on <a href="mailto:gareth@morethanseven.net">gareth@morethanseven.net</a></p>
-<p>(There is obviously a chance that you might be a recruiter, rather than someone who wants me to work with or for them. I won&#8217;t ignore you out of hand but please don&#8217;t try and ring me unless I ask you to. Email is both quicker and easier for me to deal with. Also if you just want my CV for your files, have only a vague job description, or you want to tell me about a job in a company you can&#8217;t tell me the name of please don&#8217;t be offended if I don&#8217;t get back to you.)</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/15/let-you-sys-admin-override-your-django-settings/">
-        Let you Sys Admin Override your Django Settings
-      </a>
-    </h1>
-
-    <span class="post-date">15 Feb 2009</span>
-
-    <p>The previous <a href="http://morethanseven.net/2009/02/11/django-settings-tip-setting-relative-paths/">Django settings tip</a> seemed to go down well so I thought I&#8217;d jot down a few more over the next few weeks. Most of these have come out of working with a decent sized Django team at <a href="http://thisisglobal.com">Global</a> so I can&#8217;t take credit for anything but writing them down for the most part. For this example I think <a href="http://alixandalex.com/obfuscated-signatures/">Alex Knowles</a> did the original version.</p>
-<p>I was talking with out friendly <a href="http://search.cpan.org/~rclamp/">sys</a> <a href="http://www.unixdaemon.net/">admins</a> on Friday about a new application and whether they were happy with some application specific logging (using the Python logging module) I&#8217;d build in. Nothing fancy, just application logging to a rotated log file for system events. Their answer was yes, as long as they could control where the log files ended up and the maximum file size, ideally without having to play around in the code or to redeploy the application if they wanted to move the files elsewhere.</p>
-<p>These things were already specified in the settings file rather than hardcode into the application but that only gets us half way. The standard Linux way of setting this sort of thing is with a configuration file stored in the /etc directory. So we ended up with the following snippet of code in our settings.py file.</p>
-<pre># we're going to allow overriding of settings via a yml file.
-# This makes live nicer for anyone managing the box
-# and means settings can be overloaded without redeploying the site
-SETTINGS_OVERIDE = "/etc/application_name.yml"
-try:
-    file = open(SETTINGS_OVERIDE)
-    for key, value in yaml.load(file).items():
-        globals()[key]=value
-except:
-    # we don't always have the file around or need the setting 
-    # defined so best to be quite if things go wrong
-    pass</pre>
-<p>Then in the yaml file you can simply clobber any of the settings using a simple name value pair approach.</p>
-<pre>LOG_FILE: "/var/log/application_name.log"</pre>
-<p>It lets us keep production paths that might change out of the developers code, at the same time as giving the sys admins a familiar way of managing the production environment.</p>
-<p>It does have one downside, if you&#8217;re not aware of it&#8217;s presence then it can make debugging settings related issues a pain. With that in mind you could wrap it so as to only work this way when <span class="caps">DEBUG</span> is False, or take the approach here which is to leave extensive comments.</p>
   </div>
   
 </div>

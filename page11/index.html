@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,102 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/07/07/Varnish-at-refresh-cambridge/">
+        Varnish At Refresh Cambridge
+      </a>
+    </h1>
+
+    <span class="post-date">07 Jul 2011</span>
+
+    <p>I did a quick lightning talk at the Refresh Cambridge meetup last night, a very quick introduction to <a href="https://www.varnish-cache.org/">Varnish</a>. Given 10 minutes all I really wanted to do was get people to go away and take a look at it. Lots of folks in the room hadn&#8217;t come across it before so I think the talk was hopefully well pitched.</p>
+<p><iframe src="http://www.slideshare.net/slideshow/embed_code/8531073?rel=0" width="510" height="426" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></p>
+<p>Several people asked about slighly dynamic pages and I only got chance to mention support for <a href="https://www.varnish-cache.org/trac/wiki/ESIfeatures"><span class="caps">ESI</span></a> (Edge Side Includes) at the end. Conversation afterwards turned to various parts of the modern web stack and I had a pretty good time being opinionated. Hopefully more of the same next month.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2011/06/30/Django-performance-1-measuring-performance/">
+        Django Performance Patterns 1: Measuring Performance
+      </a>
+    </h1>
+
+    <span class="post-date">30 Jun 2011</span>
+
+    <h2>Preface</h2>
+<p>As Django has matured it&#8217;s being used for bigger and bigger projects. At the same time it&#8217;s also being used by more and more people building relatively simple applications quickly. Everyone&#8217;s application is different, but I&#8217;d wager the vast majority of these have a range of common performance problems. Performance is often something only larger teams get to spend time really getting to grips with. This is sometimes because smaller projects can&#8217;t afford the time, or more often probably that things are thought to be <em>fast enough</em> anyway.</p>
+<p>One advantage of using a framework is the sharing of common solutions to common problems that happens as a community forms. In what is hopefully going to be a bit of a series I&#8217;m going to cover some simple things everyone can do to improve application performance. The patterns are generally applicable, but I&#8217;m going to focus on Django examples.</p>
+<p>I&#8217;m going to be pretty opinionated about the stack I&#8217;m using when necessary. I&#8217;m not looking to compare different web servers or databases or python versions. And I&#8217;d rather give concrete examples than generalise. If you&#8217;re using a different stack that&#8217;s fine, somethings will just work and others will need you to know how to configure the software you&#8217;ve already chosen. I&#8217;m also going to focus on a very small and simple to understand application. Most of these techniques scale up just fine, but I feel people don&#8217;t often use them on smaller projects because they thing you can <em>only</em> use them on larger ones. Or that you won&#8217;t see much impact on a smaller project. Both of these don&#8217;t ring true in my opinion and I&#8217;ll hopefully show why.</p>
+<h2>Measuring Performance</h2>
+<p>In this first part of the series lets take a quick detour to frame everything else. Lets talk about ways we can measure performance so we can see if the changes we&#8217;re making have the desired impact. If you&#8217;re not measuring performance already then start here.</p>
+<p>We&#8217;ll start out looking at a few tools which are useful when taking a view by view approach to analysing performance. These generally ignore the impact of load on the system but because of this are generally easier to understand and read.</p>
+<h2>Django Debug Toolbar</h2>
+<p>Most Django developers will hopefully already be using the excellent <a href="">Debug Toolbar</a>. It has a number of features relevant to our current quest but the most interesting is the query count. Less queries is nearly always better. That&#8217;s a whopping generalisation, but looking for unnecessary queries or duplicated queries or particularly slow running queries is a great way of making your application faster. The <span class="caps">ORM</span> makes it pretty easy to end up with a querysplosion if you&#8217;re not paying attention.</p>
+<p>It&#8217;s very simple to install:</p>
+<pre>pip install django-debug-toolbar</pre>
+<p>The query section shows you the number of queries, the individual queries themselves and the time taken. It&#8217;s designed to be run in debug mode, so the actual query times will likely be lower in production, but the query that&#8217;s taking ages in development will probably still be slow when you go live.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiB-gEM" alt="Django debug toolbar"/></p>
+<h2>YSlow</h2>
+<p><a href="http://developer.yahoo.com/yslow/">YSlow</a> is a browser extension for Firefox and Chrome that gives information and recommendations about a number of mainly <span class="caps">HTTP</span>, <span class="caps">CSS</span> or javascript issues individual pages might have. It will give you a score as well as suggestions for improvement:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiC-gEM" alt="YSlow showing a score of 96"/></p>
+<p>Also useful is the break down of the number of <span class="caps">HTTP</span> requests, and the affect of a primed cache on page loading.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjpgQIM" alt="YSlow showing http request breakdown"></p>
+<h2>Profiling Middleware</h2>
+<p>Sometimes you want to know the very low level calls that go into making a page render. For this you&#8217;ll want to look at profiling tools. The Django wiki has a <a href="https://code.djangoproject.com/wiki/ProfilingDjango">useful page on profiling</a> which is good if dispiriting reading.</p>
+<p>Django Snippets has several profiling middleware, one of which is packaged up in the excellent <a href="http://pypi.python.org/pypi/django-snippetscream">Django Snippetscream</a>. We can install that like so:</p>
+<pre>pip install django-snippetscream</pre>
+<p>Just include the middleware in your debug environment:</p>
+<pre>MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('snippetscream.ProfileMiddleware',)</pre>
+<p>You can then append ?prof to any of your URLs and instead of seeing the view you&#8217;ll see something like the following:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjRiQIM" alt="Profiling view"/></p>
+<p>Look at where your code spends it&#8217;s time and whether you have repeated calls to the same methods and functions. Sometimes getting down to this level of detail is the easiest way of finding the bottleneck in your application.</p>
+<h2>Nginx Logging</h2>
+<p>Here&#8217;s the first time I&#8217;m being opinionated about the stack, by choosing Nginx as my frontend server. I&#8217;ll talk a little about why this is a good idea later, but for the moment lets concentrate on why this is useful for measuring performance.</p>
+<p>Log files are wonderful things, and Nginx has quite a powerful syntax for <a href="http://wiki.nginx.org/HttpLogModule">adding extra information to log files</a>. Note the last line in the definition below.</p>
+<pre>log_format timed_combined '$remote_addr - $remote_user [$time_local]  '
+      '"$request" $status $body_bytes_sent '
+      '"$http_referer" "$http_user_agent" '
+      '$request_time $upstream_response_time $gzip_ratio';</pre>
+<p>We are adding the entire request time, the time taken by the upstream server (in my case gunicorn) to respond and also the gzip ratio. This is really handy if you&#8217;re optimising an application already in production. By collecting this data here it&#8217;s easy to then analyse the logs and pull out things like slow urls or assets not being gzipped effectively.</p>
+<h2>Django Timelog</h2>
+<p>Very similar to the above nginx logging, but implemented as a django 1.3 application (so it can be used in development as well) is one of my projects, <a href="https://github.com/garethr/django-timelog">django-timelog</a>. As well as logging the time taken for each request, django-timelog provides a management command to analyse the resulting log file. It produces output which can show in aggregate the average response time of either views or individual URLs.</p>
+<pre>
++--------------------------+--------+--------+-------+---------+---------+-------+-------+
+| view                     | method | status | count | minimum | maximum | mean  | stdev |
++--------------------------+--------+--------+-------+---------+---------+-------+-------+
+| boxes.viewsBoxDetailView | GET    | 200    | 9430  | 0.14    | 0.28    | 0.21  | 0.070 |
++--------------------------+--------+--------+-------+---------+---------+-------+-------+
+| boxes.viewsBoxListView   | GET    | 200    | 66010 | 0.17    | 0.28    | 0.232 | 0.045 |
++--------------------------+--------+--------+-------+---------+---------+-------+-------+
+| django.views.staticserve | GET    | 200    | 61295 | 0.00    | 0.02    | 0.007 | 0.006 |
++--------------------------+--------+--------+-------+---------+---------+-------+-------+
+</pre>
+<p>It&#8217;s packaged so installation should be straightforward.</p>
+<pre>pip install django-timelog</pre>
+<p>Again this can be used in a production environment, or it can be used locally while developing. You can also use load testing tools as described in a moment to generate traffic which is then logged.</p>
+<h2>Load Testing</h2>
+<p>I&#8217;m mainly looking for a tool here which can easily generate <span class="caps">HTTP</span> traffic in volume, sending a decent number of concurrent requests against your application and returning some useful results. I mainly turn to ab (<a href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache bench</a>) because it&#8217;s available everywhere and it&#8217;s very simple to use.</p>
+<p>For example lets hit a site with 100 requests, with requests being sent in batches of 5.</p>
+<pre>ab -c 5 -n 100 http://www.vagrantbox.es/12/</pre>
+<p>This will print something like the following. For our purposes we&#8217;re mainly interested in the requests per second value and the mean request time.</p>
+<pre>Concurrency Level:      5
+Time taken for tests:   1.981 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      328300 bytes
+HTML transferred:       297400 bytes
+Requests per second:    50.47 [#/sec] (mean)
+Time per request:       99.064 [ms] (mean)
+Time per request:       19.813 [ms] (mean, across all concurrent requests)
+Transfer rate:          161.82 [Kbytes/sec] received</pre>
+<p>Load testing is a pretty large topic. For instance even with the above simple example how do we know if 100 requests is enough? (it&#8217;s not.) Or whether a concurrency of 5 is useful? Often what you&#8217;re interested in is where your application starts to saturate or where it starts to error. But even without getting bogged down in the details a simple test like this can show changes have had a positive or negative effect. I&#8217;ll show examples of this as we investigate optimisation techniques.</p>
+<p>If you&#8217;re working on a larger project hopefully you&#8217;ll have the time to investigate other approaches too. I&#8217;m quite a fan of using production logs to replay requests for instance, and of using <a href="http://funkload.nuxeo.org/">Funkload</a> for running scenarios under load. I&#8217;ll hopefully write more about those later. I&#8217;ve heard good things about <a href="http://tsung.erlang-projects.org/">Tsung</a> as well, <a href="http://www.hpl.hp.com/research/linux/httperf/">HTTPerf</a> is excellent and <a href="http://jakarta.apache.org/jmeter/">JMeter</a> has many fans. I&#8217;m using ab for examples because it&#8217;s point and shoot and you probably already have it installed without knowing.</p>
+
+<p>Hopefully that&#8217;s a useful list of tools to get a baseline of where you&#8217;re at with performance. The rest of the articles in this series will show approaches to improve performance, and come back to one or more of these tools to confirm we&#8217;re heading in the right direction.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -204,61 +300,6 @@ LOGGING = {
 <pre>add_header Vary Accept-Encoding;</pre>
 <p>I&#8217;d assumed that enabling gzip compression with gzip_vary would have set this automatically and never checked. The way RedBot provides a checklist of recommendations is very handy.</p>
 <p>As well as checking the page itself you can also check all the assets associated with a page by adding a query string argument. For instance here is the <a href="http://redbot.org/?descend=True&amp;uri=http://www.vagrantbox.es">assets view for Vagrantbox.es</a>. RedBot also provides a <a href="http://redbot.org/?id=o5GXZe&amp;descend=True&amp;format=har"><span class="caps">JSON</span> encoded version of the result</a> which might be useful in a CI system. If you&#8217;d rather run your own instance of the software you can, the code can be found on github at <a href="http://mnot.github.com/redbot/">mnot.github.com/redbot/</a>. It currently doesn&#8217;t work with <span class="caps">HTTPS</span> resources but that&#8217;s about the only thing I&#8217;d like to see added.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/05/15/Python-on-cloudfoundry/">
-        Python On Cloudfoundry
-      </a>
-    </h1>
-
-    <span class="post-date">15 May 2011</span>
-
-    <p>For those that haven&#8217;t yet had a look <a href="http://cloudfoundry.com/">Cloudfoundry</a> from VMware is two things, one of which is nice, one of which is very cool indeed:</p>
-<ul>
-	<li>On one hand it&#8217;s a platform as a service, allowing you to easily deploy Ruby, Java and Node.js applications to <a href="http://cloudfoundry.com/">cloudfoundry.com</a>.</li>
-	<li>On the other hand it&#8217;s an <a href="http://cloudfoundry.org/">open source project</a> with all the code on <a href="http://github.com/cloudfoundry">Github</a> allowing you to run the entire stack wherever you like.</li>
-</ul>
-<p>I&#8217;m pretty interested in the latter. Its <span class="caps">API</span> could in theory become a defacto standard for application and service buildouts, in the same way as we&#8217;re seeing the EC2 <span class="caps">API</span> expand outside <span class="caps">AWS</span> for managing infrastructure (and arguably how we&#8217;re using Chef and Puppet for managing the things installed on that infrastructure). The really interesting bit is the fact it&#8217;s all open source. Not only does that mean you can run it on your own infrastructure (including as I&#8217;m doing on a virtual machine on my laptop), but it&#8217;s also designed so new services (like Redis, MySQL, RabbitMQ), new runtimes (like Ruby 1.8, RUby 1.9, Java) and new frameworks (like Rails, Sinatra, Spring) can be added easily.</p>
-<p>I&#8217;m running vcap on a <a href="http://vagrantup.com">vagrant</a> managed VirtualBox instance, but you could install it anywhere you like. I used <a href="https://github.com/auser/cloudfoundry-quickstart">these chef recipes</a> to get everything installed. I ran into an issue with the mysql service not starting correctly that <a href="https://github.com/auser/cloudfoundry-quickstart/pull/2">I fixed</a> and I needed to manually install chef into the rvm gemset part way through the install, but the recipes pretty much just worked.</p>
-<p>Looking for an excuse to have a route through the vcap code I decided to see if I could add rudimentary support for Python applications. After a day of noodling around I&#8217;ve forked the code and sent a few pull requests back with it basically working. This required changes to the <a href="https://github.com/cloudfoundry/vmc/pull/18">vmc client</a>, to the <a href="https://github.com/cloudfoundry/vcap/pull/57">vcap service</a> and like all good open source contributions to the <a href="https://github.com/cloudfoundry/vcap-tests/pull/4">test suite</a>.</p>
-<p>Thanks hugely to existing pull requests (mainly the one&#8217;s for <a href="https://github.com/cloudfoundry/vcap/pull/25">adding <span class="caps">PHP</span> support</a>) it&#8217;s not taken long at all. The Sinatra and Rails support which shipped with the first release from VMWare supports using Bundler to define gem dependencies that can be pulled in at deploy time. It shouldn&#8217;t be too much effort I&#8217;m hoping to do the same for using pip and virtualenv for each deployed python application. I think I can also see how to support python3 and how to add django as a supported framework.</p>
-<p>I had huge fun, but you might not at this early stage in the project. I&#8217;m relatively happy with reading and writing Ruby, futzing with rvm, debugging installation woes and hunting down service configuration problems. The best tool for working out what was happening was generally tailing the logs in /tmp/vcap-run/ and finding the code that wrote a given message. If you just want something to work I&#8217;d wait a little while, if you like the sound of the above it&#8217;s a pretty nice codebase to play around in. I&#8217;d love to eventually see some official contributor documentation and some hints and tips on things like running the tests. At the moment flicking through reported issues and pull requests on GitHub is the best place to start.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/05/08/Vagrant-plugin-for-interacting-with-vagrantboxes/">
-        Vagrant Plugin For Interacting With Vagrantbox.es
-      </a>
-    </h1>
-
-    <span class="post-date">08 May 2011</span>
-
-    <p>After <a href="http://www.jedi.be/blog">Patrick</a> released <a href="https://github.com/jedi4ever/sahara/">Sahara</a>, a nifty extension for the <a href="http://vagrantup.com">Vagrant</a> command line tool, I&#8217;ve been meaning to put together a similar extension for interacting with the growing list of base boxes on <a href="http://www.vagrantbox.es">vagrantbox.es</a>.</p>
-<p>After a bit of hacking this morning I&#8217;ve just pushed out an initial release of the <a href="https://rubygems.org/gems/vagrantboxes">vagrantboxes gem</a> and you can find the <a href="https://github.com/garethr/ruby-vagrantboxes">source code and some documentation on GitHub</a>.</p>
-<p>The extensions adds a vagrantboxes namespace to the vagrant command line tool which provides a few useful commands. Specifically you can list all the available boxes, do text searches, show the full details of a box and most handily of all add a box that takes your fancy to your local base box store, all without having to worry about the URLs of the boxes if you don&#8217;t want to.</p>
-<p>Here&#8217;s an example of a simple search:</p>
-<pre>&gt;&gt; vagrant vagrantboxes search centos
-3    centos 5.5                http://dl.dropbox.com/u/15307300/vagrant-0.7-centos-64-base.box
-6    opscode centos 5          http://opscode-vagrant-boxes.s3.amazonaws.com/centos5-gems.box
-7    opscode ubuntu 10.04      http://opscode-vagrant-boxes.s3.amazonaws.com/ubuntu10.04-gems.box
-9    puppet centos 5.5 64      http://puppetlabs.s3.amazonaws.com/pub/centos5_64.box
-10   puppet centos 4 64        http://puppetlabs.s3.amazonaws.com/pub/centos4_64.box
-21   centos 5.6 32             http://yum.mnxsolutions.com/vagrant/centos_56_32.box</pre>
-<p>And another quick example, this time of show printing the full description. In the future I might look to store more structured metadata and make this more useful.</p>
-<pre>&gt;&gt; vagrant vagrantboxes show 18
-puppet debian lenny 64
-http://puppetlabs.s3.amazonaws.com/pub/debian_lenny_64.box
-
-Debian Lucid 64 bit vagrant box. Puppet 2.6.6 installed and ready to provision using the Puppet provisioner in Vagrant.
-
-For good sample modules, try the jeffmccune-motd and jeffmccune-mockbuild modules posted to http://forge.puppetlabs.com/
-
-Created by Ken Barber, ken@puppetlabs.com</pre>
-<p>This proved a good excuse to delve into the Vagrant source code which is pretty readable for the most part once you understand the libraries it&#8217;s build upon. It&#8217;s simple enough to extend for adding commands like this too, which bodes well for other more useful additions in the future.</p>
-<p>If anyone has any problems with this extensions do let me know. Error handling currently consists of returning blank output rather than sensible error codes or messages, and as I&#8217;ve yet to add a small test suite so their might (will) be a few bugs lying around. I&#8217;ll try and make it better behaved in the next week or two but reasoned it&#8217;s useful straight away.</p>
   </div>
   
 </div>

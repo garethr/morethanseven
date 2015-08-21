@@ -57,7 +57,7 @@
           More than seven
         </a>
       </h1>
-      <p class="lead">Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
     </div>
   </div>
 </div>
@@ -65,6 +65,49 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/01/30/rabbitmq-support-cucumber-nagios/">
+        RabbitMQ support for Cucumber-nagios
+      </a>
+    </h1>
+
+    <span class="post-date">30 Jan 2010</span>
+
+    <p>I&#8217;ve been doing more operations related work of late and am starting to use <a href="http://auxesis.github.com/cucumber-nagios/">Cucumber-nagios</a> for various monitoring tasks. <a href="http://www.nagios.org/">Nagios</a> might not be the most attractive of web interfaces but it&#8217;s so simple to get clients up and running and extend to do what you need. Cucumber however has a lovely, text based, user interface. And although I&#8217;m mainly working with Python at the moment cucumber-nagios (written in Ruby) really is the easiest way I&#8217;ve found of writing simple functional tests.</p>
+<p>Cucumber-nagios is the creation of <a href="http://holmwood.id.au/~lindsay/">Lindsay Holmwood</a> and after several brief conversations over Twitter I set about adding a feature I wanted for my own monitoring setup. Namely support for keeping an eye on RabbitMQ.</p>
+<p>At the moment the code is in a <a href="http://github.com/garethr/cucumber-nagios">fork on GitHub</a> but I&#8217;m hoping that once any rough edges have been ironed out and a few people have kicked the tyres then it will make it&#8217;s way into trunk. If you want to use this with an existing project straight away you can always drop the contents of <a href="http://github.com/garethr/cucumber-nagios/blob/master/lib/generators/project/features/steps/amqp_steps.rb">amqp_steps.rb</a> into your feature steps file after installing the <a href="http://gems.rubyforge.org/gems/amqp">amqp gem</a>.</p>
+<p>I&#8217;ve included a little documentation in the fork as well with a quick example:</p>
+<pre>Feature: github.com
+  To make sure the rest of the system is in order
+  All our message queues must not be backed up
+  Scenario: test queue
+    Given I have a AMQP server on rabbit.github.com
+    And I want to check on the fork queue
+    Then it should have less than 400 messages
+    Then it should have at least 5 consumers
+    Then it should have less than 50 messages per consumer</pre>
+<p>My main usecase was to keep an eye on a known queue size and number of consumers. I&#8217;m sure I&#8217;m missing some features at the moment so any feedback much appreciated.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2010/01/26/processing-large-files-sed-and-awk/">
+        Processing large files with sed and awk
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jan 2010</span>
+
+    <p>I found myself using a couple of powerful but underused command line applications this week and felt like sharing.</p>
+<p>My problem involved a large text file with over three million lines and a script that processed the file line by line, in this case running a <span class="caps">SQL</span> query against a remote database.</p>
+<p>My script didn&#8217;t try and process everything in one go, rather taking off large chunks and processing them in turn, then stopping and printing out the number of lines processed. This was mainly so I could keep an eye on it and make sure it wasn&#8217;t having a detrimental affect on other systems. But once I&#8217;d run the script once (and processed the first quarter of a million records or so) I wanted to run it again, except without the first batch of lines. For this I used sed. The following command creates a new file with the contents of the original file, minus the first 254263 lines.</p>
+<pre>sed '1,254263d' original.txt &gt; new.txt</pre>
+<p>I could then run my script with the input from new.txt and not have to reprocess the deleted lines. My next problem came when the network connection between the box running the script and the database dropped out. The script printed out the contents of the last line successfully processed, so what I wanted was a new file with the all contents of the old file past the last line. The following awk command does just that, assuming the last line processed was f251f9ee0b39beb5b5c4675ed4802113.</p>
+<pre>awk '/^f251f9ee0b39beb5b5c4675ed4802113/{f=1;next}f' original.txt &gt; new.txt</pre>
+<p>Now I could have made the script that did the work more complicated and ensure it dealt with these cases. But it would have involved much more code and the original scripts where only a handful of throw away code. For one off jobs like this a quick dive into the command line seemed more prudent.</p>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -116,33 +159,6 @@ worker.work()</code></pre>
 
     <p>As mentioned at the last event I&#8217;ve taken over organising the Django User Group London event from Rob. Tickets are now available for the next event which is going to be on the 3rd of December at The Guardian offices in Kings Cross.</p>
 <p>You can sign up on <a href="http://londonpython.eventwax.com/djugl-december">eventwax</a></p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/11/01/erlang-screencasts/">
-        Erlang Screencasts
-      </a>
-    </h1>
-
-    <span class="post-date">01 Nov 2009</span>
-
-    <p>I&#8217;ve been trying to learn Erlang for a while. What I actually mean is it&#8217;s been on my list of <em>things to learn</em> for months, along with all sorts of other incredibly interesting bits and pieces. I spend a little bit of time at home but the majority of my learning time is now spent commuting to London and back most days. Sometimes I&#8217;m even going all the way to Swindon which gives me even longer to not learn Erlang.</p>
-<p>The main problem with learning something new on the train is space. Reading a book (or my new Kindle) or just using my laptop is fine. Trying to do both at once is nearly impossible (I&#8217;ve tried). So I&#8217;ve decided to give another approach a try, namely screencasts.</p>
-<p>I&#8217;ve only done the first <a href="http://www.pragprog.com/screencasts/v-kserl/erlang-in-practice">Erlang in Practice</a> episode so far but I was hugely impressed with the content and general presentation. $5 as well doesn&#8217;t seem bad at all I don&#8217;t think. The episode was half an hour long, but took me a little longer, probably closer to 45 minutes, as I was playing along at home and typing the code examples as I went. I also got sidetracked with messing with my vim configuration at the same time but hey. This makes them perfect for my hour long commute. The full series is 8 episodes long and with luck I&#8217;ll be able to work through them this week.</p>
-<p>So, good job <a href="http://weblog.hypotheticalabs.com/">Kevin Smith</a> and <a href="http://www.pragprog.com">Pragmatic</a> for a nice, accessible start to Erlang. All I need to do now is find something interesting to hack on in Erlang.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/10/24/django-committers/">
-        Django Committers
-      </a>
-    </h1>
-
-    <span class="post-date">24 Oct 2009</span>
-
-    <p>I&#8217;ve been lurking on the django-developers mailing list for the last couple of weeks and that provided an excuse to play with the <a href="http://blog.twitter.com/2009/09/soon-to-launch-lists.html">new Twitter Lists</a> feature. So here&#8217;s a <a href="http://twitter.com/garethr/djangocommitters">list of djangocommitters on twitter</a>. If I missed someone do let me know. Their is a chance you won&#8217;t be able to see this if you&#8217;re not on the beta yet I think, sorry!</p>
   </div>
   
 </div>
