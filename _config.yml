@@ -10,7 +10,7 @@ relative_permalinks: true
 # Setup
 title:            More than seven
 tagline:          'Gareth Rushgrove'
-description:      'Writing about code mainly. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.'
+description:      'Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.'
 url:              http://www.morethanseven.net
 baseurl:          /
 
