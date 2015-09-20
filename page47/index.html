@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/12/23/happy-with-my-eeepc/">
+        Happy with my eeepc
+      </a>
+    </h1>
+
+    <span class="post-date">23 Dec 2007</span>
+
+    <p>I like small. I have a macbook rather than a macbook pro because it&#8217;s smaller. Especially now I&#8217;m wandering about more often with work (and play) lugging a machine around is less and less appealing. So, armed with that excuse I felt justified in going out and buying a new <a href="http://eeepc.asus.com">Asus Eee PC</a>. I managed to just walk in to <a href="www.microanvika.com/">Micro Anvika</a> in Newcastle and buy one from a bemused staff member who  was pretty shocked to find one in stock and not allocated (sorry <a href="http://www.reyhan.org/">Rey</a>).</p>
+<p>For anyone who hasn&#8217;t seen one before, the Eee PC is a tiny linux laptop a little like the One Laptop Per Child machine but aimed more at traditional computer users (at the moment read <em>early adopting geeks</em>). The distro is setup to be pretty user friendly for those pesky Windows users but a little hacking turns it into a pretty darn nice machine.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgEeepcApple.jpg" title="My new eeepc with an apple logo on the back" alt="My new eeepc with an apple logo on the back" /></p>
+<p>And yes, I have stuck an apple sticker on back. I&#8217;m sure that should get some entertained looks next time I&#8217;m at a relevant event! I think the machine itself is actually pretty good looking, but the default desktop themes are all pretty uninspiring.</p>
+<p>I&#8217;ve stuck with the appliance like IceWM window manager and the launcher application as it makes starting things up from the keyboard with one hand pretty fast. I then jumped into various hidden away files to get the desktop setup how I like. The <a href="http://wiki.eeeuser.com">wiki</a> over on <a href="http://eeeuser.com">eee user</a> has a number of useful tutorials; <a href="http://wiki.eeeuser.com/howto:customizeeasymode">customising easy mode</a> and the debian repo from <a href="http://wiki.eeeuser.com/howto:installruby">a ruby tutorial</a> were particularly handy.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgEeepcDesktop.jpg" title="Minimal IceWM desktop with Asus Launcher" alt="Minimal IceWM desktop with Asus Launcher" /></p>
+<p>Still lots more I could install (this is Linux after all) but so far have installed Ruby, Rails, Python, Django, Erlang, MySQL, SQLite, Apache2, PHP5, <span class="caps">PEAR</span> and symfony all without a hitch. I do love apt when it just works. I&#8217;ll try and get Mono and Java on their as well just for completeness when I get a moment.</p>
+<p>The only thing I can think of that I&#8217;ll really miss at the moment is Keynote. It has a <span class="caps">VGA</span> out port (which not even the macbook has) which will support a decent resolution for presentations. But Keynote is so pretty and easy to use compared to the alternatives. We&#8217;ll have to see next time I have to do a presentation.</p>
+<p>I can see lots of places (past the obsessive tech geeks like me) where a machine like this will be really interesting. Obviously the low cost of the machine means that schools might just get interested in Linux. For people who prefer a desktop machine as their main computer and only occasionally need a laptop it&#8217;s a pretty cost effective option. As a machine to experiment with Linux it&#8217;s pretty useful too &#8211; I&#8217;d recommend being familiar with basic commands on Linux to anyone doing web development work for instance. With so many possible audiences, and what is already a pretty nice machine, Asus might be onto something here.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/12/17/css-uprising/">
         CSS Uprising
       </a>
@@ -170,23 +190,6 @@
  document.getElementsByTagName('head')[0].appendChild(s);
 }())</code></pre>
 <p>The code simply inserts a script element into the page which loads the relevant framework. I&#8217;ve shown the code on multiple lines for the sake of the example, but your bookmarklet should be on one line. Alternatively you can drag the <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert <span class="caps">YUI</span></a> or <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert Dojo</a> links to your bookmark bar.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/12/03/debug-web-pages-with-jquery-and-jash/">
-        Debug web pages with Jquery and Jash
-      </a>
-    </h1>
-
-    <span class="post-date">03 Dec 2007</span>
-
-    <p>I have a new toy I&#8217;m quite enamoured with. After a double helping of <a href="http://jquery.com/">jQuery</a> first from <a href="http://ejohn.org">Jon Resig</a> at @media Ajax and then from <a href="http://simonwillison.net">Simon Willison</a> at barcamp I just had to take a look. My favourite part was probably Simon showing off his <a href="http://simonwillison.net/2007/Aug/15/jquery/">Insert jQuery</a> bookmarklet &#8211; hacking around with the Google home page design on the firebug command line. The idea of having a command line to play around with any web page I come across appeals to my geekier side.</p>
-<p>I spend more time in Safari than Firefox these days mainly as I find it <em>feels</em> snappier and is generally more stable. The only real downside is the lag of Firebug. A quick look at <a href="http://www.getfirebug.com/lite.html">Firebug Lite</a> revealed it doesn&#8217;t work in Safari but a little searching later I found <a href="http://www.billyreisinger.com/jash/">Jash</a>. The Insert jQuery and Insert Jash bookmarklets now have pride of place in my bookmark bar.</p>
-<p><img src="http://morethanseven.net/_assets/media/imgJqueryAndJash.jpg" title="&quot;Jquery and Jash bookmarklets running on Google&quot;" alt="&quot;Jquery and Jash bookmarklets running on Google&quot;" /></p>
-<p>So what to do with my new toy? Let&#8217;s hide all the paragraphs! (for no other reasons than we can).</p>
-<pre><code>$("p").hide("slow")</code></pre>
-<p>So, redesign any web page you visit via a quick to access command line? What&#8217;s not to like?</p>
   </div>
   
 </div>

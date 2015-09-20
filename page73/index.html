@@ -68,6 +68,27 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2005/11/27/ajax-and-privacy/">
+        AJAX and Privacy
+      </a>
+    </h1>
+
+    <span class="post-date">27 Nov 2005</span>
+
+    <p>Ok, so everyone by now has no doubt had a play with <acronym>XML&quot;&gt;<span class="caps">AJAX</span></acronym> in some shape or form, and their are lots of good <a href="http://rajshekhar.net/blog/archives/85-Rasmus-30-second-AJAX-Tutorial.html">tutorials</a> and <a href="http://dhtmlnirvana.com/ajax/ajax_tutorial/">articles</a> around. I&#8217;m not going to add to the pile, but on my travels I did do something that raised a couple of questions. Let me know if anyone has any answers.</p>
+ <p>The questions are more ethical than technological however and came about when considering online advertising and it&#8217;s never ending need for metrics &#8211; at the moment that generally means impressions and click throughs (maybe also including converting click throughs). These two states are imposed to some extent by the stateless nature of most web pages. We can tell what gets shown to the visitor. But they then disappear from our radar until they do something &#8211; in this case click on an advert (or dont).</p>
+ <p>But what about the asynchronous nature of our new toy <span class="caps">AJAX</span>? We are starting to break out from the constrains of the stateless web so can anything be added to our add example? Why yes of course it can.</p>
+ <p>I&#8217;ve set up a quick working example that should hopefully make my point a little clearer. Open in a new tab (I know 80% of you can &#8211; <a href="http://haveamint.com">mint</a> is great) if you will &#8211; <a href="http://morethanseven.net/monitor">morethanseven.net/monitor</a></p>
+ <p>Mouse over the two <em>Ad</em> areas a few times. Click on them a few times too. Obviously the appearing message telling you what you have done is hardly exciting but it&#8217;s actually a response from an <span class="caps">AJAX</span> (actually it&#8217;s not returning <span class="caps">XML</span> so is that AJ?) call. All the call does is log the action inn a text file and return a success or failure. This isn&#8217;t high tech stuff &#8211; it&#8217;s proof of concept remember, it gets interesting a couple of jumps forwards.</p>
+ <p>The two buttons at the bottom, clear log and view log, allow you to see the log of actions (and delete them). I dont imagine this attracting high but the log file will log everyone&#8217;s actions not just yours, so you might want to clear the log first to more easily see your actions appear.</p>
+ <p>OK, so what? Well lets imagine instead of just the actions I log your IP address, some date details, maybe store a cookie on your computer while I&#8217;m at it. Also as well as hooking up two add areas as in the example I hook up <em>everything</em> on the page. Not only can I build up a picture of your activities between pages (your path through the site), I can build up a picture of what your mouse was doing on a given page. Now where stalking.</p>
+ <p>OK, so I&#8217;m not sure if their is a correlation between a web users mouse pointer and what they intend but think of other examples &#8211; I could trigger the events on focus for form elements. You might get half way through registering or purchasing (you&#8217;ve entered your name and an email address) and then decide against it. Normally all I&#8217;d be able to get would be someone went to the page in question and did not complete the required actions &#8211; with <span class="caps">AJAX</span> I could log who you where and were you got to in the process (and then email you to ask why).</p>
+ <p>Ethics anyone? Anyone else see problems? Let me know.</p>
+ <p><em>Note. The javascript examples are not great and I&#8217;ve testing in recent versions of IE and Firefox only. It&#8217;s a proof of concept rather than tutorial.</em></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2005/11/26/roll-on-february/">
         Roll On February
       </a>
@@ -127,30 +148,6 @@
  <p><a href="http://morethanseven.net/dconstruct">morethanseven.net/dconstruct</a></p>
  <p>All I&#8217;m doing is parsing, storing and displaying all the feeds. On first run I picked up 27 and hopefully by the time you read this more will have been said. The collection of feeds are a combination of people I&#8217;ve met and people who where blogging about <code>media. If you have a feed and want it adding just leave a comment on here or drop me an &lt;a href="mailto:gareth</code>morethanseven.net&quot;&gt;email</a> and I&#8217;ll add it to the rest.</p>
  <p>I&#8217;ll just say a big shout for everyone at <a href="http://www.clearleft.com">Clearleft</a> for organising it on such short notice. I&#8217;d rather thinks like this happen and me not be there than they not happen at all because of problems with size or cost or admin. Maybe next year?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/11/08/tips-for-fluid-design/">
-        Tips for fluid design
-      </a>
-    </h1>
-
-    <span class="post-date">08 Nov 2005</span>
-
-    <p>After getting a few comments about the site design, and in particular a few of the fluid nature comments about it being tricky to get right. I&#8217;ve found myself tending to develop fluid designs more often that not over the <a href="http://thebgroup.co.uk">last</a> <a href="http://newcastlenewmedia.org">few</a> <a href="http://www.cravens.co.uk">years</a> and thought I&#8217;d do a short series of posts about some of the techniques I use. I&#8217;ve generally found it pretty easier to find <a href="http://www.boagworld.com/archives/2005/06/liquid_vs_fixed.html">discussions</a> about the <a href="http://www.digital-web.com/articles/fluid_thinking/">pro&#8217;s</a> and <a href="http://9rules.com/whitespace/design/death_of_liquid_layouts.php">cons</a> and the basic principles but less so on actual techniques. I&#8217;ll try cover some or all of the following over the next few weeks or so:</p>
-<ul>
- <li>extendable background images</li>
-  <li>using overflow hidden</li>
-  <li>use of fluid flash banners</li>
-  <li>min-width and max-width (and javascript)</li>
-</ul>
- <p>I&#8217;ll kick off with tricks for background images.</p>
- <p>This techniques makes extensive use of the <em>background</em> <acronym title="Cascading Style Sheets"><span class="caps">CSS</span></acronym> property which is used as following: <em>div#iBackground { background: url(path/to/image) center top no-repeat; }</em></p>
- <p>I&#8217;ll assume some familiarity with this and <span class="caps">CSS</span> in general, basically all we are doing is setting a background image to the div with an id of iBackground which is set to align to the top vertically and centered horizontally.</p>
- <p>Moving the image to the background has a couple of interesting effects, the one that we are interested in here is that the the size of the div is not affected by the size of the image (as it would be if the image was placed inside it). It acts as a kind of viewport into the world of the image. By specifying the width of the div in percentages (or em&#8217;s if you are dealing with an elastic design) the size of the viewport can change dependent on the size of the browser window. An example is inorder:</p>
- <p><a href="http://joshuaink.com">joshuaink.com</a> makes use of a large background graphic that stretches the full width of the site. This means the space can be used for pretty large imagery but without breaking the experience (sideways scrolling!) for those with lower resolution displays. Note that the flower background is 2000px wide.</p>
- <p>The only problem with this technique that I have come across is generating the images in such a way that they degrade gracefully. You need to make sure real <em>content</em> (logos or text) appear in a smaller area that the whole image and live with the fact that not everyone is going to see the whole thing. In my mind this is a small price to pay for asthetically interesting fluid layouts.</p>
   </div>
   
 </div>

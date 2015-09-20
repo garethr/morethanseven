@@ -68,6 +68,40 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2005/12/27/obligatory-next-year-post/">
+        Obligatory next year post
+      </a>
+    </h1>
+
+    <span class="post-date">27 Dec 2005</span>
+
+    <p>Well, that&#8217;s nearly 2005 over and done with. Quite an eventful year all told and I couldn&#8217;t let it end without the obligatory <a href="http://www.andybudd.com/archives/2005/12/web_design_and_development_trends_for_2006/">next</a> <a href="http://www.hicksdesign.co.uk/journal/come-with-me-on-a-journey">year</a> <a href="http://www.molly.com/2005/12/13/mollys-unabashedly-biased-picks-2005-blogs-design-books-and-achievements/">post</a> .</p>
+ <p>So without further ado, this year various things happened to me:</p>
+<ul>
+ <li><a href="http://www.atmedia2005.co.uk">@media</a> was great. Met <a href="http://mrpatto.com/">lots</a> of <a href="http://www.molly.com/">nice</a> <a href="http://theintranetblog.blogspot.com/">people</a> and had a blast. Roll on next year.</li>
+  <li>I <a href="http://morethanseven.net/posts/thnking-about-a-move">moved jobs</a></li>
+  <li>I actually started blogging. I redesigned the site around that goal and now I&#8217;m hooked. Oh well.</li>
+  <li>The <a href="http://www.cssreboot.com">Reboot</a> was a massive success. It got me to redo my site properly, got me all of ten minutes of minor fame and I&#8217;m still on the front page. Thanks to everyone.</li>
+</ul>
+ <p>Next year my crystal ball predicts:</p>
+<ul>
+ <li>The <a href="http://carsonworkshops.com/summit/index.html">Carson Workshops Summit</a> will be huge.</li>
+  <li>I&#8217;ll find something more specific to write about rather than jumping around all the time.</li>
+  <li><a href="http://www.newcastlenewmedia.org">Newcastle New Media</a> will kick into action with some real world meetups and then who knows?</li>
+</ul>
+ <p>On less of a self centred trip:</p>
+<ul>
+ <li><a href="http://www.nwpropertysolutions.com">Elastic</a> and <a href="http://www.cssliquid.com">Liquid</a> design will be essential.</li>
+  <li><a href="http://www.37signals.com/svn/archives2/yahoo_vs_google_an_academics_vs_inthetrenches_entrepreneurs_showdown_.php">Yahoo Vs Google</a> will really hot up. With more buying and innovating that you can shake a stick at.</li>
+  <li>Intel powered Apples will be launch to a crazy ipod fueled public. Who still wont buy them. They will however by the machine of choice for the discerning conference attending web design geek next year.</li>
+  <li>Some crazy, web 2.0, buzzword compliant <span class="caps">CMS</span>/Blogging software will hit the streets causing a ruckus. Textpattern will still be great.</li>
+  <li>Some cools stuff has to come out of <a href="http://pages.alexa.com/prod_serv/WebInfoService.html">Alexa opening up their archive via web services</a></li>
+</ul>
+ <p>All in all, I&#8217;m looking forward to next year for a range of reasons including the above. Hope to see (or meet) all of you (again) over the coming year.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2005/12/18/commented-on/">
         @commented-on
       </a>
@@ -140,27 +174,6 @@
  <p>The sometimes obvious method is using the <span class="caps">CSS</span> <em>background</em> rules, the image wont actually be part of the page and so wont take up any space, the size of the image can then be controlled by the size of the element (say a div) on which the background image is placed. This works but has a couple of ugly side effects &#8211; if the image is content based (ie. it carries some sort of important message rather than being just for it&#8217;s asthetic attributes) then placing it in the <span class="caps">CSS</span> removes it from the page completely, not good for those without <span class="caps">CSS</span> support. Another consequence is in site management. Having content imagery in the <span class="caps">CSS</span> can make life a little tricky.</p>
  <p>The second approach involves using the <span class="caps">CSS</span> overflow property. By wrapping the inline image with a container (again, maybe a div) and assigning this an <em>overflow: hidden</em> we can control the viewable area of the image by controlling the size of the surrounding div (with <span class="caps">CSS</span>, natch). An example of this can be seen on these pages, with the favourite sites and flickr images. Resize the window. These images should expand to fill the available space.</p>
  <p>OK, so we have added some additional markup to the page, depending on your feelings on this that solution may be fine. Want to go a bit further? What about assigning a class to the image and using some nifty <span class="caps">DOM</span> scripting to add in the additional markup?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/11/27/ajax-and-privacy/">
-        AJAX and Privacy
-      </a>
-    </h1>
-
-    <span class="post-date">27 Nov 2005</span>
-
-    <p>Ok, so everyone by now has no doubt had a play with <acronym>XML&quot;&gt;<span class="caps">AJAX</span></acronym> in some shape or form, and their are lots of good <a href="http://rajshekhar.net/blog/archives/85-Rasmus-30-second-AJAX-Tutorial.html">tutorials</a> and <a href="http://dhtmlnirvana.com/ajax/ajax_tutorial/">articles</a> around. I&#8217;m not going to add to the pile, but on my travels I did do something that raised a couple of questions. Let me know if anyone has any answers.</p>
- <p>The questions are more ethical than technological however and came about when considering online advertising and it&#8217;s never ending need for metrics &#8211; at the moment that generally means impressions and click throughs (maybe also including converting click throughs). These two states are imposed to some extent by the stateless nature of most web pages. We can tell what gets shown to the visitor. But they then disappear from our radar until they do something &#8211; in this case click on an advert (or dont).</p>
- <p>But what about the asynchronous nature of our new toy <span class="caps">AJAX</span>? We are starting to break out from the constrains of the stateless web so can anything be added to our add example? Why yes of course it can.</p>
- <p>I&#8217;ve set up a quick working example that should hopefully make my point a little clearer. Open in a new tab (I know 80% of you can &#8211; <a href="http://haveamint.com">mint</a> is great) if you will &#8211; <a href="http://morethanseven.net/monitor">morethanseven.net/monitor</a></p>
- <p>Mouse over the two <em>Ad</em> areas a few times. Click on them a few times too. Obviously the appearing message telling you what you have done is hardly exciting but it&#8217;s actually a response from an <span class="caps">AJAX</span> (actually it&#8217;s not returning <span class="caps">XML</span> so is that AJ?) call. All the call does is log the action inn a text file and return a success or failure. This isn&#8217;t high tech stuff &#8211; it&#8217;s proof of concept remember, it gets interesting a couple of jumps forwards.</p>
- <p>The two buttons at the bottom, clear log and view log, allow you to see the log of actions (and delete them). I dont imagine this attracting high but the log file will log everyone&#8217;s actions not just yours, so you might want to clear the log first to more easily see your actions appear.</p>
- <p>OK, so what? Well lets imagine instead of just the actions I log your IP address, some date details, maybe store a cookie on your computer while I&#8217;m at it. Also as well as hooking up two add areas as in the example I hook up <em>everything</em> on the page. Not only can I build up a picture of your activities between pages (your path through the site), I can build up a picture of what your mouse was doing on a given page. Now where stalking.</p>
- <p>OK, so I&#8217;m not sure if their is a correlation between a web users mouse pointer and what they intend but think of other examples &#8211; I could trigger the events on focus for form elements. You might get half way through registering or purchasing (you&#8217;ve entered your name and an email address) and then decide against it. Normally all I&#8217;d be able to get would be someone went to the page in question and did not complete the required actions &#8211; with <span class="caps">AJAX</span> I could log who you where and were you got to in the process (and then email you to ask why).</p>
- <p>Ethics anyone? Anyone else see problems? Let me know.</p>
- <p><em>Note. The javascript examples are not great and I&#8217;ve testing in recent versions of IE and Firefox only. It&#8217;s a proof of concept rather than tutorial.</em></p>
   </div>
   
 </div>

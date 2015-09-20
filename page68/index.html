@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/04/02/pas-78/">
+        PAS 78
+      </a>
+    </h1>
+
+    <span class="post-date">02 Apr 2006</span>
+
+    <p>I dont often ramble about accessibility issues on here, something I&#8217;ve only just noticed. Quite suprising as it&#8217;s one of those things that I&#8217;m pretty interested in &#8211; and have been for a good long time.</p>
+ <p>Anyway, I&#8217;ve just finished reading through <a href="http://www.bsi-global.com/ICT/PAS78/index.xalter"><span class="caps">PAS</span> 78</a> or Publicly Available Specification 78, Guide to Good Practice in Commissioning Accessible Websites. It&#8217;s a document aimed at those buying websites, especially in the public sector, who probably know accessibility is <em>a good think</em> but could get easily hoodwinked by anyone with even a modicum of knowledge and evil intentions.</p>
+ <p>Rather than just provide information about the what and why, considering the doc was launched a month ago, I&#8217;ll just point you to <a href="http://www.isolani.co.uk/blog/access/Pas78Launch">a good synopsis</a> from <a href="http://www.isolani.co.uk">Isolani</a>. A few other notables have posted good reads. <a href="http://joeclark.org/">Joe Clark</a>, as always, has <a href="http://blog.fawny.org/2006/03/21/pas78/">an opinion</a> which is both anally detailed and all true. <a href="http://www.brucelawson.co.uk">Bruce</a> also has a <a href="http://www.brucelawson.co.uk/pas78">run down</a> from a (some what) insiders point of view.</p>
+ <p>My feeling was, overall, pretty positive. I&#8217;d love to see all the clients I deal with having read this. It&#8217;s a pretty good intro to the issues at hand, though it is maybe a little long and technical for some of its audience. One area in particular that got quite a bit of coverage, rightly so in my mind, was testing. Their still isn&#8217;t enough testing of any sorts for websites, even with all these <em>beta</em>  tags going around. The testing area covers all sorts of bits and pieces, again not in enough detail for the implementor but certainly enough for any good procurement office to be able to separate the wheat from the chaff.</p>
+ <p>A good series of mentions goes to <a href="http://www.usabilitynet.org/tools/13407stds.htm"><span class="caps">ISO</span> 13407</a> which covers Human centred design processes for interactive systems and as luck would have it the subject of a workshop I&#8217;m attending with <a href="http://osiris.sunderland.ac.uk/~cs0gco/">Gilbert</a> in Sunderland on monday. More on that after the fact.</p>
+ <p>Anyhow. I&#8217;d recommend getting your bosses to pay the Ã‚Â£30 (or for bosses, stump up your selves) for the <span class="caps">PAS</span> 78 <span class="caps">PDF</span>. It&#8217;s a pretty good read anyhow, and hopefully more and more proper clients will be reading it soon. Forewarned is forearmed as they say.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/03/25/playing-with-python-first-impressions/">
         Playing with Python - first impressions
       </a>
@@ -149,50 +166,6 @@ The Pragmatic Programmer</p>
  <p>I even went as far as getting a book, <a href="http://www.amazon.com/gp/product/1590592808/104-7139045-1616718?v=glance&#38;n=283155"><span class="caps">PHP</span> Tools</a> to have a good going through. I&#8217;ve been on something of a mad web design book shopping spree of late, so I&#8217;ll try do a quick round up of books soon as well.</p>
  <p>Anyone else have much playtime with <span class="caps">PEAR</span>, or similar code repositories?</p>
  <p><em>PS. Apologies for the two week hiatus. I&#8217;m something of a busy person at the moment. More quality posts as soon as possible. Promise.</em></p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/02/23/keyboards-and-web-applications/">
-        keyboards and web applications
-      </a>
-    </h1>
-
-    <span class="post-date">23 Feb 2006</span>
-
-    <p>Web applications are still evolving. This we know. One thing any power user tends to pick up on pretty quickly in desktop applications is the keyboard shortcuts. We just cant get enought of them. Why dont we see them more in web applications? Well a couple of reasons as it happens:</p>
-<ul>
- <li>Potential clashes with browser or OS shortcuts</li>
-  <li>Many web applications are still evolving from more promotional websites. The learning curve for a website <em>needs</em> to be instantaneous, otherwise your potential customer just left. But what about a web application? The users may <em>have</em> to use it, as well as having documentation and maybe even training.</li>
-  <li>Because we dont see them in web applications? The circular argument.</li>
-</ul>
- <p>Personally I think in some cases keyboard shortcuts would be nice, I have a little plan for something in mind as well so started experimenting. The clash issue I&#8217;m going to leave for another post as it will take a bit of brute force experimenting but I did start playing with a simple way of assigning functions to keys.</p>
- <p>The following code creates an object to store the lookup/hash/two dimensional array (pick one you like). This is a simple associate between a key, and a function to run when it&#8217;s pressed. A function is then assigned to the onkeyup and onkeydown events which monitors them, checks for one of the keys in the lookup to be pressed (in this case along with the ctrl key) and runs the assigned function.</p>
-<div>
-<p><code>
-&lt;pre&gt;
-&amp;lt;txp:php&amp;gt;
-include('/www/htdocs/morethanseven/scripts/sample/keyPress.js');
-&amp;lt;/txp:php&amp;gt;
-&lt;/pre&gt;
-</code></p>
-</div>
- <p>A simple library function is used to add the event to the document onload. My library obviously includes other helper functions but we dont need any of those for this example.</p>
-<div>
-<p><code>
-&lt;pre&gt;
-&amp;lt;txp:php&amp;gt;
-include('/www/htdocs/morethanseven/scripts/sample/lib.js'); 
-&amp;lt;/txp:php&amp;gt;
-&lt;/pre&gt;
-</code></p>
-</div>
- <p>Some improvements I can spot from here which I&#8217;ll implement as I actually take this out of the lab and into something production like.</p>
-<ul>
- <li><span class="caps">JSON</span> (or <span class="caps">YAML</span>) data storage. Either one makes configuration simpler and scores geek points. It&#8217;s a win win.</li>
-  <li>Abstract the use of the ctrl key from the function and allow other modifiers to be set when used.</li>
-</ul>
- <p>I&#8217;ll try get round to the look at keyboard shortcut clashes, or link to someone who already has, as I get round to it. In the mean time, what do people think about the use of keyboard shortcuts in web applications? Any good or bad examples welcome.</p>
   </div>
   
 </div>

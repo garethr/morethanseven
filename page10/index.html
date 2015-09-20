@@ -68,6 +68,68 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/10/10/Javascript-in-your-ruby-mongoid-map-reduce/">
+        Javascript In Your Ruby: Mongoid Map Reduce
+      </a>
+    </h1>
+
+    <span class="post-date">10 Oct 2011</span>
+
+    <p>We&#8217;re pretty fond of <a href="http://mongodb.org/">Mongodb</a> at work and I&#8217;ve been getting an opportunity to kick some of the more interesting tyres recently. I thought I&#8217;d document something I found myself doing here, half hoping it might be useful for anyone else with a similar problem and also to see if anyone else has a much neater approach. The examples are obviously pretty trivial, but hopefully you get the idea.</p>
+<p>So, we&#8217;re making using of the rather nice <a href="http://mongoid.org/">Mongoid</a> Ruby library for defining our models as Ruby classes. Here&#8217;s a couple of very simple classes. Anyone familiar with DataMapper or Django&#8217;s <span class="caps">ORM</span> should be right at home here.</p>
+<pre>class Publication
+  include Mongoid::Document
+
+  field :name,            :type =&gt; String
+  field :section,         :type =&gt; String
+  field :body,            :type =&gt; String
+  field :is_published,    :type =&gt; Boolean
+end
+
+class LongerPublication &lt; Publication
+  field :extra_body,      :type =&gt; String
+end
+</pre>
+<p>So we now have a good few publications and longer publications in our system. And folks have been creating sections with wild amandon. What I&#8217;d like to do now is do some reporting, specifically I want to know the numbers of Publications by type and publication status. And lets allow a breakdown by section while we&#8217;re at it.</p>
+<p>One approach to this is using Mongo&#8217;s built in map-reduce capability. Mongoid exposes this pretty cleanly in my view, by allowing you to write the required javascript functions (a mapper and a reducer) inline in the Ruby code. This might feel evil, but seems the best of the available options. I can see for much larger functions that splitting this out into separate javascript files for ease of testing might be nice, but were you can just test the input/output of the whole job this works for me.</p>
+<pre>KLASS = "this._type"
+SECTION = "this.section"
+
+def self.count_by(type)
+  map = &lt;&lt;EOF
+    function() {
+      function truthy(value) {
+        return (value == true) ? 1 : 0;
+      }
+      emit(#{type}, {type: #{type}, count: 1, published: truthy(this.is_published)})
+    }
+EOF
+
+  reduce = &lt;&lt;EOF
+    function(key, values) {
+      var count = 0; published = 0;
+      values.forEach(function(doc) {
+        count += parseInt(doc.count);
+        published += parseInt(doc.published);
+        type = doc.type
+      );
+      return {type: type, count: count, published: published}
+    }
+EOF
+
+  collection.mapreduce(map, reduce).find()
+
+end
+</pre>
+<p>In our case that will return something like the following, or rather more specifically it will return a Mongo::Cursor that allows you to get at the following data.</p>
+<pre>[{"_id"=&gt;"Publication", "value"=&gt;{"type"=&gt;"Publication", "count"=&gt;42.0, "published"=&gt;29.0}},
+{"_id"=&gt;"LongerPublication", "value"=&gt;{"type"=&gt;"LongerPublication", "count"=&gt;12.0, "published"=&gt;10.0}}]
+</pre>
+<p>I&#8217;ve been pretty impressed with both Mongo and Mongoid here. I like the feel of mapreduce jobs for this sort of reporting task. In particular it&#8217;s suprising how writing two languages mixed together like this doesn&#8217;t really affect the readability of the code in my view. Given that with a relational database you&#8217;d probably be writing <span class="caps">SQL</span> anyway maybe that&#8217;s not that suprising &#8211; the syntactic differences between Javascript and Ruby are much smaller than pretty much anything and <span class="caps">SQL</span>. Lots of folks have written about the increase of polyglot programming, but I wonder if we&#8217;ll see an increase in the embedding of one language in another?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/09/11/Rundeck-and-nagios-nrpe-checks/">
         Rundeck And Nagios Nrpe Checks
       </a>
@@ -129,31 +191,6 @@
 <p>As it turns out this failed the first time I ran it because I had an rvm installed Ruby on my path. I reset this to the system version and everything compiled fine.</p>
 <pre>rvm use system</pre>
 <p>Note also that it&#8217;s really quite simple to use a different revision or different flags when compiling. Just download that file, modify it, serve it locally (say with a python one line web server) and point brew install at it. Next step, running off head for all the latest and greatest Vim features.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/07/24/Jenkins-build-pipeline-example/">
-        Jenkins Build Pipeline Example
-      </a>
-    </h1>
-
-    <span class="post-date">24 Jul 2011</span>
-
-    <p>The idea of a build pipeline for web application deployment appears to have picked up lots of interest from the excellent <a href="http://continuousdelivery.com/">Continuous Delivery</a> book. Inspired by that, some nice folks have build an excellent plugin for Jenkins unsurprisingly called the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Pipeline+Plugin">Build Pipeline Plugin</a>. Here&#8217;s a quick example of how I&#8217;m using it for one of my projects*.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRihmQIM" alt="Build pipeline example in Jenkins"/></p>
-<p>The pipeline is really just a visualisation of up and downstream builds in Jenkins given a starting point, plus the ability to setup manual steps rather than just the default build after ones. That means the steps are completely up to you and your project. In this case I&#8217;m using:</p>
-<ol>
-	<li>Build &#8211; downloads the latest code and any dependencies. You could also create a system package here if you like. If successful triggers&#8230;</li>
-	<li>Staging deploy &#8211; In this case I&#8217;m using capistrano, but it could easily have been rsync, fabric or triggering a chef or puppet run. If successful triggers&#8230;</li>
-	<li>Staging test &#8211; This is a simple automated test suite that checks that the site on staging is correct. The tests are bundled with the code, so are pulled down as part of the build step. If the tests pass&#8230;</li>
-	<li>Staging approval &#8211; This is one of the clever parts of the plugin. This jenkins job actually does nothing except log it&#8217;s successful activation. It&#8217;s only run when I press the Trigger button on the pipeline view. This acts as a nice manual gate for a once over check on staging.</li>
-	<li>Production deploy &#8211; using the same artifact as deployed to staging this job triggers the deploy to the production site again via capistrano</li>
-</ol>
-<p>I&#8217;m triggering builds on each commit too via a webhook. But I can also kick off a build by clicking the button the pipeline view if I need to.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5kQIM" alt="Pipeline example showing build in progress"/></p>
-<p>Note that I&#8217;m only allowing the last build to be deployed given only that one can be checked on staging. Again this is configuration specific to my usage, the plugins lets you operate a number of different ways. There are a number of tweaks I want to make to this, mainly around experimenting with parameterized builds to pass useful information downstream and even allow parrallel execution. For the moment I have the <em>Block build when upstream project is building</em> flag checked on the deploy.</p>
-&nbsp;* Yes, this is a one page site. With a 5 step build process in Jenkins including a small suite of functional tests and a staging environment. This is what we call overengineering.
   </div>
   
 </div>

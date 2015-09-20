@@ -68,6 +68,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/02/01/experiment-over/">
+        Experiment over
+      </a>
+    </h1>
+
+    <span class="post-date">01 Feb 2007</span>
+
+    <p>Ok, well, that was interesting I thought. For those that haven&#8217;t followed along on the site I thought I&#8217;d recap some of the weird and wonderful colour schemes that have been used on this site as part of my experiment with <a href="http://www.firewheeldesign.com/widgets/">colorburn</a></p>
+ <p>Some were just about OK, some were quite nice really and a few were, er, pretty much unreadable (sorry). I&#8217;ll let you decide which where which:</p>
+ <p><img src="http://morethanseven.net/_assets/media/colorburn/20.png" alt="20th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/21.png" alt="21st" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/22.png" alt="22nd" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/23.png" alt="23rd" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/24.png" alt="24th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/25.png" alt="25th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/27.png" alt="27th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/28.png" alt="28th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/29.png" alt="29th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/30.png" alt="30th" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/31.png" alt="31st" /><br />
+<img src="http://morethanseven.net/_assets/media/colorburn/1.png" alt="1st" /></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/01/27/incoming/">
         Incoming!
       </a>
@@ -208,29 +233,6 @@ if (empty($buffer)) {
  <p><img src="http://morethanseven.net/_assets/media/imgColorBurn.jpg" alt="ColorBurn OS X Widget" /></p>
  <p>I often use it for inspiration for colour sets, or just to appreciate interesting colour combinations. This just takes it a step further. A little reverse engineering and I have a script (<span class="caps">PHP</span> this time, running from a cron job) that writes out a new stylesheet once every day with the colours from ColorBurn (using the magic of <span class="caps">XSL</span> if you&#8217;re interested). I&#8217;ve used an alpha transparency on the image to the top left of the page which might result in strange effects in browsers that I dont care about too much. Sorry, but I did warn you.</p>
  <p>I have a feeling that some days I&#8217;ll wake up and regret this experiment and others I&#8217;ll be pleasantly suprised. I&#8217;m not going to cheat either. ColorBurn provides me with four colours and the script will use them in the order they come in.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/01/16/opml-feeds-using-radiant/">
-        OPML Feeds using Radiant
-      </a>
-    </h1>
-
-    <span class="post-date">16 Jan 2007</span>
-
-    <p>As mentioned when I moved the site over to Radiant I promised a few tutorials and behind the scenes footage of goings on. So here goes with a quick look at how I added a nice <a href="http://morethanseven.net/friends.opml"><span class="caps">OPML</span> feed</a> to my site.</p>
- <p>For those not familiar with <a href="http://www.opml.org/"><span class="caps">OPML</span></a> it&#8217;s an <span class="caps">XML</span> format for outlines, often used for storing blog rolls and the like.</p>
- <p>What I wanted was a friends parent and the ability to add friends to it and for them to appear in a dynamic <span class="caps">OPML</span> feed. The following screenshot shows what I ended up with:</p>
- <p><img src="http://morethanseven.net/_assets/media/imgFriendsFeed.png" alt="Tree showing Friends feed in Radiant" /></p>
- <p>To accomplish this within Radiant I needed a custom layout, one which would simply render the content but also had the relevant header and footer markup. Note the mime type setting as well.</p>
- <p><img src="http://morethanseven.net/_assets/media/imgOpmlLayout.png" alt="Layout for OPML in Radiant" /></p>
- <p>Next up is the page which actually uses the <span class="caps">OPML</span> layout to render the page.</p>
- <p><img src="http://morethanseven.net/_assets/media/imgFriendsFeedCode.png" alt="friends feed from Radiant" /></p>
- <p>Note that I set the status of all the friends records to hidden, and then set the status of the r:children:each loop to search for hidden children. This way the individual friends records dont show up as seperate pages.</p>
- <p>All I need to do then is add children to the parent, friends-feed in my case. I added a few page parts to each friend page to make management a little easier; a <em>link</em>, a <em>feed</em> and for a little added spice <em>xfn</em>.</p>
- <p><img src="http://morethanseven.net/_assets/media/imgEditFriend.png" alt="Edit friend view from Radiant" /></p>
- <p>All in all it makes adding and updating friends easy, and the general approach will work with pretty much any content where you want to compose a single page based on it&#8217;s children.</p>
   </div>
   
 </div>

@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/11/12/activity/">
+        Activity
+      </a>
+    </h1>
+
+    <span class="post-date">12 Nov 2007</span>
+
+    <p>Sorry, shameless <em>what&#8217;s going on</em> post for historical posterity.</p>
+<p>Before that starts thought here are a couple of useful microformatted schedules for <a href="http://future-of-mobile.com">Future of Mobile</a> and <a href="http://vivabit.com/atmediaAjax/">@media Ajax</a> created by the really rather handy <a href="http://dmitry.baranovskiy.com/work/csc/">Conference Schedule Creator</a>. Hat tip to <a href="http://adactio.com">Jeremy</a> and <a href="http://suda.co.uk">Brian</a> for the lovely styles.</p>
+<ul>
+	<li><a href="http://morethanseven.net/presents/schedules/future-of-mobile-07/">Future of Mobile Conference Schedule</a></li>
+	<li><a href="http://morethanseven.net/presents/schedules/atmedia-ajax-07/">@media Ajax Conference Schedule</a></li>
+</ul>
+<p>I&#8217;m spending the next few weeks circling London, first up attending <a href="http://future-of-mobile.com">Future of Mobile</a>, on to <a href="http://upcoming.yahoo.com/event/313568/">Pubstandards</a> and then popping in to see <a href="http://dev.joost.com/">Joost</a>. After a short break I&#8217;ll be back for <a href="http://vivabit.com/atmediaAjax/">@media Ajax</a> and <a href="http://barcamp.org/BarCampLondon3">BarCamp London</a>. Throw in a few business meetings and we&#8217;re all set. I even have new <a href="http://moo.com">Moo</a> cards.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgWebGeek.jpg" title="Web Geek Moo cards" alt="Web Geek Moo cards" /></p>
+<p>If you&#8217;re around at any of these events, or just happen to be in London, and are one of the two people who read such self serving ramblings as this let me know and we can <a href="http://foamee.com/">drink beer</a>. Actually scratch that. Due to the wonder of <a href="http://dopplr.com">Dopplr</a> <a href="http://dopplr.com/traveller/garethr">I</a> already know where you&#8217;re going to be.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/11/07/some-useful-mobile-web-design-links/">
         Some useful mobile web design links
       </a>
@@ -169,85 +189,6 @@
 <p>echo Asset_packager::stylesheet_link_merged();</pre></code></p>
 <p>If the <span class="caps">ENVIRONMENT</span> constant is set to <em>production</em> the line includes the merged stylesheet links, otherwise each file is included seperately. This again mirrors the behaviour of the Rails plugin. A command line script is also included in the <a href="http://code.google.com/p/php-asset-packager/source">source</a> to actually merge (and <a href="http://csstidy.sourceforge.net/">tidy</a>) the <span class="caps">CSS</span> files.</p>
 <p>The vague plan is to add the rest of the features and then maybe package up as a plugin for whatever software or frameworks I&#8217;m working with at the time. At the moment that probably means wordpress, <a href="http://www.symfony-project.com/">symfony</a> and <a href="http://codeigniter.com/">code igniter</a>. Everything is open source and available from svn over on the <a href="http://code.google.com/p/php-asset-packager">Google Code site</a>. Contributions, in the way of code, bugs, documentation or thoughts welcome.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/10/23/my-trac-ticket-setup/">
-        My Trac Ticket setup
-      </a>
-    </h1>
-
-    <span class="post-date">23 Oct 2007</span>
-
-    <p>I&#8217;ve been busy really getting to grips with <a href="http://trac.edgewall.org/">Trac</a> recently and thought I&#8217;d post up a few details. Trac for those that haven&#8217;t come across it is a wiki, issue tracking systems and source code browser all rolled into one. It&#8217;s open source and written in Python.</p>
-<p>I&#8217;ll start off describing my current ticket setup, along with the code I use for reports. In future posts I&#8217;ll hopefully describe thinks like setting up users and permissions in a flexible way. I&#8217;ll leave describing <a href="http://trac.edgewall.org/wiki/TracOnUbuntu">installation</a> to <a href="https://svn.geophysik.uni-muenchen.de/trac/tracmods/wiki/InstallationGuide">others</a>, mainly because it&#8217;s a pain. I&#8217;ll also assume you&#8217;ve installed the <a href="http://trac.edgewall.org/wiki/WebAdmin">WebAdmin</a> plugin, or are familiar with trac-admin.</p>
-<h2>Create a new Ticket</h2>
-<p>By default Trac comes set up with severity, milestones, ticket types, priority and components and a few default options in each. The problem with all these options is that it takes more time and effort to add and manage issues &#8211; so they don&#8217;t get logged. Unless you know you absolutely need them I find it easier to remove most of these options in the first instance.</p>
-<p><img src="http://morethanseven.net/_assets/media/imgTracTicket.png" title="Trac new ticket" alt="Trac new ticket" /></p>
-<p>I prefer using Trac soley for issue tracking. It suffers badly in my opinion if used for more project management related activity. <a href="http://basecamphq.com">Other tools</a> do that job better (and also do bug tracking poorly).</p>
-<p>I keep priority in, but by default it&#8217;s blank and only has one other options &#8211; High. I only assign High priority to issues which are causing major problems, either preventing a successful build or stopping something happening that&#8217;s meant to.</p>
-<h2>Available reports</h2>
-<p><img src="http://morethanseven.net/_assets/media/imgTracReports.png" title="Trac reports list" alt="Trac reports list" /></p>
-<p>Trac reports are simple (or not so simple) <span class="caps">SQL</span> queries with a few bits of special syntax. I have four reports set up; Open, Closed, Important and My Issues:</p>
-<p>Open, not too suprisingly, displays all the open issues. As mixing different components here would be confusing we divide the list with headers for each components</p>
-<p><code>&lt;pre&gt;SELECT
-  component AS &amp;#95;&amp;#95;group&amp;#95;&amp;#95;,
-  (CASE priority WHEN 'High' THEN '1' ELSE '' END) AS &amp;#95;&amp;#95;color&amp;#95;&amp;#95;,
-  id, summary, owner,
-  time AS created,
-  component AS &amp;#95;component, 
-  priority AS &amp;#95;priority,
-  changetime AS &amp;#95;changetime,
-  description AS &amp;#95;description
-FROM ticket t
-LEFT JOIN enum p ON p.name = t.priority AND p.type = 'priority'
-WHERE status IN ('new', 'assigned', 'reopened') 
-ORDER BY priority DESC, p.value, t.type, time&lt;/pre&gt;</code></p>
-<p>Closed is the reverse of Open (I&#8217;m starting to state the obvious here) but with a few differences in terms of the listing. I&#8217;m more bothered here about seeing a timeline of closed issues. Good for keeping a eye (or a feed) on to see progress.</p>
-<p><code>&lt;pre&gt;SELECT
-  (CASE priority WHEN 'High' THEN '1' ELSE '' END) AS &amp;#95;&amp;#95;color&amp;#95;&amp;#95;,
-  id, summary, owner, component, resolution,
-  priority AS &amp;#95;priority, 
-  changetime AS modified,
-  description AS &amp;#95;description
-FROM ticket t
-LEFT JOIN enum p ON p.name = t.priority AND p.type = 'priority'
-WHERE status NOT IN ('new', 'assigned', 'reopened') 
-ORDER BY changetime DESC&lt;/pre&gt;</code></p>
-<p>My Issues lists only those issues which are assigned to me (or the currently logged in user) and open.</p>
-<p><code>&lt;pre&gt;SELECT
-  component AS &amp;#95;&amp;#95;group&amp;#95;&amp;#95;,
-  (CASE priority WHEN 'High' THEN '1' ELSE '' END) AS &amp;#95;&amp;#95;color&amp;#95;&amp;#95;,
-  id, summary,
-  time AS created,
-  component AS &amp;#95;component,
-  priority AS &amp;#95;priority, 
-  changetime AS &amp;#95;changetime,
-  description AS &amp;#95;description
-FROM ticket t
-LEFT JOIN enum p ON p.name = t.priority AND p.type = 'priority'
-WHERE status IN ('new', 'assigned', 'reopened') AND owner = '$USER'
-ORDER BY priority DESC, p.value, t.type, time&lt;/pre&gt;</code></p>
-<p>Important is an overview of critical issues. Software can have small bugs and be perfectly usable in the vast majority of cases. But some issues either effect lots of users or prevent the system working at all. These High priority issues need addressing first, before anything else.</p>
-<p><code>&lt;pre&gt;SELECT
-  component AS &amp;#95;group&amp;#95;&amp;#95;,
-  (CASE priority WHEN 'High' THEN '1' ELSE '' END) AS &amp;#95;&amp;#95;color&amp;#95;&amp;#95;,
-  id, summary, owner,
-  time AS created,
-  component AS &amp;#95;component,
-  priority AS &amp;#95;priority, 
-  changetime AS &amp;#95;changetime,
-  description AS &amp;#95;description
-FROM ticket t
-LEFT JOIN enum p ON p.name = t.priority AND p.type = 'priority'
-WHERE status IN ('new', 'assigned', 'reopened') AND priority = 'High'
-ORDER BY priority DESC, p.value, t.type, time&lt;/pre&gt;</code></p>
-<p>Interesting bits here include the following line which makes all High priority tasks have a red border:</p>
-<p><code>&lt;pre&gt;(CASE priority WHEN 'High' THEN '1' ELSE '' END) AS &amp;#95;&amp;#95;color&amp;#95;&amp;#95;,&lt;/pre&gt;</code></p>
-<p>As a side note, I hadn&#8217;t written proper <span class="caps">SQL</span> for a while (all that <a href="www.digital-web.com/articles/hacking_open_apis/">hacking on APIs</a>). Suprisingly good fun as it turns out.</p>
-<h2>Conclusions</h2>
-<p>The main benefit of this setup is simplicity. Too many bug tracking systems are either way too complicated, or come with defaults which are on the complex side (I include Trac in this last category). <a href="http://garrettdimon.com">Garret Dimon</a> has been <a href="http://garrettdimon.com/archives/tags/tracker">writing</a> about the development of a new bug tracking system with a focus on simplicity. <a href="http://fixxbugs.com/">Fixx</a> and <a href="http://lighthouseapp.com/">Lighthouse</a> are other products looking to fill this niche. That&#8217;s not to say larger teams don&#8217;t need to store more information than this, just that by starting small you can actually find out what you&#8217;re missing &#8211; rather than guessing and making the whole process of adding and fixing bugs a particularly painful one.</p>
   </div>
   
 </div>

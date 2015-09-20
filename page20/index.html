@@ -68,6 +68,38 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/03/08/Piston-and-sanitising-json-callbacks/">
+        Piston And Sanitising Json Callbacks
+      </a>
+    </h1>
+
+    <span class="post-date">08 Mar 2010</span>
+
+    <p>I&#8217;m a big fan of <a href="http://bitbucket.org/jespern/django-piston">Piston</a>, the django app for creating RESTful web services. As part of a project at work I ended up looking through the source code, mainly at some of the neat tricks of serialisation of objects. While poking around I came across something in my mind that wanted fixing. This being open source rather than just file a bug report I setup a <a href="http://bitbucket.org">bitbucket</a> account and got hacking.</p>
+<% syntax_colorize :python, type=:coderay do %>
+def render(self, request):
+	cb = request.GET.get('callback')
+        seria = simplejson.dumps(self.construct(),
+		cls=DateTimeAwareJSONEncoder,
+		ensure_ascii=False, indent=4)
+
+        # Callback
+        if cb:
+            return '%s(%s)' % (cb, seria)
+
+        return seria
+<% end %>
+<p>Can you spot the problem? Note the use of the callback passed in the query string arguments and then used <em>without any checking</em> in the output.</p>
+<p>What we really want to do is something like this:</p>
+<% syntax_colorize :python, type=:coderay do %>
+if is_valid_jsonp_callback_value(cb):
+<% end %>
+<p>Which is exactly what has just <a href="http://bitbucket.org/jespern/django-piston/changeset/f558b2c66dcc/">gone into the code for Piston</a>. <a href="http://tav.espians.com/sanitising-jsonp-callback-identifiers-for-security.html">This article</a> contains lots of background information about why <span class="caps">JSONP</span> callbacks can be a security hole, and helpfully provides a <a href="http://github.com/tav/scripts/blob/master/validate_jsonp.py">nice Python module</a> to help with the sanitisation. Nice to be on the authors list for something I&#8217;m using actively.</p>
+<p>Thanks to <a href="http://twitter.com/jespern">Jesper Noehr</a> for Piston, for some pointers on bitbucket and for quickly taking the patch. If you&#8217;re accepting a callback on your site or application, especially if it&#8217;s a public service, you really want to do something like this or you just might have an exploitable security hole.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/03/07/New-nanoc-powered-blog/">
         New Nanoc Powered Blog
       </a>
@@ -147,22 +179,6 @@ Feature: localhost
     <span class="post-date">11 Feb 2010</span>
 
     <p>The next Django User Group London is in two weeks time. You can register over on <a href="http://londonpython.eventwax.com/djugl-february">Eventwax</a>. So far we have <a href="http://intranation.com">Brad</a> talking with more speakers to be announced shortly. Hope to see a few people there.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/02/01/rise-house-team/">
-        The rise of the in-house team?
-      </a>
-    </h1>
-
-    <span class="post-date">01 Feb 2010</span>
-
-    <p>I was just thinking about the <a href="http://www.dibiconference.com/">Design it Build it</a> conference later in the year (full disclosure: I&#8217;m speaking). Specifically the people speaking on the developer track. Between myself, Michael Brunton-Spall from The Guardian, David Singleton from Last.fm and Emma Persky from Gumtree four of the six speakers work on in-house teams. Not early stage start-ups, not large software/advertising companies, not as freelancers but in a reasonable sized company on a development team.</p>
-<p>My original background was working in agencies, and then a stint working for myself and I&#8217;m constantly interested by the different facets of the web software industry. I think conferences or magazines aimed at your average interested web developer or designer play an interesting role in what people perceive as normal. If all you see are people who work as a freelancer you start to think that must be way cooler than whatever it is you&#8217;re doing at the time. I remember attending the first @media event and being surprised at the small number of people from larger agencies. Everyone was from smaller boutique places, or Yahoo! or a freelancer. Now lots of people I see at events are involved in startups.</p>
-<p>Interestingly as well none of it is about a particular language or framework. Thinking about it as I type I think between the four of us we spend are day jobs mainly using different languages (java, python, php, perl). But I bet we all work in environments where we use other languages at least occasionally, or at the least the people around us do. Mixed environments are commonplace in companies that have been around a good while and run on software. They are far less common elsewhere with startups using whatever is cool (lets build a mobile search engine in Haskel anyone?) and small agencies often using whatever they built their first client website with (probably <span class="caps">PHP</span>).</p>
-<p>What I&#8217;m really interested in though is the type of topics that are going to be talked about. Last.fm vs the Xbox, Scaling the Guardian, my rambling thoughts on a modern toolbox for developers beyond your average <span class="caps">LAMP</span> or .<span class="caps">NET</span> stack. This is the sort of think I&#8217;m interested in. It&#8217;s the sort of problems I like having. It&#8217;s also, I think, the sort of stuff that doesn&#8217;t get a showing a many mainstream conferences. I&#8217;m hoping it&#8217;s all going to be fairly practical too &#8211; things that whatever role people have they can take away and apply.</p>
-
   </div>
   
 </div>

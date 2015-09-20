@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/07/15/ruby-on-rails-on-nokia-n800/">
+        Ruby on Rails on Nokia N800
+      </a>
+    </h1>
+
+    <span class="post-date">15 Jul 2007</span>
+
+    <p>My latest job has allowed me to get back into playing with <a href="http://rubyonrails.com">Rails</a>, something I&#8217;ve been meaning to do for a year or so. Having got everything up to date and installed on my virtual server and on my laptop I couldn&#8217;t resist seeing if I could get it going on my <a href="http://www.nseries.com/products/n800">N800</a>.</p>
+<p>The reasons for this are mainly that the idea of a wireless web server in my pocket is pretty intriguing. Think about it. If you&#8217;re at an event with Wi-Fi you can just point people to an IP address and hey presto they have access to your details, or a set of photos, or whatever you want to show them. I&#8217;ve also got nginx installed, but I&#8217;m not as yet that up on running python or <span class="caps">PHP</span> behind it on the N800. So, no need to carry around the laptop. OK, maybe it&#8217;s just me and all this going to web conferences? We&#8217;ll have to see if I actually knock up anything useful for the next conference and see. Saving that I&#8217;ve been travelling quite a bit recently and it&#8217;s handy when reading a Rails book to be able to try out the examples.</p>
+<p>Anyway, it turns out that you can indeed <a href="http://flickr.com/photos/kwe/484269853/">install Ruby and Rails on the N800</a>, although their isn&#8217;t much information around and non of it worked exactly as stated for me &#8211; hence this post.</p>
+<p>I followed along with a <a href="http://www.digitalknk.com/2007/05/27/howto-ruby-on-rails-on-your-nokia-n800/">pretty good tutorial</a>, although I already had Red Pill Mode, XTerm and <span class="caps">SSH</span> installed. Ruby is also now available in the <a href="https://garage.maemo.org/projects/ruby185/">Garage</a>.</p>
+<p>The crux of the post is that you can find the required packages, in particular for Gem, <a href="http://pierre.droids-corp.org/maemo/">here</a>. But unfortunately that is were the problems start. I ran into exactly the same problem as described in the comments in the above post, on <a href="http://railsgrunt.com/2007/5/14/installing-ruby-on-rails-on-the-n800">this blog post</a> and on this <a href="http://www.internettablettalk.com/">Internet Tablet Talk</a> <a href="http://www.internettablettalk.com/forums/showthread.php?t=5442&amp;page=2">forum thread</a>. Specifically, Gem hanging, crashing or returning a segmentation fault in the yaml.rb file on line 133.</p>
+<p>The problem appears to be (this is me guessing here) with gem and the N800 being able download all the info for Gem to update it&#8217;s package list. The solution, or rather a suitable workaround, is to download the individual gems yourself to the local file system or a memory card and then install them from there. You can get all the Rails gems <a href="http://pierre.droids-corp.org/maemo/gems/">here</a>. A quick script/server later and I had the familiar Rails welcome screen on port 3000. This should in theory work for oher gems as well. You can either download them directly or use Gem on a local machine and them move the files across via bluetooth or <span class="caps">USB</span>.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/07/11/a-round-up/">
         A round-up
       </a>
@@ -160,60 +177,6 @@
 <p>Bye bye to all the people at TH_NK. It&#8217;s been great for two years and I&#8217;ll miss the cunning hit and run attacks on asp.net that have yielded some pretty good results. I&#8217;m sure you&#8217;ll get more done without me being quite so obstinate!</p>
 <p>It&#8217;s not just the impending job move that has been keeping me so busy. I finally, after much useful feedback and patience from <a href="http://thewatchmakerproject.com">Matt</a> got my first <a href="http://www.digital-web.com">Digital Web</a> article done: <a href="http://www.digital-web.com/articles/apis_and_mashups/">APIs and Mashups For The Rest Of Us</a>. As the title suggests it&#8217;s a quick run through the various goings on, in particular on what I find so interesting about the concepts of Open APIs and this web of data thing. I even squeezed in some talk of <a href="http://microformats.org">Microformats</a> <a href="http://www.digital-web.com/articles/apis_and_mashups/comments/">Let me know what you think</a>. Thanks to <a href="http://sam.aaron.name/">Sam</a> as well for a useful early proof read and to <a href="http://www.tiffehr.com/">Tiff</a> at Digital Web (who also has some interesting things to say on this here industry on her new blog, <a href="http://www.lostcog.com/">Lost Cog</a>.)</p>
 <p>End of self reverential post. The list of <em>real</em> things I have to blog about is frankly too long to wait around. And it&#8217;s not helped by these <a href="http://vivabit.com/atmedia2007">trips</a> to <a href="http://hackday.org">london</a> which frankly just give me even more to write about. Incase anyone is interested (and more to remind me), expect something on automated site testing, some musings and code (!) for doing useful things with microformats, some cool CSS3 (or is it CSS2.2 now?) tricks and something involving flickr which should actually be quite interesting if I get the time.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/06/02/json-configuration-example-printing/">
-        JSON configuration example - Printing
-      </a>
-    </h1>
-
-    <span class="post-date">02 Jun 2007</span>
-
-    <p>As a quick follow up to my <a href="http://morethanseven.net/posts/unobtrusive-javascript-example-printing/">previous post on unobtrusive javascript</a> I thought I&#8217;d expand it even more, but this time in an attempt to make it easier to use.</p>
-<p>As we&#8217;ve already mentioned javascript should be treated like any other programming language &#8211; not necessarily left to the experts but their should ideally be an expert involved somewhere along the line. One way of doing this is to abstract out configuration from programmatic logic. This massively helps with code resuse as well, leaving everyone to play to their strengths. It&#8217;s interesting to note that even programmers who would always store configuration settings seperately when writing <span class="caps">PHP</span> or Rails applications don&#8217;t always get around to doing the same in Javascript. Hell, I used to be one of them until <a href="http://wait-till-i.com/">Chris Heilmann</a> pointed out how patently obvious the solution was while at <a href="http://thehighlandfling.com/2007/">The Highland Fling</a>.</p>
-<p>The answer is <a href="http://www.json.org/"><span class="caps">JSON</span></a>. I think it&#8217;s nearly always easier with a quick example so here&#8217;s the Print snippet from the previous post but this time with a few configurable options:</p>
-<pre><code>var Print = {
-   config: {
-      "id": "iNav",
-      "classname": "has-print",
-      "text": "Print"
-   },
-   init: new domFunction(function() {
-      if (list = document.getElementById(Print.config.id)) {
-         if (list.nodeName.toLowerCase() === 'ul') {
-            if (Print.hasClass(list,Print.config.classname)) {
-               var item = document.createElement("li");
-               item.className = "print";
-               var link = document.createElement("a");
-               link.href = "#";
-               link.onclick = Print.printpage;
-               var txt = document.createTextNode(Print.config.text);
-               link.appendChild(txt);
-               item.appendChild(link);
-               list.appendChild(item);
-            }
-         }
-      }
-   }),
-   hasClass: function(element,cName) { 
-      return new RegExp('\\b''&amp;#43;cName'&amp;#43;'\\b').test(element.className);
-   },
-   printpage: function() {
-      window.print();
-      return false;
-   }
-}</code></pre>
-<p>The main thing we have done is to add a new block:</p>
-<pre><code>config: {
-   "id": "iNav",
-   "classname": "has-print",
-   "text": "brand new text"
-},</code></pre>
-<p>This is simply a <span class="caps">JSON</span> object of name/value pairs. You can easily alter the right hand values and change the workings of the app. You then reference the settings in  the rest of you&#8217;re code using dot notation:</p>
-<pre><code>Print.config.text</code></pre>
-<p>In the above example our configuration directives are stored in our Print object. Depending on the circumstances of use you might find it easier to have a seperate Config object which stores all the configuration settings for the entire site.</p>
   </div>
   
 </div>

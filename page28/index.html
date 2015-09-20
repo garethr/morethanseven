@@ -68,6 +68,25 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/04/12/simple-issue-tracking/">
+        Simple issue tracking
+      </a>
+    </h1>
+
+    <span class="post-date">12 Apr 2009</span>
+
+    <p>Another project I hacked together on the train running on App Engine I&#8217;m afraid. Anyone getting bored of my <em>new project each week</em> posts please stop reading now.</p>
+<p><a href="http://gitbug.appspot.com"><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjZNgw" alt="GitBug interface"/></a></p>
+<p>Issue or bug tracking is just one of those things we all deal with and probably have opinions on. Lots of open source software exists (<a href="http://www.bugzilla.org/">BugZilla</a>, <a href="http://trac.edgewall.org/">Trac</a>) to do the job and various companies have commercial products (<a href="http://lighthouseapp.com/">Lighthouse</a>, <a href="http://sifterapp.com/">Sifter</a>, <a href="http://hedgehoglab.com/products/fixx/">Fixx</a>). So why did I go and create another one?</p>
+<p>Certainly not because I think I can do a better job for the majority. This is very much a personal pet project and I don&#8217;t very much fancy competing with teams of smart people building good products.</p>
+<p>Like most software projects my issue tracker was designed to scratch a personal itch. I now have 28 repos over on <a href="http://github.com/garethr">GitHub</a> (how did that happen?). Some of these are public projects I&#8217;d like other peoples input on, and for me that means having a public list of issues. But these aren&#8217;t active projects being worked on by a team of people &#8211; it&#8217;s mainly just me (with Brad and Simon occasionally correcting my spelling and grammar) hacking on the train to work and back. I don&#8217;t need collaboration features. I don&#8217;t want to be limited to a small number of projects. I&#8217;d rather not pay lots of money, or worry too much about hosting.</p>
+<p>So that&#8217;s where <a href="http://gitbug.appspot.com">GitBug</a> comes in. Bug tracking for people with minimal needs.</p>
+<p>The only real <em>feature</em> past a very minimal bug tracker is the ability to close bugs via a GitHub webhook. Oh and lots of <span class="caps">JSON</span> and <span class="caps">RSS</span> feeds for everything but that&#8217;s just the way we should build things now anyway.</p>
+<p>Their are areas of the interface that could do with some streamlining and a couple of open bugs that don&#8217;t yet cause me enough pain to fix. I have however opened it up for anyone with a Google account to use and a few people have started adding their own projects and issues already. I&#8217;m hoping that for the most part by keeping it as simple as possible I can avoid having to do any work on <em>it</em> and work on bugs in other projects instead, of which I&#8217;m sure there are many.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/04/10/support-revcanonical/">
         Support for Rev=Canonical
       </a>
@@ -136,66 +155,6 @@
     <span class="post-date">22 Mar 2009</span>
 
     <p>Just saw this and thought it was cool. You can <a href="http://github.com/garethr/booky/blob/08615163198a2b51353aeba07f25ec9ed477d60c/src/booky/lib/builder.py#L17-24">link to a specific line, or set of lines</a> on GitHub. All you need to do is append something like #L17-24 to specify highlighting lines 17 to 24.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/21/hacker-posts/">
-        Hacker Posts
-      </a>
-    </h1>
-
-    <span class="post-date">21 Mar 2009</span>
-
-    <p>I&#8217;ve been playing again with App Engine, and going back to an on/off pet project that I&#8217;ve build variations of for a while.</p>
-<p><a href="http://hackerposts.appspot.com"><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRihHww" alt="Hacker Posts"/></a></p>
-<p>It&#8217;s basically a pretty straightforward aggregation platform, taking content from a number of feeds and creating relationships between the items. It&#8217;s mainly an experiment in creating a decent size site on App Engine &#8211; it can be surprising how many urls you can get out of a good corpus of data:</p>
-<ul>
-	<li>400 items, each with a unique url</li>
-	<li>each item has a variable number of tags generated, at the moment that amounts to about 1000 unique urls</li>
-	<li>each month and year of content gets a url so that&#8217;s another 4 or so</li>
-	<li>each day for which we have items we also get a url, so that&#8217;s another 90 or so</li>
-</ul>
-<p>So starting off with 1500 or so pages isn&#8217;t bad. The site also grows over time as new items are posted or I add more feeds. Everything else I&#8217;ve done with App Engine has been more <a href="http://imified-demo.appspot.com/">application</a> <a href="http://image-host.appspot.com/">focused</a> so seeing how a content site performs is interesting in and of itself.</p>
-<p>The data in question I used for this first experiment was the feeds I could find from the <a href="http://news.ycombinator.com/leaders">top posters on Hacker News</a>. Hence the name <a href="http://hackerposts.appspot.com">Hacker Posts</a>. That left me with 35 feeds:</p>
-<ul>
-	<li>http://www.matasano.com/log/feed/</li>
-	<li>http://feeds2.feedburner.com/ThinkGene</li>
-	<li>http://www.mechanicalrobotfish.com/rss.xml</li>
-	<li>http://feeds.feedburner.com/Cloudknow</li>
-	<li>http://mark.nirv.net/rss</li>
-	<li>http://feeds.feedburner.com/seldomlogical</li>
-	<li>http://feeds.feedburner.com/mattmaroon/AAcm</li>
-	<li>http://www.swombat.com/rss.xml</li>
-	<li>http://feeds.feedburner.com/woobius</li>
-	<li>http://feeds2.feedburner.com/danieltenner</li>
-	<li>http://www.nilkanth.com/feed/</li>
-	<li>http://feeds.feedburner.com/NewCartographer</li>
-	<li>http://inthebox.webmin.com/feed</li>
-	<li>http://www.maximise.dk/blog/xml/rss.xml</li>
-	<li>http://www.pchristensen.com/blog/feed/</li>
-	<li>http://280north.com/blog/feed/</li>
-	<li>http://tlrobinson.net/blog/feed/</li>
-	<li>http://www.WhatToFix.com/atom.xml</li>
-	<li>http://alexkrupp.typepad.com/sensemaking/atom.xml</li>
-	<li>http://feeds.feedburner.com/yegg</li>
-	<li>http://scotchi.net/feed/atom/</li>
-	<li>http://paulbuchheit.blogspot.com/feeds/posts/default</li>
-	<li>http://www.owenbyrne.com/feed/</li>
-	<li>http://blog.jrock.us/feeds/articles/atom</li>
-	<li>http://www.kalzumeus.com/feed/</li>
-	<li>http://feeds.feedburner.com/gojomo</li>
-	<li>http://davidpiccione.com/blog/feed/</li>
-	<li>http://blog.blinker.net/feed/</li>
-	<li>http://dambalah.com/feed/</li>
-	<li>http://dustincurtis.com/rss.xml</li>
-	<li>http://blog.jodoro.com/feeds/posts/default</li>
-	<li>http://arantaday.com/blog/feed/</li>
-	<li>http://www.allanjosephbatac.com/blog/feed</li>
-	<li>http://feeds.feedburner.com/offbytwo</li>
-	<li>http://feeds.feedburner.com/FoundersBlog-Cluttermecom</li>
-</ul>
-<p>I have a couple of other communities or events that I&#8217;d like to do the same thing around, as well as a few features I want to add to the underlying software. The nice thing with App Engine is rolling new instances out is as simple as running a command.</p>
   </div>
   
 </div>

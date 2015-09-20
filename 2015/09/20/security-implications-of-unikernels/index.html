@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Some Security Implication of Unikernels &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Some Security Implication of Unikernels</h1>
+  <span class="post-date">20 Sep 2015</span>
+  <p>I was attending the first <a href="http://gotocon.com/goto-london-2015/">GOTO London conference</a> last week, in particlar the <a href="https://www.ruggedsoftware.org/">Rugged</a> Track. One of the topics of conversation that came up was unikernels, and their potential for improving the state of software security. Unikernels are pretty new outside research groups, I’m just lucky enough to live and work in Cambridge where some of that research is happening. The security advantages of unikernels are one of the things that attracted me in the first place. I thought it might be interesting to jot a few of those down for other people interested in security and the future of infrastructure.</p>
+
+<p>As with my <a href="http://www.morethanseven.net/2015/08/21/operating-unikernel-challenges/">last post</a>, it’s worth having a basic understand of Unikernels. I’d recommend reading <a href="http://queue.acm.org/detail.cfm?id=2566628">Unikernels - the rise of the virtual library operating system</a>.</p>
+
+<h2>Hypervisor</h2>
+
+<p>Every unikernel is provided the isolation guarantees from a hypervisor. Not only are these guarantees reasonably well understood, they tend to make use of hardware features too. It’s interesting to note that recent container runtime work is heading in this direction too, with ptojects like <a href="https://clearlinux.org/features/clear-containers">Clear Containers from Intel</a>, <a href="https://blogs.vmware.com/cloudnative/introducing-project-bonneville/">Bonneville from VMware</a> and the <a href="https://coreos.com/blog/rkt-0.8-with-new-vm-support/">new stage1 in rkt</a>.</p>
+
+<h2>No User Space</h2>
+
+<p>With a typical server OS we have kernel space and user space. Part of the idea here is to ensure the underlying machine doesn’t crash, whatever horrible things people do in user space. But this means <em>you can do horrible things</em>. The unikernel model is similar to the Erlang philosophy of <em>let it crash</em>. You only have kernel space, you entire application resides in it. Most things out of the ordinary are going to crash the kernel. This makes the sort of exploratory testing useful in exploit development harder.</p>
+
+<h2>Really Immutable Infrastructure</h2>
+
+<p>People often talk about immutable infrastructure. I’d wager there is more talk than reality however. When you push, people are often not using read-only file systems and retain the capability to login to machines to make ad-hoc changes. What they mean by immutable is that they only change machines at deploy time. This ignores both the fact they have the technical capability to change them anytime, and that an attacker could change them outside that deployment cycle. With unikernel systems there is often just the compiled kernel, you can’t just change files on disk. The defaults force an immutable way of working.</p>
+
+<h2>Clean Slate TLS</h2>
+
+<p>As a typical developer or operator you’ve probably learned more than you wanted to know about the OpenSSL source code. It’s not well understood and not likely to be so anytime soon and has some pretty spectacular bugs like <a href="http://heartbleed.com/">Heartbleed</a>. The <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> is laudable and will improve things but it’s still a problematic codebase. Functional programming is often regarded as an easier way of writing understandable code. Types are a good thing, especially when it comes to security systems. So a pure <a href="https://mirage.io/blog/introducing-ocaml-tls">OCaml TLS</a> implementation as used by <a href="https://mirage.io/">MirageOS</a> makes sense on lots of levels. Yes this is quite an undertaking, but the <a href="http://amirchaudhry.com/bitcoin-pinata/">bitcoin pinata</a> tests show promise.</p>
+
+<h2>Formal Proofs</h2>
+
+<p>Knowing whether an application really does exactly what you want it to do (and no more) is a hard problem to solve. Unit tests and other form of automated testing help, but are still reliant on people to both write and design the tests. A formal proof system can provide much stronger guarentees of correctness, it’s an approach used in some cases for missing-critical components of <a href="http://cacm.acm.org/magazines/2015/4/184701-how-amazon-web-services-uses-formal-methods/fulltext">Amazon’s AWS</a>. MirageOS is implemented in OCaml. One of the most popular OCaml programmes is <a href="https://coq.inria.fr/">Coq</a>, which just so happens to be a formal proof management system. I’ve not seen many examples yet of this approach, probably due to the effort involved, but the capability is there for building formally specified unikernels. I’d wager a similar thing is possible with Haskell and <a href="https://github.com/GaloisInc/HaLVM">HalVM</a>. Making that easier to do for typical developers could open up much more secure development practices for certain usecases.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/08/21/operating-unikernel-challenges/">
+            A Discussion of The Operational Challenges With Unikernels
+            <small>21 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/08/20/puppet-module-skeleton-updates/">
+            Update to Puppet Module Skeleton
+            <small>20 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/05/19/information-security-reading-list/">
+            Information Security Reading List
+            <small>19 May 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

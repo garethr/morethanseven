@@ -68,6 +68,60 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/06/02/json-configuration-example-printing/">
+        JSON configuration example - Printing
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jun 2007</span>
+
+    <p>As a quick follow up to my <a href="http://morethanseven.net/posts/unobtrusive-javascript-example-printing/">previous post on unobtrusive javascript</a> I thought I&#8217;d expand it even more, but this time in an attempt to make it easier to use.</p>
+<p>As we&#8217;ve already mentioned javascript should be treated like any other programming language &#8211; not necessarily left to the experts but their should ideally be an expert involved somewhere along the line. One way of doing this is to abstract out configuration from programmatic logic. This massively helps with code resuse as well, leaving everyone to play to their strengths. It&#8217;s interesting to note that even programmers who would always store configuration settings seperately when writing <span class="caps">PHP</span> or Rails applications don&#8217;t always get around to doing the same in Javascript. Hell, I used to be one of them until <a href="http://wait-till-i.com/">Chris Heilmann</a> pointed out how patently obvious the solution was while at <a href="http://thehighlandfling.com/2007/">The Highland Fling</a>.</p>
+<p>The answer is <a href="http://www.json.org/"><span class="caps">JSON</span></a>. I think it&#8217;s nearly always easier with a quick example so here&#8217;s the Print snippet from the previous post but this time with a few configurable options:</p>
+<pre><code>var Print = {
+   config: {
+      "id": "iNav",
+      "classname": "has-print",
+      "text": "Print"
+   },
+   init: new domFunction(function() {
+      if (list = document.getElementById(Print.config.id)) {
+         if (list.nodeName.toLowerCase() === 'ul') {
+            if (Print.hasClass(list,Print.config.classname)) {
+               var item = document.createElement("li");
+               item.className = "print";
+               var link = document.createElement("a");
+               link.href = "#";
+               link.onclick = Print.printpage;
+               var txt = document.createTextNode(Print.config.text);
+               link.appendChild(txt);
+               item.appendChild(link);
+               list.appendChild(item);
+            }
+         }
+      }
+   }),
+   hasClass: function(element,cName) { 
+      return new RegExp('\\b''&amp;#43;cName'&amp;#43;'\\b').test(element.className);
+   },
+   printpage: function() {
+      window.print();
+      return false;
+   }
+}</code></pre>
+<p>The main thing we have done is to add a new block:</p>
+<pre><code>config: {
+   "id": "iNav",
+   "classname": "has-print",
+   "text": "brand new text"
+},</code></pre>
+<p>This is simply a <span class="caps">JSON</span> object of name/value pairs. You can easily alter the right hand values and change the workings of the app. You then reference the settings in  the rest of you&#8217;re code using dot notation:</p>
+<pre><code>Print.config.text</code></pre>
+<p>In the above example our configuration directives are stored in our Print object. Depending on the circumstances of use you might find it easier to have a seperate Config object which stores all the configuration settings for the entire site.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/05/29/unobtrusive-javascript-example-printing/">
         Unobtrusive Javascript Example - Printing
       </a>
@@ -184,22 +238,6 @@
 &lt;/div&gt;</code></pre>
 <p>Assuming the above is published on spammer.com then I&#8217;m sunk. It&#8217;s another authorative hcard with the same name, in this case <em>my</em> name. Of course therein lies another problem, when we name our children we tend to just do it on a whim, we even copy names we like from other people! And we change or subvert these names when we dont like them with nick names and the like. Domain names are unique so we avoid this problem.</p>
 <p>So, a possible solution does present itself; using the uniqueness of domain names combined with the fact that most people aren&#8217;t evil spammers. Lets postulate a search engine finds lots of hcards for a given name. Most of these hcards probably point back to the url of the entity they are describing (so most hcards on the web describing me point back to this site). We can then check if one of the hcards is from that domain, and if it has a valid microID. In other words we use the lazy web to identify the most likely location of an authorative hcard.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/04/16/authoritative-hcards-authority-in-microformats/">
-        Authoritative hCards - Authority in microformats
-      </a>
-    </h1>
-
-    <span class="post-date">16 Apr 2007</span>
-
-    <p>I&#8217;ve been pondering lots of potential uses for <a href="http://microformats.org">microformats</a> of late and came up on one thing I thought worth asking what people thought; namely the issue of authority in microformatted data.</p>
-<p><a href="http://technorati.com">Technorati</a> provide a very interesting <a href="http://kitchen.technorati.com/contact/search/">Microformats search engine</a> that allows you to search for a person and get back their contact details via hcards that it knows about. For instance try doing a <a href="http://kitchen.technorati.com/contact/search/rushgrove">search for me</a> and you get seven results (ironic given the domain name), try with one of those <a href="http://adactio.com">famous people</a> and you get <a href="http://kitchen.technorati.com/contact/search/jeremy+keith">lots more</a>. This poses a problem, what is the various hcard disagree?</p>
-<p>You can always look at the publication date but this might not be enough. I could publish an hcard with incorrect data for anyone right now on this site and it would be more recent that the other, possibly correct, information already available on the web. Note that this isn&#8217;t a problem with Microformats per ce, more an ever present problem with the web. It&#8217;s just that Microformats make the matter more of a potential issue.</p>
-<p>Is their a need for the ability to provide an authoritative hCard, or other Microformat instance? One that can always be trusted? If I publish an hcard of my details I&#8217;d like to think the latest version of that would be the most trustworthy. But how do you make a claim of ownership over a piece of data on the web (microformatted or not)? And for some of this data do you need a way of deciding who has access to it and who does not in a standard manner?</p>
-<p>I&#8217;m pretty interested in the issue of identity at the moment, spurred on by the likes of <a href="http://openid.net/">OpenID</a> and <a href="http://microid.org/">MicroID</a>. I&#8217;m wondering if their isn&#8217;t some clever cross over here? Sites like <a href="http://claimid.com/">ClaimID</a> are doing some things in this space already so we&#8217;ll have to see.</p>
   </div>
   
 </div>
