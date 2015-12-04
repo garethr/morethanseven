@@ -1,11 +1,13 @@
 # Dependencies
 markdown:         redcarpet
 highlighter:      pygments
-plugins:          plugins
+plugins_dir:      plugins
+
+gems:            [jekyll-paginate, jekyll-gist]
 
 # Permalinks
 permalink:        pretty
-relative_permalinks: true
+#relative_permalinks: true
 
 # Setup
 title:            More than seven
