@@ -21,6 +21,8 @@ GEM
     jekyll-paginate (1.1.0)
     jekyll-sass-converter (1.3.0)
       sass (~> 3.2)
+    jekyll-textile-converter (0.1.0)
+      RedCloth (~> 4.0)
     jekyll-watch (1.3.0)
       listen (~> 3.0)
     kramdown (1.9.0)
@@ -56,5 +58,6 @@ DEPENDENCIES
   jekyll
   jekyll-gist
   jekyll-paginate
+  jekyll-textile-converter
   pygments.rb
   redcarpet

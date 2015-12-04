@@ -3,7 +3,10 @@ markdown:         redcarpet
 highlighter:      pygments
 plugins_dir:      plugins
 
-gems:            [jekyll-paginate, jekyll-gist]
+gems:
+- jekyll-paginate
+- jekyll-gist
+- jekyll-textile-converter
 
 # Permalinks
 permalink:        pretty
