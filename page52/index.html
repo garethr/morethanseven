@@ -68,6 +68,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/07/18/nabaztag-rest-api/">
+        Nabaztag REST API
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jul 2007</span>
+
+    <p>I&#8217;m having quite a bit of fun with my rabbit, <em>cambridge</em>, at the moment. Their were a number of projects at <a href="http://hackday.org">Hackday</a> involving the ever so cute <a href="http://nabaztag.com">Nabaztag</a> and I had a feeling I&#8217;d probably go home and adopt one. The idea of a rabbit with APIs was simple too much fun.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgNabaztag.jpg" title="Nabaztag" alt="Nabaztag" /></p>
+<p>The Nabaztag <span class="caps">API</span> docs can be found in two places (the rest of the site unfortunately has a number of issues when it comes to finding information easily); in the <a href="http://help.nabaztag.com/fiche.php?langue=3&amp;fiche=29#none">help section</a> and on the <a href="http://api.nabaztag.com/docs/home.html"><span class="caps">API</span> site</a>. The latter are much better than the former by the way.</p>
+<p>Lots of people have already been hacking on the wireless rabbit. Their are some good tools over on the <a href="http://nabaztools.sourceforge.net/">Nabaztag Sourceforge project</a>, a handy <a href="http://rubyforge.org/projects/nabaztag/">Ruby module</a> and a <a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=463">prospective</a> <a href="http://tmp.lfms.nl/nabaztag/"><span class="caps">PEAR</span> module</a> for <span class="caps">PHP</span>.</p>
+<p>I&#8217;ve been getting more and more into the ideas behind <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer"><span class="caps">REST</span></a> recently and one thing that disappointed me a litte was the <span class="caps">HTTP</span> <span class="caps">RPC</span> style Nabaztag <span class="caps">API</span> (note to anyone thinking <span class="caps">REST</span> simply means using a <span class="caps">GET</span> request rather than something like <span class="caps">SOAP</span> or <span class="caps">XML</span>-<span class="caps">RPC</span>, it doesn&#8217;t). I couldn&#8217;t help seeing PUTs to ears and POSTs to the mouth.</p>
+<p>Inspired a little by <a href="http://www.aralbalkan.com/">Arals</a> <a href="http://aralbalkan.com/994">Bunny Talk</a> I&#8217;ve started implementing parts of the <span class="caps">API</span> in a RESTful manner, and used my <span class="caps">API</span> abstraction layer to build a similar application.</p>
+<p>Head over to <a href="http://morethanseven.net/presents/nabaztag/">morethanseven.net/presents/nabaztag/</a> and send me a message (via my rabbit obviously) or, er, play with <em>cambridges</em> ears (he likes that). At the moment the <span class="caps">API</span> is configured only for my rabbit, although you can download the source code and run it yourself if you like. It requires PHP5 at the moment as one of the required modules is PHP5 only. But you are using <a href="http://gophp5.org/">PHP5 now</a> aren&#8217;t you?</p>
+<p>If you don&#8217;t want to use the form you can access the <span class="caps">API</span> directly. Here are a couple of examples using curl:</p>
+<pre><code>curl http://morethanseven.net/presents/nabaztag/ears/left</code></pre>
+
+<pre><code>curl -X 'PUT' http://morethanseven.net/presents/nabaztag/ears/left/13</code></pre>
+
+<pre><code>curl -X 'POST' -d "message" http://morethanseven.net/presents/nabaztag/mouth</code></pre>
+<p>Their&#8217;s a litte documentation in the source. I&#8217;ll add more methods, more documentation and maybe make an <span class="caps">API</span> anyone with a Nabaztag can use by authenticating either as I need it or if people actually want it. Let me know what you think (via the rabbit obviously!)</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/07/15/ruby-on-rails-on-nokia-n800/">
         Ruby on Rails on Nokia N800
       </a>
@@ -161,22 +186,6 @@
     content: "\2192";
 }</code></pre>
 <p>You need to use the Unicode encoding. Doh. Job done.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/06/11/introducing-hedgehog-lab/">
-        Introducing hedgehog lab
-      </a>
-    </h1>
-
-    <span class="post-date">11 Jun 2007</span>
-
-    <p>For both of you who care what I get up to during my work hours this post is for you. I&#8217;ve finally gotten involved in a new startup with a couple of friends. Look out for <a href="http://hedgehoglab.com">hedgehog lab</a> related goings on in a Newcastle near you. We&#8217;ve got plans being drawn up as I type (multi-tasking) but a smattering of training and consultancy on web standards design and development and a very health dose of some of those new fangled online products (all with as many microformats as I can sneak in) sounds like fun to me.</p>
-<p><a href="http://hedgehoglab.com/"><img src="http://morethanseven.net/_assets/media/imgHedgehogLab.jpg" title="hedgehog lab" alt="hedgehog lab" /></a></p>
-<p>Bye bye to all the people at TH_NK. It&#8217;s been great for two years and I&#8217;ll miss the cunning hit and run attacks on asp.net that have yielded some pretty good results. I&#8217;m sure you&#8217;ll get more done without me being quite so obstinate!</p>
-<p>It&#8217;s not just the impending job move that has been keeping me so busy. I finally, after much useful feedback and patience from <a href="http://thewatchmakerproject.com">Matt</a> got my first <a href="http://www.digital-web.com">Digital Web</a> article done: <a href="http://www.digital-web.com/articles/apis_and_mashups/">APIs and Mashups For The Rest Of Us</a>. As the title suggests it&#8217;s a quick run through the various goings on, in particular on what I find so interesting about the concepts of Open APIs and this web of data thing. I even squeezed in some talk of <a href="http://microformats.org">Microformats</a> <a href="http://www.digital-web.com/articles/apis_and_mashups/comments/">Let me know what you think</a>. Thanks to <a href="http://sam.aaron.name/">Sam</a> as well for a useful early proof read and to <a href="http://www.tiffehr.com/">Tiff</a> at Digital Web (who also has some interesting things to say on this here industry on her new blog, <a href="http://www.lostcog.com/">Lost Cog</a>.)</p>
-<p>End of self reverential post. The list of <em>real</em> things I have to blog about is frankly too long to wait around. And it&#8217;s not helped by these <a href="http://vivabit.com/atmedia2007">trips</a> to <a href="http://hackday.org">london</a> which frankly just give me even more to write about. Incase anyone is interested (and more to remind me), expect something on automated site testing, some musings and code (!) for doing useful things with microformats, some cool CSS3 (or is it CSS2.2 now?) tricks and something involving flickr which should actually be quite interesting if I get the time.</p>
   </div>
   
 </div>

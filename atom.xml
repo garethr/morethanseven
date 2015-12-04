@@ -4,13 +4,110 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-09-20T08:49:34+01:00</updated>
+ <updated>2015-12-04T11:15:19+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Provisioning droplets with Puppet</title>
+   <link href="http://www.morethanseven.net/2015/12/04/provisioning-droplets-with-puppet/"/>
+   <updated>2015-12-04T00:00:00+00:00</updated>
+   <id>http://www.morethanseven.net/2015/12/04/provisioning-droplets-with-puppet</id>
+   <content type="html">&lt;p&gt;I love &lt;a href=&quot;https://www.digitalocean.com/&quot;&gt;DigitalOcean&lt;/a&gt; for quickly spinning
+up machines. I also like managing my infrastructure using Puppet. Enter the
+&lt;a href=&quot;https://forge.puppetlabs.com/garethr/digitalocean&quot;&gt;garethr-digitalocean&lt;/a&gt; module.
+This currently provides a single Puppet type; &lt;code&gt;droplet&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lets show a quick example of that, by launching two droplets, called
+test-digitalocean and test-digitalocean-1.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-puppet&quot; data-lang=&quot;puppet&quot;&gt;&lt;span class=&quot;na&quot;&gt;droplet&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;test-digitalocean&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;test-digitalocean-1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ensure&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;present&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;region&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;lon1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;512mb&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14169855&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With the above manifest saved as &lt;code&gt;droplets.pp&lt;/code&gt; we can run it with:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ puppet apply --test droplets,pp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will ensure those two droplets exist in that region, and have that
+size. If they don&amp;#39;t exist it will launch droplets using the specified image.
+This means we can run the same command again, and rather that create
+more instances it will simply report that we currently have those
+droplets already.&lt;/p&gt;
+
+&lt;h2&gt;Querying resources&lt;/h2&gt;
+
+&lt;p&gt;Puppet also comes with &lt;code&gt;puppet resource&lt;/code&gt;, a handy way of querying the
+state of a given resource or type. Running the following will list all
+of your droplets, whether you created them using Puppet or not.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ puppet resource droplet
+droplet { &amp;#39;test-digitalocean&amp;#39;:
+  ensure              =&amp;gt; &amp;#39;present&amp;#39;,
+  backups             =&amp;gt; &amp;#39;false&amp;#39;,
+  image               =&amp;gt; &amp;#39;14169855&amp;#39;,
+  image_slug          =&amp;gt; &amp;#39;ubuntu-15-10-x64&amp;#39;,
+  ipv6                =&amp;gt; &amp;#39;true&amp;#39;,
+  price_monthly       =&amp;gt; &amp;#39;10.0&amp;#39;,
+  private_address     =&amp;gt; &amp;#39;10.131.98.186&amp;#39;,
+  private_networking  =&amp;gt; &amp;#39;true&amp;#39;,
+  public_address      =&amp;gt; &amp;#39;178.62.25.100&amp;#39;,
+  public_address_ipv6 =&amp;gt; &amp;#39;2A03:B0C0:0001:00D0:0000:0000:0090:B001&amp;#39;,
+  region              =&amp;gt; &amp;#39;lon1&amp;#39;,
+  size                =&amp;gt; &amp;#39;1gb&amp;#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Mutating resources&lt;/h2&gt;
+
+&lt;p&gt;The type also supports mutating droplets, for instance changing the
+size of a droplet if you change the model in Puppet. The API client
+doesn&amp;#39;t support all possible changes, but you can disable backups, enable
+IPv6 and switch on private networking as needed. Here&amp;#39;s a quick sample
+of the output showing this in action.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Info: Loading facts
+Notice: Compiled catalog for gareths-macbook.local in environment production in 0.43 seconds
+Info: Applying configuration version &amp;#39;1449225401&amp;#39;
+Info: Checking if droplet test-digitalocean exists
+Info: Powering off droplet test-digitalocean
+Info: Resizing droplet test-digitalocean
+Info: Powering up droplet test-digitalocean
+Notice: /Stage[main]/Main/Droplet[test-digitalocean]/size: size changed &amp;#39;1gb&amp;#39; to &amp;#39;512mb&amp;#39;
+Error: Disabling IPv6 for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/ipv6: change from true to false failed: Disabling IPv6 for test-digitalocean is not supported
+Error: Disabling private networking for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/private_networking: change from true to false failed: Disabling private networking for test-digitalocean is not supported
+Info: Checking if droplet test-digitalocean-1 exists
+Info: Created new droplet called test-digitalocean-1
+Notice: /Stage[main]/Main/Droplet[test-digitalocean-1]/ensure: created
+Info: Class[Main]: Unscheduling all events on Class[Main]
+Notice: Applied catalog in 60.61 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;But why?&lt;/h2&gt;
+
+&lt;p&gt;Describing your infrastructure at this level in code has several advantages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Having a shared model of your infrastructure in code allows for a discussion
+around that model&lt;/li&gt;
+&lt;li&gt;You can be convident in the model because of the idempotent nature of running
+the code&lt;/li&gt;
+&lt;li&gt;The use of code for this model allows for activities like code review, change
+control based on pull requests, unit testing, user created abstrations and more&lt;/li&gt;
+&lt;li&gt;The use of Puppet means you can use it as above as a command line interface, or
+run it every period of time to enfore and report on the state of you infrastructure&lt;/li&gt;
+&lt;li&gt;Puppet ecosystem tools like PuppetDB, Puppet Board or Puppet Enterprise mean you can
+store data over time for later analysis&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The module also acts as a reasonable example of a simple Puppet type and provider.
+If you&amp;#39;re interested in extending Puppet for your own services this is hopefully a
+good place to start understanding the API.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Some Security Implication of Unikernels</title>
@@ -382,7 +479,8 @@ used &lt;a href=&quot;http://kitchen.ci/&quot;&gt;Test Kitchen&lt;/a&gt; and
 virtual machines (one for each supported operating system), applying the
 Puppet manifest and then making some assertions:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/a8d090b5d7f7a190f7d9.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/a8d090b5d7f7a190f7d9.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;The above is simply checking whether certain packages are installed, the
 PPA is setup correctly and whether &lt;code&gt;mirage&lt;/code&gt; and &lt;code&gt;opam&lt;/code&gt; can be executed
@@ -395,7 +493,8 @@ resulting software allows us to build MirageOS unikernels. For this I
 used &lt;a href=&quot;https://github.com/sstephenson/bats&quot;&gt;Bats&lt;/a&gt; running in the same
 Test Kitchen setup.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/191c4c0676b471f9b986.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/191c4c0676b471f9b986.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;The above configures and builds a simple HTTP server unikernel, and then
 checks that when run it returns the expected response on the correct
@@ -441,7 +540,8 @@ Explorer if you prefer).&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This launches BoxStarter, which executes the following code:&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/a1838aa68355a0766de4.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/a1838aa68355a0766de4.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;This takes a while as it runs Windows update and repeatedly reboots the
 machine. But once completed you&amp;#39;ll have the listed software installed
@@ -2099,14 +2199,14 @@ Percentage of the requests served within a certain time (ms)
 
 &lt;p&gt;Cum sociis natoque penatibus et magnis dis &lt;code&gt;code element&lt;/code&gt; montes, nascetur ridiculus mus.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Example can be run directly in your JavaScript console&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;// Create a function that takes two arguments and returns the sum of those arguments&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;return a + b&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;// Call the function&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;c1&quot;&gt;// &amp;gt; 8&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.&lt;/p&gt;
 
@@ -2114,7 +2214,8 @@ Percentage of the requests served within a certain time (ms)
 
 &lt;p&gt;Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/5555251.js?file=gist.md&quot;&gt; &lt;/script&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/5555251.js?file=gist.md&quot;&gt; &lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Vestibulum id ligula porta felis euismod semper.&lt;/p&gt;
 
@@ -5574,7 +5675,7 @@ next: get details about the next track in the list&lt;/pre&gt;
  
  <entry>
    <title>Are XMPP and offline processing coming to Google App Engine?</title>
-   <link href="http://www.morethanseven.net/2009/01/15/are-xmpp-and-offline-processing-coming-google-app-/"/>
+   <link href="http://www.morethanseven.net/2009/01/15/are-xmpp-and-offline-processing-coming-google-app/"/>
    <updated>2009-01-15T00:00:00+00:00</updated>
    <id>http://www.morethanseven.net/2009/01/15/are-xmpp-and-offline-processing-coming-google-app-</id>
    <content type="html">&lt;p&gt;Google &lt;a href=&quot;http://google-code-updates.blogspot.com/2009/01/changes-for-jaiku-and-farewell-to.html&quot;&gt;just announced&lt;/a&gt; that, once the port of &lt;a href=&quot;http://www.jaiku.com&quot;&gt;Jaiku&lt;/a&gt; to App Engine is complete they will be Open Sourcing the code and stopping official development. I only used Jaiku sporadically in the heady days when everyone had to sign up for a new web 2.0 service every week or be mocked by their colleagues. What really interests me about this move though is what it means for App Engine.&lt;/p&gt;
@@ -5862,7 +5963,7 @@ p {
  
  <entry>
    <title>Jabber, Erlang, Debugging. Things I'm playing with at the moment</title>
-   <link href="http://www.morethanseven.net/2008/10/05/jabber-erlang-debugging-things-im-playing-with-at-/"/>
+   <link href="http://www.morethanseven.net/2008/10/05/jabber-erlang-debugging-things-im-playing-with-at/"/>
    <updated>2008-10-05T00:00:00+01:00</updated>
    <id>http://www.morethanseven.net/2008/10/05/jabber-erlang-debugging-things-im-playing-with-at-</id>
    <content type="html">&lt;p&gt;I&amp;#8217;m busy experimenting with various blogging approaches at the moment, hence the short links I&amp;#8217;ve been posting recently. Another type of post I thought I&amp;#8217;d give a try to was the list of interesting things. I find this sort of thing strangely cathartic &amp;#8211; if nothing else by writing down the things I&amp;#8217;m thinking about I won&amp;#8217;t forget to spend time playing with them.&lt;/p&gt;
@@ -6356,7 +6457,7 @@ end&lt;/code&gt;&lt;/pre&gt;
  
  <entry>
    <title>Why the webstandards world appears to be choosing Django</title>
-   <link href="http://www.morethanseven.net/2008/03/29/why-the-webstandards-world-appears-to-be-choosing-/"/>
+   <link href="http://www.morethanseven.net/2008/03/29/why-the-webstandards-world-appears-to-be-choosing/"/>
    <updated>2008-03-29T00:00:00+00:00</updated>
    <id>http://www.morethanseven.net/2008/03/29/why-the-webstandards-world-appears-to-be-choosing-</id>
    <content type="html">&lt;p&gt;I&amp;#8217;ve been noticing an interesting trend recently, not one I have any empirical evidence for mind, but one I though interesting non-the-less. Parts of the webstandards world appear to all be playing with &lt;a href=&quot;http://djangoproject.com&quot;&gt;Django&lt;/a&gt;. Part of this has been the odd mention down the pub, at barcamps or at &lt;span class=&quot;caps&quot;&gt;SXSW&lt;/span&gt; this year. But the main source of information on the topic has been &lt;a href=&quot;http://twitter.com&quot;&gt;twitter&lt;/a&gt;. To name but a few I&amp;#8217;ve seen tweets from &lt;a href=&quot;http://nascentguruism.com&quot;&gt;Steve&lt;/a&gt;, &lt;a href=&quot;http://thecssdiv.co.uk&quot;&gt;Ross&lt;/a&gt; and &lt;a href=&quot;http://aralbalkan.com&quot;&gt;Aral&lt;/a&gt; recently and &lt;a href=&quot;http://muffinresearch.co.uk/&quot;&gt;Stuart&lt;/a&gt; and &lt;a href=&quot;http://cyril.doussin.name/thoughts/&quot;&gt;Cyril&lt;/a&gt; literally wont shut up about it.&lt;/p&gt;

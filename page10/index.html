@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/11/02/Exposing-puppet-and-facter-information-on-the-web/">
+        Exposing Puppet And Facter Information On The Web
+      </a>
+    </h1>
+
+    <span class="post-date">02 Nov 2011</span>
+
+    <p>I don&#8217;t appear to have been in a writing mood recently but I&#8217;ve been getting back into hacking on a couple of pet projects. The first fruits of this coding (mainly backwards and forwards on the train) I&#8217;ve just made available to anyone interested.</p>
+<p><a href="https://github.com/garethr/web-puppet">Web Facter</a> is a gem which takes the output from <a href="https://github.com/puppetlabs/facter">Facter</a> and exposes this as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. In theory you could run this on a configurable port on each of your machines and have a <span class="caps">URL</span> you can hit to get information on uptime, networking setup, hostnames or anything else exposed by Facter. It comes with a simple built-in web server and optional http basic authentication if you&#8217;re not going to do this via a proxy. The <span class="caps">JSON</span> display should be both human and machine readable, and I have a few ideas for projects which needed this information.</p>
+<p>The other project is very similar, and even has a similar name, <a href="https://github.com/garethr/web-facter">Web Puppet</a>. You can run this on your puppet master and it exposes the node information (currently including the facts and tags) again as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. I&#8217;m still working on this to make it a little more usable. At the moment it just shows you all nodes and all information, if you&#8217;re working with a larger cluster this isn&#8217;t really sensible. Recent versions of Puppet do have an <a href="http://docs.puppetlabs.com/guides/rest_api.html"><span class="caps">HTTP</span> based <span class="caps">API</span></a> but it requires some hoops to be jumped through and I&#8217;m not quite sure from the docs it lets me do what I want (I have a specific usecase, of which more soon all being well).</p>
+<p>Both projects have had me reading the source code of Puppet and Facter, which for the most part has been enjoyable and informative. Puppet in particular has some great comments lying around :) Both of the above projects are available as gems for anyone else to play around with and build on, but my main aim is a little more high level. All being well I&#8217;ll have a couple of projects built atop these APIs shortly.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/10/10/Javascript-in-your-ruby-mongoid-map-reduce/">
         Javascript In Your Ruby: Mongoid Map Reduce
       </a>
@@ -174,23 +189,6 @@ end
     <p>I stepped in at the last minute to do a talk at the last London Ruby User Group. From the feedback afterwards folks seemed to enyoy it and I certainly had fun. Thanks to everyone who came along.</p>
 <p><object id="__sse8828889" width="595" height="497"> <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironmentsii-110811103611-phpapp02&rel=0&stripped_title=config-managament-for-development-environments-ii&userName=garethr" /> <param name="allowFullScreen" value="true"/> <param name="allowScriptAccess" value="always"/> <embed name="__sse8828889" src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=configmanagamentfordevelopmentenvironmentsii-110811103611-phpapp02&rel=0&stripped_title=config-managament-for-development-environments-ii&userName=garethr" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="595" height="497"></embed> </object></p>
 <p>As well as the slides the nice Skills Matter folks have already uploaded the <a href="http://skillsmatter.com/podcast/home/chef-vagrant">videos from the night</a>.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/07/31/Vim-with-ruby-support-using-homebrew/">
-        Vim With Ruby Support Using Homebrew
-      </a>
-    </h1>
-
-    <span class="post-date">31 Jul 2011</span>
-
-    <p>I&#8217;ve spend a bit of time this weekend cleaning, tidying and upgrading software on my mac. While doing that I got round to compiling my own Vim. I&#8217;d been meaning to do this for a while, I prefer using Vim in a terminal to using MacVim, and I like having access to things like <a href="http://www.vim.org/scripts/script.php?script_id=3025">Command-T</a> which requires Ruby support which the inbuild version lacks.</p>
-<p>Vim isn&#8217;t in Homebrew, because Homebrew&#8217;s policy is to not provide duplicates of already installed software. Enter <a href="https://github.com/adamv/homebrew-alt">Homebrew Alt</a> which provides formulas for anything not allowed by the homebrew policy. As luck would have it a <a href="https://github.com/adamv/homebrew-alt/blob/master/duplicates/vim.rb">Vim Formula</a> already exists. And installing from it couldn&#8217;t be easier.</p>
-<pre>brew install https://raw.github.com/adamv/homebrew-alt/master/duplicates/vim.rb</pre>
-<p>As it turns out this failed the first time I ran it because I had an rvm installed Ruby on my path. I reset this to the system version and everything compiled fine.</p>
-<pre>rvm use system</pre>
-<p>Note also that it&#8217;s really quite simple to use a different revision or different flags when compiling. Just download that file, modify it, serve it locally (say with a python one line web server) and point brew install at it. Next step, running off head for all the latest and greatest Vim features.</p>
   </div>
   
 </div>

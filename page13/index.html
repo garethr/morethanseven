@@ -68,6 +68,75 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/04/29/Creating-a-cucumber-nagios-package-with-fpm/">
+        Creating A Cucumber Nagios Package With Fpm
+      </a>
+    </h1>
+
+    <span class="post-date">29 Apr 2011</span>
+
+    <p>I&#8217;ve written <a href="http://morethanseven.net/2011/01/16/Why-developers-should-care-about-system-packages.html">before</a> about why I like System Packages, but even I&#8217;ll admit that the barriers to creating them mean I don&#8217;t use them for everything. <a href="https://github.com/jordansissel/fpm"><span class="caps">FPM</span></a> however is making it much easier, to the point where I&#8217;m starting to create a few packages I can reuse on projects. I thought a write up of how I&#8217;m doing that for <a href="http://cucumber-nagios.org/">Cucumber-Nagios</a> might be useful.</p>
+<p>For those that haven&#8217;t seen it yet, <span class="caps">FPM</span> (or Effing Package Management) is a tool that helps you build packages, like RPMs and DEBs, quickly. It can take in gems, python packages, node.js npm files or just plain directories and make files and from that create you one or more system packages. Lets have a look at a full example with a Ruby gem.I really like using cucumber-nagios, whatever platform or language I happen to be using at the time. I have a number of Django projects for instance with cucumber-nagios checks, so being able to not worry about most of the Ruby install is useful.</p>
+<p>In order to use <span class="caps">FPM</span> you&#8217;ll need to install it. It&#8217;s available as a Ruby gem so lets start there. I&#8217;m not going to delve into setting up a Ruby Gems environment as it&#8217;s annoying and covered for most platforms elsehere on the internet.</p>
+<pre><code>gem install fpm</code></pre>
+<p>First off lets install the cucumber-nagios gem, along with all it&#8217;s dependencies, into a local folder on my build machine. This might be a virtual machine or a separate machine in your cluster. It should be running the same OS as the intended production machines however. The following examples are from Ubuntu, but it&#8217;s much the same for <span class="caps">RPM</span> based distros.</p>
+<pre><code>gem install --no-ri --no-rdoc --install-dir ~/tmp/gems cucumber-nagios</code></pre>
+<p>Cucumber-nagios has a large number of dependencies, so we&#8217;re going to need to create packages for all of those too. <span class="caps">FPM</span> will cleverly deal with maintaining the specified dependencies thought. We&#8217;ll use find to do this quickly, and then instruct <span class="caps">FPM</span> to convert from a gem to a deb. You could obviously do this line by line if you prefer.</p>
+<pre><code>find ~/tmp/gems/cache -name '*.gem' | xargs -rn1 fpm -s gem -t deb -a all</code></pre>
+<p>That should leave us with lots of new .deb files that we can have a closer look at:</p>
+<pre><code>dpkg --info rubygem-cucumber-nagios_0.9.0_i686.deb
+dpkg -c rubygem-cucumber-nagios_0.9.0_i686.deb</code></pre>
+<p>If you already have a private apt repository set up then just upload these packages and away you go. I&#8217;d like to use apt for installing them so I can leave it to manage all the dependencies easily. If not then I&#8217;ll show you briefly how to create a local file system repo, it&#8217;s not much more work to create a shared repo available over <span class="caps">HTTP</span>.</p>
+<p>First create a directory to store our packages and move our newly created .deb files into it. You&#8217;ll need to be able to execute some of these commands as root but given the topic I&#8217;m assuming you&#8217;ll be able to deal with that.</p>
+<pre><code>mkdir /usr/local/repo
+cp *.all.deb /usr/local/repo</code></pre>
+<p>For the next part you&#8217;ll need to install the dpkg development tools, and then create a file that can be read by apt when it&#8217;s looking for packages it can install.</p>
+<pre><code>apt-get install dpkg-dev
+dpkg-scanpackages /usr/local/repo /dev/null | gzip -9c &gt; /usr/local/repo/Packages.gz</code></pre>
+<p>Now add your new package repo to your apt sources and update your package cache.</p>
+<pre><code>/etc/apt/sources.list
+deb file:/usr/local/repo ./
+apt-get update</code></pre>
+<p>At this point everything should be up and running. Let&#8217;s do a search in our repo:</p>
+<pre><code>apt-cache search rubygem-
+rubygem-amqp - AMQP client implementation in Ruby/EventMachine
+rubygem-builder - Builders for MarkUp.
+rubygem-bundler - The best way to manage your application's dependencies
+rubygem-cucumber - cucumber-0.10.2
+rubygem-cucumber-nagios - Systems testing plugin for Nagios using Cucumber.
+rubygem-diff-lcs - Provides a list of changes that represent the difference between two sequenced collections.
+rubygem-eventmachine - Ruby/EventMachine library
+rubygem-extlib - Support library for DataMapper and Merb
+rubygem-gherkin - gherkin-2.3.6
+rubygem-highline - HighLine is a high-level command-line IO library.
+rubygem-json - JSON Implementation for Ruby
+rubygem-mechanize - The Mechanize library is used for automating interaction with websites
+rubygem-net-ssh - Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+rubygem-nokogiri - Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
+rubygem-rack - a modular Ruby webserver interface
+rubygem-rack-test - Simple testing API built on Rack
+rubygem-rspec - rspec-2.5.0
+rubygem-rspec-core - rspec-core-2.5.1
+rubygem-rspec-expectations - rspec-expectations-2.5.0
+rubygem-rspec-mocks - rspec-mocks-2.5.0
+rubygem-templater - Templater has the ability to both copy files from A to B and also to render templates using ERB
+rubygem-term-ansicolor - Ruby library that colors strings using ANSI escape sequences
+rubygem-webrat - Ruby Acceptance Testing for Web applications</code></pre>
+<p>And finally lets install cucumber-nagios from our shiny new package.</p>
+<pre><code>apt-get install rubygem-cucumber-nagios</code></pre>
+<p>If everything has worked out you should be able to run the cucumber-nagios-gen command to create a new project. Note that the path may be different, and in the case of debian based distros the gem bin path is not on the Path.</p>
+<pre><code>/usr/lib/ruby/gems/1.8/bin/cucumber-nagios-gen project test
+Generating with project generator:
+     [ADDED]  .gitignore
+     [ADDED]  .bzrignore
+     [ADDED]  Gemfile
+     [ADDED]  README
+     [ADDED]  features/steps
+     [ADDED]  features/support</code></pre>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/04/17/Devops-weekly-archive/">
         Devops Weekly Archive
       </a>
@@ -132,56 +201,6 @@
 <p>Still unsure which Devops people are saying it&#8217;s a bonefide methodology. I see the word used sometimes but generally in passing and not I don&#8217;t think meant how you mean here. And I don&#8217;t think I&#8217;ve heard people speak about it in person. &#8220;Scrum methodology&#8221; returns more than 113,000 results in Google. &#8220;Devops methodology&#8221; returns about 150, some of which 404 and half of which are agregators pointing at the other half.</p>
 <h2>&#8220;The Devops movement smells of a scam in the making&#8221;</h2>
 <p>Some company or other is definitely going to be scammed into paying over the odds for a consultant because they used the word Devops in the sales pitch. That will have next to nothing to do with what I&#8217;d see as the Devops movement and everything to do with human nature (and sales people).</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/03/20/A-continuous-deployment-example-setup/">
-        A Continuous Deployment Example Setup
-      </a>
-    </h1>
-
-    <span class="post-date">20 Mar 2011</span>
-
-    <p>One of the reasons behind getting around to building <a href="http://www.vagrantbox.es">Vagrantbox.es</a> recently was I was giving a talk to a group of startups on <a href="http://thedifferenceengine.eu/">The Difference Engine</a> programme and I wanted to have an example project to demonstrate various things. I wanted to demonstrate everything from sensible version control habbits, configuration management, basic orcestration and most importantly a solid deployment process. I&#8217;ve decided to write up what I&#8217;m doing for deployment because I think it&#8217;s pretty nice, and for all the talk about Continuous Deployment I haven&#8217;t seen many examples of code and configuration to make it happen.</p>
-<p>Most of what I&#8217;ll cover is pretty easy to map to whatever technologies your using. For this project I&#8217;d gone for Git, Django, Gunicorn, Nginx, Fabric, Mysql and Jenkins and I&#8217;m deploying to Ubuntu running on <a href="http://www.brightbox.co.uk/">Brightbox Cloud</a>. Apart from the Jenkins instance in the middle you could follow the instructions and swap things out easily.</p>
-<h2>Jenkins</h2>
-<p>First up lets install <a href="http://jenkins-ci.org/">Jenkins</a>. I setup a separate cloud instance just to run the Continuous Integration server. I find this approach easier to manage but you could always run this locally if you prefer. The Jenkins folk provide very up to date <a href="http://pkg.jenkins-ci.org/debian/">packages for Debian</a> so I chose to use those.</p>
-<h3>Plugins</h3>
-<p>Jenkins provides a huge number of optional plugins which enable various additional features. Plugins are installed via the web interface at /pluginManager. I&#8217;ve installed:</p>
-<ul>
-	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Cobertura+Plugin">Jenkins Cobertura Plugin</a></li>
-	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Jenkins <span class="caps">GIT</span> plugin</a></li>
-	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Github+Plugin">GitHub plugin</a></li>
-	<li><a href="http://wiki.hudson-ci.org/display/HUDSON/Green+Balls">Green Balls</a></li>
-	<li><a href="http://wiki.hudson-ci.org/display/HUDSON/Violations">Hudson Violations plugin</a></li>
-</ul>
-<p>Only the Git plugin is really required for what I&#8217;m doing with deployment. Cobertura and Violations are code quality metrics tools that I use to record output from pylint and code coverage for my test suite.</p>
-<h2>The Source</h2>
-<p>My finished project was already on GitHub in a private repository. I&#8217;m using a requirements.txt file to record python dependencies so I can use pip to install them automatically and I&#8217;m using Virtualenv to sandbox this installation. I&#8217;m also using South to manage my database schema changes. I won&#8217;t go into that here as it&#8217;s pretty Python specific, Rails for instance has Active Record migrations, <span class="caps">RVM</span> and Bundler which do pretty much the same job. <span class="caps">PHP</span> has <span class="caps">PEAR</span> and some of the frameworks offer a migration tool.</p>
-<p>I then created two projects in Jenkins:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiRywEM" alt="Jenkins dashboard"/></p>
-<h3>Project 1: Vagrantboxes</h3>
-<p>This is the main build of my master branch in Git. As well as setting up the Git repo as shown below I&#8217;ve set a polling schedule to */5 * * * * (that&#8217;s every 5 minutes) and also set Trigger builds remotely so I can have a task in my fabfile which triggers a build immediately.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjh2gEM" alt="Git config for Jenkins"/></p>
-<p>I then have two build steps, both of which execute shell commands. The first installs any new requirements via pip:</p>
-<pre>bash -l -c "source bin/activate; pip install -r requirements.txt"</pre>
-<p>The second runs my test suite and generates the <span class="caps">XML</span> output required to show the test results in Jenkins:</p>
-<pre>bash -l -c "source bin/activate; cd vagrantboxes/configs/common; python manage.py jenkins boxes"</pre>
-<p>I&#8217;m using the rather handy <a href="https://github.com/kmmbvnr/django-jenkins">Django Jenkins</a> application for this.</p>
-<p>So far so good. This gives us a project that, when we push some changes to GitHub, will pull those changes down to the CI server and run our test suite, giving us feedback as to whether the tests pass or fail.</p>
-<p>Now for the trick, in Post-build Actions tick Build other projects and specify the name of another project that we&#8217;ll setup next. Mine is called Vagrantboxes-deploy.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRirwwEM" alt="Post build action in Jenkins"/></p>
-<h3>Project 2: Vagrantboxes-deploy</h3>
-<p>This project is triggered only when the previous project runs successfully. And all it&#8217;s going to do is run the deployment script on the project we just built. The setup for this project is very simply, it has one build step which just executes the following:</p>
-<pre>bash -l -c "cd /var/lib/jenkins/jobs/Vagrantboxes/workspace; source bin/activate; fab appserver deploy"</pre>
-<p>The specifics of the Fabric script here aren&#8217;t that important but I&#8217;m doing something not too disimilar to <a href="http://morethanseven.net/2009/07/27/fabric-django-git-apache-mod_wsgi-virtualenv-and-p.html">what I described here</a>.</p>
-<p>The reason I&#8217;ve setup a separate project for these is so I can, if I choose, trigger a deployment separately to the full build, and also so I can very easily disable deployments even if the main build is still running.</p>
-<h2>Conclusions</h2>
-<p>With this setup whenever I push code to master it triggers a build. If the test suite passes it runs the deployment script and pushes out the code to the live web servers. This suites me and this project but you might find it easier to start by pushing all successfull builds out to a staging environment. And maybe then moving on to having a new project which is only triggered manually for deploying to production.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiqwwEM" alt="project view in Jenkins"/></p>
-<p>This setup has other advantages too. The Jenkins dashboard becomes a handy tool for recording deployment events. You can easily setup emails or IM messages or Campfire posts to alert other team members whenever a deployment happens. And it really really makes sure your delployment scripts work without hand holding.</p>
-<p>This is a simple project that I&#8217;m working on on my own, but in a team environment you&#8217;d likely have a more complex branching strategy and more Jenkins projects. You might also introduce some gateways for manual testing but the starting point is the same. Jenkins makes archiving successful build artifacts relatively easy as well, this setup has a few race condition possibilities that you can fix by building artifacts from successful builds. Jenkins also supports building from different branches and having different branches trigger different projects, all handy if you want to grow this kind of setup.</p>
   </div>
   
 </div>

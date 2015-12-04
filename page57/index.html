@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/02/04/webdd/">
+        WebDD
+      </a>
+    </h1>
+
+    <span class="post-date">04 Feb 2007</span>
+
+    <p>Just back from <a href="//webdd.org.uk">WebDD</a> down in Reading at the Microsoft Campus and thought I&#8217;d post a few thoughts. I&#8217;ll get into a few of these topics in more detail down the line when time permits but for now&#8230;</p>
+ <p>I went to a few talks, one on Microformats by <a href="http://www.glennjones.net">Glenn Jones</a> and the other on web standards design by <a href="http://www.splintered.co.uk">Patrick Lauke</a> that I enjoyed but didn&#8217;t learn much. I wasn&#8217;t the intended audience really and I&#8217;d gone along because I didn&#8217;t fancy the alternatives. Both were entertaining and well attended anyhow, and I&#8217;m sure the more developer orientated folk got a lot out of both.</p>
+ <p>The main two things I came away thinking about however were the upcoming version of <a href="http://msdn2.microsoft.com/en-us/vstudio/aa700830.aspx">Visual Studio</a> (codename &#8220;Orcas&#8221;) and Microsofts new identity platform <a href="http://cardspace.netfx3.com/">CardSpace</a></p>
+ <p>Now I&#8217;m not generally a fan of IDEs, but someone has been thinking <em>alot</em> about how Visual Studio (and the new Expression Web) can be of use to web designers. Some of the <span class="caps">CSS</span> tools are very cool, I might do some screenshot from Expression (we all got free copies) if I get the chance. Their has also been a huge effort to integrate Javascript functionality, including full debugging and breakpoint support as well as intelissense. All of which looks really rather nice.</p>
+ <p>According to Microsoft <q><a href="http://cardspace.netfx3.com/">Windows CardSpace</a> enables users to provide their digital identities in a familiar, secure and easy way.</q> Which should have alarm bells going off and (bad) memories of Passport flooding back. I went in not knowing much and in quite a sceptical mood, assuming the worst. Turns out I was wrong. The presentation, by <a href="http://www.idunno.org/">Barry Dorrans</a>, covered quite a bit of ground from an introduction, through code and working examples and even a big discussion of the issue of identity and <a href="http://openid.net/">OpenID</a> in particularly. I&#8217;m suprised that I haven&#8217;t seen any mention of CardSpace along with the recent rise in discussion around identity and OpenID. More on this soon.</p>
+ <p>One last thing on the WebDD site caught my eye: <q>around 350 people with a 50/50 split of web developers and web designers</q>. In reality I think about 20 of us registered as designers which amused me. Microsoft doesn&#8217;t (yet) have a pull over designers as it does over developers. More on that too when I get my thoughts in order.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/02/01/experiment-over/">
         Experiment over
       </a>
@@ -217,22 +234,6 @@ if (empty($buffer)) {
 ?&amp;gt;</code></pre>
 <p>Obviously you could do more with the return than print out a success or failure message. The $buffer variable has the returned <span class="caps">XML</span> or <span class="caps">JSON</span> for you&#8217;re parsing pleasure.</p>
 <p>I&#8217;m going to try out some of the other <span class="caps">API</span> methods too, probably play more with <span class="caps">XSL</span> or look more closely at the <a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198"><span class="caps">PEAR</span> <span class="caps">JSON</span> module</a> in building up a simple library as a quick search didn&#8217;t throw up much of interest and the <span class="caps">API</span> is nice and simple; making it fun to hack on.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/01/17/colorburnified/">
-        Colorburnified
-      </a>
-    </h1>
-
-    <span class="post-date">17 Jan 2007</span>
-
-    <p>If you visited the site previously since the Radiant move you might notice a new colour scheme. Come to mention it if you visit tomorrow, or the day after you should get a different colour scheme too.</p>
- <p>I mentioned that I planned on a few experiments around these parts and this is the first one. I&#8217;m a big fan of <a href="http://www.firewheeldesign.com/widgets/">ColorBurn</a> from <a href="http://www.firewheeldesign.com/">Firewheel</a>. For those that haven&#8217;t seen it it&#8217;s a desktop widget that displays a new four colour colour scheme every day that looks a little something like:</p>
- <p><img src="http://morethanseven.net/_assets/media/imgColorBurn.jpg" alt="ColorBurn OS X Widget" /></p>
- <p>I often use it for inspiration for colour sets, or just to appreciate interesting colour combinations. This just takes it a step further. A little reverse engineering and I have a script (<span class="caps">PHP</span> this time, running from a cron job) that writes out a new stylesheet once every day with the colours from ColorBurn (using the magic of <span class="caps">XSL</span> if you&#8217;re interested). I&#8217;ve used an alpha transparency on the image to the top left of the page which might result in strange effects in browsers that I dont care about too much. Sorry, but I did warn you.</p>
- <p>I have a feeling that some days I&#8217;ll wake up and regret this experiment and others I&#8217;ll be pleasantly suprised. I&#8217;m not going to cheat either. ColorBurn provides me with four colours and the script will use them in the order they come in.</p>
   </div>
   
 </div>

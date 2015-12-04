@@ -68,6 +68,41 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/01/02/commented-on-follow-up/">
+        @Commented-on Follow up
+      </a>
+    </h1>
+
+    <span class="post-date">02 Jan 2006</span>
+
+    <p>Since the <a href="http://morethanseven.net/posts/commented-on">brief discussion</a> based around <a href="http://www.ben-ward.co.uk">ben&#8217;s</a> original idea for using <a href="http://del.icio.us">del.icio.us</a> to track comments you have made on other blogs I&#8217;ve been having a play.</p>
+ <p>The main issue that people saw was simplicity, which I see falling under two headings:</p>
+<ul>
+ <li>Ideally it should just happen. If you comment somewhere (and opt in, obviously) you browser or online service should keep a track and give you access to this data. This would require changes to existing blogs and in particular the common software like <a href="http://www.textpattern.com">textpattern</a> or <a href="http://wordpress.org">the other one</a></li>
+  <li>Saving that for later, a simple one click service which does not get in the way and achieves the same thing should be suitable.</li>
+</ul>
+ <p>It&#8217;s the later that I&#8217;ve been playing with and thought I&#8217;d present here in it&#8217;s early stages. The plan is as follows:</p>
+<ul>
+ <li>A <a href="http://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a> collects the data from the page (title and url) and sends it to an intermediary page, rather than del.icio.us.</li>
+  <li>The intermediary page prompts for a username and password (<span class="caps">HTTP</span> authentication) and adds the post to del.icio.us automatically.</li>
+  <li>The page is then either closed or redirected back to the page from whence the request came.</li>
+</ul>
+ <h3>The bookmarklet</h3>
+ <p>The bookmarklet section is simple enought modifications of the existing del.icio.us bookmarklets. See the download at the end of this post for details.</p>
+ <h3>Intermediary</h3>
+ <p>The intermediary page uses <span class="caps">HTTP</span> authentication to ask for a del.icio.us username and password (note that I&#8217;m not storing these at all, or for that matter at present checking if they are correct.) This needs only happen the first time you use the page if you use your browser to store the details or once per browser session otherwise.</p>
+ <p>The page then makes a request to the <a href="http://del.icio.us/help/api/">del.icio.us <span class="caps">API</span></a> using the lovely <span class="caps">PHP</span> library from <a href="http://dietrich.ganx4.com/delicious/">dietrich.ganx4.com/delicious/</a></p>
+ <h3>Return</h3>
+ <p>On a failed request the page reports that an error has occured (I&#8217;ll expand on this with more pertinent error messages as time permits.)</p>
+ <p>On success however we have two options, depending on the bookmarklet used. The default is to close the page down, with an alternative beiong to redirect back to the refering page. We do however run into a slight problem here with Firefox. Our favourite browser will only allow windows to be closed via javascript if they where opening by a script (<span class="caps">NOT</span> including our bookmarket). Internet Explorer has a similar set up where it prompts the user for an action, although a <a href="http://www.guyfromchennai.com/?p=18">simple fudge</a> get&#8217;s us around that one. At the moment therefore the close window bookmarklet is of limited usage for Firefox users.</p>
+ <h3>Future</h3>
+ <p>This could quite easily be expanded for use on a blog as the requests are simple <span class="caps">HTTP</span> requests with query string parameters. However the security implications of giving out your username and password would likely limit this approach. I&#8217;m going to look into the sending of bookmarks to others that ben mentioned and see if that can be used here &#8211; as hopefully that may only require you to give out your username. A service like <a href="http://www.gravatar.com/">gravatar</a> could then be used to do lookups between email addresses and del.icio.us usernames and away we go.</p>
+ <p>Any thoughts, comments or suggestions welcome. And feel free to try out the bookmarklets. I&#8217;ve included a handy download below including a quick readme and the bookmarklets.</p>
+ <p><a href="http://morethanseven.net/commented-on/commented-on.zip">download @Commented-on pack</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2005/12/27/obligatory-next-year-post/">
         Obligatory next year post
       </a>
@@ -157,23 +192,6 @@
  <p>As well as all the obvious things everyone will be up to I always try and have some sort of computer project on the go. Something I can have a proper run at over the festive period. New language. Application. New site. You get the idea.</p>
  <p>I&#8217;m intrigued to see if that&#8217;s just me? Is everyone else thinking &#8220;No computer for a week!&#8221; or similar? Or has anyone got any exciting projects on the go, and fancy letting us in on a little secret.</p>
  <p>Needless to say I&#8217;ll have more on what I&#8217;m up to nearer the time but obviously it will start in <a href="http://momb.socio-kybernetics.net/">beta</a> and if I&#8217;m really pushing the boat out I&#8217;ll set up an AJAXified sign up page and maybe an <a href="http://measuremap.com/">invitation only</a> period. I might just be mocking others here but maybe not, time will tell.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2005/12/04/tips-for-fluid-design-ii/">
-        Tips for fluid design II
-      </a>
-    </h1>
-
-    <span class="post-date">04 Dec 2005</span>
-
-    <p>A while back I decided to jot down a couple of practical, simple techniques that have served me well when actually building fluid designs.</p>
- <p>One of the situations that often comes up is the need to make an elements width vary. This is no problem when that element is a block level element (say a div or a paragraph) as unless you tell them otherwise their width willl vary with the space available. However, when it comes to graphics this can be a problem. After all, these will (probably) have been designed with a fixed size in mind.</p>
- <p>Their are a couple of possible solutions here, both useful in different circumstances. However, both rely on the image itself to some extent.</p>
- <p>The sometimes obvious method is using the <span class="caps">CSS</span> <em>background</em> rules, the image wont actually be part of the page and so wont take up any space, the size of the image can then be controlled by the size of the element (say a div) on which the background image is placed. This works but has a couple of ugly side effects &#8211; if the image is content based (ie. it carries some sort of important message rather than being just for it&#8217;s asthetic attributes) then placing it in the <span class="caps">CSS</span> removes it from the page completely, not good for those without <span class="caps">CSS</span> support. Another consequence is in site management. Having content imagery in the <span class="caps">CSS</span> can make life a little tricky.</p>
- <p>The second approach involves using the <span class="caps">CSS</span> overflow property. By wrapping the inline image with a container (again, maybe a div) and assigning this an <em>overflow: hidden</em> we can control the viewable area of the image by controlling the size of the surrounding div (with <span class="caps">CSS</span>, natch). An example of this can be seen on these pages, with the favourite sites and flickr images. Resize the window. These images should expand to fill the available space.</p>
- <p>OK, so we have added some additional markup to the page, depending on your feelings on this that solution may be fine. Want to go a bit further? What about assigning a class to the image and using some nifty <span class="caps">DOM</span> scripting to add in the additional markup?</p>
   </div>
   
 </div>

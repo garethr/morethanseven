@@ -68,6 +68,34 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/06/04/testing-wsgi-application-urltest/">
+        Testing WSGI Application with Urltest
+      </a>
+    </h1>
+
+    <span class="post-date">04 Jun 2009</span>
+
+    <p>I found myself wanted something to make writing high level, functional tests for <span class="caps">WSGI</span> application easier and quicker. If I liked the term I&#8217;d call it a domain specific language for testing URLs. Basically I found myself writing a lot of tests like:</p>
+<pre>def test_404_handler(self):  
+    response = self.app.get('/does-not-exist', expect_errors=True)        
+    self.assertEquals("404 Not Found", response.status)</pre>
+<p>Testing more than a view URLs like this got boring quickly. What I wanted was a short hand syntax for defining this sort of simple test and then running them all individually. So was born <a href="http://github.com/garethr/urltest/tree/master">Urltest</a>. It uses the rather nifty <a href="http://pypi.python.org/pypi/WebTest/0.9">Webtest</a> module and hooks into unittest from the standard library. You&#8217;re test script then looks a little like:</p>
+<pre>#!/usr/bin/env python
+from example_app import application
+from urltest import verify_urls
+if __name__ == "__main__":
+    urls = (
+        {'url':"/", 'code':200},
+        {'url':"/bob", 'code':200},
+        {'url':"/jim", 'code':404},
+        {'url':"/jim", 'method': "POST", 'code':405},
+    )    
+    verify_urls(urls, application)</pre>
+<p>Let me know if you use it as at the moment this is <em>works for me</em> ware, although it&#8217;s reasonably well tested and commented.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/05/28/another-glue-python-framework-mnml/">
         Another Glue Python Framework - MNML
       </a>
@@ -185,21 +213,6 @@ application = TokenBasedApplication(routes)</pre>
 <p>The highlights for me so far I think has been Dan Lyons talking about the future of media and print businesses. Basically a somewhat rambling attempt to describe where newspapers and print publications find themselves in this day and age (in trouble) and where they might head for salvation (either dumbing down or becoming more exclusive/expensive). Throw in interesting stories and anecdotes, the odd joke and some personal thoughts on the future for journalists and everyone&#8217;s happy.</p>
 <p>An honorable mention goes to Johnny Lee Chung as well for showing off drag and drop between a laptop and a table. Oh, and everything else has been pretty interesting as well and it&#8217;s not even the end of day one yet.</p>
 <p>I&#8217;m around until next week too, which means I should be able to get along to barcamp &#8211; assuming my mind hasn&#8217;t melted with all the stuff to take in.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/04/27/keeping-zeldmans-self-education-web-professionals/">
-        Keeping Up With The Zeldmans - (Self) Education for Web Professionals
-      </a>
-    </h1>
-
-    <span class="post-date">27 Apr 2009</span>
-
-    <p>So, it was the <a href="http://www.bamboojuice.co.uk/">Bamboo Juice</a> conference last Friday at the rather impressive Eden project in Cornwall. Along with <a href="http://adactio.com">Jeremy</a>, <a href="http://www.thehodge.co.uk/">Dom</a>, <a href="http://boagworld.com/">Paul</a> and <a href="http://www.scatteredpoppies.com/">Relly</a> I presented to the crowd of mainly local first time web conference goers.</p>
-<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=selfeducationforwebprofessionals-090427034436-phpapp02&stripped_title=self-education-for-web-professionals" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=selfeducationforwebprofessionals-090427034436-phpapp02&stripped_title=self-education-for-web-professionals" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
-<p>It was a great event, and felt a lot like the first Highland Fling in that it was the first big event in an area that&#8217;s actually quite a distance from the bright lights of London (it took 8 hours to get back to Cambridge). The party afterwards, held in one of the biomes at the Eden project itself, was also pretty impressive.</p>
-<p>I&#8217;ll hopefully right up some of my notes from the presentation soon, but for the moment I&#8217;ve <a href="http://www.slideshare.net/garethr/self-education-for-web-professionals">uploaded the slides to Slideshare</a>. The whole thing was video&#8217;d as well so look out for those in the future.</p>
   </div>
   
 </div>

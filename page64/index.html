@@ -68,6 +68,29 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/07/25/yui-lovin/">
+        YUI lovin
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jul 2006</span>
+
+    <p>I&#8217;m working on some redesign work for one of my under maintained sites at the moment, with something of a redesign in the works. It seemed a good opportunity to play more with <a href="http://developer.yahoo.com/yui/"><span class="caps">YUI</span></a>, the Yahoo User Interface Library, which I&#8217;d had a peak at before and heard nice things about (sorry, I like the long namespaces).</p>
+ <p>I&#8217;ve nothing finished yet past a proof of concept, but I thought a couple of lines of javascript wouldn&#8217;t go a miss. Nothing fancy mind, just some nice bits I like so far.</p>
+ <p>The case in point was wanting to add event handlers to an unknown number of links within an unordered list.</p>
+ <p>First off a quick, clever, one liner. <em>onAvailable</em> checks for the availability of the object (if you remove the quotes) or an object with a specified id in this case. It executes the callback function, <em>init</em> in this case, when the condition is true.</p>
+<div><code>YAHOO.util.Event.onAvailable("iList", init);</code></div>
+ <p>Moments later we have events added to all the links.</p>
+<div><code>&lt;pre&gt;
+function init() {
+   var links = document.getElementById("iList").getElementsByTagName("A");
+   YAHOO.util.Event.addListener(links, "click", clickCallback);
+}&lt;/pre&gt;</code></div>
+ <p>Again you just throw in whatever you happen to be working with (in this case an array returned by <em>getElementsByTagName</em>) and everything just gets dealt with. I originally had a <em>for</em> loop, iterating over the links and adding events, then I worked out <span class="caps">YUI</span> just did it all for me if I let it. I like that. I <strong>could</strong> have done it myself. <span class="caps">YUI</span> would have let me and not complained. But if I want to delve a bit I can find cool, quick, clean ways of doing the same thing. I refactored my code, with the help of <span class="caps">YUI</span> in ten minutes. I like that, but I think I said that.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/07/19/more-dconstruct-craziness/">
         More dConstruct craziness
       </a>
@@ -147,21 +170,6 @@
  <p>However, a code of ethics, more a stamement of intent from professional to professional, strikes me as a really good idea. It&#8217;s easy to forget that it can be difficult when learning (and aren&#8217;t we always learning in this job?) to really get down to best practice. It can be difficult to just do it at times, never mind do it <em>properly</em> what ever that means.</p>
  <p>After reading on the comments I was feeling pretty good, and a few from the bottom I was thinking, I&#8217;ll set up a wiki, as suggested. Well, <a href="http://www.meriwilliams.com">Meri</a> got their first so good job Meri, it keeps it in Newcastle any how. <a href="http://www.meriwilliams.com/ethics/index.php?title=Main_Page">Head over there now</a>, it&#8217;s fairly light on content at the moment but I guess that is the point of this point.</p>
  <p>What do other people think of this anyhow? Now I need to find some time. Or rather more time. I love being all enthusiastic, if only I found the time! I&#8217;m going to have to cut down on sleep, and I so like sleep.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/06/22/ie-7-readiness-toolkit/">
-        IE 7 Readiness toolkit
-      </a>
-    </h1>
-
-    <span class="post-date">22 Jun 2006</span>
-
-    <p><a href="http://blogs.msdn.com/ie/archive/2005/03/09/391362.aspx">Chris Wilson</a>, during his <a href="http://vivabit.com/atmedia2006">@media</a> presentation mentioned in passing the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=D13EE10D-2718-47F1-AA86-1E32D526383D&#38;displaylang=en">IE 7 Readiness Toolkit</a>. This vaguely uninspiring title hides a very nice collection of essential tools for discerning web developers on Windows.</p>
- <p><a href="http://poisonedminds.com/comics/pm20060621.png">IE is painful</a> we already know that. We have a large number of tools available in Firefox to help us out, but sometimes you need to go to the source. Along with a nice <del>rip off</del> <ins>implementation</ins> of a web developer toolbar, it also put me onto <a href="http://www.fiddlertool.com/fiddler/">the Fiddler</a> (what is it about these names) which is an <span class="caps">HTTP</span> Debugging proxy. What? Well it sits next to IE and monitors all <span class="caps">HTTP</span> traffic, allowing you to find out exactly what&#8217;s going on. Very handy indeed, and worth running just to see what&#8217;s really going on, especially in Ajax land.</p>
- <p>A couple of other interesting tools are included that I&#8217;ve not had a look at yet, the Expression Finder looks particularly interesting. It basically tracks down any hacks in your files and tells you off.</p>
- <p>All in all a good move from Microsoft. What with <a href="http://opensearch.a9.com/">Open Search</a> being integrated into IE 7 as well, and <span class="caps">RSS</span> maybe reacing a tipping point eventually (Non geeks will believe my predictions one day) things might be looking up.</p>
   </div>
   
 </div>

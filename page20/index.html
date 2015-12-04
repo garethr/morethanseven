@@ -68,6 +68,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/03/19/Static-generator-for-web-services/">
+        Static Generator For Web Services
+      </a>
+    </h1>
+
+    <span class="post-date">19 Mar 2010</span>
+
+    <p>My latest <em>on a train</em> project is <a href="http://github.com/garethr/Dumper">Dumper</a>, a static generator for web services. I&#8217;m a huge fan of <a href="http://nanoc.stoneship.org/">Nanoc</a> and tools like <a href="http://github.com/mojombo/jekyl">Jekyl</a> for building websites. But I spend at least as much time building small webservicds. I wanted something super simple that would let me expose data I had access to as a read only web service.</p>
+<p>At the moment that means using a mysql database, specifying a <span class="caps">SQL</span> query and running a python script. Hey presto you have lots and lots of <span class="caps">XML</span> and <span class="caps">JSON</span> files representing your data. Dumper provides hooks for you to customise the ourput or even overide the database layer. It should be possible if you were so inclined to replace the mysql backend with another database, or other type of data store. Hopefully some of these might end up in my branch at a later date.</p>
+<p>At a basic level all you need is a config file which looks a little like:</p>
+<% syntax_colorize :ini, type=:coderay do %>
+[Dumper]
+path: people
+index: id
+backend: mysql
+
+[Database]
+sql: SELECT id, name FROM people
+host: localhost
+username: root
+password:
+database: dumper
+<% end %>
+<p>And then run a command line application against that file:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+dumper -c people.ini dump
+<% end %>
+<p>The application supports a number of flags for specifying where you want the files to be generated, what your config file is called and to clean up any generated files if you want to try again. The output will let you know which files have been updated, which deleted and which added too. If you&#8217;d rather have a single file but with all your records in then that&#8217;s easy too &#8211; just add something to the config file.</p>
+<p>It&#8217;s somewhat early days for Dumper, and I&#8217;ve not seen anything similar so their are definately some rough edges that could do with some work. All of that will really come down to how much use it gets. I&#8217;d appreciate any feedback from anyone with a similar itch to scratch too.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/03/08/Piston-and-sanitising-json-callbacks/">
         Piston And Sanitising Json Callbacks
       </a>
@@ -167,18 +200,6 @@ Feature: localhost
 	<li>Use my own domain name</li>
 </ul>
 <p>I have a sneaking suspicion what I might be thinking about is a private tumblr blog used as a datasource for <a href="http://nanoc.stoneship.org/">Nanoc3</a>. But that relies on me having the time to build that as I can&#8217;t find anyone who might have written such a think. Maybe one day.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/02/11/djugl-february/">
-        DJUGL February
-      </a>
-    </h1>
-
-    <span class="post-date">11 Feb 2010</span>
-
-    <p>The next Django User Group London is in two weeks time. You can register over on <a href="http://londonpython.eventwax.com/djugl-february">Eventwax</a>. So far we have <a href="http://intranation.com">Brad</a> talking with more speakers to be announced shortly. Hope to see a few people there.</p>
   </div>
   
 </div>

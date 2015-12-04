@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Provisioning droplets with Puppet &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Provisioning droplets with Puppet</h1>
+  <span class="post-date">04 Dec 2015</span>
+  <p>I love <a href="https://www.digitalocean.com/">DigitalOcean</a> for quickly spinning
+up machines. I also like managing my infrastructure using Puppet. Enter the
+<a href="https://forge.puppetlabs.com/garethr/digitalocean">garethr-digitalocean</a> module.
+This currently provides a single Puppet type; <code>droplet</code>.</p>
+
+<p>Lets show a quick example of that, by launching two droplets, called
+test-digitalocean and test-digitalocean-1.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">droplet</span> <span class="p">{</span> <span class="p">[</span><span class="s">&#39;test-digitalocean&#39;</span><span class="p">,</span> <span class="s">&#39;test-digitalocean-1&#39;</span><span class="p">]:</span>
+  <span class="na">ensure</span> <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">region</span> <span class="o">=&gt;</span> <span class="s">&#39;lon1&#39;</span><span class="p">,</span>
+  <span class="na">size</span>   <span class="o">=&gt;</span> <span class="s">&#39;512mb&#39;</span><span class="p">,</span>
+  <span class="na">image</span>  <span class="o">=&gt;</span> <span class="mi">14169855</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>With the above manifest saved as <code>droplets.pp</code> we can run it with:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ puppet apply --test droplets,pp
+</code></pre></div>
+<p>This will ensure those two droplets exist in that region, and have that
+size. If they don&#39;t exist it will launch droplets using the specified image.
+This means we can run the same command again, and rather that create
+more instances it will simply report that we currently have those
+droplets already.</p>
+
+<h2>Querying resources</h2>
+
+<p>Puppet also comes with <code>puppet resource</code>, a handy way of querying the
+state of a given resource or type. Running the following will list all
+of your droplets, whether you created them using Puppet or not.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ puppet resource droplet
+droplet { &#39;test-digitalocean&#39;:
+  ensure              =&gt; &#39;present&#39;,
+  backups             =&gt; &#39;false&#39;,
+  image               =&gt; &#39;14169855&#39;,
+  image_slug          =&gt; &#39;ubuntu-15-10-x64&#39;,
+  ipv6                =&gt; &#39;true&#39;,
+  price_monthly       =&gt; &#39;10.0&#39;,
+  private_address     =&gt; &#39;10.131.98.186&#39;,
+  private_networking  =&gt; &#39;true&#39;,
+  public_address      =&gt; &#39;178.62.25.100&#39;,
+  public_address_ipv6 =&gt; &#39;2A03:B0C0:0001:00D0:0000:0000:0090:B001&#39;,
+  region              =&gt; &#39;lon1&#39;,
+  size                =&gt; &#39;1gb&#39;,
+}
+</code></pre></div>
+<h2>Mutating resources</h2>
+
+<p>The type also supports mutating droplets, for instance changing the
+size of a droplet if you change the model in Puppet. The API client
+doesn&#39;t support all possible changes, but you can disable backups, enable
+IPv6 and switch on private networking as needed. Here&#39;s a quick sample
+of the output showing this in action.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Info: Loading facts
+Notice: Compiled catalog for gareths-macbook.local in environment production in 0.43 seconds
+Info: Applying configuration version &#39;1449225401&#39;
+Info: Checking if droplet test-digitalocean exists
+Info: Powering off droplet test-digitalocean
+Info: Resizing droplet test-digitalocean
+Info: Powering up droplet test-digitalocean
+Notice: /Stage[main]/Main/Droplet[test-digitalocean]/size: size changed &#39;1gb&#39; to &#39;512mb&#39;
+Error: Disabling IPv6 for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/ipv6: change from true to false failed: Disabling IPv6 for test-digitalocean is not supported
+Error: Disabling private networking for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/private_networking: change from true to false failed: Disabling private networking for test-digitalocean is not supported
+Info: Checking if droplet test-digitalocean-1 exists
+Info: Created new droplet called test-digitalocean-1
+Notice: /Stage[main]/Main/Droplet[test-digitalocean-1]/ensure: created
+Info: Class[Main]: Unscheduling all events on Class[Main]
+Notice: Applied catalog in 60.61 seconds
+</code></pre></div>
+<h2>But why?</h2>
+
+<p>Describing your infrastructure at this level in code has several advantages:</p>
+
+<ul>
+<li>Having a shared model of your infrastructure in code allows for a discussion
+around that model</li>
+<li>You can be convident in the model because of the idempotent nature of running
+the code</li>
+<li>The use of code for this model allows for activities like code review, change
+control based on pull requests, unit testing, user created abstrations and more</li>
+<li>The use of Puppet means you can use it as above as a command line interface, or
+run it every period of time to enfore and report on the state of you infrastructure</li>
+<li>Puppet ecosystem tools like PuppetDB, Puppet Board or Puppet Enterprise mean you can
+store data over time for later analysis</li>
+</ul>
+
+<p>The module also acts as a reasonable example of a simple Puppet type and provider.
+If you&#39;re interested in extending Puppet for your own services this is hopefully a
+good place to start understanding the API.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/09/20/security-implications-of-unikernels/">
+            Some Security Implication of Unikernels
+            <small>20 Sep 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/08/21/operating-unikernel-challenges/">
+            A Discussion of The Operational Challenges With Unikernels
+            <small>21 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/08/20/puppet-module-skeleton-updates/">
+            Update to Puppet Module Skeleton
+            <small>20 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

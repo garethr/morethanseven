@@ -106,7 +106,8 @@ used <a href="http://kitchen.ci/">Test Kitchen</a> and
 virtual machines (one for each supported operating system), applying the
 Puppet manifest and then making some assertions:</p>
 
-<script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script></p>
 
 <p>The above is simply checking whether certain packages are installed, the
 PPA is setup correctly and whether <code>mirage</code> and <code>opam</code> can be executed
@@ -119,7 +120,8 @@ resulting software allows us to build MirageOS unikernels. For this I
 used <a href="https://github.com/sstephenson/bats">Bats</a> running in the same
 Test Kitchen setup.</p>
 
-<script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script></p>
 
 <p>The above configures and builds a simple HTTP server unikernel, and then
 checks that when run it returns the expected response on the correct
@@ -145,6 +147,15 @@ suite for people to verify their installation works.</p>
     
       <li>
         <h3>
+          <a href="/2015/12/04/provisioning-droplets-with-puppet/">
+            Provisioning droplets with Puppet
+            <small>04 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/2015/09/20/security-implications-of-unikernels/">
             Some Security Implication of Unikernels
             <small>20 Sep 2015</small>
@@ -157,15 +168,6 @@ suite for people to verify their installation works.</p>
           <a href="/2015/08/21/operating-unikernel-challenges/">
             A Discussion of The Operational Challenges With Unikernels
             <small>21 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2015/08/20/puppet-module-skeleton-updates/">
-            Update to Puppet Module Skeleton
-            <small>20 Aug 2015</small>
           </a>
         </h3>
       </li>
