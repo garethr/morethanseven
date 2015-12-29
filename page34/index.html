@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/05/hosting-images-app-engine/">
+        Hosting Images on App Engine
+      </a>
+    </h1>
+
+    <span class="post-date">05 Feb 2009</span>
+
+    <p>I like adding images to the occasional blog post but don&#8217;t do it as often as I want to. The reason being I can hardly ever be bothered to resize images. It means opening up a memory hogging application, fiddling around for a few minutes and then saving it out somewhere, then uploading said image to my server. All of those things bore me.</p>
+<p>Appengine to the rescue. As an excuse to play around with the <a href="http://code.google.com/appengine/docs/python/images/overview.html">image <span class="caps">API</span></a> as well as add more pictures to this here blog I decided to build myself a small image hosting application. I really only care about the two things noted above; resizing and uploading. If I can do that in one go I&#8217;m happy.</p>
+<p>A couple of train rides (all the best code gets written on train journeys, fact) later and I&#8217;ve deployed the first version of Image Host which looks a little something like this:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRjtBww" alt="Image Hosting interface on Google App Engine"/></p>
+<p>(And yes that image is an image of image-host hosted on image-host. If you&#8217;re thinking <em>what image?</em> then it means this experiment isn&#8217;t working at the moment.)</p>
+<p>The application is designed in such a way as you could have as many people uploading and managing their own set of images as you want, all within one instance. The only reason I don&#8217;t just open it up to any google user account is that it would eat into my quotas if it got popular and I have no interest in policing whatever dubious images anyone might upload.</p>
+<p>I&#8217;ve been playing with App Engine quite extensively of late. I really appreciate the <span class="caps">SDK</span> and the limited, but well designed and thought out APIs and testing stubs. At the moment I&#8217;m happy with where it&#8217;s at. It&#8217;s obviously early days but in my mind all I really want are APIs for offline processing, some sort of message queuing facility, <span class="caps">XMPP</span> support and a payment model for raising the limitations. And several of those are already slated for the near future.</p>
+<p>If anyone wants to host their own version you can grab the code from <a href="http://github.com/garethr/appengine-image-host/tree/master">GtHub</a>. You&#8217;ll need your own App Engine account and your own snappy name but that&#8217;s all. If you really don&#8217;t want to do that, have a good reason to needing image hosting and ask nicely I might add more people to my version as well.</p>
+<p>Their are a few bugs I&#8217;m going to fix when I get a moment,  a few documented limitations I know about and I&#8217;m still fleshing out the test suite to cover all the functionality. But all in all a worthwhile few hours spent hacking. I&#8217;ll probably get round to writing up some pointers for testing App Engine code as well as their are a host of gotchas and the only real documentation at present is comments in the code.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/02/pep-374/">
         PEP 374
       </a>
@@ -147,52 +167,6 @@ if __name__ == "__main__":
      6 f3dd9b remove a ticket           open  03/22 schacon  feature,ticket      
      7 e1629e improved cli support      open  03/22 schacon  cli,feature   </pre>
 <p>Perfect for my pet projects or working with like minded folk.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/24/defence-apache-ant/">
-        In Defence of Apache Ant
-      </a>
-    </h1>
-
-    <span class="post-date">24 Jan 2009</span>
-
-    <p>I&#8217;m a big fan of the <a href="http://ant.apache.org/">Ant</a> build tool. Their I said it. Nearly everyone else I end up talking to about build scripts (more people that you&#8217;d think, but OK, it&#8217;s hardly the most exciting topic of conversation) either hates it or treats it with disdain.</p>
-<p>I&#8217;ve been using it for a few years on and off, in several jobs and for personal projects as well. I&#8217;ve used it while writing Python, .<span class="caps">NET</span> and <span class="caps">PHP</span>. It might be somewhat unfashionable (it&#8217;s written in Java and you write your commands in <span class="caps">XML</span>) but, for me at least, it&#8217;s incredibly handy to have around.</p>
-<p>Ant is a build tool. It lets you define tasks in a config file (called build.xml) and then execute them via running the <em>ant</em> command line application. It supports dependencies between tasks as well as defining properties that can be used by multiple tasks. It supports a lot of Java specific stuff as well but also has the ability to simply execute commands on the host OS.</p>
-<p>As a really simple example of a few tasks I use on more than one project involve simple backups and deployment.</p>
-<p>First I set up a few properties including details of where my site files live and the <span class="caps">SSH</span> access details for the remote site.</p>
-<pre>&lt;property name="username" value=""/&gt;
-&lt;property name="host" value=""/&gt;
-&lt;property name="dir" value=""/&gt;</pre>
-<p>The first example task simply runs a backup of everything in the target directory using scp.</p>
-<pre>&lt;target name="backup" description="backup site" &gt;
-   &lt;exec executable="scp" dir="." failonerror="true"&gt;
-      &lt;arg value="-r"/&gt;
-      &lt;arg value="${username}@${host}:${dir}"/&gt;
-      &lt;arg value="backups/${TODAY_UK}"/&gt;
-   &lt;/exec&gt;
-&lt;/target&gt;</pre>
-<p>If I make local changes and want to push them to the live site I have another simple task which shells out to rsync.</p>
-<pre>&lt;target name="deploy" description="deploy usng rsync" &gt;
-  &lt;exec executable="rsync" dir="." failonerror="true"&gt;
-      &lt;arg value="-r"/&gt;
-      &lt;arg value="."/&gt;
-      &lt;arg value="${username}@${host}:${dir}"/&gt;
-      &lt;arg value="--exclude-from=rsync.excludes"/&gt;
-      &lt;arg value="-v"/&gt;
-  &lt;/exec&gt;
-&lt;/target&gt;</pre>
-<p>I know <a href="http://simonwillison.net">some people</a> hate this separate arguments as individual elements. Yes it&#8217;s excessively <span class="caps">XML</span> but it makes everything incredibly clear to anyone who might sneak a look. And build scripts change little compared to project code so the verbosity never bothers me overly. If you really want you can put everything on one line, but I find that harder to follow and maintain.</p>
-<pre>&lt;target name="deploy" description="deploy usng rsync" &gt;
-  &lt;exec executable="rsync" dir="." failonerror="true"&gt;
-      &lt;arg line="-r . "${username}@${host}:${dir} --exclude-from=rsync.excludes -v"/&gt;
-  &lt;/exec&gt;
-&lt;/target&gt;</pre>
-<p>For bigger projects I tend to create more complex backup and deployment tasks, or more often than not add in various dependencies. But you hopefully get the idea. Even for simple commands like this that would be a single line bash script I tend to use ant. I find by putting things together into a build script I&#8217;m more likely to add useful functionality to it later, and to remember and therefore run the commands more often.</p>
-<p>A good reference for finding out more than is in the <a href="http://ant.apache.org/manual/index.html">manual</a> is the <a href="http://wiki.apache.org/ant/FrontPage">Apache Ant Wiki</a>. More than anything it features real examples that you can learn from which with Ant is definitely the best way to discover new tricks.</p>
-<p>I know their are a number of other tools in languages I like more. On occasion I use <a href="http://rake.rubyforge.org/">Rake</a>, <a href="http://savannah.nongnu.org/projects/fab">Fabric</a> and <a href="http://www.capify.org/">Capistrano</a>. I&#8217;ve looked at <a href="http://www.zedshaw.com/projects/vellum/">Vellum</a> and good old make. I know others who swear by just writing simple bash scripts or using straight Ruby, <span class="caps">PHP</span> or Python (or not writing build scripts at all and doing everything by hand. But I like having my build scripts separate and simple. It might not be pretty or fashionable, but Ant does almost perfectly what I want it to do.</p>
   </div>
   
 </div>

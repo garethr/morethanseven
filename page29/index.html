@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/03/24/google-search-new-features-timeline-search-and-won/">
+        Google Search New Features? Timeline Search and Wonder Wheel
+      </a>
+    </h1>
+
+    <span class="post-date">24 Mar 2009</span>
+
+    <p>Looks like I&#8217;m being experimented on. I just got a strange <em>Web</em> button appearing on a search today and decided to click it. It revealed a host of new Google features (at least I&#8217;ve never seen em before), including various filters and visualisation tools.</p>
+<p>The entertainingly named Wonder Wheel was my first click. It&#8217;s a visualisation which shows related search terms. I&#8217;d love to have access to that data via an <span class="caps">API</span> as well.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiJJww" alt="Example of Wonder Wheel search on Google"/></p>
+<p>The timeline view, and time based filters, look more useful for most search activities. Just getting hold of recent content on a particular search term is the sort of thing blog search engines have sended to do well in the past and that Twitter search has been showing off.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiiHww" /></p>
+<p>I hope I keep these features during whatever testing is going on and that they all go live soon. It&#8217;s a pretty big improvement if you ask me.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/03/22/github-links-lines-code/">
         Github Links to Lines of Code
       </a>
@@ -191,48 +208,6 @@ class SimpleMiddleware(object):
 application = SimpleMiddleware(application)
 run_wsgi_app(application)</pre>
 <p><span class="caps">WSGI</span> middleware is both a useful place for common functionality to live in your App Engine application as well as being a handy tool for anyone working across multiple Python frameworks to share code.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/14/xmpp-and-queues-app-engine-jaiku-not-quite-yet/">
-        XMPP and Queues in App Engine via Jaiku? Not quite yet
-      </a>
-    </h1>
-
-    <span class="post-date">14 Mar 2009</span>
-
-    <p>So <a href="http://code.google.com/p/jaikuengine">JauikuEngine</a>, the open source, App Engine based, version of Jaiku is now available for everyone to look at. I <a href="http://twitter.com/garethr/status/1321372099">found the repo a couple of days ago</a> but it was restricted to project members. The main reason I want to hunt through the code is to have a look at what I&#8217;m guessing will be API&#8217;s available in a soon to be released version of App Engine &#8211; with specific interest in anything to do with <span class="caps">XMPP</span>, queues and offline processing.</p>
-<p>Well it looks like I&#8217;m out of luck for the moment at least. In the <a href="http://code.google.com/p/jaikuengine/source/browse/trunk/settings.py">settings file</a> I found the following two snippets though:</p>
-<pre>#
-# XMPP / IM
-#
-# Enabling IM will require a bit more than just making this True, please
-# read the docs at http://code.google.com/p/jaikuengine/wiki/im_support
-IM_ENABLED = False
-# This is the id (JID) of the IM bot that you will use to communicate with
-# users of the IM interface
-IM_BOT = 'root@example.com'
-# Turn on test mode for IM
-IM_TEST_ONLY = False
-# JIDs to allow when testing live XMPP so you don't spam all your users
-IM_TEST_JIDS = []</pre>
-<p>And another for queues:</p>
-<pre>#
-# Task Queue
-#
-# Enabling the queue will allow you to process posts with larger numbers
-# of followers but will require you to set up a cron job that will continuously
-# ping a special url to make sure the queue gets processed
-QUEUE_ENABLED = True
-# The secret to use for your cron job that processes your queue
-QUEUE_VENDOR_SECRET = 'SECRET'</pre>
-<p>The only problem appears to be that the page referenced, <a href="http://code.google.com/p/jaikuengine/wiki/im_support">code.google.com/p/jaikuengine/wiki/im_support</a>, currently says:</p>
-<blockquote>
-<p><acronym title="termie"><span class="caps">TODO</span></acronym>: describe how to get IM working with Jaiku Engine</p>
-</blockquote>
-<p>So <a href="http://twitter.com/termie">termie</a>, or anyone else on the inside, I&#8217;d love to know how to get this up and running?</p>
-<p>I&#8217;ll be having a better look through the code when I get a chance. This was just the first thing I jumped on before heading out the door. I love Open Source.</p>
   </div>
   
 </div>

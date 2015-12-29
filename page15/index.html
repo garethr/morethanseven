@@ -68,6 +68,54 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/01/29/Using-checkinstall-with-virtualenv-for-python-deployments/">
+        Using Checkinstall With Virtualenv For Python Deployments
+      </a>
+    </h1>
+
+    <span class="post-date">29 Jan 2011</span>
+
+    <p>Michael Brunton-Spall wrote last week about some <a href="http://www.brunton-spall.co.uk/post/2011/01/26/packaging-and-deploying-python-web-apps/">frustrations with packagings and deploying Python web applications</a>. Although his experience was with Python, the problems he describes are the same for Ruby and <span class="caps">PHP</span> and a whole host of languages. The following example uses Python, but works equally as well for anything else.</p>
+<p>Michael has three simple rules for his servers:</p>
+<ol>
+	<li>they cannot access the internet</li>
+	<li>they cannot access internal services that are for development</li>
+	<li>they cannot have compilers / utilities on them</li>
+</ol>
+<p>I won&#8217;t go into all the reasons for doing this (you can read the blog post linked to above) but these are pretty sensible security precautions.</p>
+<p>My approach to this problem would be to use your friendly system packages and using a handy tool called <a href="http://www.asic-linux.com.mx/~izto/checkinstall/">Checkinstall</a> to create a deb or rpm. I&#8217;m going to use as an example the <a href="http://wiki.secondlife.com/wiki/Eventlet">Eventlet</a> library. This is available in PyPi and one of it&#8217;s dependencies (Greenlets) provides a C extension. The same approach would work for an entire Python web application too. I&#8217;m as ever using the apt package management tool but this should work with yum as well.</p>
+<p>The first step is to build the package on a build machine. This should be a machine or virtual machine running the same operating system as your production web servers. You might build these packages manually or as part of a continuous integration system. On this machine we&#8217;ll need the compilers and development tools:</p>
+<pre>sudo apt-get install build-essential python-dev python-setuptools checkinstall
+sudo easy_install virtualenv</pre>
+<p>We&#8217;ll also create a virtualenv into which we&#8217;ll be installing our packages:</p>
+<pre>sudo virtualenv --no-site-packages /usr/local/environment
+source /usr/local/environment/bin/activate</pre>
+<p>Now, instead of just calling easy_install to install the package, we prefix it with checkinstall.</p>
+<pre>sudo checkinstall /usr/local/environment/bin/easy_install eventlet</pre>
+<p>This will prompt for various meta data about the package you want to create, including the name and version of the package. If you&#8217;re using this method in the real world you&#8217;ll want to decide on a versioning and naming scheme for your packages to avoid clashes with system provided packages. You can also set many of these options from the command line rather than having to manually fill them in each time.</p>
+<p>Once everything has been filled in successfully this should run through, installing eventlet and greenlets and eventually creating a deb or rpm package depending on what platform you&#8217;re running on. You should see something like:</p>
+<pre>Done. The new package has been installed and saved to
+
+ /home/vagrant/eventlet-gareth_20110129-1_i386.deb
+
+ You can remove it from your system anytime using: 
+
+      dpkg -r eventlet-gareth</pre>
+<p>Now lets grab that package and take it to one of our front end web servers via a controlled deployment process. That front end web server needs the virtualenv creating but nothing else. So:</p>
+<pre>sudo apt-get install python-virtualenv
+sudo virtualenv --no-site-packages /usr/local/environment</pre>
+<p>(Now you might be thinking that installing the python-virtualenv package in this way breaks rule 1 above. And you&#8217;d be right in most cases, but I&#8217;m guessing Michael&#8217;s systems team have a local package repo for authorised packages, or alternatively you could download the package to the build machine and push it to the production environment.)</p>
+<p>Now install the package we created earlier.</p>
+<pre>sudo dpkg -i eventlet-gareth_20110129-1_i386.deb</pre>
+<p>That should throw all the required files into the virtualenv environment we created. No compilers. No calls to internal or external systems. Just move some precompiled binaries and text files to predefined places on disk.</p>
+<p>I used a PyPi package as an example. Checkinstall could have been pointed at a custom build file written especially for your own application, one that moves files and folders to where they are needed. Say something that looks like this:</p>
+<pre>#!/bin/sh
+cp /home/stage/myapplication /var/www/apps/</pre>
+<p>The running checkinstall against that (or a more complex build file using capistrano or ant or fabric) you can create a package containing your application code and install it into the specified place.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/01/16/Why-developers-should-care-about-system-packages/">
         Why Developers Should Care About System Packages
       </a>
@@ -292,30 +340,6 @@ end</pre>
 	<li><a href="http://kodingen.com/">Kodingen</a></li>
 	<li><a href="http://dotcloud.com">DotCloud</a></li>
 </ul>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/12/24/A-vagrant-ecosystem/">
-        A Vagrant Ecosystem
-      </a>
-    </h1>
-
-    <span class="post-date">24 Dec 2010</span>
-
-    <p>As mentioned loudly and repeatedly on here and on Twitter I love <a href="http://vagrantup.com">vagrant</a>. While writing a chef cookbook to bootstrap my virtual machines I started thinking about how things around vagrant could help it be more useful. These might be things I&#8217;m going to do, or ideally get involved with others to do. If anyone has any other ideas, or suggestions please leave comments, I definately think this is the time for discussion.</p>
-<h2>Baseboxes</h2>
-<p>I don&#8217;t really want to have to maintain baseboxes but I want access to lots of them. I&#8217;m sure some people will want a <em>Ruby on Rails in a box</em> but all I really care about is having access to recent 32 and 63 bit vanilla linux distributions. I want a good source for trusted baseboxes. At the moment the approach is to look on the wiki, then look on the mailing list and then search the web, then create your own (even using <a href="https://github.com/jedi4ever/veewee">VeeWee</a> it&#8217;s still a little fiddly). I&#8217;ve managed to find good lucid, maverick and debian boxes, but have had problems with centos and a few others. Part of this is the rate of change recenty of both vagrant and now VirtualBox (both good things), part of it is the lack of reviews and shared experiences around baseboxes.</p>
-<p>What I&#8217;d love to see is a single place where anyone can post a link to a basebox and vagrant users can come along and assign metadata about whether it worked and on what hardware, vagrant version, virtual box version, etc. It could even act as a tracker, counting downloads of boxes to gauge popularity.</p>
-<h2>Templated Vagrantfiles</h2>
-<p>As mentioned previously I have a chef cookbook I use to bootstrap all my new virtual machines. My process is therefore: <em>vagrant init</em>, make some manual changes to the Vagrantfile (or copy it from elsewhere), <em>vagrant up</em>. I&#8217;m lazy and want a nicer way to reuse Vagrantfiles or to script their creation.</p>
-<p>I started out thinking that the ability to point the init command at a template and to provide context on the command line might be a good idea. Now I&#8217;m wondering whether we just need a command line application which allows for writing or modifying the Vagrantfile? Something like:</p>
-<pre>vagrant config vm.provisioner=:chef_solo
-vagrant config chef.recipe_url=http://cloud.github.com/downloads/garethr/chef-repo/cookbooks.tar.gz</pre>
-<h2>Hosted cookbooks</h2>
-<p>I dissed the idea of a <em>Ruby on Rails in a box</em> basebox above but I still want to be able to let people more easily share custom configuration for specialist applications. But what I&#8217;d prefer would be people sharing packaged cookbooks, a bit like I&#8217;ve done for my default virtual machine setup. Again the beauty of this is it&#8217;s pretty much just sharing a <span class="caps">URL</span> to a tar.gz file. This makes more sense to me at least than random people connecting to my chef server (I shouldn&#8217;t know about their machines) and lowers the barrier to entry for those not interested in hosting their own chef server or using the opscode platform for local virtual machines.</p>
-<p>I&#8217;m also not talking here about just sharing individual cookbooks like <a href="http://cookbooks.opscode.com/">cookbooks.opscode.com</a>, but rather a packaged collection of individual recipes designed for a specific purpose. A fully working solr instance, a django application server using apache/mod_wsgi, etc.</p>
-<p>Many of the points about baseboxes above would work here too I think. Having a good community resource which points to lots of cookbook tar files. Allowing people to feed back about what works for them. I&#8217;ve mainly taked about Chef here as that&#8217;s what vagrant initially shipped with, with the puppet provisioner now ready to go with would stand for puppet manifests too.</p>
   </div>
   
 </div>

@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/11/12/an-admission-about-source-control/">
+        An Admission about Source Control
+      </a>
+    </h1>
+
+    <span class="post-date">12 Nov 2006</span>
+
+    <p>I have an admission to make; for personal projects, of which I have many, I haven&#8217;t been using source control until now. The reason? Probably laziness. I do lots of reading around the whole software development process but most of that gets used at work, at least until now.</p>
+ <p>One of my favourite articles is the old <a href="http://www.joelonsoftware.com/articles/fog0000000043.html">Joel Test</a>. Some of this is less relevant to the home developer, but it does give you somewhere to start from. Well, I&#8217;ve now got <a href="http://subversion.tigris.org/">subversion</a> up and running and all new projects will be going in their. I&#8217;ve already added the repository to my backup policy. The free book <a href="http://svnbook.red-bean.com/">Version Control with Subversion</a> provided all the information I needed to get up and running. I&#8217;m more of a fan of command line interfaces anyway so haven&#8217;t installed any special interface. I&#8217;m sure I&#8217;ll look into the <a href="http://www.macromates.com/">Textmate</a> integration once I know my way around the command line interface a bit more.</p>
+ <p>Next up I&#8217;m on the lookout for something to use for bug tracking. I already use <a href="http://backpackit.com">backpack</a> and <a href="http://basecamphq.com">basecamp</a> for different activities but I&#8217;m not sure yet if they will do for proper bug tracking. I dont really like <a href="http://www.bugzilla.org/">bugzilla</a>, although maybe <a href="http://trac.edgewall.org/">trac</a> is what I&#8217;m looking for?</p>
+ <p>What does anyone else use, either for source control or bug tracking?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/11/10/teaching/">
         Teaching
       </a>
@@ -134,24 +149,6 @@
  <p><a href="http://rubyonrails.org">Ruby on Rails</a> even wore as a badge of honor that it didn&#8217;t need to do any <span class="caps">XML</span> pushups to deal with configuration. And even those with a penchant for Java seem to have problems with using <a href="http://www.sdtimes.com/printArticle/column-20060901-05.html"><span class="caps">XML</span> as a programming language</a>.</p>
  <p>Of late though I&#8217;ve been back playing with APIs, many of which produce <span class="caps">XML</span> in one way or another (whether that&#8217;s <span class="caps">RSS</span>, Atom or some custom format), and <span class="caps">XSL</span> actually comes in pretty handy here for just thowing around content. I did some work with a <a href="http://mini.google.co.uk">Google Mini</a> too using <span class="caps">XSLT</span> and their are some <a href="http://suda.co.uk/projects/X2V/">interesting tricks</a> with <a href="http://microformats.org">Microformats</a> to boot. I haven&#8217;t listened to the <a href="http://muffinresearch.co.uk/wsg/audio/index.xml">podcast</a> yet so I&#8217;m just guessing at the moment but I could see <a href="http://allinthehead.com/">Drew&#8217;s</a> &#8220;Your website as your <span class="caps">API</span>&#8221; talk at the <a href="http://muffinresearch.co.uk/archives/2006/10/21/following-the-wsg-microformats-event/">recent <span class="caps">WSG</span> meeting</a> making use of <span class="caps">XSLT</span>?</p>
  <p>So, I think I might have changed my mind a bit. <span class="caps">XSL</span>, I think, is going to be a useful skill to have in your toolkit in a world of microformats and APIs. The <a href="http://www.w3schools.com/xsl/">W3Schools <span class="caps">XSL</span> tutorial</a> is a pretty good starting place if you&#8217;ve not used it previously at all. Thought I&#8217;d still rather use a <a href="http://www.cheetahtemplate.org/">decent templating engine</a> for site rendering tasks.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/10/14/virtualhosts-on-mac-os-x/">
-        Virtualhosts on Mac OS X
-      </a>
-    </h1>
-
-    <span class="post-date">14 Oct 2006</span>
-
-    <p><a href="http://www.thewatchmakerproject.com">Matthew</a> just posted a quick write up of <a href="http://www.thewatchmakerproject.com/journal/378/virtual-hosts-and-the-proper-way-to-work-offline">setting up virtual hosts</a> on windows and a little of the rationale behind why you would bother.</p>
- <p>Being a Mac person when I&#8217;m not in the office I thought a quick follow up would be useful for those that way inclined.</p>
- <p>On OS X their are a couple of things needed to setup a virtual host. As well as the apache virtualhost directives the host needs adding to NetInfoManager.</p>
- <p>Although you can do all of this manually I&#8217;m more of a fan of a quick shell script and, as it happens, so are others. I&#8217;ve been using a modified version of <a href="http://patrickgibson.com/">Patrick Gibsons</a> <a href="http://patrickgibson.com/utilities/virtualhost/">Virtualhost&#8217;s script</a> for a while. Just drop it somewhere on your path (or run it from a specific folder) from Terminal like so:</p>
-<div><code>sudo virtualhost.sh morethanseven.dev</code></div>
- <p>Where morethanseven.dev is the local domain you want setting up. The default version of the script makes the assumption that you are using the default web server which comes with OS X. I&#8217;m not, but it&#8217;s easy enough to modifiy the configuration parameters at the top of the (well commented) script to point where you want. I have it working perfectly with a copy of the <a href="http://www.mamp.info/"><span class="caps">MAMP</span></a> installation package for instance.</p>
- <p>I&#8217;m something of a fan of utility scripts. Often repeated tasks can be bundled up into a shell script, python script or automator workflow. Automatic screen capture? Batch image processing? Backup? It can help keep everything tidy, as well as minimising repeated effort. Anyone else with any good examples of process automation with regards web design want to share?</p>
   </div>
   
 </div>

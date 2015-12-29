@@ -68,6 +68,69 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/09/16/getting-going-with-symfony/">
+        Getting going with Symfony
+      </a>
+    </h1>
+
+    <span class="post-date">16 Sep 2007</span>
+
+    <p>I&#8217;ve tinkered with a rather large number of these web application frameworks, in Ruby, Python, <span class="caps">PHP</span> and C#, at some point over the last few years. But I&#8217;ve never really settled on any of them &#8211; mainly because my day job didn&#8217;t need me to and also because I like playing with new toys. I even tinkered with <a href="http://morethanseven.net/posts/webphp/">my own homage</a> to <a href="http://webpy.org/">Web.py</a> in <span class="caps">PHP</span> which a few people have picked and are <a href="http://code.google.com/p/wephp/">running with</a>.</p>
+<p>Right now though I&#8217;ve been doing some work with a <a href="http://rbd.shiftnetwork.co.uk/">few</a> <a href="http://www.bofh.org.uk/">people</a> on a Rails project. Their are some seriously nice things in Rails that I don&#8217;t see elsewhere; really good testing support baked in for one, and some serious deplyments for another.</p>
+<p><a href="http://www.symfony-project.com/">Symfony</a> is another <span class="caps">PHP</span> framework but one that only supports PHP5 (a good thing in my book). It&#8217;s basically a slick integration of lots of existing mature <span class="caps">PHP</span> tools plus some good old <span class="caps">MVC</span> and tried and trusted Software Patterns. I also discovered from a few YAHOO&#8217;s that they have started using it on some levels within <span class="caps">YAHOO</span>.</p>
+<p>My interest piqued I found a couple of <a href="http://www.slideshare.net/fullo/federico-feroldi-php-in-yahoo/">related</a> <a href="http://www.slideshare.net/dustin.whittle/symfony-yui-professional-web-20">presentations</a> on <a href="http://www.slideshare.net/">Slideshare</a> (my new favourite web app), and the site has a <a href="http://www.symfony-project.com/book/1_0">high quality online documentation</a> which can also be <a href="http://www.amazon.co.uk/Definitive-Guide-Symfony-Experts-Source/dp/1590597869">purchased in dead tree format</a>.</p>
+<p>Having a play around with Symfony it took me a little while to get everything up and running, but I&#8217;d kept some handy notes for later. Hopefully they might be useful to someone other than me.</p>
+<p>I&#8217;ve dropped in a few variables denoted by braces where relevant. The paths are from my <span class="caps">MAMP</span> and <span class="caps">PEAR</span> based environment and I&#8217;m using a MySQL database, though you could just as easily use Sqlite.</p>
+<p>First we set up a virtual host in Apache. You have to do this manually at the moment. I already have a script for setting up virtual hosts under apache on OS X which I might extend to do this for me if I end up using Symfony alot.</p>
+<p><code>&lt;pre&gt;&lt;VirtualHost 127.0.0.1&gt;
+  ServerName 
+  DocumentRoot "/Applications/MAMP/htdocs/{project}/web"
+  DirectoryIndex index.php
+  Alias /sf /Applications/MAMP/bin/php5/lib/php/data/symfony/web/sf
+  &lt;Directory "/Applications/MAMP/bin/php5/lib/php/data/symfony/web/sf"&gt;
+    AllowOverride All 
+    Allow from All</p>
+</Directory>
+&lt;Directory &#8220;/Applications/<span class="caps">MAMP</span>/htdocs/{project}/web&#8221;&gt;
+AllowOverride All
+Allow from All
+</Directory>
+<p></VirtualHost></pre></code></p>
+<p><code>&lt;pre&gt;cd /www
+mkdir {project}
+cd {project}&lt;/pre&gt;</code></p>
+<p>Now we dive into the actual symfony commands. We&#8217;ll just setting up both a frontend and a backend for this app which I think is likely to be pretty typical. I quite like the idea of seperate entities for these.</p>
+<p><code>&lt;pre&gt;symfony init-project {project_name}
+symfony init-app frontend
+symfony init-module frontend {module_name}&lt;/pre&gt;</code></p>
+<p>Next we have to configure our database connection by editing /config/databases.yml</p>
+<p><code>&lt;pre&gt;all:
+    propel:
+      class: sfPropelDatabase
+      param:
+        dsn: mysql://{username}:{password}@localhost:3306/{database_name}&lt;/pre&gt;</code></p>
+<p>That done we can set up our data definitions in <em>/config/schema.yml</em>. Read the documention for all the details but you can probably get the general idea.</p>
+<p><code>&lt;pre&gt;propel:
+ item:
+   id:
+   title: varchar(200)
+   description: longvarchar
+   created_at:&lt;/pre&gt;</code></p>
+<p>And yet another quick change in <em>/config/propel.ini</em></p>
+<p><code>&lt;pre&gt;propel.database.createUrl = mysql://{username}:{password}@localhost:3306
+propel.database.url = mysql://{username}:{password}@localhost:3306/{database_name}&lt;/pre&gt;</code></p>
+<p>The next set of commands build our model files, create <span class="caps">SQL</span> for out chosen database and then create the tables in the database.</p>
+<p><code>&lt;pre&gt;symfony propel-build-model
+symfony propel-build-sql
+symfony propel-insert-sql&lt;/pre&gt;</code></p>
+<p>We&#8217;ll quickly create a backend using the scaffolding. Note that <em>item</em> here is the model name which is taken from the <em>schema.yml</em> config file above.</p>
+<p><code>&lt;pre&gt;symfony init-app backend
+symfony propel-generate-crud backend items Item&lt;/pre&gt;</code></p>
+<p>All in all not bad going. And that&#8217;s basically the same for most of the apps you&#8217;re likely to develop. It could probably be a little easier in the database and apache config areas in fairness. Rails&#8217; use of an inbuild webserver really helps here. But the use of <span class="caps">YAML</span> to define the model is, in my mind, more straightforward that using Ruby in Rails migrations. I&#8217;ve an app in the works at the moment and I&#8217;m looking at using Symfony. If that pans out I&#8217;ll blog more about the bits I&#8217;m interested in &#8211; the inbuilt unit testing framework high on my list.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/09/10/brighton-rocks/">
         Brighton Rock(s)
       </a>
@@ -132,24 +195,6 @@
 <p>It&#8217;s been a pretty good excuse to play with various bits of CSS3, including multi-columns, advanced layout, generated content and the various print offerings. Given I can control the rendering engine then produce a <span class="caps">PDF</span> to distribute I can use anything that the latest browser builds can deal with.</p>
 <p>I&#8217;ve not got all the workflow steps automated yet, I&#8217;m using Firefox to print documents to <span class="caps">PDF</span> (via Preview) at the moment which works fine but is still a manual process I can get rid of using something like <a href="http://www.re.be/css2xslfo/">css2xslfo</a> and <a href="http://xmlgraphics.apache.org/fop/">fop</a>. I&#8217;m also pretty sure the PDFs won&#8217;t be accessible, although the original markup certainly should be.</p>
 <p>As I produce more complex documents I&#8217;ll likely miss things like automated table of contents generation, footnotes and page numbering but, then again, I can write that in Javascript (or on the server) if I so choose. I was impressed listening to HÃ¥kon Wium Lie at <a href="http://vivabit.com/atmedia2007/">@media</a> about the process they used to format his last book using <span class="caps">CSS</span> and <a href="http://www.princexml.com/">PrinceXML</a>. I&#8217;m half tempted to spend time rolling all this together into a web app. It would be pretty good fun really; APIs, <span class="caps">XSLT</span>, <span class="caps">CSS</span>, <span class="caps">PDF</span>, some nice UI problems, etc. Only problem I see would be entering a market contested by Microsoft, Google, Sun and er, lots of others.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/07/31/some-thoughts-on-good-conferences-to-attend-uk/">
-        Some Thoughts on Good Conferences to Attend - UK
-      </a>
-    </h1>
-
-    <span class="post-date">31 Jul 2007</span>
-
-    <p><a href="http://benmetcalfe.com/blog/index.php/2007/07/31/some-thoughts-on-good-conferences-to-attend/">Ben Metcalfe</a> just posted a run down of some thoughts on conferences to attend. With all my travels this year I thought I&#8217;d join in.</p>
-<p>I&#8217;ve spend quite a bit of time this year travelling the UK for various get togethers, conferences, meetups and the like and had great fun doing so. I go mainly because nowhere else do I find quite such a critical mass of smart interesting people to have a pint with and discuss the intricacies of the web. For 2007, in roughly chronological order: <a href="http://www.webdd.org.uk/">WebDD</a>, <a href="http://barcamp.org/BarCampLondon2">Barcamp London</a>, <a href="http://www.futureofwebapps.com/">Future of Web Apps</a>, <a href="http://thehighlandfling.com">Highland Fling</a>, Refresh Edinburgh, <a href="http://vivabit.com/atmedia2007/">@media</a>, <a href="http://www.hackday.org/">Hackday</a>. I&#8217;ll be at <a href="http://2007.dconstruct.org/">dConstruct</a>, Future of Web Apps (again) and possibly <a href="http://www.future-of-mobile.com">Future of Mobile</a> and a Rails meetup in London as well to finish off the year.</p>
-<p>I won&#8217;t go on about how cool <a href="http://barcamp.org/">Barcamp</a> was. I actually think the whole unconference thing sits alongside the more formal conference scene quite nicely rather than acting as a direct challenge. Safe to say if you have yet to make a Barcamp then be on the lookout (although if you could not pick brighton please. I really want to go and it&#8217;s going to be hard enough to get tickets anyway!)</p>
-<p>Highland Fling was excellent. Alan did a bang up job of picking a pretty focused topic and getting a gang of safe hands in to do the talking. Everything seemed to follow on from the previous talk, or catch a thread only touched on earlier in the day. This turned out to be down to the specific topic rather than some pre-conference collusion which I thing bodes well for other such topic centric mini-conferences. It was all rounded off (as all conferences must be) with a rousing talk from <a href="http://www.stuffandnonsense.co.uk/">Andy Clarke</a> and a panel chaired by <a href="http://adactio.com/">Jeremy <del>Paxman</del> <ins>Keith</ins></a>.</p>
-<p>@media is still the daddy of the UK web standards scene. Personally I want more advanced materials and I&#8217;d love to see more audience interaction, but the scale of it makes that a little difficult I acknowledge. I&#8217;ll keep going as long as I learn something new and come away feeling a little bit inspired. I&#8217;ll be going next year. Maybe it&#8217;s not going to hit the heights of the very first @media a couple of years back but that was my first trip out into the world. Oh, and <a href="http://www.htmldog.com/">patrick</a> throws good parties in pubs with beer.</p>
-<p>I think dConstruct is basically a grown up Highland Fling. It was great fun last year so here&#8217;s hoping it&#8217;s as much fun this year. Again, the idea of a particular topic is in place. I&#8217;m still thinking about <a href="http://vivabit.com/atmediaAjax/">@media Ajax</a> if I can get enough work together to pay for it (note to people trying to keep up &#8211; I now <a href="http://garethrushgrove.com">work for myself as a freelancer</a>) and I have a sneaking suspicion I&#8217;ll want to get along to <a href="http://www.future-of-mobile.com/">Future of Mobile</a> in a couple of months too.</p>
-<p>My plan for next year is to try and get out of the country and hopefully to some of the events in the US and Europe that offer something different. <a href="sxsw.com/"><span class="caps">SXSW</span></a> is an obvious choice, but I&#8217;d be interested in any other ideas on top of Ben&#8217;s list. I&#8217;d also like to think in a year of so I might even end up talking at some nice event or other &#8211; but I need to pick a topic and stick to it I reckon instead of flitting between whatever I feel like that afternoon. Oh and probably practice.</p>
   </div>
   
 </div>

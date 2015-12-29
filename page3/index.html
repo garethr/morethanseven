@@ -68,6 +68,66 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/07/20/leaving-gds-never-easy/">
+        Leaving GDS never easy
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jul 2014</span>
+
+    <p><em>The following is the email I sent to lots of my colleagues at the 
+<a href="https://gds.blog.gov.uk/">Government Digital Service</a> last week.</em></p>
+
+<p>So, after 3 rather exciting years I&#39;ve decided to leave GDS.</p>
+
+<p>That&#39;s surprisingly difficult to write if I&#39;m honest.</p>
+
+<p>I was part of the team that built and shipped the beta of <a href="https://www.gov.uk">GOV.UK</a>.
+Since then I&#39;ve worked across half of what has become GDS, equally
+helping and frustrating (then hopefully helping) lots of you. I&#39;ve
+done a great deal and learnt even more, as well as collected arcane
+knowledge about government infosec and the dark arts of procurement
+along the way. I&#39;ve done, and helped others do, work I wouldn&#39;t even
+have thought possible (or maybe likely is the right word?) when I
+started.</p>
+
+<p>So why leave? For all the other things I do I&#39;m basically a tool
+builder. So I&#39;m going off to work for <a href="http://puppetlabs.com">Puppet Labs</a> to build
+infrastructure tools that don&#39;t suck. That sort of pretty specific
+work is something that <em>should</em> be done outside government in my
+opinion. I&#39;m a pretty firm believer in &quot;government should only do what
+only government can do&quot; (<a href="https://www.gov.uk/design-principles#second">design principle number 2</a> for those that
+haven&#39;t memorised them yet). And if I&#39;m honest, focusing on something
+smaller than fixing a country&#39;s civic infrastructure is appealing for
+now.</p>
+
+<p>I&#39;ll let you in on a secret; I didn&#39;t join what became GDS because of
+the GOV.UK project. I joined to work with friends I&#39;d not yet had the
+chance to work with and to see the inside of a growing organisation
+from the start. I remember <a href="http://twitter.com/tomskitomski">Tom Loosemore</a> promising me we&#39;d be 200
+people in 3 years! As far as anyone knows we&#39;re 650+ people. That&#39;s
+about a person a day for 2 years. I&#39;m absolutely not saying that came
+without a cost, but for me being part of that that was part of the
+point - so I can be a little accepting with hindsight.</p>
+
+<p>For me, apart from all the short term things (side-note: this job now
+has me thinking £10million is a small amount of money and 2 years is a
+small amount of time) there is one big mission:</p>
+
+<blockquote>
+<p>Make government a sustainable part of the UK tech community</p>
+</blockquote>
+
+<p>That means in 10 years time experienced tech people from across the
+country, as well as people straight from university, choosing to work
+for government. Not just for some abstract and personal reason (though
+that&#39;s fine too), but because it&#39;s a a genuinely interesting place to
+work. That one&#39;s on us.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
         Using OWASP ZAP from the command line
       </a>
@@ -386,109 +446,6 @@ tools (and not just the one&#39;s mentioned above) then I think you&#39;re missi
 out. Even if you stick with a mainly open source monitoring stack you
 might look at your tools a bit differently after you&#39;ve experimented
 with some of the commercial competition.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/02/05/a-template-for-puppet-modules/">
-        A template for Puppet modules
-      </a>
-    </h1>
-
-    <span class="post-date">05 Feb 2014</span>
-
-    <p>A little while ago I published a <a href="https://github.com/garethr/puppet-module-skeleton">template writing your own puppet modules</a>. It&#39;s
-very opinionated but comes out of the box with lots of the tools you
-eventually find and add to your tool box. I&#39;m posting this as it came
-up at the recent <a href="http://cfgmgmtcamp.eu">Configuration Management Camp</a>
-and after discussing it I realised I hadn&#39;t actually wrote anything
-about it anywhere.</p>
-
-<h2>What do you get?</h2>
-
-<ul>
-<li>A simple install, config, service class pattern</li>
-<li>Unit tests with <a href="https://github.com/rodjek/rspec-puppet">rspec-puppet</a></li>
-<li>Rake tasks for <a href="https://github.com/rodjek/puppet-lint">linting</a> and <a href="https://github.com/gds-operations/puppet-syntax">syntax checking</a></li>
-<li>Integration tests using <a href="https://github.com/puppetlabs/beaker">Beaker</a></li>
-<li>A Modulefile to provide Forge metadata</li>
-<li>Command line tools to upload to the Forge with <a href="https://github.com/maestrodev/puppet-blacksmith">blacksmith</a></li>
-<li>A README based on the Puppetlabs documentation standards</li>
-<li><a href="https://travis-ci.org">Travis CI</a> configuration based on the official
-Puppetlabs support matrix</li>
-<li>A Guardfile which can run all the tests when you change manifests</li>
-</ul>
-
-<p>Obviously you can choose not to use parts of this, or even delete
-aspects, but I find that approach much quicker than starting from scratch
-or copying files from previous modules and changing names.</p>
-
-<h2>How can I use it?</h2>
-
-<p>Simple. The following will install the module skeleton to
-<code>~/.puppet/var/puppet-module/skeleton</code>. This turns out to be picked up
-by the Puppet module tool.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/garethr/puppet-module-skeleton 
-<span class="nb">cd </span>puppet-module-skeleton
-find skeleton -type f <span class="p">|</span> git checkout-index --stdin --force --prefix<span class="o">=</span><span class="s2">&quot;$HOME/.puppet/var/puppet-module/&quot;</span> --
-</code></pre></div>
-<p>With that in place you can then just run the following to create a new
-module, where puppet-ntp is the name of our new module.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">puppet module generate puppet-ntp
-</code></pre></div>
-<p>We use <code>puppet module</code> like this rather than just copying the files
-because otherwise you would have to rename everything from class names
-to test assertions. The skeleton actually contains erb templates in
-places, and running <code>puppet module generate</code> results in the module name
-being available to those templates.</p>
-
-<h2>Now what?</h2>
-
-<p>Assuming you have run the above commands you should have a folder called
-<code>puppet-ntp</code> in your current directory. <code>cd</code> into that and then install
-the dependencies:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle install
-</code></pre></div>
-<p><a href="http://bundler.io/">Bundler </a>is a dependency manager for Ruby. If you
-don&#39;t already have it installed you should be able to do so with the
-following:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install bundler
-</code></pre></div>
-<p>Now you have the dependencies why not run the full test suite? This
-checks syntax, lints the Puppet code and runs the unit tests.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>rake <span class="nb">test</span>
-</code></pre></div>
-<p>Unit tests give fast feedback and help make sure the code you write is
-going to do what you intend, but they aren&#39;t actually applying the
-manifests to a real machine. For that you want an integration test.
-You&#39;ll need <a href="http://vagrantup.com">Vagrant</a> installed for this next
-step. Lets run those as well with:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>rspec spec/acceptance
-</code></pre></div>
-<p>This will take a while, especially the first time. This uses Beaker to
-download a virtual machine from Puppetlabs (if you don&#39;t already have
-it) and then brings up a new machine, applies a simple manifest, runs
-the acceptance tests and then destroys the machine.</p>
-
-<p>The <code>CONTRIBUTING.md</code> file has more information for running the test
-suite.</p>
-
-<h2>What&#39;s new?</h2>
-
-<p>I&#39;ve recently added a <a href="https://github.com/guard/guard">Guardfile</a> to
-help with testing. You can run this with:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>guard
-</code></pre></div>
-<p>Now in a separate tab or pane make a change to any of the manifests. The
-tests should run automatically in the tab or pane where guard is
-running.</p>
-
-<h2>Can you add this new tool?</h2>
-
-<p>Probably. Although I started the repo a few other people have
-contributed code or made improvements already. Just sent a pull request
-or open an issue.</p>
 
   </div>
   

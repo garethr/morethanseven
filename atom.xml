@@ -4,13 +4,161 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-12-04T11:15:19+00:00</updated>
+ <updated>2015-12-29T16:50:08+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Operations is more than just Systems Administration</title>
+   <link href="http://www.morethanseven.net/2015/12/27/operations-more-than-systems-administration/"/>
+   <updated>2015-12-27T00:00:00+00:00</updated>
+   <id>http://www.morethanseven.net/2015/12/27/operations-more-than-systems-administration</id>
+   <content type="html">&lt;p&gt;I think one of the patterns of the last few years has been the
+democratization of systems administration, especially for web
+applications. Whether that&amp;#39;s Heroku or Docker, or Chef or Puppet, more
+and more traditional developers are doing work that would have been
+&lt;em&gt;somebody else&amp;#39;s problem&lt;/em&gt; only a few years ago. But running in parallel
+to that thread is another less positive trend, that of conflating
+operations with &lt;em&gt;just&lt;/em&gt; systems administation. The story seems to go that
+now we know Ansible (or some other tool) we just need developers to run
+the show.&lt;/p&gt;
+
+&lt;p&gt;In this post I&amp;#39;m going to try and introduce some of the other
+operational disciplines, especially for developers who maybe have come
+to operations via the above resurgence in infrastructure tooling over
+the past few years.&lt;/p&gt;
+
+&lt;p&gt;Note that this post has a slight bias towards more &lt;em&gt;normal&lt;/em&gt;
+organisations. That is to say if you&amp;#39;re in a 5 person software startup
+you probably don&amp;#39;t have operational problems to worry too much about
+yet. I&amp;#39;m also not playing down the practice of systems administration,
+most experienced sysadmins I know are also quite rounded operations pros
+as well.&lt;/p&gt;
+
+&lt;h2&gt;Service Management&lt;/h2&gt;
+
+&lt;p&gt;If you&amp;#39;ve worked in operations, or in many large organisations you&amp;#39;ll have
+come across the term Service Management. This tends to be linked to
+various service management frameworks; like ITIL or MOF (Microsoft
+Operations Framework). The framework will describe, often in great
+detail, activities and processes for things like incident response,
+configuration management, change management, capacity planning and more.&lt;/p&gt;
+
+&lt;p&gt;While I was at &lt;a href=&quot;https://gds.blog.gov.uk/&quot;&gt;The Government&lt;/a&gt; I wrote what I
+think is a reasonable introduction to &lt;a href=&quot;https://www.gov.uk/service-manual/operations/service-management.html&quot;&gt;Service 
+Management&lt;/a&gt;
+albeit from a specific point-of-view. This was based on my experience of
+trying, and likely sometimes failing, to encourage teams to think about
+how the products they we&amp;#39;re working on would be run. Each of the topics
+touched on in the overview is worthy of it&amp;#39;s own stack of books, but I
+will repeat the ITIL service list here as (whatever you might think of
+the framework or a specific implementation) I&amp;#39;d found it a useful starting
+point for conversations - in particular stressing the breadth of
+topics under service management.&lt;/p&gt;
+
+&lt;h4&gt;Service Strategy&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;IT service management&lt;/li&gt;
+&lt;li&gt;Service portfolio management&lt;/li&gt;
+&lt;li&gt;Financial management for IT services&lt;/li&gt;
+&lt;li&gt;Demand management&lt;/li&gt;
+&lt;li&gt;Business relationship management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Service Design&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Design coordination&lt;/li&gt;
+&lt;li&gt;Service Catalogue management&lt;/li&gt;
+&lt;li&gt;Service level management&lt;/li&gt;
+&lt;li&gt;Availability management&lt;/li&gt;
+&lt;li&gt;Capacity Management&lt;/li&gt;
+&lt;li&gt;IT service continuity management&lt;/li&gt;
+&lt;li&gt;Information security management system&lt;/li&gt;
+&lt;li&gt;Supplier management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Service Transition&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Transition planning and support&lt;/li&gt;
+&lt;li&gt;Change management&lt;/li&gt;
+&lt;li&gt;Service asset and configuration management&lt;/li&gt;
+&lt;li&gt;Release and deployment management&lt;/li&gt;
+&lt;li&gt;Service validation and testing&lt;/li&gt;
+&lt;li&gt;Change evaluation&lt;/li&gt;
+&lt;li&gt;Knowledge management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Service Operation&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Event management&lt;/li&gt;
+&lt;li&gt;Incident management&lt;/li&gt;
+&lt;li&gt;Request fulfillment&lt;/li&gt;
+&lt;li&gt;Problem management&lt;/li&gt;
+&lt;li&gt;Identity management&lt;/li&gt;
+&lt;li&gt;Continual Service Improvement&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For each of the above points, whether you are using ITIL or not, it&amp;#39;s
+useful to have a conversation. Some of these areas do provide ample
+opportunity for automation and for using tooling to minimise the effort
+required. But much of this is about designing &lt;em&gt;how&lt;/em&gt; you are going to
+operate a service throughout it&amp;#39;s lifetime.&lt;/p&gt;
+
+&lt;h2&gt;Operations user stories&lt;/h2&gt;
+
+&lt;p&gt;One of the other things I published while at The Government was a set of
+&lt;a href=&quot;https://www.gov.uk/service-manual/operations/web-operations-stories.html&quot;&gt;user stories for a web operations 
+team&lt;/a&gt;.
+These grew out of work on launching GOV.UK and have had input from
+various past colleagues. In hindsight I&amp;#39;d probably do somethings
+here differently, the stories assume a certain context which isn&amp;#39;t explicitly
+spelled out for instance. But they have a couple of things going for them in that
+they demonstrate how traditional operations activities can be planned out as part
+of a more developer-friendly planning approach, and also they are public and
+have been tested by more than a single team.&lt;/p&gt;
+
+&lt;h2&gt;Not everything is a programming problem&lt;/h2&gt;
+
+&lt;p&gt;The main point I think is that not everything can be turned into a
+programming problem to solve. Automation has it&amp;#39;s place, and many manual
+processes and practices can benefit from automation. But the wide range
+of activities involved in running a non-trivial and often non-ideal
+system in production tend to mean making trade-offs and prioritization
+decisions frequently. This is where softer skills like arguing for
+funding or additional head count, or building a business case for
+further work, come into play. Operations management is much more than
+systems administration.&lt;/p&gt;
+
+&lt;h2&gt;Further reading&lt;/h2&gt;
+
+&lt;p&gt;This is little more than a plea for people to think more about
+operations, separate to the more technical aspects of systems
+administration. If you&amp;#39;re interested in learning more however I would
+recommend some good reading material:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.itpi.org/the-visible-ops-handbook-review.html&quot;&gt;Visible Ops
+Handbook&lt;/a&gt; -
+still an excellent and pragmatic introduction to many of the topics
+noted above.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://shop.oreilly.com/product/0636920033080.do&quot;&gt;Designig Delivery&lt;/a&gt; -
+a bang up-to-date tome covering a range of service design topics.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.basicsm.com/bsm-basic-service-management-book&quot;&gt;Basic Service
+Management&lt;/a&gt; -
+a 50 page starter book covering the fundamentals of service
+management as generally discussed in more detail elsewhere. A great
+starting point.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Provisioning droplets with Puppet</title>
