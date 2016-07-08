@@ -68,6 +68,37 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/05/18/Installing-integrity-on-debianubuntu/">
+        Installing Integrity On Debian/Ubuntu
+      </a>
+    </h1>
+
+    <span class="post-date">18 May 2010</span>
+
+    <p>I&#8217;ve been playing with <a href="http://integrityapp.com">Integrity</a> again as a simple continuous integration server and have installed it on a few debian and ubuntu machines in the last few weeks. The current site has good installation instructions for the Ruby side of things but leaves it as an excercise for the installer to make sure all the system level dependencies are installed.</p>
+<p>So probably as much for me in the future, here is what I had to install to get the installation instructions to work for me.</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install build-essential
+apt-get install ruby
+apt-get install rdoc
+apt-get install sqlite3
+apt-get install libdbd-sqlite3-ruby
+apt-get install libdataobjects-sqlite3-ruby1.8 
+apt-get install libsqlite3-dev
+apt-get install libxml2
+apt-get install libxml2-dev
+apt-get install libxsl-dev
+apt-get install libopenssl-ruby
+<% end %>
+<p>I also needed to install the following package on Ubuntu:</p>
+<% syntax_colorize :bash, type=:coderay do %>
+apt-get install ruby1.8-dev
+<% end %>
+<p>If you want to use a database other than the default SQLite then you won&#8217;t need those packages and I&#8217;ll assume you know what you&#8217;re doing.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/04/29/Youre-going-to-need-a-bigger-toolbox/">
         You're Going To Need A Bigger Toolbox
       </a>
@@ -230,22 +261,6 @@ export JAVA_HOME=/usr/lib/jvm/java-6-sun
 hive --service hwi
 <% end %>
 <p>That should bring up a webserver on port 9999 where you should see something similar to the screenshot above.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/28/More-django-project-templates/">
-        More Django Project Templates
-      </a>
-    </h1>
-
-    <span class="post-date">28 Mar 2010</span>
-
-    <p>Quite a while ago I released some handy scripts for building up Django project layouts. Part of the reason behind this was to kick off discussions about ideal pproject layouts and maybe even get a few user submitted layouts into the project. Paster makes this soft of thing really easy to do and I was interested in what people might come up with.</p>
-<p>Well, the team over at <a href="http://chicagotribune.com/">The Chicargo Tribune</a> have done just that, creating a branch of the original project and <a href="http://github.com/ryanmark/django-project-templates/">adding a very rich example project to it</a></p>
-<p>I&#8217;ve finally gotten around to merging that back into <a href="http://github.com/garethr/django-project-templates/">my branch</a> and releasing a new version to <a href="http://pypi.python.org/pypi/django-project-templates/0.11">PyPi</a>. It&#8217;s got a good number of PostGreSQL commands that might be of use, as well as several Amazon S3 and EC2 examples. Even if none of these complete templates fit what you&#8217;re looking for exactly their are lots of smaller fabric recipes worth taking a look at.</p>
-<p>You can read all about what is in the project over on their <a href="http://blog.apps.chicagotribune.com/2010/03/08/advanced-django-project-layout/">developer blog</a>, which if filled with other interesting web and operations goodness.</p>
-<p>So, huge thanks to <a href="http://blog.apps.chicagotribune.com/author/cgroskopf/">Chris</a>, <a href="http://blog.apps.chicagotribune.com/author/bboyer/">Brian</a>, <a href="http://blog.apps.chicagotribune.com/author/ryanthomasmark/">Ryan</a> and <a href="http://blog.apps.chicagotribune.com/author/joegermuskact/">Joe</a> for some great work.</p>
   </div>
   
 </div>

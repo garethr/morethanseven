@@ -68,6 +68,33 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2013/03/23/government-service-design-manual/">
+        Government Service Design Manual
+      </a>
+    </h1>
+
+    <span class="post-date">23 Mar 2013</span>
+
+    <p>I&#8217;ve not been writing many blog posts lately, but I have been doing quite a bit of writing elsewhere. One of the things I&#8217;ve had a hand in at work is the new <a href="https://www.gov.uk/service-manual">Government Service Design Manual</a>. This is the work of many people I work with as well as further afield. It&#8217;s intended to be a good starting place to find information about building high quality digital services.</p>
+<p>The manual is in beta and we&#8217;re looking for as much feedback as possible on the whole thing. It&#8217;s already proving useful and a good way of framing the scope of discussions, but it has lots of room for improvement.</p>
+<p>If you&#8217;re reading this post I&#8217;m going to wager you&#8217;re interest lies in or around devops flavoured content. The following are guides I&#8217;ve written in this area that I&#8217;d love any and all feedback on.</p>
+<ul>
+	<li><a href="https://www.gov.uk/service-manual/the-team/web-operations.html">Web Operations</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/configuration-management.html">Configuration Management</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/hosting.html">Hosting</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/information-security.html">Information Security</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/monitoring.html">Monitoring</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/load-and-performance-testing.html">Load and Performance Testing</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/release-strategies.html">Releasing Software</a></li>
+	<li><a href="https://www.gov.uk/service-manual/operations/penetration-testing.html">Vulnerability and Penetration Testing</a></li>
+	<li><a href="https://www.gov.uk/service-manual/making-software/choosing-technology.html">Choosing Technology</a></li>
+</ul>
+<p>If you&#8217;re interested in the background to this endeavour then a couple of blog posts from some of my colleagues might be of interest too. First Richard Pope talks about <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">how the manual came about</a> and here&#8217;s a post from Andrew Greenway about this <a href="http://digital.cabinetoffice.gov.uk/2013/03/21/building-the-standard/">beta testing of the service standard</a>.</p>
+<p>The source for all this is on <a href="https://github.com/alphagov/government-service-design-manual">GitHub</a> so if you prefer you can just sent a pull request. Or I&#8217;m happy to get emails or comments on this post. In particular if people have good references or next steps for these guides then let me know as several of them in particular are lacking in that area.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2013/03/23/perils-of-portability/">
         Perils of portability
       </a>
@@ -128,26 +155,6 @@
 	<li>Hooks for instrumentation</li>
 	<li>Configurable logging</li>
 </ul>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/12/30/my-personal-package-repository/">
-        my personal package repository
-      </a>
-    </h1>
-
-    <span class="post-date">30 Dec 2012</span>
-
-    <p>I&#8217;m a <a href="http://www.morethanseven.net/2011/01/16/Why-developers-should-care-about-system-packages/">big fan of system packages for lots of reasons</a> and have often ended up rolling my own debian package repository at work, or working with others that have done so. Recently I finally got round to setting up a personal package repo, at <a href="http://packages.garethrushgrove.com">packages.garethrushgrove.com</a>. More interesting than the repo is probably the tool chain I used, oh and the rather nice bootstrap based styling.</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjh1wIM" alt="nice looking package repository"/></p>
-<p>The source code for everything is <a href="https://github.com/garethr/packages">on GitHub</a> although not much documentation exists yet. In the middle are a few shell scripts that generate the repo. Around them is a Vagrant box (which makes it easier to build packages for different achitectures or distros) and some Rake commands</p>
-<pre><code>bundle exec rake -T
-rake recipes:build[recipe]  # Build a package from one of the available recipes
-rake recipes:list           # List available recipes
-rake repo:build             # Build the repository</code></pre>
-<p>The recipes commands allow for building new packages based on scripts. A few examples are included which use fpm, but you could use anything. The repo:build command triggers the debian repository to be rebuilt.</p>
-<p>The vagrant configuration shares various folders between and guest and host which also opens up a few useful features. One is I can just drop any old debian package into the debs folder and run the repo:build command and it will be in my repository. The other useful capability is that the resulting repo is shared back to the host, which means I can then check it into Git and in my case push it up to Heroku.</p>
   </div>
   
 </div>

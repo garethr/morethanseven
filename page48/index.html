@@ -68,6 +68,43 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/12/11/using-curl-to-play-with-couchdb/">
+        Using Curl to play with CouchDB
+      </a>
+    </h1>
+
+    <span class="post-date">11 Dec 2007</span>
+
+    <p>As a big big fan of all things <span class="caps">HTTP</span>, the new <a href="http://www.erlang.org/">Erlang</a> based database, <a href="http://couchdb.org">CouchDB</a>, piqued my interest. With the recent <a href="http://damienkatz.net/2007/11/couchdb_070.html">release of 0.7</a> it&#8217;s now intended for widespread use. Now I&#8217;m a fan of databases as long as I don&#8217;t have to go too near them. <span class="caps">SQL</span>, triggers and stored procedures are all a little too close to magic for me.</p>
+<p>The reason CouchDB looks particularly good fun was it&#8217;s build around a <span class="caps">REST</span> <span class="caps">API</span> using <span class="caps">JSON</span> for data transport. I&#8217;m generally not an acronym guy, but <span class="caps">REST</span>, <span class="caps">JSON</span>, <span class="caps">API</span> and <span class="caps">HTTP</span> in one open source piece of code? Sounds like fun to me.</p>
+<p>The CouchDB community have built up an already <a href="http://www.couchdbwiki.com/">excellent wiki</a> with all the information you need to get started and get the <a href="http://www.couchdbwiki.com/index.php?title=Installation">software installed</a>. I just used the magic of <a href="http://www.macports.org/">MacPorts</a> but the page covers all the various dependencies and setups (though nothing on their yet about the N800).</p>
+<pre><code>sudo port install couchdb</code></pre>
+<p>You might then need to set-up a user and some permissions. Again the wiki has more <a href="http://www.couchdbwiki.com/index.php?title=Installation#Security_Considerations">detailed installation instructions</a>. All being well you should then be able to fire up CouchDB:</p>
+<pre><code>sudo -u couchdb couchdb</code></pre>
+<p>So first things first. Their are getting started code examples on the wiki in all the usual languages so you can just dive in. CouchDB also comes with a few in-build tools which are both pretty attractive and useful. You have a <a href="http://localhost:8888/_utils/browse/index.html">database browser</a>, a full <a href="http://localhost:8888/_utils/couch_tests.html">test suite</a> and a <a href="http://localhost:8888/_utils/shell.html">command shell</a>.</p>
+<p><a href="http://curl.haxx.se/">Curl</a>, for those not familiar with it, is a fantastic command line utility for throwing around <span class="caps">HTTP</span> requests. I already use it for testing and generally prodding sites but it&#8217;s absolutely perfect for demonstrating CouchDB. Let&#8217;s start with creating a database called <em>test</em>:</p>
+<pre><code>curl -X PUT http://localhost:8888/test/</code></pre>
+<p>That should have created the database. Let&#8217;s get some information back about the database:</p>
+<pre><code>curl -X GET http://localhost:8888/test/</code></pre>
+<p>Everything should be returning <span class="caps">JSON</span> strings telling us something about what it finds. Let&#8217;s add a blank document to the database:</p>
+<pre><code>curl -X POST http://localhost:8888/test/ \
+-H "Content-Type: application/json" -d {}</code></pre>
+<p>Note the blank <span class="caps">JSON</span> object <em>{}</em> passed as Post data. What about retrieving a list of document from the database?</p>
+<pre><code>curl -X GET http://localhost:8888/test/_all_docs</code></pre>
+<p>We&#8217;re now done with that database so let&#8217;s delete it.</p>
+<pre><code>curl -X DELETE http://localhost:8888/test/</code></pre>
+<p>I&#8217;ve just done the basics here, but the APIs are simple and nicely documented enough for you easily to find out more. This is the beauty of RESTfully designed APIs, they are just about self documenting. For the most part you just have a predefined <span class="caps">HTTP</span> method and a defined <span class="caps">URL</span>.</p>
+<ul>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_View_API"><span class="caps">HTTP</span> View <span class="caps">API</span></a></li>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_Doc_API"><span class="caps">HTTP</span> Doc <span class="caps">API</span></a></li>
+	<li><a href="http://www.couchdbwiki.com/index.php?title=HTTP_Db_API"><span class="caps">HTTP</span> DB <span class="caps">API</span></a></li>
+</ul>
+<p>The Erlang base of CouchDB makes for some interesting horizontal scaling possibilities (as well as a good excuse to play with Erlang.) Even if CouchDB wasn&#8217;t cool enough already, it comes with probably the best start-up message I&#8217;ve seen in software for ages:</p>
+<pre><code>CouchDB has started. Time to relax.</code></pre>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/12/08/writing-elsewhere/">
         Writing Elsewhere
       </a>
@@ -140,48 +177,6 @@
 <p>In the end I talked though everything in general terms and the audience nicely jumped in with various platform specific toolsets for unit testing, functional testing and performance measurement. All in all good fun and a subject I think will see some activity next year.</p>
 <div style="width:425px;text-align:left" id="__ss_187152"><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=things-you-probably-dont-do-or-tying-to-make-project-automation-sexy-1196432405301568-3"/><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=things-you-probably-dont-do-or-tying-to-make-project-automation-sexy-1196432405301568-3" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object><div style="font-size:11px;font-family:tahoma,arial;height:26px;padding-top:2px;"><a href="http://www.slideshare.net/?src=embed"><img src="http://static.slideshare.net/swf/logo_embd.png" style="border:0px none;margin-bottom:-5px" alt="SlideShare"/></a> | <a href="http://www.slideshare.net/garethr/things-you-probably-dont-do-or-tying-to-make-project-automation-sexy" title="View 'Things you probably don't do (or tying to make project automation sexy)' on SlideShare">View</a> | <a href="http://www.slideshare.net/upload">Upload your own</a></div></div>
 <p>Overall a good smattering of my favourite topics at the moment (education, development process, distributed messaging), lots of fun people and the chance to ride round Google on a segway at about two in the morning. Roll on the next barcamp.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/11/23/archiving-twitter-data-with-python/">
-        Archiving Twitter data with Python
-      </a>
-    </h1>
-
-    <span class="post-date">23 Nov 2007</span>
-
-    <p><a href="http://www.al3x.net/">Alex</a> from <a href="http://twitter.com">Twitter</a> just got round to adding the ability to export your entire archive of tweets via the <a href="http://groups.google.com/group/twitter-development-talk/web/api-documentation"><span class="caps">API</span></a>. A few people on the mailing list had been asking for this for a while so good to see it get released.</p>
-<p>I couldn&#8217;t resist knocking together a very quick and simple Python script to go off and get all your tweets, presented here for anyone else to play around with. Note that simple, fast and works on my machine were watchwords here. Don&#8217;t expect fancy parameters, much error handling or artificial intelligence.</p>
-<% syntax_colorize :python, type=:coderay do %>
-import urllib2
-username = '<YOUR USERNAME>'
-password = '<YOUR PASSWORD>'
-format = 'json' # json or xml
-filename = 'archive.json' # filename of the archive
-tweets = 164 # number of tweets
-pages = (int(float(tweets)/float(80)))+1
-auth = urllib2.HTTPPasswordMgrWithDefaultRealm()
-auth.add_password(None, 'http://twitter.com/account/', username, password)
-authHandler = urllib2.HTTPBasicAuthHandler(auth)
-opener = urllib2.build_opener(authHandler)
-urllib2.install_opener(opener) 
-i = 1
-response = ''
-print 'Downloading tweets. Note that this may take some time'
-while i <= pages:
-    request = urllib2.Request('http://twitter.com/statuses/user_timeline/account.' \
-    + format + '?page=' + str(i))
-    response = response + urllib2.urlopen(request).read()
-    i = i + 1
-handle = open(filename,"w")
-handle.write(response)
-handle.close()
-print 'Archived ' + str(tweets) + ' of ' + username + \
-'\'s tweets to ' + filename
-<% end %>
-<p>The main thing to note here though is the ideal of <a href="http://www.dataportability.org/">data portability</a>. Let&#8217;s just say I wanted to move to Jaiku or Pownce instead of Twitter, but didn&#8217;t want to lose all that data. If I can knock up an export script in half an hour then all you need are import data <span class="caps">API</span> calls and a little more scripting.</p>
-<p>As it is, I&#8217;m more interesting in seeing what I can do with my data now I can get at it. <a href="http://suda.co.uk">Brian</a> just suggested a <a href="http://simile.mit.edu/timeline/">quick visualisation tool</a> (which already eats <span class="caps">JSON</span>) and I&#8217;d already been thinking about <a href="http://morethanseven.net/posts/pygunfog/">language analysis</a> and maybe having a look at <a href="http://www.apml.org/"><span class="caps">APML</span></a> some more. Open data is simply more fun.</p>
   </div>
   
 </div>

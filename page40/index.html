@@ -68,6 +68,118 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/09/20/django-admin-options/">
+        Django Admin Options 
+      </a>
+    </h1>
+
+    <span class="post-date">20 Sep 2008</span>
+
+    <p>Working on a decent sized Django project at work means I&#8217;ve found myself delving into Django&#8217;s admin interface more than a few times. Although it&#8217;s always possible to just use a custom template and do everything yourself it&#8217;s nearly always easier and often quicker to use the generated admin views. One of the problems with that is, even with therecent 1.0 release, some of the options are not that well documented outside the source code or in posts buried on mailing lists.</p>
+<p>I&#8217;ll assume a little bit of familiarity with the new-forms-admin way of doing things which is now the default in Django 1.0. If you&#8217;re just getting started with building Django sites then you might want to first have a look at a tutorial or two. It&#8217;s quite different to the examples found in the original Django book or older online tutorials but it&#8217;s also much more powerful and flexible with a better separation of concerns.</p>
+<p>We&#8217;ll start off with a very simple model in models.py which defines a simple Article class with a couple of fields.</p>
+<pre>from django.db import models
+class Article(models.Model):    
+    	title = models.CharField(max_length=200)
+	content = models.TextField()
+	publish_date = models.DateTimeField(default=datetime.today)</pre>
+<p>Django 1.0 introduced the concept of admin autodiscovery. By playing your admin declarations in admin.py in an application (most likely next to models.py and views.py) you can tell django to find these automatically. To enable auto loading of admin modules you can add the following to your urls.py.</p>
+<p>.pre from django.contrib import admin<br />
+admin.autodiscover()</p>
+<p>This will load the module admin.py for each of the apps in the installed apps list. Now Lets add an admin class in your admin.py to go with the above models.py. We&#8217;ll call it ArticleAdmin:</p>
+<pre>from django.contrib import admin
+from models import Article
+class ArticleAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Article, ArticleAdmin)</pre>
+<p>The important line is the last one, in which we register the admin for the Article class. This will display the relevant admin views in the Django admin for that model &#8211; allowing us to add new articles, list existing ones and delete old ones. But by default the admin is quite sparse.</p>
+<p>Once we have a few articles in the system we&#8217;ll find it hard to find them again. Lets add a few more lines to our admin.py file:</p>
+<pre>class ArticleAdmin(admin.ModelAdmin):
+	list_display=('title', 'publish_date')
+	ordering = ['-publish_date']
+	list_per_page = 25
+	search_fields = ['title','content']
+	date_hierarchy = 'publish_date'</pre>
+<p>Lets step though each of these statements and see what we&#8217;ve done:</p>
+<ul>
+	<li>setting <em>list_display</em> for the title and publish_date means these two fields will appear in the changelist. This is the view you get when you hit Articles in the admin and allows you to find the article you are looking for.</li>
+	<li><em>ordering</em> is self explanatory, in that we choose to order the items in the changelist by the publish_date rather than the auto generated numeric id.</li>
+	<li><em>list_per_page</em> is another straightforward option, setting the maximum number of articles to show in the changelist before the list starts paging over multiple pages.</li>
+	<li><em>search_fields</em> adds a simple search to the changelist, the fields specified set which fields to search; title and content in this case.</li>
+	<li><em>date_hierarchy</em> is great when you have a date associated with an object. This outputs a separate filter list which displays the years by which to filter. The option you pass to this setting is the field name which stores the date.</li>
+</ul>
+<p>The simple example above hopefully demonstrates the ease of which the admin can be configured. Knowing about these capabilities already built into Django can save you quite a bit of time when it comes to producing production ready admin interfaces. Except for more complex systems this should suffice. Below is a table of the Django admin options I&#8217;ve been using. If anyone has any more let me know and I&#8217;ll add them here, along with a brief description.</p>
+<table>
+	<tr>
+		<td>Option</td>
+		<td>Description</td>
+	</tr>
+	<tr>
+		<td>model</td>
+		<td> Set the model for which this is the admin </td>
+	</tr>
+	<tr>
+		<td>form</td>
+		<td> Set the form class if one has been created </td>
+	</tr>
+	<tr>
+		<td>list_display</td>
+		<td> Set which fields should appear in the changelist view </td>
+	</tr>
+	<tr>
+		<td>list_filter</td>
+		<td> Se which fields should be used to provide a filter in the changelist view </td>
+	</tr>
+	<tr>
+		<td>raw_id_field</td>
+		<td> Useful when you have a Foreign Key on another model with lots of records. This changes the default interface from the a select box to a custom widget</td>
+	</tr>
+	<tr>
+		<td>ordering</td>
+		<td> Specify the order of the objects in the changelist </td>
+	</tr>
+	<tr>
+		<td>fieldset</td>
+		<td> Fieldsets allow for control over the changeform view, setting which fields to display and whether to separate them out into individual fieldsets. Worth investigating </td>
+	</tr>
+	<tr>
+		<td>save_on_top</td>
+		<td> If you have a long form it&#8217;s useful to be able to display the save buttons at the top as well as the bottom </td>
+	</tr>
+	<tr>
+		<td>date_hierachy</td>
+		<td> Add date based filtering to the chaneglist view </td>
+	</tr>
+	<tr>
+		<td>radio_fields</td>
+		<td> Another alternative widget for Foreign key fields, this time using radio buttons. Useful for fixed small lists of objects </td>
+	</tr>
+	<tr>
+		<td>list_per_page</td>
+		<td> How may objects to list per page on the changelist view </td>
+	</tr>
+	<tr>
+		<td>search_fields</td>
+		<td> Enable search for the model and specify which fields to search </td>
+	</tr>
+	<tr>
+		<td>prepopulated_fields</td>
+		<td> Some fields might be prepopulated based on the user entering text into another field. This is often used to prepopulate slugs based on the title of an object </td>
+	</tr>
+	<tr>
+		<td>filter_horizontal</td>
+		<td> The default widget for many to many fields is the rather shoddy multiple select box. Filter horizontal enhances this with some super javascript, making it much more usable. Never use many to many fields without this or filter_vertical </td>
+	</tr>
+	<tr>
+		<td>filter_vertical</td>
+		<td> Does exactly the same as filter_horizontal, except the filter lists appear one above the other rather than side to side. Useful for thinner admin views</td>
+	</tr>
+</table>
+<p>As you can see you can customise the default admin views a great deal even without creating your own templates and defining custom admin views. The best part is still that as well as being useful for demonstrations and prototypes these interfaces are useful on a live production site. Quite an achievement I think.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/09/16/openmicroblogging/">
         openmicroblogging
       </a>
@@ -206,25 +318,6 @@ while not connected:
     <p>A short break from blogging ends with a new site design. As with all these things their will no doubt be a few kinks still to work out and I&#8217;ll be adding to the design a little over the coming months. The main reason for all this change? A move to a custom <span class="caps">CMS</span> build using Django. This was something of an excuse to play around with Django outside <a href="http://www.gcapmedia.com/">work</a> and I&#8217;m pretty happy with the results. I have all the bits of wordpress I actually used, plus a few bits I didn&#8217;t have before. More importantly I have something I want to hack on. Wordpress is a kick ass blogging tool, but keeping it updated or adding new features never seemed much like fun.</p>
 <p>It seems like it&#8217;s the week for Django related site launches in the UK. We released the <a href="http://www.capitalradio.co.uk/">new Capital Radio site</a> on the world last week and Nat beat me by a day or so with <a href="http://natbat.net/">her new Django powered site</a>. Look for more in the future too I would wager.</p>
 <p>I have a whole range of posts brewing about what I found out along the way, both building a personal blog and building a large site with a big team. Keeping up with the bleeding edge of Django ahead of the 1.0 release took some doing (I&#8217;m running the latest Trunk release here at the moment). Deciding to use a combination of <a href="http://pypi.python.org/pypi/Spawning/0.7">Spawning</a> and <a href="http://nginx.net/">Nginx</a> for serving is a nice break from Apache as well. But that is all for later when I have a little more time.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/06/21/of-hacking-continuous-integration-and-django/">
-        Of Hacking, Continuous Integration and Django
-      </a>
-    </h1>
-
-    <span class="post-date">21 Jun 2008</span>
-
-    <p>I&#8217;ve not written anything here for a good few weeks, my tweeting has slowed down some and I&#8217;m behind on my feed reading. I&#8217;m going to blame the new job and the daily commute from Cambridge to London I think. I&#8217;ve definitely not been any less busy that usual:</p>
-<h3>Hacking</h3>
-<p>We had an internal hackday on Thursday and Friday last week where lots of us over at GCap/Global downed tools and build cools stuff for a couple of days. This is exactly the sort of reason I took the job in London &#8211; for the opportunity to build interesting things quickly with other smart people. I got to play around with an event driven, music orientated, <span class="caps">API</span> hack and a more useful but less sexy documentation hack. Yes, I said documentation hack. I might be able to release the latter all being well but I need to finish it off first and kick the tyres on some internal projects</p>
-<h3>Django</h3>
-<p>As a development team we&#8217;re using <a href="http://djangoproject.com/">Django</a> for everything which is proving to be huge fun. It&#8217;s a decent size project and we&#8217;re pushing Django (and in particular new-forms admin) in interesting ways. Having worked previously with <span class="caps">PHP</span>, <span class="caps">ASP</span>.<span class="caps">NET</span> and Rails I&#8217;m loving lots of bits of Django. I mentioned the <a href="http://morethanseven.net/posts/why-the-webstandards-world-appears-to-be-choosing-django/">template system</a> before but their are lots of other things to appreciate. Some of this just comes from working with people like <a href="http://simonwillison.com">Simon</a> and <a href="http://www.siudesign.co.uk/">Rob</a> who know Django pretty well. Some of it just from being able to write Python every day.</p>
-<h3>Continuous Integration</h3>
-<p>When not working on Django, or writing <span class="caps">HTML</span>, <span class="caps">CSS</span> or Javascipt (now mainly using <a href="http://jquery.com">JQuery</a>), I&#8217;ve been busy pushing the benefits of Continuous Integration. As someone who is actually pretty bad at writing unit tests I like the process of working with <a href="http://cruisecontrol.sourceforge.net/">Cruise Control</a> as a gatekeeper. I also like automation in general so have been busy with Ant scripts and some Twill scripts as well for more functional testing. Django&#8217;s test suite is pretty nifty and easy to use. <a href="http://www.djangoproject.com/documentation/testing/">The official documentation</a> is a pretty good starting point but I&#8217;m still on the lookout for some more in depth best practices articles.</p>
-<p>So, between writing lots of code I&#8217;ve had less time to write words other than internal documentation. I&#8217;m finding the change pretty refreshing at the moment but want to keep up with writing every now and again. Who knows how that will work out? I have a feeling that I might blog more geeky code related stuff but time will see how that plays out.</p>
   </div>
   
 </div>

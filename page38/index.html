@@ -68,6 +68,18 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/11/22/css-test-github/">
+        CSS Test on GitHub
+      </a>
+    </h1>
+
+    <span class="post-date">22 Nov 2008</span>
+
+    <p>I upload the <a href="http://github.com/garethr/css-test/tree/master">work I&#8217;ve done so far</a> on testing <span class="caps">CSS</span>. It&#8217;s still work in progress obviously but if you&#8217;re interested do let me know. I&#8217;ve stared with the image approach but will hopefully have something up demonstrating the selenium/rendered <span class="caps">DOM</span> position approach as well.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/11/16/i-hearts-github-two/">
         I Love GitHub Two
       </a>
@@ -155,47 +167,6 @@ except ImportError:
 <p>I now have two settings files stored in an environments module containing all the usual django settings; one for my development environment and one suitable for live. The settings.py above is for my local development environment, with only one small change for live (this file doesn&#8217;t get deployed along with the source code for the site, so doesn&#8217;t get overwritten).</p>
 <pre>ENV = 'live'</pre>
 <p>This isn&#8217;t quite the same as the Rails implementation obviously. I run completely different server setups so I&#8217;m not too bothered about a flag on the runserver command like the -e flag for mongel. I could also probably do something to autodetect the environment but this works fine for me.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/10/13/unit-testing-css-looking-solution/">
-        Unit Testing CSS - Looking for a Solution
-      </a>
-    </h1>
-
-    <span class="post-date">13 Oct 2008</span>
-
-    <blockquote>
-<p>I think it&#8217;s an epic failure of web standards that <span class="caps">CSS</span> is the only essentially untestable technology invented in last decade &#8211; <a href="http://twitter.com/t_a_w/statuses/957359524">Tomasz</a></p>
-</blockquote>
-<p>Talking today on Twitter with <a href="http://twitter.com/t_a_w">Tomasz</a> got me thinking again about one of those problems that I come back to once in a while. Unit testing <span class="caps">CSS</span>. <span class="caps">CSS</span> development is a pain, even with some sort of <a href="http://natbat.net/2008/Sep/28/css-systems/">system</a>. Admit it. I actually like <span class="caps">CSS</span> most of the time but it&#8217;s still painful at times. Hopefully with that out of the way you feel better.</p>
-<blockquote>
-<p>unit testing is a method of testing that verifies the individual units of source code are working properly. A unit is the smallest testable part of an application.</p>
-</blockquote>
-<p>All testing past simple validation of <span class="caps">CSS</span> seems to be done visually at present.<br />
-Thinking about this from the point of view of <span class="caps">CSS</span> seems straight forward, but turns out not to be so for a variety of reasons. The problem lies in the cascading and compounding nature of the beast. Each individual <span class="caps">CSS</span> rule might do something which is self contained, but the chances on a real site are probably slim. For instance:</p>
-<pre>body {
-   font-size: 100%;
-}
-p {
-   font-size: 2em;
-}</pre>
-<p>What is the size of the font size of a paragraph? It turns out it depends. Not just on more than one unit of source code (we have two rules here) but also on things like the browser. And how do we get this font size from a browser in the first place? I generally dislike <a href="http://selenium.openqa.org/">Selenium</a> but does it provide a mechanism for getting at the calculated <span class="caps">DOM</span> attribute values? Do we have to interface directly with a browser at a lower level?</p>
-<p><a href="http://wxmozilla.sourceforge.net/">wxMozilla</a>, <a href="http://wxmozilla.sourceforge.net/">wxWebKit</a> or maybe <a href="http://code.google.com/p/pywebkitgtk/">pywebkitgtz</a> might prove useful, but I&#8217;m not sure at what level they operate. What I&#8217;m imagining here is maybe something like (excuse the Python, hopefully you get the idea):</p>
-<pre>def test_text_size_is_12px(self):
-    response = fetch_with_browser('http://www.google.com')
-    self.assertEquals(12, response.search("p").fontSize    </pre>
-<p>So we could use <span class="caps">CSS</span> selectors (ie. <em>p</em>) to find elements and then assert various <span class="caps">DOM</span> properties (ie. <em>fontSize</em>) are equal to values we specify. The magic is in getting access to those calculated <span class="caps">DOM</span> attribute values from an actual browser engine.</p>
-<p>Another approach would seem to be looking at visual rendering and comparing against a known good version. This seems to be something that the <a href="http://weblogs.mozillazine.org/roc/archives/2005/03/visual_regressi.html">Mozilla folks got up to a while back</a> to test different browser versions. Their are a few tools that might help us out here too; <a href="http://www.browsercam.com/">BrowserCam</a> provides a paid for service, <a href="http://www.paulhammond.org/webkit2png/">Webkit2png</a> is a handy command line script I&#8217;ve had fun with in the past and <a href="http://iecapt.sourceforge.net/">IECapt</a> appears to be a similar beast for Internet Explorer. <a href="http://cutycapt.sourceforge.net/">CutyCapt</a> is another cross platform webkit based utility. I can see a few gotchas lurking here. Animations or slow loading javascript would obviously throw this into disarray. But disabling these in the browser might get up somewhere. How to compare images  produced I&#8217;m not yet sure, but I reasons someone reading this might have a good idea?</p>
-<p>As the title would suggest this post does not contain the answer, only a few useful links and two possible approaches to the problem. The questions at this stage are:</p>
-<ul>
-	<li>Does any of this exist already? If so who do we need to cuddle up to to get access to it?</li>
-	<li>Are any of the technical hurdles to either of the approaches mentioned above insurmountable? If not what is the best solution?</li>
-	<li>Does anyone except me and Tomasz even want this?</li>
-</ul>
-<p>I reason their are a fair few things that would be needed to make this first practical and later standard; nice APIs, run times in various languages, and working out whether or not it actually helps <span class="caps">CSS</span> development to name but a few. But right now I&#8217;d go for a limited proof of concept that works on my machine. If anyone has any links to thinks that might be good starting points please let me know. Other ideas welcome as well.</p>
-<p>One last thing; <a href="http://ajaxian.com/archives/ajaxians-join-mozilla-creating-developer-tools">Mozilla&#8217;s latest employees</a> are looking at the whole spectrum of developer tools. I&#8217;d love for them to start with something like this.</p>
   </div>
   
 </div>

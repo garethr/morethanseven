@@ -68,6 +68,32 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/28/git-issue-tracking/">
+        Git Issue Tracking
+      </a>
+    </h1>
+
+    <span class="post-date">28 Jan 2009</span>
+
+    <p><a href="http://wiki.github.com/schacon/ticgit">TicGit</a> looks great. I love command line apps and have been looking for something like this for a while. It&#8217;s described as a:</p>
+<blockquote>
+<p>Git based distributed ticketing system, including a command line client and web viewer</p>
+</blockquote>
+<pre>#&gt;ti list
+     # TicId  Title                     State Date  Assgn    Tags                
+--------------------------------------------------------------------------------
+*    1 9ebd07 add attachment to ticket  open  03/22 schacon  attach,feature      
+     2 6ca8be download attached file    open  03/22 schacon  attach,feature      
+     3 bec8e9 add a milestone           resol 03/22 schacon  feature,milestone,ne
+     4 9b83ea general tag management    open  03/22 schacon  feature,tags        
+     5 94f24e show expanded comments    open  03/22 schacon  feature,ticket      
+     6 f3dd9b remove a ticket           open  03/22 schacon  feature,ticket      
+     7 e1629e improved cli support      open  03/22 schacon  cli,feature   </pre>
+<p>Perfect for my pet projects or working with like minded folk.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/24/defence-apache-ant/">
         In Defence of Apache Ant
       </a>
@@ -195,21 +221,6 @@ next: get details about the next track in the list</pre>
 <p>I&#8217;m also presuming the original Jaiku application had at least some features powered by offline processing or used a message based architecture behind the scenes? Or used scheduled batch jobs for reporting or data mungling?</p>
 <p>All of these issues are high up on the <a href="http://code.google.com/p/googleappengine/issues/list">App Engine issues list</a> and solutions to these two outstanding problems would move App Engine, in my opinion, to being very cool to being very useful. I&#8217;ve been impressed with the simple, well designed and well documented current set of APIs and I&#8217;d love to see a few more added for <span class="caps">XMPP</span> and offline processing. If the Jaiku code is open source but relies on Google only APIs it would seem a little odd.</p>
 <p>So does anyone have any more information on this? Any passing Googlers who can get us an answer?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/14/localbuilder-github/">
-        Localbuilder on GitHub
-      </a>
-    </h1>
-
-    <span class="post-date">14 Jan 2009</span>
-
-    <p>One of several little projects I have up and running on <a href="http://github.com">GitHub</a> at present is <a href="http://github.com/garethr/localbuilder/tree/master">LocalBuilder</a>. It&#8217;s a pretty simple little script which watches for changes in a given directory and when they occur runs a given command. I knocked it together to use to trigger the running of a test suite each time I save files in a project. It&#8217;s written in Python but you could use it to run commands in any language you like.</p>
-<p>It&#8217;s all pretty simple Python really and is hopefully reasonably commented and tested so if you&#8217;re interested you can follow along with <a href="http://github.com/garethr/localbuilder/tree/master">the code</a>. If you just want to use the damn thing then:</p>
-<pre><code>./localbuilder --path /path/to/watch --command /command/to/execute</code></pre>
-<p>It turns out Ruby has a much nicer tool to do this and more in autotest, part of the <a href="http://www.zenspider.com/ZSS/Products/ZenTest/">ZenTest</a> suite of testing tools. I&#8217;m finding more and more very nice bits of code written in Ruby of late, but that&#8217;s probably a whole different blog post.</p>
   </div>
   
 </div>

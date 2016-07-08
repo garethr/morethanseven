@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/07/11/Git-pre-recieve-hook-for-integrity/">
+        Git Pre Recieve Hook For Integrity
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jul 2010</span>
+
+    <p>I&#8217;m getting married rather soon so time has been somewhat short (in a good way) for just hacking on stuff, but I&#8217;ve finally found a little bit of time to play with something I&#8217;ve been mulling over for a while. Namely a continuous deployment workflow using the integrity continous integration server.</p>
+<p>I&#8217;m hoping to have an incredibly simple but fully operation example available at some point &#8211; mainly to act as a good discussion point. For now here&#8217;s my current pre-receive hook.</p>
+<script src="http://gist.github.com/471711.js?file=pre-receive"></script>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/06/29/Python-what-to-use/">
         Python: What To Use?
       </a>
@@ -150,37 +164,6 @@
 <p>As well as just the tweets I want to build a few other small features. The first of which is link extraction, so at the moment you&#8217;ll see recent links a the top of the page. I&#8217;ll hopefully make that a little more useful, with better browing and converting short urls into the real ones. I also have vague plans for providing exports, listing people talking about devops and some useful graphs to track general activity around devops.</p>
 <img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjphAEM" alt="Devops aggregator on Twitter"
 <p>I&#8217;m really interested to see if the whole discussion around the term devops grows over the next year or so, and I&#8217;m hoping this will make it a little easier to see that change happen.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/05/18/Installing-integrity-on-debianubuntu/">
-        Installing Integrity On Debian/Ubuntu
-      </a>
-    </h1>
-
-    <span class="post-date">18 May 2010</span>
-
-    <p>I&#8217;ve been playing with <a href="http://integrityapp.com">Integrity</a> again as a simple continuous integration server and have installed it on a few debian and ubuntu machines in the last few weeks. The current site has good installation instructions for the Ruby side of things but leaves it as an excercise for the installer to make sure all the system level dependencies are installed.</p>
-<p>So probably as much for me in the future, here is what I had to install to get the installation instructions to work for me.</p>
-<% syntax_colorize :bash, type=:coderay do %>
-apt-get install build-essential
-apt-get install ruby
-apt-get install rdoc
-apt-get install sqlite3
-apt-get install libdbd-sqlite3-ruby
-apt-get install libdataobjects-sqlite3-ruby1.8 
-apt-get install libsqlite3-dev
-apt-get install libxml2
-apt-get install libxml2-dev
-apt-get install libxsl-dev
-apt-get install libopenssl-ruby
-<% end %>
-<p>I also needed to install the following package on Ubuntu:</p>
-<% syntax_colorize :bash, type=:coderay do %>
-apt-get install ruby1.8-dev
-<% end %>
-<p>If you want to use a database other than the default SQLite then you won&#8217;t need those packages and I&#8217;ll assume you know what you&#8217;re doing.</p>
   </div>
   
 </div>

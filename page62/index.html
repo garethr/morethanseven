@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/10/21/an-apology-to-xslt/">
+        An apology to XSLT
+      </a>
+    </h1>
+
+    <span class="post-date">21 Oct 2006</span>
+
+    <p>I have to admit to thinking that <span class="caps">XSL</span> was something of a waste of time a while back. I&#8217;ve changed my mine and wanted to muse about why.</p>
+ <p><span class="caps">XML</span> is simple enough to jump right in, and a few years back it had a big enough band wagon to mean jumping on was pretty much required. I think in hindsight, at least in my mind, alot of this was just a little gratuitous. <span class="caps">XML</span> abstraction layers, <span class="caps">XML</span> content management systems, <span class="caps">SOAP</span>, etc.</p>
+ <p>I&#8217;d often seen <span class="caps">XSLT</span> as the template layer in an <span class="caps">XML</span> based content management system and after several looks went back to using light weight systems that made sense. The idea of going from a database to <span class="caps">XML</span> then outputting <span class="caps">HTML</span> via <span class="caps">XSLT</span> just made me wonder why. The rationale that you could then output it as anything (<span class="caps">WML</span>, <span class="caps">PDF</span>, whatever) was very nice, but rarely actually realised from what I saw, and easy enough to do with any half decent templating system. You also always seemed to need more <span class="caps">XSLT</span> that it looked like you should.</p>
+ <p><a href="http://rubyonrails.org">Ruby on Rails</a> even wore as a badge of honor that it didn&#8217;t need to do any <span class="caps">XML</span> pushups to deal with configuration. And even those with a penchant for Java seem to have problems with using <a href="http://www.sdtimes.com/printArticle/column-20060901-05.html"><span class="caps">XML</span> as a programming language</a>.</p>
+ <p>Of late though I&#8217;ve been back playing with APIs, many of which produce <span class="caps">XML</span> in one way or another (whether that&#8217;s <span class="caps">RSS</span>, Atom or some custom format), and <span class="caps">XSL</span> actually comes in pretty handy here for just thowing around content. I did some work with a <a href="http://mini.google.co.uk">Google Mini</a> too using <span class="caps">XSLT</span> and their are some <a href="http://suda.co.uk/projects/X2V/">interesting tricks</a> with <a href="http://microformats.org">Microformats</a> to boot. I haven&#8217;t listened to the <a href="http://muffinresearch.co.uk/wsg/audio/index.xml">podcast</a> yet so I&#8217;m just guessing at the moment but I could see <a href="http://allinthehead.com/">Drew&#8217;s</a> &#8220;Your website as your <span class="caps">API</span>&#8221; talk at the <a href="http://muffinresearch.co.uk/archives/2006/10/21/following-the-wsg-microformats-event/">recent <span class="caps">WSG</span> meeting</a> making use of <span class="caps">XSLT</span>?</p>
+ <p>So, I think I might have changed my mind a bit. <span class="caps">XSL</span>, I think, is going to be a useful skill to have in your toolkit in a world of microformats and APIs. The <a href="http://www.w3schools.com/xsl/">W3Schools <span class="caps">XSL</span> tutorial</a> is a pretty good starting place if you&#8217;ve not used it previously at all. Thought I&#8217;d still rather use a <a href="http://www.cheetahtemplate.org/">decent templating engine</a> for site rendering tasks.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/10/14/virtualhosts-on-mac-os-x/">
         Virtualhosts on Mac OS X
       </a>
@@ -573,23 +590,6 @@
  <p>I only heard about the Nintendo DS Lite getting a browser add on last week, but it peaked my interest. The spread of mass market devices with WiFi and a decent browser throw up interesting possibilities, so it was with a smile on my face that I discovered the browser was going to be <a href="http://opera.com">Opera</a>. Their is quite a bit of information over on their site on <a href="http://www.opera.com/pressreleases/en/2006/02/15/">press releases</a> and a special <a href="http://www.opera.com/products/devices/nintendo/">Nintendo section</a> and all looks good.</p>
  <p>I&#8217;d be interested to see how the two screens thing works for browsing, and how the device copes with the problems of content not being designed for the small screen very often, though <a href="http://www.opera.com/products/mobile/operamini/">Opera Mini</a> did a ridiculously good job. Also of note is that the upcoming Wii is going to use an Opera browser as well. The move from the desktop to focus on devices looks like being a very clever move.</p>
  <p>One minor let down is that the DS browser costs. This looks like it&#8217;s due to extra hardware being required but it&#8217;s still a shame after the <span class="caps">PSP</span> browser was added simply as a software upgrade. Hopefully that wont be a barrier to entry. If and when (ok, when) I get my hands on one (launch 6th of October) I might try and post some tests. The <span class="caps">PSP</span> browser does occasionally fall over on very large sites with a nasty memory error, and I&#8217;m interested in how complete the <span class="caps">CSS</span> and Javascript support are.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/09/18/6-hours-on-a-train-with-code-igniter/">
-        6 hours on a train with Code Igniter
-      </a>
-    </h1>
-
-    <span class="post-date">18 Sep 2006</span>
-
-    <p>I&#8217;ve mentioned <a href="http://codeigniter.com">Code Igniter</a> <a href="http://morethanseven.net/posts/internet-check-media-check">before</a> but only now have I got round to really putting it through it&#8217;s paces by building something proper. I got the opportunity (if you could call it that) thanks to a six hour train journey from Oxford.</p>
- <p>I&#8217;ve been thinking about sprucing up this site for a while, and have a few other personal projects that I really should get round to sorting out. Something I&#8217;ve noted of late is a move, amongst some parties, back to bespoke personal content management systems. <a href="http://adactio.com">Jeremy</a> has been speaking about some of the <a href="http://adactio.com/journal/1162">feaures he has been adding</a> recently, <a href="http://christianmontoya.com">Christian</a> had a <a href="http://www.christianmontoya.com/2006/09/16/enjoying-cake/">few comments</a> too plus <a href="http://snook.ca">Jonathan</a> has been <a href="http://withcake.com/posts/view/snook_ca_using_cakephp">posting</a>  about his recent move to <a href="http://cakephp.org/">CakePHP</a> from <a href="http://www.movabletype.org">Movable Type</a>.</p>
- <p>I find this kind of interesting. Everyone started off with hand rolled solutions, seemed to move to the comfort of <a href="http://textpattern.com">Textpattern</a> or <a href="http://wordpress.org">Wordpress</a> and the more geekely inclined are on the move again. With such large user bases the big blogging platforms are (rightly) spending more time on bug fixes and user experience, rather than kick ass features. And us geeks want more <a href="http://microformats.org">Microformats</a> and mashups that we can shake a stick at. Only this time we get to stand on the shoulders of giants by using frameworks such as <a href="http://rubyonrails.org">Rails</a>, <a href="http://www.djangoproject.com/">Django</a> or <a href="http://codeigniter.com">Code Igniter</a> which means less time doing the boring stuff.</p>
- <p>Short sales pitch. <a href="http://codeigniter.com">Code Igniter</a> is cool, and more. The documentation is first rate and comes along with the download rather than just being available online (useful when your on the train.) It all makes sense as well which is nice, especially if you have some familiarity with the <span class="caps">MVC</span> pattern. It covers the basics so you dont have to &#8211; validation, database abstraction, session hanling. It&#8217;s also easily extensible through a nice plugin architecture and makes no assumpions about what you intend to build. I have a quick and dirty <a href="http://textism.com/tools/textile/">Textile</a> plugin that I need to package up and put out &#8211; some <a href="http://www.codeigniter.com/forums/viewthread/1105/P0/">discussion</a> of this over on the <a href="http://www.codeigniter.com/forums/">forums</a> which I may peruse.</p>
- <p>In short expect to see some minor additions and the like round these parts as I try to transition away from <a href="http://textpattern.com">Textpattern</a> and any problems caused are no doubt the fault of some poor coding somewhere.</p>
- <p>And I wonder what the next step will be? We have been through hand rolled to stable applications to frameworks to hand rolled based on frameworks. Any takers?</p>
   </div>
   
 </div>

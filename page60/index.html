@@ -68,6 +68,19 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/12/25/backgarden/">
+        Backgarden
+      </a>
+    </h1>
+
+    <span class="post-date">25 Dec 2006</span>
+
+    <p>I&#8217;m a fan of <a href="http://backpackit.com">Backpack</a> from <a href="http://37signals.com">37signals</a>. Although you <em>can</em> make pages public their is currently no way to style those differently, or to add content from outside Backpack. That&#8217;s where Backgarden comes in. It&#8217;s a simple <span class="caps">PHP</span> (4 and 5, the <span class="caps">XML</span>/<span class="caps">XSL</span> implementations are slighly different) application that builds a page via the Backpack <span class="caps">API</span> and some <span class="caps">XSL</span> magic that you can put on your site. You just enter the page address and your <span class="caps">API</span> key.</p>
+<p><a href="/_assets/downloads/backgarden/backgarden.zip">Download Zip</a></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/12/23/cms-on-rails/">
         CMS on Rails
       </a>
@@ -139,38 +152,6 @@
  <p>Locally I messed up the domain name but settled on the nicer <a href="http://refreshnewcastle.org">refreshnewcastle.org</a> and with a little help from <a href="http://thewatchmakerproject.com/">Matthew <del>Patterson</del> Pennell</a> have a nice new site. Next year I want to do more than just web site related bits an pieces. Maybe half a tick?</p>
  <p>Now the &#8220;something vague&#8221; idea. Well, <a href="http://morethanseven.net/posts/teaching">teaching web design</a> at Newcastle College definately counts here I think. I didn&#8217;t see this coming and hopefully I&#8217;m doing a good job so far.</p>
  <p>Ok, so not bad going, but I could do better. And looking back over a list I made a year ago is quite interesting. I guess I&#8217;m posting this early to encourage anyone reading it to post a list of things they want to do next year. Anyone got any ideas?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/11/15/mac-virtualhost-follow-up/">
-        Mac Virtualhost follow up
-      </a>
-    </h1>
-
-    <span class="post-date">15 Nov 2006</span>
-
-    <p>A couple of people asked for the details of the virtualhost script I modified for use with <span class="caps">MAMP</span> in a <a href="http://morethanseven.net/posts/virtualhosts-on-mac-os-x#comment">previous post</a>. Apologies for taking a bit of time.</p>
- <p>First I had to make these changes to the original <a href="http://patrickgibson.com/utilities/virtualhost/">virtualhost script</a>:</p>
-<p><code>
-DOC_ROOT_PREFIX="/Applications/MAMP/htdocs" 
-</code></p>
-<p><code>
-&lt;pre&gt;APACHE_CONFIG="/Applications/MAMP/conf/apache" 
-APACHECTL="/Applications/MAMP/Library/bin/apachectl"&lt;/pre&gt;
-</code></p>
- <p>I also made a few changes to httpd.conf in /Applications/<span class="caps">MAMP</span>/conf/apache. From memory first to allow local .htaccess files to override everything on a per directory basis.</p>
-<p><code>
-&lt;pre&gt;&amp;lt;Directory "/Applications/MAMP/htdocs"&amp;gt;
-oAllowOverride All
-&amp;lt;/Directory&amp;gt;&lt;/pre&gt;
-</code></p>
- <p>and then to point to the virtual hosts directory.</p>
-<p><code>
-&lt;pre&gt;NameVirtualHost 127.0.0.1
-Include /Applications/MAMP/conf/apache/virtualhosts&lt;/pre&gt;
-</code></p>
- <p>I keep meaning to do a screen capture tutorial of sorts, so maybe something like this would be a good starting point? We shall see as and when time permits. Probably this time next year. Any problems let me know and I&#8217;ll try and debug.</p>
   </div>
   
 </div>

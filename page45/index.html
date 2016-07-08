@@ -68,6 +68,19 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/02/19/invited-to-join-wasp/">
+        Invited to Join WaSP
+      </a>
+    </h1>
+
+    <span class="post-date">19 Feb 2008</span>
+
+    <p>I had a great time at <a href="http://semanticcamp.tommorris.org/">SemanticCamp</a> over the weekend which was not too much of a surprise. What was a surprise was getting back home to find out that I&#8217;ve been invited to join the <a href="http://www.webstandards.org/">Web Standards Project</a> (WaSP) on the <a href="http://www.webstandards.org/action/edutf">Education Task Force</a>. I even have my <a href="http://www.webstandards.org/about/members/grushgrove/">own page</a>.</p>
+<p>Thanks for inviting me guys. Anyone who has had the misfortune of having me present during a discussion of the current state of web education knows it&#8217;s one of my favourite subjects. Hopefully I can make myself useful around the place and help with getting a few things done. More on this when I know more but in the meantime feel free to pester me endlessly if you have a particular axe to grind.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/02/13/example-of-the-yahoo-live-api/">
         Example of the Yahoo Live Api
       </a>
@@ -231,40 +244,6 @@ pear install phing/phing</code></pre>
 <p>Mike is right in that the IE team are actually going to be shipping two browsers. That has got to be a massive issue for them &#8211; certainly a bigger issue than me adding a new header to my site or a meta element to my pages. But if it lets the second of those browsers support CSS3, HTML5, <span class="caps">XHTML</span>, Canvas and anything else we dream of then I&#8217;m all for it. We all know the first of those browsers just won&#8217;t be up to the task.</p>
 <p>One particular thorny problem I wasn&#8217;t aware of was issues surrounding accessibility. <a href="http://www.brucelawson.co.uk/index.php/2008/accessibility-implications-microsoft-versioning/">Bruce Lawson</a> has some of the details but in short by locking a large number of sites into the ways of IE7 we essentially freeze the (poor) state of accessibility on the web. <a href="http://splintered.co.uk">Patrick Lauke</a> also raises a related issue in the comments regarding further alienating screen reader and assistive technology developers. These points for me are ones I want addressing by Microsoft and one&#8217;s without resolution which would make me change my mind on this whole issue of defaults.</p>
 <p>So, the jury is still out in my mind. I hope it is in the minds of those working closer to the heart of this problem at Microsoft. Like <a href="http://molly.com">Molly</a> I&#8217;m glad this issue has been raised now, rather than simply revealed at launch. I just hope the reason for that was to get the sort of high quality feedback we&#8217;re seeing in some areas of the community in order to test the waters and come to a consensus.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/22/who-loses-out-to-x-ua-compatible/">
-        Who loses out to X-UA-Compatible?
-      </a>
-    </h1>
-
-    <span class="post-date">22 Jan 2008</span>
-
-    <p>If you work on the web you&#8217;ll probably have already seen or noted the existence of the <a href="http://alistapart.com/issues/251">latest issue of A List Apart</a>:</p>
-<ul>
-	<li><a href="http://alistapart.com/articles/beyonddoctype">Beyond <span class="caps">DOCTYPE</span>: Web Standards, Forward Compatibility, and IE8</a></li>
-	<li><a href="http://alistapart.com/articles/fromswitchestotargets">From Switches to Targets: A Standardista&#8217;s Journey</a></li>
-</ul>
-<p>My twitter feed positively exploded with negative feedback on this issue but I&#8217;ve only just got round to reading (and re-reading) the various interesting articles and (some half through through) comments. I though I&#8217;d have a think through who this affects.</p>
-<p>What we&#8217;re disucssing is either adding a meta element to your documents or alternatively sending the relevant <span class="caps">HTTP</span> header. The code for that looks like:</p>
-<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;</code></pre>
-<h3>IE Users</h3>
-<p>Users of Internet Explorer get a bum deal here I think. Their browser is going to get bigger &#8211; potentially a lot bigger. With all those rendering engines rolled into one it&#8217;s also likely to need lots of memory. How this affects the mobile version of IE is anyones guess. Memory and file size are even more important here.</p>
-<h3>Other Browser Vendors</h3>
-<p>I have a feeling they will all go <em>Meh</em> and move along as if nothing happened. Certainly my experience of upgrades to Firefox, Safari and Opera (including recent bleeding edge versions) doesn&#8217;t break any of my bits of the web or the bits I frequent.</p>
-<h3>Web Standards Savvy Designers and Developers</h3>
-<p>A really cool feature for us designers and developers has gone unmentioned I feel. We&#8217;ve been asking Microsoft for one application in which we can test all their browsers in. IE8 will be that browser. Think about it. By changing the contents of the meta element (or the header) we can trigger the rendering engine to use IE6, IE7 or IE8.</p>
-<p>I&#8217;m a big fan of the whole progressive enhancement approach, using new browser features that not everyone supports (generated content, CSS3 selectors, etc.) in a way that they don&#8217;t affect older browsers. If I were to use a feature not yet supported by IE7 but expected in IE8 for instance in this way I would expect it work in IE8. If I include an IE7 <em>X-UA-Compatible</em> declaration this won&#8217;t happen. Which is why I probably won&#8217;t include one. The problem is if I don&#8217;t include it at all I still have the same problem. I&#8217;ll come back to the solution (and the problem with the solution) in a moment.</p>
-<h3>Other Web Designers and Developers</h3>
-<p>Not everyone is using Web Standards, and even less get progressive enhancement. Most of the web is broken and we <em>are not going to fix this</em>. Virtually no one thinks XHTML2 is a good idea because it starts with this fact and says <em>&#8220;Let&#8217;s start again, but get it right this time&#8221;</em>. The fact that all those websites (and more importantly for Microsoft the users of those websites) standardise on IE7 is fine by me. IE7 isn&#8217;t that bad remember.</p>
-<p>So, all in all I don&#8217;t see a major problem for me, or other savvy web designers and developers. I have one issue; namely the strong language around the use of <em>edge</em>.</p>
-<blockquote>
-<p>This option, though strongly discouraged, will cause a site to target the latest IE browser versions as they release.</p>
-</blockquote>
-<p>What this is describing is how things work now. It&#8217;s also how I want to work &#8211; using progressive enhancement to make my websites better when people have browsers that support them. I&#8217;ll be adding the relevant <em>edge</em> headers to my sites by default as I get a moment to tinker.</p>
-<p>In my view this should allow the web to move forward faster with newer features hitting IE sooner, leaving a ghetto populated by IE users who don&#8217;t upgrade quickly and designers and developers who don&#8217;t want to be professional about their craft (or tools that aim for the lowest common denominator). Yes, I&#8217;ll need to add a header to all of my sites in the future but in return I get the latest version of IE that lets me test all previous versions of IE.</p>
   </div>
   
 </div>

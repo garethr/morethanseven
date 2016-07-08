@@ -68,6 +68,48 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/01/24/uri-templates-in-the-real-world/">
+        URI Templates in the Real World
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jan 2007</span>
+
+    <p>I do quite a bit of big picture web site/application design at work (ok, that probably needs more of a description). I get involved in alot of the details that lie somewhere off to the side of the obvious bits that need to be done (mmm, not much better). All those technologies and tools and ideas only tell part of the story of building a successful site or online application. Even something stringing together a good idea, clean markup, good <span class="caps">CSS</span>, some fancy backend code (insert prefered option) and a sprinkling of user centred design tools can fall down on the hidden details; good form labels, help messages that actually help rather than just repeating the problem, organising file systems to allow for simple scaling, skinning and internationalisation, etc.</p>
+ <p><a href="http://plasticbag.org">Tom Coates</a> spoke last year about his concept of <a href="http://www.plasticbag.org/files/native/">Native to a Web of Data</a> which really struck a chord at the time, and not just because I still want <a href="http://www.flickr.com/photos/redux/97126279/">this on a t-shirt</a>. More recently the idea of <a href="http://en.wikipedia.org/wiki/REST"><span class="caps">REST</span></a> has really caught on, especially amongst the dynamic languages crowd &#8211;  you just need to look at Rails 1.2 for an example their. The big picture is <a href="http://www.faqs.org/rfcs/rfc2616.html"><span class="caps">HTTP</span></a> is back and everyone who didn&#8217;t already get it should be doing some reading.</p>
+ <p>Another notable person talking quite a bit about <span class="caps">REST</span>, <span class="caps">HTTP</span> and related issues is <a href="http://bitworking.org">Joe Gregorio</a>. Amongst other interesting posts, I came across one on <a href="http://bitworking.org/news/URI_Templates"><span class="caps">URI</span> Templates</a> a good while ago and have been following the specification to produce recent documentation. The idea is simple and so is the <a href="http://bitworking.org/projects/URI-Templates/draft-gregorio-uritemplate-00.html">specification</a>. A quick example, for a simple <span class="caps">CRUD</span> interface might be:</p>
+<table>
+<tr>
+    <th>Action</th>
+    <th><span class="caps">URI</span></th>
+    <th>Method</th>
+</tr>
+<tr>
+    <td>View</td>
+    <td>/view/{id}</td>
+    <td>Get</td>
+</tr>
+<tr>
+    <td>Add</td>
+    <td>/page/add</td>
+    <td>Get, Post</td>
+</tr>
+<tr>
+    <td>Edit</td>
+    <td>/page/edit/{id}</td>
+    <td>Get, Post</td>
+</tr>
+<tr>
+    <td>Delete</td>
+    <td>/page/delete/{id}</td>
+    <td>Post</td>
+</tr>
+</table>
+ <p>Doing this for a site or application in the early stages of development really helps to highlight what actions are available, and to remove the need for costly changes later in the day. It also helps others learn, mainly through discussion, about the different <span class="caps">HTTP</span> methods and the importance of the <span class="caps">URI</span> in general.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/01/20/posting-to-twitter-using-php/">
         Posting to Twitter using PHP
       </a>
@@ -199,24 +241,6 @@ if (empty($buffer)) {
  <p>Phew. Their is also some work going on on profiles for TV, Printed media and Mobile. I&#8217;m interested in a few of these modules &#8211; particularly those dealing with Web Typography and the Basic User Interface module which deals with <em>the look of form elements in their various states and more cursors and colors to describe GUIs (graphical user interfaces) that blend well with the user&#8217;s desktop environment.</em></p>
  <p><a href="http://css3.info">CSS3 Info</a> also has lots of information worth reading, including some good examples of parts of CSS3 that have been implemented ahead of recommendation in the <a href="http://www.css3.info/preview/">preview section</a>. My favourite bit however has to be the <a href="http://www.css3.info/selectors-test/test.html"><span class="caps">CSS</span> selector test</a> by <a href="http://rakaz.nl/">Niels Leenheer</a>. You can read a little more about that, and <a href="http://rakaz.nl/item/how_well_do_browsers_support_css_selectors">how different browsers do</a>, or at least how they did in October. The <a href="http://www.w3.org/Style/CSS/Test/CSS3/Selectors/current/html/index.html">W3C test suite</a> is available too, but no where near as slick.</p>
  <p>I&#8217;ve even gone and installed a <a href="http://nightly.webkit.org/">WebKit nighly build</a> to try out some of the features only supported their at the moment. Who knows? I might even add new designs to the site using new selectors as a treat for those <em>silly</em> enough to be using such experimental browsers.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/01/07/new-year-new-site/">
-        New year New site
-      </a>
-    </h1>
-
-    <span class="post-date">07 Jan 2007</span>
-
-    <p>If you&#8217;re viewing this post in your feedreader then you might not notice anything different but it&#8217;s all change around these parts. I&#8217;ve gone all <a href="http://radiantcms.org">Radiant</a> and with it a new slightly minimal design.</p>
- <p>Radiant, for those that missed my earlier gushing post is a Rails based Content Management System that looks something like this:</p>
- <p><img src="/_assets/media/imgRadiantAdmin.png" alt="Morethanseven admin panel from Radiant" /></p>
- <p>I&#8217;m going to post a few follow ups about how I did certain things using Radiant and my particular setup. All in all it&#8217;s been fun. Always a good sign when developing something. I ported all my old posts across from Textpattern and I&#8217;ve posted a project post (in my new <a href="http://morethanseven.net/projects-feed">project feed</a>) about <a href="http://morethanseven.net/projects/txp2radiant">TXP2Radiant</a> for anyone else looking to do the same.</p>
- <p>Their will likely be a few gremlins lying around that I&#8217;ll get to over the coming weeks, and I have some decent posts in mind to keep people interested. Expect less about what I&#8217;m up to and more about the pressing issues of web design and development that I keep meaning to write about.</p>
- <p>The design is a little on the minimal side at the moment but on purpose. I want to play around with different designs for the site while keeping everything clean and simple. I might even set a file size limit for the <span class="caps">CSS</span> and I definately want to start playing more with CSS3 selectors (more than 80% of you dont use IE6, for the other 20% <em>please</em> upgrade). I&#8217;m not going to say anything I&#8217;d regret, like one new design every other month, but I can dream.</p>
- <p>As I get more familiar with Rails (one of the reasons for the move) and Radiant I&#8217;ll likely add some bits like a <a href="http://flickr.com">Flickr</a> powered gallery and maybe something to do with <a href="http://twitter.com">Twitter</a> but for the moment it&#8217;s all about the content.</p>
   </div>
   
 </div>

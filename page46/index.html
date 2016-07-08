@@ -68,6 +68,40 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/01/22/who-loses-out-to-x-ua-compatible/">
+        Who loses out to X-UA-Compatible?
+      </a>
+    </h1>
+
+    <span class="post-date">22 Jan 2008</span>
+
+    <p>If you work on the web you&#8217;ll probably have already seen or noted the existence of the <a href="http://alistapart.com/issues/251">latest issue of A List Apart</a>:</p>
+<ul>
+	<li><a href="http://alistapart.com/articles/beyonddoctype">Beyond <span class="caps">DOCTYPE</span>: Web Standards, Forward Compatibility, and IE8</a></li>
+	<li><a href="http://alistapart.com/articles/fromswitchestotargets">From Switches to Targets: A Standardista&#8217;s Journey</a></li>
+</ul>
+<p>My twitter feed positively exploded with negative feedback on this issue but I&#8217;ve only just got round to reading (and re-reading) the various interesting articles and (some half through through) comments. I though I&#8217;d have a think through who this affects.</p>
+<p>What we&#8217;re disucssing is either adding a meta element to your documents or alternatively sending the relevant <span class="caps">HTTP</span> header. The code for that looks like:</p>
+<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;</code></pre>
+<h3>IE Users</h3>
+<p>Users of Internet Explorer get a bum deal here I think. Their browser is going to get bigger &#8211; potentially a lot bigger. With all those rendering engines rolled into one it&#8217;s also likely to need lots of memory. How this affects the mobile version of IE is anyones guess. Memory and file size are even more important here.</p>
+<h3>Other Browser Vendors</h3>
+<p>I have a feeling they will all go <em>Meh</em> and move along as if nothing happened. Certainly my experience of upgrades to Firefox, Safari and Opera (including recent bleeding edge versions) doesn&#8217;t break any of my bits of the web or the bits I frequent.</p>
+<h3>Web Standards Savvy Designers and Developers</h3>
+<p>A really cool feature for us designers and developers has gone unmentioned I feel. We&#8217;ve been asking Microsoft for one application in which we can test all their browsers in. IE8 will be that browser. Think about it. By changing the contents of the meta element (or the header) we can trigger the rendering engine to use IE6, IE7 or IE8.</p>
+<p>I&#8217;m a big fan of the whole progressive enhancement approach, using new browser features that not everyone supports (generated content, CSS3 selectors, etc.) in a way that they don&#8217;t affect older browsers. If I were to use a feature not yet supported by IE7 but expected in IE8 for instance in this way I would expect it work in IE8. If I include an IE7 <em>X-UA-Compatible</em> declaration this won&#8217;t happen. Which is why I probably won&#8217;t include one. The problem is if I don&#8217;t include it at all I still have the same problem. I&#8217;ll come back to the solution (and the problem with the solution) in a moment.</p>
+<h3>Other Web Designers and Developers</h3>
+<p>Not everyone is using Web Standards, and even less get progressive enhancement. Most of the web is broken and we <em>are not going to fix this</em>. Virtually no one thinks XHTML2 is a good idea because it starts with this fact and says <em>&#8220;Let&#8217;s start again, but get it right this time&#8221;</em>. The fact that all those websites (and more importantly for Microsoft the users of those websites) standardise on IE7 is fine by me. IE7 isn&#8217;t that bad remember.</p>
+<p>So, all in all I don&#8217;t see a major problem for me, or other savvy web designers and developers. I have one issue; namely the strong language around the use of <em>edge</em>.</p>
+<blockquote>
+<p>This option, though strongly discouraged, will cause a site to target the latest IE browser versions as they release.</p>
+</blockquote>
+<p>What this is describing is how things work now. It&#8217;s also how I want to work &#8211; using progressive enhancement to make my websites better when people have browsers that support them. I&#8217;ll be adding the relevant <em>edge</em> headers to my sites by default as I get a moment to tinker.</p>
+<p>In my view this should allow the web to move forward faster with newer features hitting IE sooner, leaving a ghetto populated by IE users who don&#8217;t upgrade quickly and designers and developers who don&#8217;t want to be professional about their craft (or tools that aim for the lowest common denominator). Yes, I&#8217;ll need to add a header to all of my sites in the future but in return I get the latest version of IE that lets me test all previous versions of IE.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/01/19/a-few-interesting-upcoming-events/">
         A few interesting upcoming events
       </a>
@@ -165,31 +199,6 @@ pear install symfony/pake</code></pre>
     <p>It turns out that their are now nearly 40 <a href="http://www.refreshingcities.org/">Refresh</a> groups scattered around and about. Here&#8217;s a <a href="http://maps.google.co.uk/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;ll=43.580391,-56.25&amp;spn=98.199649,202.5&amp;z=2&amp;om=1&amp;msid=103845568847240179832.000442fedc66a55c4744b">quick map of them all</a>. It&#8217;s pretty interesting how all these groups have picked up on a simple word.</p>
 <p><iframe width="560" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps/ms?ie=UTF8&amp;hl=en&amp;om=1&amp;s=AARTsJpLByU1_UoXjtzM2l03IoKFmn1HHw&amp;msa=0&amp;msid=103845568847240179832.000442fedc66a55c4744b&amp;ll=38.891033,-76.992187&amp;spn=90.392203,196.875&amp;z=2&amp;output=embed"></iframe></p>
 <p>For anyone in the Newcastle are we&#8217;re having a meetup next week, on Thursday evening, as it happens, the <a href="http://upcoming.yahoo.com/event/396927/">details are on Upcoming</a> if you fancy coming along.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/04/things-to-entertain-us-in-2008/">
-        Things to entertain us in 2008 
-      </a>
-    </h1>
-
-    <span class="post-date">04 Jan 2008</span>
-
-    <p>This being a blog and it being the start of a new year (2008 for those not following closely) I feel obliged to list of few predictions of sorts. Rather than concrete <em>this will happen</em> things here are a few bits and pieces I think will be interesting over the next year.</p>
-<h2>Site Specific Browsers</h2>
-<p>A <a href="http://blog.whatfettle.com/2008/01/04/a-vision-of-the-web-in-2008/">few</a> <a href="http://factoryjoe.com/blog/2007/12/28/fluid-prism-mozpad-and-site-specific-browsers/">people</a> have already waxed lyrical about Site Specific Browsers and after trying out &#8220;Prism&#8221;:<a href="http://labs.mozilla.com/2007/10/prism/">Prism</a> for a few weeks I can say I really like the idea. Their are a couple of teething problems, both with the idea and the current implementations, but all seem solvable with a little focus. Security (sandbox everything), memory footprint (as small as possible) and integration with the desktop (local storage, <a href="http://gears.google.com/">Google Gears</a>?).</p>
-<p>I think their are already a couple of extreme examples of this idea in the wild, both of which I&#8217;m already pretty interested in. <a href="http://www.joost.com/">Joost</a> are doing some pretty cool things with their bespoke application and web site backend and <a href="http://www.songbirdnest.com/">Songbird</a> just hit version 0.4 and is looking pretty nice.</p>
-<h2>Mobile</h2>
-<p>We&#8217;ll see more and more people playing with mobile apps next year I&#8217;m thinking. Mobile browsers (special mentions to <a href="http://www.operamini.com/">Opera Mini</a> and Mobile Safari here) are getting better and better and the iPhone (at least in the UK) has hopefully started something with regards fixed cost unlimited data. With some good <a href="http://mobilewebbook.com/">materials</a> already in print, next years <a href="http://future-of-mobile.com/">Future of Mobile</a> likely to be bigger and better than before and half the web developers I know pondering how they get to work with mobile I see more cool stuff happening here.</p>
-<h2>The Backend</h2>
-<p><a href="http://www.wait-till-i.com/">Chris</a> has made a <a href="http://www.wait-till-i.com/2007/12/30/lets-make-2008-the-year-of-embracing-the-server-side-with-ajax">call to arms</a><br />
- (of sorts) and I&#8217;m hoping this comes to pass. It&#8217;s becoming more and more apparent that the best teams are agile and multi-disciplinary and both sides of this divide have lots to gain from each other. For starters most front end people could probably do with learning some good old fashioned software engineering stuff; build tools, source control, deployment, testing, etc. As for the backend guys; how about unobtrusive applications, accessibility and the importance of good quality markup? Apologies for the huge generalisations here, but hopefully you know what I&#8217;m getting at.</p>
-<h2>Software as Infrastructure</h2>
-<p><a href="http://blog.gardeviance.org/">Simon Wardley</a> and others have been talking about software systems as infrastructure for a good while and I think we&#8217;ve seen glimpses of this in the last year. Whether it&#8217;s people using <a href="http://twitter.com">Twitter</a> for interesting projects (<a href="http://foamee.com">Foamee</a> for instance) or Amazon and their web service platform (<a href="http://aws.amazon.com/s3">S3</a>, <a href="http://aws.amazon.com/ec2">EC2</a>, <a href="http://www.amazon.com/b?ie=UTF8&amp;node=342335011">SimpleDB</a>, <a href="http://www.amazon.com/b?ie=UTF8&amp;node=342429011">DevPay</a>) we have a start. I think we&#8217;ll see lots more of this sort of drop in web based software over the next year. The key seems to be thinking about things in a RESTful manner, and throwing in as much publicly exposed <span class="caps">JSON</span>, <span class="caps">RSS</span> and Microformats as possible. It will also be interesting to see if the <a href="http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-09.html">Atom Publishing Protocol</a> takes off next year too.</p>
-<h2>Education</h2>
-<p>Education is coming up more and more in conversation between people involved in web design and development it seams, both off and <a href="http://www.airbagindustries.com/archives/airbag/help.php">online</a>. I had a great conversation with <a href="http://www.rachelandrew.co.uk/">Rachel</a> and <a href="http://www.contentwithstyle.co.uk">Mike</a> after @media and then another good discussion with Dan Dixon, <a href="http://andybudd.com/">Andy</a>, <a href="http://kid666.com/">Tom</a> and others at barcamp and know other smart people are thinking about this too. I&#8217;m hoping to get something off the group here in the next month or so but would love to know about any other industry driven initiatives anyone might know about?</p>
-<p>Ok, so that&#8217;s more a list of things I <em>think</em> I&#8217;ll end up focusing on (as much as I ever focus on anything) over the next year. We&#8217;ll see how that goes and if other things crop up that are more interesting. What about you? Anything you think is going to be play worthy next year?</p>
   </div>
   
 </div>

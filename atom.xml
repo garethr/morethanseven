@@ -4,13 +4,139 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2015-12-29T16:50:08+00:00</updated>
+ <updated>2016-07-08T20:02:56+01:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Everyone is Not a Software Company</title>
+   <link href="http://www.morethanseven.net/2016/07/05/everyone-is-not-a-software-company/"/>
+   <updated>2016-07-05T00:00:00+01:00</updated>
+   <id>http://www.morethanseven.net/2016/07/05/everyone-is-not-a-software-company</id>
+   <content type="html">&lt;p&gt;The &lt;em&gt;Everyone is a Software Company&lt;/em&gt; meme has been around for a
+&lt;a href=&quot;http://www.forbes.com/sites/techonomy/2011/11/30/now-every-company-is-a-software-company/#22c372311009&quot;&gt;number&lt;/a&gt;
+&lt;a href=&quot;http://www.zdnet.com/article/now-that-everyone-is-a-software-company-should-they-operate-like-software-companies/&quot;&gt;of&lt;/a&gt;
+&lt;a href=&quot;http://blogs.gartner.com/peter-sondergaard/everyone-is-a-technology-company/&quot;&gt;years&lt;/a&gt;,
+but it feels increasingly hard to get away from recently. That prompted
+this post.&lt;/p&gt;
+
+&lt;h2&gt;But what do we mean by Software Company?&lt;/h2&gt;
+
+&lt;p&gt;To be software company you&amp;#39;re going to need to employee software
+engineers and other professionals. Applying that logic to a large
+number of companies at once, and looking at how existing
+&lt;em&gt;software companies&lt;/em&gt; are setup, we find a few large problems.&lt;/p&gt;
+
+&lt;h2&gt;Google as an example&lt;/h2&gt;
+
+&lt;p&gt;In my talk at Velocity, entitled &lt;a href=&quot;https://speakerdeck.com/garethr/the-two-sides-to-google-infrastructure-for-everyone-else&quot;&gt;The Two Sides of Google Infrastructure
+for Everyone
+Else&lt;/a&gt;
+I argued both for and against the idea of wholesale adoption of
+Google-like software and development/operations practices. What makes
+Google a software company? Even though they derive the lions
+share of revenue from advertising it&amp;#39;s easy to argue that
+Google are a software company. But what does that look like?&lt;/p&gt;
+
+&lt;p&gt;From the &lt;a href=&quot;https://abc.xyz/investor/pdf/20151231_alphabet_10K.pdf&quot;&gt;Google Annual Report
+2015&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;61,814 full-time employees: 23,336 in research and development,
+19,082 in sales and marketing, 10,944 in operations, and 8,452
+in general and administrative functions&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, roughly 50% of Google is involved in building or running software.
+&lt;a href=&quot;https://www.glassdoor.com/Salary/Google-Salaries-E9079.htm&quot;&gt;Glassdoor&lt;/a&gt;
+says salaries for engineers at Google average about $126,000-$162,000.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm&quot;&gt;US Bureau of Labor Statistics says&lt;/a&gt;
+that in 2014 the number of computer programming jobs in the US
+was 1,114,000, with median pay in 2015 of $100,690 a year. The
+total number of jobs in the US is about 143 million, with the
+average wages at $44,569.20 according to the &lt;a href=&quot;https://www.ssa.gov/oact/cola/awidevelop.html&quot;&gt;Social Security
+Administration&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The Google Annual Report also states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Competition for qualified personnel in our industry is intense,
+particularly for software engineers, computer
+scientists, and other technical staff&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, quick summary:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Software engineers are expensive relative to others employees&lt;/li&gt;
+&lt;li&gt;Demand for the best engineers means even higher wages&lt;/li&gt;
+&lt;li&gt;There isn&amp;#39;t a large surplus of unemployed software engineers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now the data above is mainly from US sources, although the Google data
+is from an international company with offices around the world. My
+experience says this is likely similar in Europe. Looking into data for
+India and China would be interesting.&lt;/p&gt;
+
+&lt;h2&gt;Problems&lt;/h2&gt;
+
+&lt;p&gt;One obvious problem is short-term supply and demand. Everyone wants
+experienced software folks for their transformation effort. But the more
+organisations that buy into the &lt;em&gt;everyone is a software company&lt;/em&gt; story
+the greater the demand for a finite supply of people. For most
+that means you&amp;#39;ll to able to find less people that you want because of
+competition and afford even less people because all that competition
+pushes up salaries.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ve seen that firsthand while working for the UK Government. People
+occasionally complained that Government was hampering commercial
+organisations growth by employing lots of developers and operations
+people in London.&lt;/p&gt;
+
+&lt;p&gt;You&amp;#39;re also immediately in competition for software professionals with
+existing software companies. Given the high salaries, most of
+those employers already have developer friendly working environments and
+established hiring practices suited to luring developers to work for
+them. This sort of special case is hard for large companies without an
+existing empowered developer organisation. I saw a lot of that at the
+Government as well.&lt;/p&gt;
+
+&lt;p&gt;But the real macro problems are much more interesting. Even if you think
+50% is a high mark for the ratio of software folk to others, you probably
+agree you need a lot more than you have today. And those developers just
+don&amp;#39;t exist today to allow &lt;em&gt;everyone to be a software company&lt;/em&gt;. Nor
+would I argue is education in the near term producing enough skilled
+people to fill that gap tomorrow. So, what happens?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Does everyone sort-of become a software company but not quite?&lt;/li&gt;
+&lt;li&gt;Do most organisations struggle to hire and maintain a software team
+and see the endeavour fail?&lt;/li&gt;
+&lt;li&gt;Do increasing numbers of developers end up working for a small number
+of larger and larger software companies?&lt;/li&gt;
+&lt;li&gt;Does outsourcing bounceback,  adapt and demonstrate innovation and
+transformation qualities to go along with the scale?&lt;/li&gt;
+&lt;li&gt;Countries like India or China are able to produce enough software engineers
+at scale to allow there companies to act on everyone becoming a
+software company?&lt;/li&gt;
+&lt;li&gt;We see clear winners and losers, ie. companies which become software
+companies and accelarate away from those that don&amp;#39;t?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Caveats&lt;/h2&gt;
+
+&lt;p&gt;The above is not a detailed analysis, and undoutedly has a few holes. It
+also doesn&amp;#39;t overly question the &lt;em&gt;advantage&lt;/em&gt; of being a software
+company, or really question what we actually mean by &lt;em&gt;everyone&lt;/em&gt;. But I
+think the central point holds: Everyone is NOT a software company, nor
+will everyone be a software company any time soon.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Operations is more than just Systems Administration</title>

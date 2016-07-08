@@ -68,6 +68,36 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/15/let-you-sys-admin-override-your-django-settings/">
+        Let you Sys Admin Override your Django Settings
+      </a>
+    </h1>
+
+    <span class="post-date">15 Feb 2009</span>
+
+    <p>The previous <a href="http://morethanseven.net/2009/02/11/django-settings-tip-setting-relative-paths/">Django settings tip</a> seemed to go down well so I thought I&#8217;d jot down a few more over the next few weeks. Most of these have come out of working with a decent sized Django team at <a href="http://thisisglobal.com">Global</a> so I can&#8217;t take credit for anything but writing them down for the most part. For this example I think <a href="http://alixandalex.com/obfuscated-signatures/">Alex Knowles</a> did the original version.</p>
+<p>I was talking with out friendly <a href="http://search.cpan.org/~rclamp/">sys</a> <a href="http://www.unixdaemon.net/">admins</a> on Friday about a new application and whether they were happy with some application specific logging (using the Python logging module) I&#8217;d build in. Nothing fancy, just application logging to a rotated log file for system events. Their answer was yes, as long as they could control where the log files ended up and the maximum file size, ideally without having to play around in the code or to redeploy the application if they wanted to move the files elsewhere.</p>
+<p>These things were already specified in the settings file rather than hardcode into the application but that only gets us half way. The standard Linux way of setting this sort of thing is with a configuration file stored in the /etc directory. So we ended up with the following snippet of code in our settings.py file.</p>
+<pre># we're going to allow overriding of settings via a yml file.
+# This makes live nicer for anyone managing the box
+# and means settings can be overloaded without redeploying the site
+SETTINGS_OVERIDE = "/etc/application_name.yml"
+try:
+    file = open(SETTINGS_OVERIDE)
+    for key, value in yaml.load(file).items():
+        globals()[key]=value
+except:
+    # we don't always have the file around or need the setting 
+    # defined so best to be quite if things go wrong
+    pass</pre>
+<p>Then in the yaml file you can simply clobber any of the settings using a simple name value pair approach.</p>
+<pre>LOG_FILE: "/var/log/application_name.log"</pre>
+<p>It lets us keep production paths that might change out of the developers code, at the same time as giving the sys admins a familiar way of managing the production environment.</p>
+<p>It does have one downside, if you&#8217;re not aware of it&#8217;s presence then it can make debugging settings related issues a pain. With that in mind you could wrap it so as to only work this way when <span class="caps">DEBUG</span> is False, or take the approach here which is to leave extensive comments.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/11/django-settings-tip-setting-relative-paths/">
         Django Settings Tip - Setting Relative Paths 
       </a>
@@ -161,19 +191,6 @@ import pdb
 for attr in ('stdin', 'stdout', 'stderr'):
     setattr(sys, attr, getattr(sys, '__%s__' % attr))
 pdb.set_trace()</pre>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/07/new-version-radiant-cms-out-today/">
-        New Version of Radiant CMS Out Today
-      </a>
-    </h1>
-
-    <span class="post-date">07 Feb 2009</span>
-
-    <p>Via <a href="http://github.com/radiant/radiant/tree/master">tagging a new release</a> on GitHub I see a new version of <a href="http://radiantcms.org/">Radiant</a> (0.7) has been released. Radiant is a really nice <span class="caps">CMS</span> for smaller projects, it&#8217;s used on the official <a href="http://www.ruby-lang.org/">Ruby</a> site and I used it here at one point.</p>
-<p>Go check out the <a href="http://radiantcms.org/blog/archives/2009/02/07/radiant-0-7-0---intaglio-release-final/">blog post for the full list of the changes</a>.</p>
   </div>
   
 </div>

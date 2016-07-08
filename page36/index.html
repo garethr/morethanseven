@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/14/localbuilder-github/">
+        Localbuilder on GitHub
+      </a>
+    </h1>
+
+    <span class="post-date">14 Jan 2009</span>
+
+    <p>One of several little projects I have up and running on <a href="http://github.com">GitHub</a> at present is <a href="http://github.com/garethr/localbuilder/tree/master">LocalBuilder</a>. It&#8217;s a pretty simple little script which watches for changes in a given directory and when they occur runs a given command. I knocked it together to use to trigger the running of a test suite each time I save files in a project. It&#8217;s written in Python but you could use it to run commands in any language you like.</p>
+<p>It&#8217;s all pretty simple Python really and is hopefully reasonably commented and tested so if you&#8217;re interested you can follow along with <a href="http://github.com/garethr/localbuilder/tree/master">the code</a>. If you just want to use the damn thing then:</p>
+<pre><code>./localbuilder --path /path/to/watch --command /command/to/execute</code></pre>
+<p>It turns out Ruby has a much nicer tool to do this and more in autotest, part of the <a href="http://www.zenspider.com/ZSS/Products/ZenTest/">ZenTest</a> suite of testing tools. I&#8217;m finding more and more very nice bits of code written in Ruby of late, but that&#8217;s probably a whole different blog post.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/11/speaking-bamboo-juice/">
         Speaking at Bamboo Juice
       </a>
@@ -152,19 +167,6 @@ conn.request("POST", "/appengine-books/builds")</pre>
 </ul>
 <p>I also have a feeling some communities are happier knocking out little tools than others. The Ruby community in particular seems busy at the moment and their is a great deal of good stuff in Java.</p>
 <p>One last thought. How do you go about finding new tools that might work nicely in a web development world? I read far too much of the internet on a daily basis and I still miss interesting stuff more often than not. I only came across <a href="http://github.com/foca/integrity/tree/master">Integrity</a> yesterday for instance.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/12/13/search-genres-spotify/">
-        Search for Genres on Spotify
-      </a>
-    </h1>
-
-    <span class="post-date">13 Dec 2008</span>
-
-    <p><a href="http://www.spotify.com/">Spotify</a> is great. It seems stable, the desktop interface is simple and straight forward, and it has an entire album of emo bands doing covers of other emo bands. One thing that&#8217;s not quite clear just yet in the interface however is how to search for all the Rock tracks, or more specifically how to search for all the tracks in a given genre.</p>
-<p>Turns out it&#8217;s quite simple. Just do a search for <em>genre:Rock</em>. My guess is there are various other textual shortcuts hidden in that search box. If anyone knows of any others post a comment.</p>
   </div>
   
 </div>
