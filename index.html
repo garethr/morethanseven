@@ -68,6 +68,96 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2016/10/07/infrakit-hello-world/">
+        InfraKit Hello World
+      </a>
+    </h1>
+
+    <span class="post-date">07 Oct 2016</span>
+
+    <p>Docker just shipped <a href="https://github.com/docker/infrakit">InfraKit</a> a few days ago at LinuxCon
+and, while at the Docker Distributed Systems Summit, I wanted to see if I could get a hello world
+example up and running. The documentation is lacking at the moment, epecially around how to tie the
+different components like instances and flavors together.</p>
+
+<p>The following example isn&#39;t going to do anything particularly useful, but it&#39;s hopefully simple
+enough to help anyone else trying to get started. I&#39;m assuming you&#39;ve checked out and built the
+binaries as described in the <a href="https://github.com/docker/infrakit#building">README</a>.</p>
+
+<p>First create a directory. We&#39;re going to be using InfraKit to manage local files in that directory 
+as part of the demo.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mkdir test
+</code></pre></div>
+<p>Now create an InfraKit configuration file. We&#39;re going to use the <code>file</code> instance plugin to manage
+files in out directory. This means everything works on the local machine, rather than trying to 
+launch real infrastructure in AWS or similar. InfraKit also requires a <code>flavor</code> plugin. I&#39;m using
+<code>vanilla</code> here just to meet the requirement for a flavor plugin, but it&#39;s not going to actually do
+anything in this demo. It might be useful to write a noop flavor plugin or similar.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cat garethr.json
+</code></pre></div><div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;garethr&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Instance&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;Plugin&quot;</span><span class="p">:</span> <span class="s2">&quot;instance-file&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;Flavor&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;Plugin&quot;</span><span class="p">:</span> <span class="s2">&quot;flavor-vanilla&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;Size&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>InfraKit is based on running separate plugins. Each plugin runs as a separate process and provides
+a filesystem socket in <code>/run/infrakit/plugins</code>. First start up the <code>file</code> plugin:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/file --dir=./test
+INFO[0000] Starting plugin
+INFO[0000] Listening on: unix:///run/infrakit/plugins/instance-file.sock
+INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/instance-file.sock err= &lt;nil&gt;
+</code></pre></div>
+<p>Next, in a separate terminal run the vanilla plugin:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/vanilla
+INFO[0000] Starting plugin
+INFO[0000] Listening on: unix:///run/infrakit/plugins/flavor-vanilla.sock
+INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/flavor-vanilla.sock err= &lt;nil&gt;
+</code></pre></div>
+<p>An finally run the group plugin. I&#39;m passing <code>--log=5</code> to enable more verbose outout so it&#39;s easier to see
+what&#39;s going on with the group.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/group --log=5
+INFO[0000] Starting discovery
+DEBU[0000] Opening: /run/infrakit/plugins
+DEBU[0000] Discovered plugin at unix:///run/infrakit/plugins/instance-file.sock
+INFO[0000] Starting plugin
+INFO[0000] Starting
+INFO[0000] Listening on: unix:///run/infrakit/plugins/group.sock
+INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/group.sock err= &lt;nil&gt;
+</code></pre></div>
+<p>With that all setup we can create a group based on our configuration file from above.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/cli group --name group watch garethr.json
+watching garethr
+</code></pre></div>
+<p>Have a look in the <code>test</code> directory. You should see a single file has been created.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ls test
+instance-1475833380
+</code></pre></div>
+<p>Let&#39;s delete that file and see what happens:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rm test/* 
+</code></pre></div>
+<p>Hopefully InfraKit will spot the instance (a file in this case) no longer exists and recreate it. You should
+see something like the following in the logs:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">INFO[0612] Created instance instance-1475833820 with tags map[infrakit.config_sha:B2MsacXz8V_ztsjAzu3tu3zivlw= infrakit.group:garethr]
+</code></pre></div>
+<p>This is obviously a less-than-useful example but hopefully provides a
+good hello world example for anyone trying to run InfraKit in it&#39;s
+current early stage.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2016/07/05/everyone-is-not-a-software-company/">
         Everyone is Not a Software Company
       </a>
@@ -95,10 +185,10 @@ number of companies at once, and looking at how existing
 for Everyone
 Else</a>
 I argued both for and against the idea of wholesale adoption of
-Google-like software and development/operations practices. What makes
-Google a software company? Even though they derive the lions
-share of revenue from advertising it&#39;s easy to argue that
-Google are a software company. But what does that look like?</p>
+Google-like software and development/operations practices.
+Even though they derive the lions share of revenue from advertising it&#39;s
+easy to argue that Google are a software company. But what does that look like?
+What makes Google a software company?</p>
 
 <p>From the <a href="https://abc.xyz/investor/pdf/20151231_alphabet_10K.pdf">Google Annual Report
 2015</a></p>
@@ -133,13 +223,14 @@ scientists, and other technical staff</p>
 <ul>
 <li>Software engineers are expensive relative to others employees</li>
 <li>Demand for the best engineers means even higher wages</li>
+<li>Proportionally there aren&#39;t many software developers</li>
 <li>There isn&#39;t a large surplus of unemployed software engineers</li>
 </ul>
 
 <p>Now the data above is mainly from US sources, although the Google data
 is from an international company with offices around the world. My
 experience says this is likely similar in Europe. Looking into data for
-India and China would be interesting.</p>
+India and China would be super interesting I&#39;d wager.</p>
 
 <h2>Problems</h2>
 
@@ -186,13 +277,18 @@ software company?</li>
 companies and accelarate away from those that don&#39;t?</li>
 </ul>
 
+<p>Personally I think to take advantage of the idea behind the meme we&#39;re
+going to need order of magnitude more efficient approaches to software
+delivery. What that looks like is the most interesting question of all.</p>
+
 <h2>Caveats</h2>
 
 <p>The above is not a detailed analysis, and undoutedly has a few holes. It
 also doesn&#39;t overly question the <em>advantage</em> of being a software
 company, or really question what we actually mean by <em>everyone</em>. But I
 think the central point holds: Everyone is NOT a software company, nor
-will everyone be a software company any time soon.</p>
+will everyone be a software company any time soon, unless we come up
+with a fundamentally better approach to service delivery.</p>
 
   </div>
   
@@ -481,173 +577,6 @@ good place to start understanding the API.</p>
 <h2>Formal Proofs</h2>
 
 <p>Knowing whether an application really does exactly what you want it to do (and no more) is a hard problem to solve. Unit tests and other form of automated testing help, but are still reliant on people to both write and design the tests. A formal proof system can provide much stronger guarentees of correctness, it’s an approach used in some cases for missing-critical components of <a href="http://cacm.acm.org/magazines/2015/4/184701-how-amazon-web-services-uses-formal-methods/fulltext">Amazon’s AWS</a>. MirageOS is implemented in OCaml. One of the most popular OCaml programmes is <a href="https://coq.inria.fr/">Coq</a>, which just so happens to be a formal proof management system. I’ve not seen many examples yet of this approach, probably due to the effort involved, but the capability is there for building formally specified unikernels. I’d wager a similar thing is possible with Haskell and <a href="https://github.com/GaloisInc/HaLVM">HalVM</a>. Making that easier to do for typical developers could open up much more secure development practices for certain usecases.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/08/21/operating-unikernel-challenges/">
-        A Discussion of The Operational Challenges With Unikernels
-      </a>
-    </h1>
-
-    <span class="post-date">21 Aug 2015</span>
-
-    <h2>What are Unikernels</h2>
-
-<p>Most of this post assumes a basic understanding of what unikernels are
-so I’d recommend reading <a href="http://queue.acm.org/detail.cfm?id=2566628">Unikernels – the rise of the virtual library
-operating system</a> before moving
-on.</p>
-
-<h2>Why are Unikernels interesting</h2>
-
-<p>As a starting point: complexity. Managing infrastructure, and the
-software that runs on it, is too complicated. You can impose
-organisational rules to control this complexity (we only deploy on
-Debian, we only run JVM applications, the only allowed database is
-MySQL) but that limits you in other ways too, and in reality is nearly
-always broken somewhere in any non-trivial environment (this appliance
-uses Ubuntu, this software is only certified on Windows, PostgreSQL
-doesn’t run on the JVM). So you turn to software to manage that
-complexity; Puppet or Chef do a great job of allowing configuration
-complexity to be managed in code (where you can test it) and Docker
-allows for bundles of complexity to be isolated from other bundles of
-complexity. But there are still an awful lot of moving parts.</p>
-
-<p>Another reason is the growing realisation that security is important.
-Securing systems on the internet is hard. Even though the basics are
-broadly understood they are often not implemented, and the people
-attempting to compromise systems are smart, well paid and highly
-incentivised (basically like you). It’s generally easier to break
-something than to build it. Part of this is a numbers game – to run a
-reasonable sixed system you might need to run 50 different services, and
-install 200 packages on every host. An attacker has to compromise just
-one of those to win.</p>
-
-<p>A further reason, if one were needed, is the proliferation of many small
-internet connected devices, aka. The Internet of Things. Part of this
-relates to the above points about security concerns, but some of it is
-simply a matter of managing that many single purpose, low power,
-devices. The overhead of a typical general purpose operating system and
-application runtime just don’t fit this model.</p>
-
-<p>Enter unikernels. Unikernels actually remove unneeded complexity. You’re
-running a hypervisor and the unikernel and that’s it. The unikernel
-contains only those libraries that you have specifically required. That
-drastically reduces the surface area for attack as well as meaning
-you’re running less software, hopefully enough less that your power
-needs are reduced too. By specifically requiring individual libraries
-you’re also making complexity visible. Rather than using a general
-purpose operating system with it’s 100s of packages and millions of
-lines of code you are at least choosing what to include.</p>
-
-<h2>Operational challenges</h2>
-
-<p>While I think some part of the future looks like unikernels their are
-some large operational challenges to overcome before they break out of
-very specific niches or research projects. Note that</p>
-
-<p>there are architectural and software development challenges as well, I
-just happen to think they’re easier to deal with.</p>
-
-<h3>Development environment</h3>
-
-<p>There are a few properties of a development environment that I think are
-essential to modern development; development/production parity being one
-of the most important. Tools like Vagrant, and a move towards
-infrastructure as code, and more recently Docker have made great strides
-here in the past several years. The different unikernel implementations
-are generally based on lesser known software stacks (Haskell, OCaml,
-Erlang, etc) so some of this is familiarity. But what does
-development/production partity mean for a unikernel based system? We’re
-not just talking about the individual unikernel here either – how do I
-deploy unikernels? How do I compose several unikernels together to build
-an application? What does a Continuous integration or deployment
-pipeline look like? In my view the unikernel movement should focus some
-efforts here. Not only will this make it easier for people to get
-started, but having strong opinions early will allow the nascent
-community to solve the problem together, rather than everyone solving it
-just-in-time for themselves.</p>
-
-<h3>Managing the hypervisor</h3>
-
-<p>I’d argue today most developers don’t spent much time directly working
-with hypervisors. Either you’re running on an in-house VMware, KVM or
-Xen install with some (hopefully self-service, automated) provisioning
-mechanism in place or you’re using a public cloud like AWS, Azure, etc.
-The current generation of unikernel systems mainly target Xen. I think
-in the short term at least this means getting to know the hypervisor.
-Xen is solid software, but I don’t see a great deal of automation around
-it – say well maintained Puppet modules, API clients or a Terraform
-provider. In the long term we’ll hopefully have higher level interfaces,
-but in the short term efforts here would lower the barrier to entry
-considerably.</p>
-
-<h4>Double down on AWS</h4>
-
-<p>Given the above, and given the ubiquity of EC2 (which is based on Xen)
-it might be wise to build up first-class tools around using EC2 as a
-target environment for unikernel deployments. EC2 supports custom
-kernels, but these require a number of convoluted steps that could be
-automated away (note that I’m talking about more than just a shell
-script here). Also what are the best practices around autoscaling groups
-andunikernels? Or VPC networks and unikernels?</p>
-
-<h3>The network</h3>
-
-<p>With the explosion in containers and microservices it’s becoming clearer
-(if it wasn’t already) how important the network is. By removing the
-operating system we remove things like host firewalls and the new breed
-of overlay networks. At the same time if we are to tap the dynamic
-potential of unikernels we’ll need a similarly dynamic and automatable
-network. Maybe this becomes more of an application concern, with
-services communicating via other services which act as firewalls and
-intelligent proxies, but that still leaves the underlying network to be
-managed.</p>
-
-<h3>Debugging</h3>
-
-<p>However much testing you do beforehand you’ll still likely end up with
-problems in production, and as you scale up you’ll hit issues that you
-simply can’t recreate outside the live environment. This is were good
-debugging capabilities come in. While general purpose operating systems
-might be complex they are well know, and tools like ps, top, free, ping,
-telnet, netcat, dtrace, etc. are commonly used by anyone debugging
-systems. Note that in many cases you’re debugging a combination of
-systems; is the performance issue an application problem, a network
-problem, a storage problem or some interesting combination of several
-facters?</p>
-
-<p>By removing the general purpose operating system, unikernel based
-environments remove most of the current debugging tools at the same
-time. Part of this Is good application development hygiene (logs,
-metrics and status endpoints for instance), but what about the more
-interactive debugging practices? What does debugging a system based on
-unikernels look like?</p>
-
-<h3>Orchestration</h3>
-
-<p>The word may be overloaded but the need to arrange and manage a number
-of components that make up a larger system is a real need. This might be
-something like Docker&#39;s Compose file or <a href="https://brooklyn.incubator.apache.org/learnmore/blueprint-tour.html">Brooklyn&#39;s
-Blueprints</a>,
-or it could be something more akin to the APIs from Cloud Foundry,
-Kubernetes or Mesos. Testing some of these models with unikernel based systems
-will be an interesting test of how coupled to containers the existing models are.
-The lack of legacy again opens up the potential to come up with a truly
-modern alternative here too.</p>
-
-<h2>Conclusion</h2>
-
-<p>Unless you’re in an environment where security is your number 1 concern
-then the current state of Unikernels probably means choosing to adopt
-them now is a little bleeding edge. But I think that will change over
-time as the various projects mature and address some of the issues
-described above. In the meantime I’d love to see more discussion of some
-of the operational challenges. I think talking about the needs of
-operators at this early stage should make the resulting ecosystems more
-robust whsen it comes to future production deployments.</p>
 
   </div>
   

@@ -68,6 +68,32 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/01/27/questions-pointers-and-reality/">
+        Questions, Pointers and Reality
+      </a>
+    </h1>
+
+    <span class="post-date">27 Jan 2008</span>
+
+    <p>Along with an awful lot of noise, the whole X-UA-<span class="caps">COMPATIBLE</span> IE8 issue is also bringing out some well rounded and thought through arguments from people I admire.</p>
+<p>I still disagree with <a href="http://adactio.com/journal/1403/">Jeremy Keith</a> on the default issue but agree with everything else. Jeremy says:</p>
+<blockquote>
+<p>Let me make it perfectly clear: I understand the need for version targeting. But the onus must be on the publisher to enable it.</p>
+</blockquote>
+<p>At the moment it comes down to a sense of stubborn realism on my part. All the people who know about the issue and the need for the new header (that would be me, Jeremy, probably you and the whole <em>web standards developer</em> crowd) are probably also in a position to add it fairly easily. All those that don&#8217;t know about the header <em>don&#8217;t have to know</em> about it. Ever. I would prefer if this wasn&#8217;t the case but alas I think it might be.</p>
+<p><a href="http://www.isolani.co.uk/blog/standards/InternetExplorerReality">Mike Davies</a> has one of the most well argued points out their. Throwing into the pot the issue of content not served via a web server raises even more issues that make changing the default behaviour difficult. I think Mike sums this up pretty well:</p>
+<blockquote>
+<p>Every other browser has either started from scratch from the ground up (Firefox and Opera), or created a browser after the browser-wars (Safari). As such, all three have benefited from not having to support Microsoft&#8217;s excess baggage. And Microsoft being dragged to a complete stop because of it. This is Microsoft&#8217;s browser-war victory biting them in the ass.</p>
+</blockquote>
+<p>Whether we like it or not this issue is about Microsoft, and I (maybe naively) believe Microsoft would like nothing better than to get back up from the mat and innovate in the browser space. But they can&#8217;t because of the ball and chain.</p>
+<p>Who hasn&#8217;t written at least some code that, in hindsight, turned into a horrible maintenance nightmare? You might dream of jumping in and rewriting it from scratch but if that code has already been shipped to a client then what is that client doing to do? Turning around and saying <em>actually, what we gave you originally was pretty rubbish</em> isn&#8217;t going to go down well &#8211; even when it&#8217;s the right thing to do.</p>
+<p>Mike is right in that the IE team are actually going to be shipping two browsers. That has got to be a massive issue for them &#8211; certainly a bigger issue than me adding a new header to my site or a meta element to my pages. But if it lets the second of those browsers support CSS3, HTML5, <span class="caps">XHTML</span>, Canvas and anything else we dream of then I&#8217;m all for it. We all know the first of those browsers just won&#8217;t be up to the task.</p>
+<p>One particular thorny problem I wasn&#8217;t aware of was issues surrounding accessibility. <a href="http://www.brucelawson.co.uk/index.php/2008/accessibility-implications-microsoft-versioning/">Bruce Lawson</a> has some of the details but in short by locking a large number of sites into the ways of IE7 we essentially freeze the (poor) state of accessibility on the web. <a href="http://splintered.co.uk">Patrick Lauke</a> also raises a related issue in the comments regarding further alienating screen reader and assistive technology developers. These points for me are ones I want addressing by Microsoft and one&#8217;s without resolution which would make me change my mind on this whole issue of defaults.</p>
+<p>So, the jury is still out in my mind. I hope it is in the minds of those working closer to the heart of this problem at Microsoft. Like <a href="http://molly.com">Molly</a> I&#8217;m glad this issue has been raised now, rather than simply revealed at launch. I just hope the reason for that was to get the sort of high quality feedback we&#8217;re seeing in some areas of the community in order to test the waters and come to a consensus.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/01/22/who-loses-out-to-x-ua-compatible/">
         Who loses out to X-UA-Compatible?
       </a>
@@ -185,20 +211,6 @@ pear install symfony/pake</code></pre>
 <p>This is a pretty simple example but one I&#8217;m already finding useful. Rsync is but one way of deploying apps but with Pake has the advantage of being simple and in lots of situations good enough. It&#8217;s certainly better than a manual deployment process. It would be simple enough to build into the task a simple logging system so you have a log of all deployments; when they happened and who did them for instance.</p>
 <p>If that has whet your appetite then their are other deployment tools you might want to look into; <a href="http://www.capify.org/">Capistrano</a> (Ruby), <a href="http://ant.apache.org/">Ant</a> (Java), <a href="http://maven.apache.org/">Maven</a> (Java) and <a href="http://phing.info">Phing</a> (<span class="caps">PHP</span>) spring to mind. If anyone knows of a Python equivalent that would be useful too? I&#8217;m also using Phing for a few tasks on projects at the moment, mainly for some nifty Subversion tasks (and you can use Phing with Pake as symfony does), but that will have to wait until another post.</p>
 <p>So, what are peoples experiences of build tools? Any good pointers? Or maybe reasons why you don&#8217;t use them in your projects?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/05/refresh-map/">
-        Refresh Map
-      </a>
-    </h1>
-
-    <span class="post-date">05 Jan 2008</span>
-
-    <p>It turns out that their are now nearly 40 <a href="http://www.refreshingcities.org/">Refresh</a> groups scattered around and about. Here&#8217;s a <a href="http://maps.google.co.uk/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;ll=43.580391,-56.25&amp;spn=98.199649,202.5&amp;z=2&amp;om=1&amp;msid=103845568847240179832.000442fedc66a55c4744b">quick map of them all</a>. It&#8217;s pretty interesting how all these groups have picked up on a simple word.</p>
-<p><iframe width="560" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps/ms?ie=UTF8&amp;hl=en&amp;om=1&amp;s=AARTsJpLByU1_UoXjtzM2l03IoKFmn1HHw&amp;msa=0&amp;msid=103845568847240179832.000442fedc66a55c4744b&amp;ll=38.891033,-76.992187&amp;spn=90.392203,196.875&amp;z=2&amp;output=embed"></iframe></p>
-<p>For anyone in the Newcastle are we&#8217;re having a meetup next week, on Thursday evening, as it happens, the <a href="http://upcoming.yahoo.com/event/396927/">details are on Upcoming</a> if you fancy coming along.</p>
   </div>
   
 </div>

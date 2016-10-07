@@ -68,6 +68,27 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/11/01/simulating-rails-environments-django/">
+        Simulating Rails like Environments in Django
+      </a>
+    </h1>
+
+    <span class="post-date">01 Nov 2008</span>
+
+    <p>I was always a fan of <a href="http://wiki.rubyonrails.org/rails/pages/Environments">Rail environments</a> and as part of some work upgrading this site to the latest version of Django I decided to clean up my whole deployment process. Part of that involved replacing everything in settings.py with the following snippet of code:</p>
+<pre>ENV = "development"
+try:
+    exec "from environments." + ENV + " import *"
+except ImportError:
+    print "You must specify a valid environment"
+    exit()</pre>
+<p>I now have two settings files stored in an environments module containing all the usual django settings; one for my development environment and one suitable for live. The settings.py above is for my local development environment, with only one small change for live (this file doesn&#8217;t get deployed along with the source code for the site, so doesn&#8217;t get overwritten).</p>
+<pre>ENV = 'live'</pre>
+<p>This isn&#8217;t quite the same as the Rails implementation obviously. I run completely different server setups so I&#8217;m not too bothered about a flag on the runserver command like the -e flag for mongel. I could also probably do something to autodetect the environment but this works fine for me.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/10/13/unit-testing-css-looking-solution/">
         Unit Testing CSS - Looking for a Solution
       </a>
@@ -155,18 +176,6 @@ p {
     <span class="post-date">30 Sep 2008</span>
 
     <p><a href="http://code.google.com/p/update-engine/wiki/TestingAndCoverage">Interesting testing And coverage reporting</a> write up by the Google Engineers behind <a href="http://code.google.com/p/update-engine">Update Engine</a>. This is the sort of thing we keep discussing in the office.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/09/27/headless-vmware-fusion/">
-        Headless VMWare Fusion
-      </a>
-    </h1>
-
-    <span class="post-date">27 Sep 2008</span>
-
-    <p>The latest version of <a href="http://www.vmware.com/products/fusion/">VMWare Fusion</a> lets you run virtual machines in headless mode. Which is pretty handy if you&#8217;re using a Linux VM to mirror your live environment. The strange thing is that it&#8217;s not enabled by default. To enable it you need to run the following on your console: <code>defaults write com.vmware.fusion fluxCapacitor -bool YES</code></p>
   </div>
   
 </div>

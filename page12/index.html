@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/07/07/Varnish-at-refresh-cambridge/">
+        Varnish At Refresh Cambridge
+      </a>
+    </h1>
+
+    <span class="post-date">07 Jul 2011</span>
+
+    <p>I did a quick lightning talk at the Refresh Cambridge meetup last night, a very quick introduction to <a href="https://www.varnish-cache.org/">Varnish</a>. Given 10 minutes all I really wanted to do was get people to go away and take a look at it. Lots of folks in the room hadn&#8217;t come across it before so I think the talk was hopefully well pitched.</p>
+<p><iframe src="http://www.slideshare.net/slideshow/embed_code/8531073?rel=0" width="510" height="426" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></p>
+<p>Several people asked about slighly dynamic pages and I only got chance to mention support for <a href="https://www.varnish-cache.org/trac/wiki/ESIfeatures"><span class="caps">ESI</span></a> (Edge Side Includes) at the end. Conversation afterwards turned to various parts of the modern web stack and I had a pretty good time being opinionated. Hopefully more of the same next month.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/06/30/Django-performance-1-measuring-performance/">
         Django Performance Patterns 1: Measuring Performance
       </a>
@@ -286,27 +300,6 @@ LOGGING = {
 <pre>add_header Vary Accept-Encoding;</pre>
 <p>I&#8217;d assumed that enabling gzip compression with gzip_vary would have set this automatically and never checked. The way RedBot provides a checklist of recommendations is very handy.</p>
 <p>As well as checking the page itself you can also check all the assets associated with a page by adding a query string argument. For instance here is the <a href="http://redbot.org/?descend=True&amp;uri=http://www.vagrantbox.es">assets view for Vagrantbox.es</a>. RedBot also provides a <a href="http://redbot.org/?id=o5GXZe&amp;descend=True&amp;format=har"><span class="caps">JSON</span> encoded version of the result</a> which might be useful in a CI system. If you&#8217;d rather run your own instance of the software you can, the code can be found on github at <a href="http://mnot.github.com/redbot/">mnot.github.com/redbot/</a>. It currently doesn&#8217;t work with <span class="caps">HTTPS</span> resources but that&#8217;s about the only thing I&#8217;d like to see added.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/05/15/Python-on-cloudfoundry/">
-        Python On Cloudfoundry
-      </a>
-    </h1>
-
-    <span class="post-date">15 May 2011</span>
-
-    <p>For those that haven&#8217;t yet had a look <a href="http://cloudfoundry.com/">Cloudfoundry</a> from VMware is two things, one of which is nice, one of which is very cool indeed:</p>
-<ul>
-	<li>On one hand it&#8217;s a platform as a service, allowing you to easily deploy Ruby, Java and Node.js applications to <a href="http://cloudfoundry.com/">cloudfoundry.com</a>.</li>
-	<li>On the other hand it&#8217;s an <a href="http://cloudfoundry.org/">open source project</a> with all the code on <a href="http://github.com/cloudfoundry">Github</a> allowing you to run the entire stack wherever you like.</li>
-</ul>
-<p>I&#8217;m pretty interested in the latter. Its <span class="caps">API</span> could in theory become a defacto standard for application and service buildouts, in the same way as we&#8217;re seeing the EC2 <span class="caps">API</span> expand outside <span class="caps">AWS</span> for managing infrastructure (and arguably how we&#8217;re using Chef and Puppet for managing the things installed on that infrastructure). The really interesting bit is the fact it&#8217;s all open source. Not only does that mean you can run it on your own infrastructure (including as I&#8217;m doing on a virtual machine on my laptop), but it&#8217;s also designed so new services (like Redis, MySQL, RabbitMQ), new runtimes (like Ruby 1.8, RUby 1.9, Java) and new frameworks (like Rails, Sinatra, Spring) can be added easily.</p>
-<p>I&#8217;m running vcap on a <a href="http://vagrantup.com">vagrant</a> managed VirtualBox instance, but you could install it anywhere you like. I used <a href="https://github.com/auser/cloudfoundry-quickstart">these chef recipes</a> to get everything installed. I ran into an issue with the mysql service not starting correctly that <a href="https://github.com/auser/cloudfoundry-quickstart/pull/2">I fixed</a> and I needed to manually install chef into the rvm gemset part way through the install, but the recipes pretty much just worked.</p>
-<p>Looking for an excuse to have a route through the vcap code I decided to see if I could add rudimentary support for Python applications. After a day of noodling around I&#8217;ve forked the code and sent a few pull requests back with it basically working. This required changes to the <a href="https://github.com/cloudfoundry/vmc/pull/18">vmc client</a>, to the <a href="https://github.com/cloudfoundry/vcap/pull/57">vcap service</a> and like all good open source contributions to the <a href="https://github.com/cloudfoundry/vcap-tests/pull/4">test suite</a>.</p>
-<p>Thanks hugely to existing pull requests (mainly the one&#8217;s for <a href="https://github.com/cloudfoundry/vcap/pull/25">adding <span class="caps">PHP</span> support</a>) it&#8217;s not taken long at all. The Sinatra and Rails support which shipped with the first release from VMWare supports using Bundler to define gem dependencies that can be pulled in at deploy time. It shouldn&#8217;t be too much effort I&#8217;m hoping to do the same for using pip and virtualenv for each deployed python application. I think I can also see how to support python3 and how to add django as a supported framework.</p>
-<p>I had huge fun, but you might not at this early stage in the project. I&#8217;m relatively happy with reading and writing Ruby, futzing with rvm, debugging installation woes and hunting down service configuration problems. The best tool for working out what was happening was generally tailing the logs in /tmp/vcap-run/ and finding the code that wrote a given message. If you just want something to work I&#8217;d wait a little while, if you like the sound of the above it&#8217;s a pretty nice codebase to play around in. I&#8217;d love to eventually see some official contributor documentation and some hints and tips on things like running the tests. At the moment flicking through reported issues and pull requests on GitHub is the best place to start.</p>
   </div>
   
 </div>

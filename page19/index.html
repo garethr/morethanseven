@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/05/26/Devops-twitter-aggregator/">
+        Devops Twitter Aggregator
+      </a>
+    </h1>
+
+    <span class="post-date">26 May 2010</span>
+
+    <p>I&#8217;ve been hacking on appengine again and have thrown up a simple <a href="http://devopstweets.appspot.com/">twitter aggregator for devops</a>. It&#8217;s again based on <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> with an increasing number of additions and changes.</p>
+<p>As well as just the tweets I want to build a few other small features. The first of which is link extraction, so at the moment you&#8217;ll see recent links a the top of the page. I&#8217;ll hopefully make that a little more useful, with better browing and converting short urls into the real ones. I also have vague plans for providing exports, listing people talking about devops and some useful graphs to track general activity around devops.</p>
+<img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjphAEM" alt="Devops aggregator on Twitter"
+<p>I&#8217;m really interested to see if the whole discussion around the term devops grows over the next year or so, and I&#8217;m hoping this will make it a little easier to see that change happen.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/05/18/Installing-integrity-on-debianubuntu/">
         Installing Integrity On Debian/Ubuntu
       </a>
@@ -197,70 +212,6 @@ apt-get install ruby1.8-dev
 <p>Anyway, Twitter is at it&#8217;s best at conferences like this. It&#8217;s perfect for the <em>where to go now</em> situation. But I also like going back in time after the fact and looking at what people said, especially to get feedback about my talk. With that in mind I&#8217;ve build a <a href="http://dibiconf.appspot.com/">little aggregator</a> for all things #dibi. So far that appears to be a mixture of excitement and travel chaos.</p>
 <p>I specifically wanted something that ran on the server, which discounted an awful lot of pure javascript versions. I think Twitter clients generally do a good job of the <em>right now</em> anyway. I also like to collect data for mining later, assuming I have the time. After a number of discussions on Twitter, then just some wandering around GitHub I found <a href="http://github.com/steffentchr/twitterengine">TwitterEngine</a> which is fantastic. I&#8217;ve hacked it around quite a bit into something more general purpose. I&#8217;ve added some caching, some other App Engine performance tweaks and some monitoring. I&#8217;ll commit those to GitHub when I get the chance. I&#8217;d forgotten quite how much fun App Engine development was.</p>
 <p>I still want to add a few more features before the conference. The styles work quite well on my Android but less well (text too small) on my iPod Touch. So I&#8217;ll fix that first. Any other requests?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/04/05/Hadoop-hive-web-interface/">
-        Hadoop Hive Web Interface
-      </a>
-    </h1>
-
-    <span class="post-date">05 Apr 2010</span>
-
-    <p>I&#8217;ve been playing with Hive recently and liking what I&#8217;ve found. In theory at least it provides a very nice, simple way of getting into analysing large data sets. To make it even easier to show other people what you&#8217;re up to Hive has a nascent web interface with a little documentation <a href="http://wiki.apache.org/hadoop/Hive/HiveWebInterface">on the wiki</a></p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRiBfQw" alt="image of hive web ui"/></p>
-<p>On the one hand it&#8217;s rather simple at this point, but that should be easily enought to prettify given a bit of time. The bigger problem was getting it working in the first place. What follows worked for me using the latest cloudera packages on debian testing. I&#8217;m assuming you already have Hive and Hadoop installed, the basic packages worked fine for me here.</p>
-<p>Next up you&#8217;ll need the <span class="caps">JDK</span> (not just the <span class="caps">JRE</span>) as their is some compilation that will go on the first time you run the web interface.</p>
-<% syntax_colorize :bash, type=:coderay do %>
-apt-get install ant sun-java6-jdk
-<% end %>
-<p>Next up I had to modify the installed <em>/etc/hive/conf/hive-site.xml</em> file as follows:</p>
-<p>I changed this:</p>
-<% syntax_colorize :xml, type=:coderay do %>
-<property>
-  <name>hive.metastore.uris</name>
-  <value>file:///var/lib/hivevar/metastore/metadb/</value>
-  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
-</property>
-<% end %>
-<p>To this. Note the hivevar path doesn&#8217;t exist so I&#8217;m not sure if this was a typo in the source.</p>
-<% syntax_colorize :xml, type=:coderay do %>
-<property>
-  <name>hive.metastore.uris</name>
-  <value>file:///var/lib/hive/var/metastore/metadb/</value>
-  <description>Comma separated list of URIs of metastore servers. The first server that can be connected to will be used.</description>
-</property>
-<% end %>
-<p>I also change the following section regarding the metastore name:</p>
-<% syntax_colorize :xml, type=:coderay do %>
-<property>
-  <name>javax.jdo.option.ConnectionURL</name>
-  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/${user.name}_db;create=true</value>
-  <description>JDBC connect string for a JDBC metastore</description>
-</property>
-<% end %>
-<p>To this, with a fixed name. When using the above confirguration the file was actually called ${user.name} rather than my username being subsituted in. Elsewhere this seems to work fine.</p>
-<% syntax_colorize :xml, type=:coderay do %>
-<property>
-  <name>javax.jdo.option.ConnectionURL</name>
-  <value>jdbc:derby:;databaseName=/var/lib/hive/metastore/metastore_db;create=true</value>
-  <description>JDBC connect string for a JDBC metastore</description>
-</property>
-<% end %>
-<p>I&#8217;m not convinced the above two changes are needed but have left them here just in case. The main tricky part is making sure a load of environment variables are correctly set. The following worked for me:</p>
-<% syntax_colorize :bash, type=:coderay do %>
-export ANT_LIB=/usr/share/ant/lib
-export HIVE_HOME=/usr/lib/hive
-export HADOOP_HOME=/usr/lib/hadoop
-export PATH=$PATH:$HADOOP_HOME/bin
-export JAVA_HOME=/usr/lib/jvm/java-6-sun
-<% end %>
-<p>All being well that should allow you to run the hive command with the web interface like so:</p>
-<% syntax_colorize :bash, type=:coderay do %>
-hive --service hwi
-<% end %>
-<p>That should bring up a webserver on port 9999 where you should see something similar to the screenshot above.</p>
   </div>
   
 </div>

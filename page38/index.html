@@ -68,6 +68,18 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/11/29/app-engine-samples/">
+        App Engine Samples
+      </a>
+    </h1>
+
+    <span class="post-date">29 Nov 2008</span>
+
+    <p>It&#8217;s probably old hat to those who have been using Google Appengine for a while but I just found <a href="http://code.google.com/p/google-app-engine-samples/">some sample apps</a> on Google Code. I prefer learning from actual code like this, at least until the App Engine books make it out next year.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/11/22/css-test-github/">
         CSS Test on GitHub
       </a>
@@ -146,27 +158,6 @@ Ordered by: internal time, call count
 <p>From nearly half a second (0.479 <span class="caps">CPU</span> seconds) to 0.081 <span class="caps">CPU</span> seconds &#8211; roughly a 500% improvement in performance!</p>
 <p>If you are using text transforming filters in Django that make use of regular expressions I would look to try and get rid of them and move the conversion into a save method. You might not see quite as much of a performance gain as I did here but I&#8217;d be surprised if it&#8217;s not taking an awful lot longer than you might thing.</p>
 <p>Their are a few tools that are handy to have around if you&#8217;re wanting to profile your own applications. Django Snippets has a handy <a href="http://www.djangosnippets.org/snippets/70/">profiling middleware</a> and the really rather nice <a href="http://code.google.com/p/django-command-extensions/">Command Extensions</a> provides a few more tools including profile graph generation.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/11/01/simulating-rails-environments-django/">
-        Simulating Rails like Environments in Django
-      </a>
-    </h1>
-
-    <span class="post-date">01 Nov 2008</span>
-
-    <p>I was always a fan of <a href="http://wiki.rubyonrails.org/rails/pages/Environments">Rail environments</a> and as part of some work upgrading this site to the latest version of Django I decided to clean up my whole deployment process. Part of that involved replacing everything in settings.py with the following snippet of code:</p>
-<pre>ENV = "development"
-try:
-    exec "from environments." + ENV + " import *"
-except ImportError:
-    print "You must specify a valid environment"
-    exit()</pre>
-<p>I now have two settings files stored in an environments module containing all the usual django settings; one for my development environment and one suitable for live. The settings.py above is for my local development environment, with only one small change for live (this file doesn&#8217;t get deployed along with the source code for the site, so doesn&#8217;t get overwritten).</p>
-<pre>ENV = 'live'</pre>
-<p>This isn&#8217;t quite the same as the Rails implementation obviously. I run completely different server setups so I&#8217;m not too bothered about a flag on the runserver command like the -e flag for mongel. I could also probably do something to autodetect the environment but this works fine for me.</p>
   </div>
   
 </div>

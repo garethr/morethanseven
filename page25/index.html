@@ -68,6 +68,39 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/07/23/whats-new-django-11/">
+        What's new in Django 1.1
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jul 2009</span>
+
+    <p>With the <a href="http://www.djangoproject.com/weblog/2009/jul/21/rc/">release candidate for Django 1.1</a> out the door I decided to have a quick look at what&#8217;s new. This isn&#8217;t a complete list, rather the bits I found most interesting.</p>
+<h2><a href="http://docs.djangoproject.com/en/dev/topics/conditional-view-processing/">Conditional Views</a></h2>
+<blockquote>
+<p>Django now has much better support for conditional view processing using the standard ETag and Last-Modified <span class="caps">HTTP</span> headers. This means you can now easily short-circuit view processing by testing less-expensive conditions. For many views this can lead to a serious improvement in speed and reduction in bandwidth.</p>
+</blockquote>
+<p>A nice set of decorators for dealing with ETags and Last-Modified headers. Again very simple to use and set up, and a simple way of squeezing a little more performance out of you application.</p>
+<h2><a href="http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/#ref-contrib-admin-actions">Admin Actions</a></h2>
+<blockquote>
+<p>The basic workflow of Django’s admin is, in a nutshell, “select an object, then change it.” This works well for a majority of use cases. However, if you need to make the same change to many objects at once, this workflow can be quite tedious. In these cases, Django’s admin lets you write and register “actions” – simple functions that get called with a list of objects selected on the change list page.</p>
+</blockquote>
+<p>Anything that makes the admin a little more powerful and a little more flexible is a good idea in my book. Admin actions allow you to run code over multiple objects at once, simple select them with a checkbox then select an action to run. This is worth it for the delete action alone, but you can write your own actions simply enough as well (for instance for approving a batch of comments, or archiving a set or articles.)</p>
+<h2><a href="http://docs.djangoproject.com/en/dev/ref/contrib/admin/#admin-list-editable">Editable Admin List Items</a></h2>
+<blockquote>
+<p>You can now make fields editable on the admin list views via the new list_editable admin option. These fields will show up as form widgets on the list pages, and can be edited and saved in bulk.</p>
+</blockquote>
+<p>Another time saving admin addition, this time for making some fields editable from the change list rather than the object view. For quick changes, especially to boolean fields, I think this again is a nice addition.</p>
+<h2><a href="http://docs.djangoproject.com/en/dev/ref/models/options/#django.db.models.Options.managed">Unmanaged Models</a></h2>
+<blockquote>
+<p>You can now control whether or not Django creates database tables for a model using the managed model option. This defaults to True, meaning that Django will create the appropriate database tables in syncdb and remove them as part of reset command. That is, Django manages the database table’s lifecycle. If you set this to False, however, no database table creating or deletion will be automatically performed for this model. This is useful if the model represents an existing table or a database view that has been created by some other means.</p>
+</blockquote>
+<p>I particularly like this addition. One of the issues I had with Django was some of the built in assumptions, in particular that you&#8217;d be using a <span class="caps">SQL</span> database backend. Using unmanaged models looks like a great approach to using an alternative database like couchdb, tokyotyrant or mongodb or representing a webservice interface in your application.</p>
+<p>I&#8217;m sure I&#8217;ll have missed a few other interesting changes or additions. Anyone else have a favourite?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/07/15/simple-app-running-scripts-and-recording-results/">
         Asteroid - simple app for running scripts and recording the results
       </a>
@@ -188,36 +221,6 @@ manage.py test --coverage
 <p>It&#8217;s basically a quality tracking service for Python modules. For instance my recent <a href="http://pypants.org/projects/urltest/0.2.3/evaluations/3142/">UrlTest module has a page on PyPants</a>, scoring a good B grade after some cleanup work earlier today.</p>
 <p>Under the hood I think it&#8217;s probably <a href="http://pycheesecake.org/">CheeseCake</a> which is available as a command line application, maybe with a hint of <a href="http://pypi.python.org/pypi/pylint">PyLint</a> and <a href="http://svn.browsershots.org/trunk/devtools/pep8/pep8.py">pep8.py</a> thrown in. But the nice interface, as well as tracking of scores over time, really add something. GitHub has been credited by some as making sharing code more fun, I&#8217;m hoping projects like PyPants can do the same for quality in Python code.</p>
 <p>Congrats to <a href="http://ericholscher.com/">Eric Holscher</a>, <a href="http://traviscline.com/">Travis Cline</a>, and <a href="http://playgroundblues.com/">Nathan Borror</a> on a fantastic addition to the Python community.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/06/24/urltest-pypi/">
-        Urltest on PyPi
-      </a>
-    </h1>
-
-    <span class="post-date">24 Jun 2009</span>
-
-    <p>I&#8217;ve been meaning to add some of my code to the <a href="http://pypi.python.org">Python Package Index</a> for a while and  have finally gotten around to it with <a href="http://github.com/garethr/urltest/tree/master">Urltest</a>, my simple <span class="caps">DSL</span> for testing <span class="caps">WSGI</span> apps.</p>
-<p>You can now find it at <a href="http://pypi.python.org/pypi/urltest">pypi.python.org/pypi/urltest</a> and install it using setuptools with:</p>
-<pre>easy_install urltest</pre>
-<p>At the moment I&#8217;ve not added any categorisation or detailed description to the setup.py file, I&#8217;ll be doing that soon. I wanted to get it working with the absolute minimum setup.py file, which turned out to look like:</p>
-<pre>#!/usr/bin/env python
-from setuptools import setup, find_packages
-setup(
-    name = "urltest",
-    version = "0.1",
-    author = "Gareth Rushgrove",
-    author_email = "gareth@morethanseven.net",    
-    url = "http://github.com/garethr/urltest",
-    packages = find_packages('src'),
-    package_dir = {'':'src'},
-)</pre>
-<p>Uploading it to <span class="caps">PYPI</span> itself was incredibly simple, partly as I was already using setup tools for local installation.</p>
-<pre>python setup.py register
-python setup.py bdist_egg upload</pre>
-<p>Let me know if anyone uses this and gets it working. I&#8217;ll be adding more details and maybe even some more features when I get the chance. Once I do that I&#8217;ll probably work on a few more packages as well.</p>
   </div>
   
 </div>

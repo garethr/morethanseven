@@ -68,6 +68,46 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/01/01/testing-packer-created-images-with-serverspec/">
+        Testing Packer created images with serverspec
+      </a>
+    </h1>
+
+    <span class="post-date">01 Jan 2014</span>
+
+    <p><a href="http://www.packer.io/">Packer</a> provides a great way of describing the steps for creating a virtual machine image. But it doesn&#39;t have a built-in way of verifying those images.</p>
+
+<p><a href="http://serverspec.org/">Serverspec</a> provides a nice framework for writing tests against infrastructure, asserting the operation of services or the installation of packages.</p>
+
+<p>I&#39;m interested at the moment in building continous delivery pipelines for infrastructure components and have a simple working example of <a href="https://github.com/garethr/packer-serverspec-example">testing Packer with Serverspec</a> on
+Github. The example uses the AWS builder and the Puppet provisioner but the approach should work with other combinations.</p>
+
+<p>This doesn&#39;t represent a complete infrastructure pipeline, but it does demonstrate an approach to automating one particular component - building base images.</p>
+
+<h2>Testing</h2>
+
+<p>In our example I&#39;m using the <a href="https://github.com/puppetlabs/puppetlabs-ntp">Puppetlabs NTP</a> module to install and configure NTP. Once the Puppet provisioner has run, but before we build the AMI (or other virtal machine image) we run a test suite. For our example the tests are pretty simple:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">describe package(&#39;ntp&#39;) do
+  it { should be_installed }
+end
+
+describe service(&#39;ntp&#39;) do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+</code></pre></div>
+<p>If the tests fail, Packer will stop and the AMI won&#39;t be built. The combination of storing the code (Packer template) alongside a test suite (Serverspec) and building a new AMI whenever you change the code, makes this setup perfect for continuous integration. </p>
+
+<h2>Wercker builds</h2>
+
+<p>As an example of a continuous integration setup the repository contains a <a href="https://github.com/garethr/packer-serverspec-example/blob/master/wercker.yml">wercker.yml</a> configuration file for the excellent <a href="http://devcenter.wercker.com/">Wercker</a> service. Wercker makes setting up multi-step built pipelines easy and nicely configurable via a simple text file in your repository.</p>
+
+<p>The Wercker <a href="https://app.wercker.com/#applications/52c450e489daaf145f001ad8">build for this project is public</a>. Currently the build involves downloading Packer, running <code>packer validate</code> to check the template and eventually running <code>packer build</code> to boot an instance and run our serverspec tests. </p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2013/12/29/making-the-web-secure/">
         Making the web secure, one unit test at a time
       </a>
@@ -486,43 +526,6 @@ be exposed to the (virtual) network configuration.</p>
 Heroku or DotCloud or insert PaaS here is already working on this. If
 not maybe this post will prompt someone to do so.</p>
 
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/04/23/web-application-security-tools/">
-        Web application security tools
-      </a>
-    </h1>
-
-    <span class="post-date">23 Apr 2013</span>
-
-    <p>I&#8217;ve become increasingly interested in web application security issues over the last year or so. Working in Government will do that to you. And I&#8217;ve come to the conclusion that a) there are lots of good open source security tools, b) many of them are terribly packaged and c) most developers don&#8217;t use any of them.</p>
-<p>I&#8217;ve been having related conversations at recent events I&#8217;ve made it along to, including Devopsdays London which featured some good open spaces discussions on the subject. Security is one of those areas that, for many organisations, is basically outsourced to third party penetration testing firms or consultants. Specialists definitely have a role to play, but with a move towards increasingly rapid releases I think in-house security testing and monitoring is going to get more and more important.</p>
-<h2>A collection of security tools</h2>
-<p>I&#8217;ve started to build a <a href="https://github.com/garethr/pentesting-playground">collection of tools on GitHub</a>, along with a vagrant setup to test them out. Full instructions are available on that repository but the short version is you can run one command and have one virtual machine filled with security testing tools and, if useful, another machine running a vulnerable web application with which to test. The current list of tools runs to:</p>
-<ul>
-	<li><a href="http://code.google.com/p/skipfish/">skipfish</a></li>
-	<li><a href="http://nmap.org/">nmap</a></li>
-	<li><a href="http://www.cirt.net/nikto2">nikto</a></li>
-	<li><a href="http://w3af.org/">w3af</a></li>
-	<li><a href="https://github.com/mozilla/Garmr">garmr</a></li>
-	<li><a href="https://github.com/iSECPartners/sslyze">sslyze</a></li>
-	<li><a href="https://github.com/metachris/wpscanner">wpscanner</a></li>
-	<li><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">owasp zap</a></li>
-	<li><a href="http://arachni-scanner.com/">arachni</a></li>
-	<li><a href="https://github.com/gauntlt/gauntlt">gauntlt</a></li>
-	<li><a href="http://sqlmap.org/">sqlmap</a></li>
-	<li><a href="http://wpscan.org/">wpscan</a></li>
-	<li><a href="http://sourceforge.net/projects/sslscan/">sslscan</a></li>
-	<li><a href="http://blog.taddong.com/2013/02/tlssled-v13.html">TLSSLed</a></li>
-</ul>
-<p>But I&#8217;ll add more tools as I discover them or as people file issues or pull requests.</p>
-<h2>What about Backtrack?</h2>
-<p>When I started investigating tools for security and penetration testing most roads led to <a href="http://www.backtrack-linux.org/">Backtrack</a>. This is a complete Linux distribution packed with a huge number of security tools, including many if not all of the above. Why then did I write puppet code rather than create a Vagrant box from Backtrack? Firstly, Backtrack is probably great if you&#8217;re a professional penetration tester, but the barrier to entry to installing a new distibution for most developers is too high in my view. And with a view to using some of these tools as part of monitoring systems I don&#8217;t always want a separate virtual machine. I want to be able to install the tools wherever I want. A good configuration management tool gives you that portability, and Vagrant gives you all the benefits of a local virtual machine.</p>
-<h2>Future plans</h2>
-<p>As mentioned I&#8217;d like to expand how some of these tools are used to include automated monitoring of applications, maybe look at ways of extracting data for metrics or possibily writing a Sensu plugin or two. The first step to that is probably breaking down the monolithic puppet manifest into separate modules for each tool. Along the way I can add support for more operating systems as required. I&#8217;ve already done that for the <a href="http://forge.puppetlabs.com/garethr/wackopicko">wackopicko module which is up on the Forge</a>.</p>
-<p>I&#8217;m also soliciting any and all feedback, especially from developers who don&#8217;t do any security related testing but feel like they should.</p>
   </div>
   
 </div>

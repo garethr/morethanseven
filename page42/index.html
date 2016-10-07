@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/05/09/design-strategies-for-a-distributed-web/">
+        Design Strategies for a Distributed Web
+      </a>
+    </h1>
+
+    <span class="post-date">09 May 2008</span>
+
+    <p>I just finished my presentation on the last day of the Xtech conference in Dublin. I&#8217;d chosen to ramble on about the advantages, problems and a few solutions of building applications atop of lots of APIs. The presentation is now up on <a href="http://slideshare.net">slideshare</a> at <a href="http://www.slideshare.net/garethr/design-strategies-for-a-distributed-web/">slideshare.net/garethr/design-strategies-for-a-distributed-web/</a>.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=design-strategies-for-a-distributed-web-1210328995794127-8"/><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=design-strategies-for-a-distributed-web-1210328995794127-8" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>Lots of interesting conversations have been occurring all week and a few people have mentioned a near barcamp feel at times. It&#8217;s a pretty small, clued-up, technical audience and as always some of the best bits have been conversations in the corridors.<br />
+<a href="http://adactio.com">Jeremy</a> has been <a href="http://adactio.com/journal/tag/xtech08">live blogging many of the talks</a> which should be a worth a read later on. Although with three tracks most of the time that&#8217;s only some of the great talks on offer.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/04/29/moving-to-london-working-for-gcap/">
         Moving to London, Working For GCAP
       </a>
@@ -209,22 +224,6 @@ end</code></pre>
 <p>At present haml is very much pitched at the Rails community from whence it came. Many of the examples demonstrate benefits compared to <span class="caps">ERB</span>, and haml is of course written in Ruby and available as a Rails plugin. Being perceived as part of that community has obvious benefits but also some subtle costs, in particular regarding those people that don&#8217;t like Rails very much.</p>
 <p>I&#8217;m not really convinced of the benefits in all fairness. The <em>something else to learn</em> barrier only gets magnified when working within a team environment. You now have to train new recruits of whatever skill level in another syntax. One that they might be able to write quickly enough but can they understand from the briefest of glances at a template? <span class="caps">HTML</span> might not be great here but it is familiar to everyone. Their is also the programmers abstraction. What if I can&#8217;t get the markup I want out the other side of the black box? Yes it&#8217;s open source so I can hack the box open but that causes even more problems. And while I quite like meaningful whitespace (for instance in Python), in templates which fail if it&#8217;s not quite right I see a major problem for those whom a text editor is not their best friend.</p>
 <p>I am however interested to see whether the problems people have with haml are with haml in particular or with the overall approach of alternative syntax&#8217;s for <span class="caps">HTML</span> and <span class="caps">CSS</span>. Are DSLs (Domain Specific Languages) needed for <span class="caps">CSS</span> and <span class="caps">HTML</span>? and if so is this a possible avenue for innovation on top of slow moving standards?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/04/06/git-ditz-and-microformats/">
-        Git, Ditz and Microformats
-      </a>
-    </h1>
-
-    <span class="post-date">06 Apr 2008</span>
-
-    <p>I finally got round to making use of <a href="http://git.or.cz/">Git</a>, the distributed source code management tools much loved by Open Source projects like the Linux Kernel and now Ruby on Rails. It had been on the long list of things to have a look at for quite a while but for the majority of my personal projects <span class="caps">SVN</span> is just fine. The reason that led me to finally run <em>sudo port install git-core</em> was the new <a href="http://ditz.rubyforge.org/">Ditz</a> command line issue tracking software release on <a href="http://gitorious.org/projects/ditz">Gitorious</a> by <a href="http://cs.stanford.edu/people/wmorgan/">William Morgan</a>.</p>
-<p>Now, a command line issue tracker is maybe kind of niche and a little geeky. But most desktop or web based issue trackers just seem to wind me up and I like small tools that fit in with my command line centric workflow. I managed to clone <a href="http://gitorious.org/projects/ditz/repos/ditz-microformats">my own copy</a> of Ditz to have a play with. I ran into a few initial problems but nothing a <a href="http://www.kernel.org/pub/software/scm/git/docs/tutorial.html">good tutorial</a> and a <a href="http://groups.google.com/group/gitorious">helpful mailing list</a> couldn&#8217;t fix.</p>
-<p>I&#8217;m not just playing around either; Ditz comes with the nice ability to generate a set of static <span class="caps">HTML</span> files representing your issue database. I&#8217;ve committed and pushed a few modifications and enhancements onto my clone &#8211; mainly validation, semantic markup improvements and a smattering of microformats (work in progress) in the templates and a couple of markup generation helpers in the Ruby code. I plan on working up the interface a little as well but like any good web designer I&#8217;m starting with the underlying markup structure.</p>
-<p>A few other enhancements I&#8217;d love to see in Ditz or a clone I could pull from include the ability to use  <a href="http://www.sqlite.org/">SQLite</a> rather than the default <span class="caps">YAML</span> for larger projects, automatic generation of <span class="caps">RSS</span> feeds alongside the <span class="caps">HTML</span> (although I&#8217;ve started implementing hAtom) and maybe automated deployment to a remote host over <span class="caps">FTP</span> or <span class="caps">SSH</span>.</p>
-<p>The distributed nature of Git appears to be pushed as the main advantage to those developers taking a look. But I think this is, in many cases, is not <em>that</em> important compared to the familiarity that comes from having used <span class="caps">SVN</span> or similar for a while. What I think just might be it&#8217;s real strength is that Git is a <strong>social source control system</strong>. For Open Source projects like Ditz this is a potentially game changing move. The ease with which anyone can contribute and take things in strange directions without affecting the overall effort is fantastic. It removes barriers to entry for contributors and means making small quick changes is much easier and more immediate. With both Gitorious and <a href="http://github.com/">Github</a> wrapping Git in a shiny web based interface that focuses on these social aspects it will be interesting to see if this leads to more or faster Open Source collaboration efforts.</p>
   </div>
   
 </div>

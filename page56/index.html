@@ -68,6 +68,26 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/03/04/parsing-erdf/">
+        Parsing ERDF
+      </a>
+    </h1>
+
+    <span class="post-date">04 Mar 2007</span>
+
+    <p>Now we&#8217;ve got some <a href="http://morethanseven.net/posts/microformats-and-erdf-sitting-in-a-tree/">eRDF in our pages</a> we need to extract it out in preparation for doing someting with it.</p>
+<h3>With <span class="caps">XSL</span></h3>
+<p>First up we want to try and extract the eRDF in our page into an <span class="caps">RDF</span> document. <a href="http://iandavis.com">Ian Davis</a> has already created a nice <span class="caps">XSL</span> document to do just that. and I&#8217;ve implemented a <a href="http://morethanseven.net/presents/erdf/">nice service wrapper</a> to extract the <span class="caps">RDF</span> from a given <span class="caps">URL</span>. Try pointing it at <a href="http://morethanseven.net">morethanseven.net</a> or <a href="http://iandavis.com">iandavis.com</a> for an example of it in action. Next step here is to extend it to allow extracting a simple vcard from the <span class="caps">RDF</span> in a similar manner to <a href="http://suda.co.uk/">Brian Suda&#8217;s</a> <a href="http://suda.co.uk/projects/X2V/">Microformats extractor</a>.</p>
+<h3>With Javascript</h3>
+<p><a href="http://www.danwebb.net/">Dan Webb</a> has recently written up his <a href="http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript">Sumo! microformas parser</a> and boy is it really rather fancy. At the moment he&#8217;s only got profiles for hCard, hCalendar and hResume but writing profiles is relatively simple. Accoring to one of Dans comments he&#8217;s working on adding support for rel and rev style microformats like rel-tag and <span class="caps">XFN</span>.</p>
+<p>Although billed as a Microformats parser, in reality what Dan&#8217;s created is pretty generic. You can use it to parse out any information marked up with any semantic class names &#8211; just like our eRDF.</p>
+<p>I&#8217;ve set up a very basic Sumo! profile for <span class="caps">FOAF</span> and some <a href="http://morethanseven.net/presents/foaf/">simple tests to extract eRDF data from a test page</a>. This is very much a proof of concept of extracting eRDF using Javascript but would be relatively simple to extend for the full <span class="caps">FOAF</span> spec once Dan or someone else extends Sumo! to support rel and rev.</p>
+<p>On a related note the combination of Sumo! and the <a href="http://www.getfirebug.com/">Firebug</a> javascript console is just perfect. Anyone who hasn&#8217;t yet downloaded the latest version should get over there quick.</p>
+<p><img src="http://morethanseven.net/_assets/media/imgFirebug.png" title="Firebug" alt="Firebug" /></p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/03/03/microformats-and-erdf-sitting-in-a-tree/">
         Microformats and eRDF sitting in a tree
       </a>
@@ -179,19 +199,6 @@
 <p>Between them they now have me interested in doing more with mobile messaging (<span class="caps">SMS</span>, <span class="caps">MMS</span>, Jabber), finding our more about eRDF, playing with Pipes, organising a Barcamp, getting some Moo cards, playing more with the flickr machine tags api and, oh, about a hundred and one other things including drinking beer (ok, that one was Ben). Consider that a partial list of the sorts of things I&#8217;m likely to post on over the next month or so.</p>
 <p>If their is anyone I have yet to add to <a href="http://flickr.com">Flickr</a>, <a href="http://upcoming.org">Upcoming</a> or <a href="http://twitter.com">Twitter</a> hopefully I&#8217;ll find you soon or feel free to drop me a line. If I missed someone sorry, probably all the sleep I&#8217;ve been trying to catch up on.</p>
 <p>This post brought to you by some of <span class="caps">XFN</span>.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/02/24/content-management-systems-a-go-go/">
-        Content Management Systems a go-go
-      </a>
-    </h1>
-
-    <span class="post-date">24 Feb 2007</span>
-
-    <p>Well, I&#8217;m now running <a href="http://wordpress.org">WordPress</a>. I know I appear to be aimlessly flitting between content management systems on this site but it&#8217;s more of a little research project I swear. Hopefully it&#8217;s all happening pretty seemlessly for everyone reading my ramblings. This time <span class="caps">RSS</span> came to the fore, allowing me to simply export a feed of all my previous posts and import them straight into WordPress. This sort of portability is very very nice for the user. I&#8217;d love to see this sort of functionality for hierachically structured data in larger enterprise systems.</p>
-<p>I&#8217;ve got Wordpress up and running with a few choice plugins and a new theme in a couple of days which is nice. Hopefully any minor issues will be ironed out as I find them. An added bonus is comments are now back, I&#8217;ve got so many things to rave about after getting back from <a href="http://barcamp.org/BarCampLondon2">BarCamp</a> and <a href="http://futureofwebapps.com">Future of Web Apps</a> that letting anyone else point out the errors is only fair.</p>
   </div>
   
 </div>
