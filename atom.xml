@@ -4,7 +4,7 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2016-11-05T18:51:07+00:00</updated>
+ <updated>2016-11-05T18:55:58+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
@@ -29,7 +29,7 @@ was written only a few months after I joined Puppet. With a bunch
 more time working for a software vendor there are some bits I missed in
 my original discussion.&lt;/p&gt;
 
-&lt;h1&gt;What do you mean by general purpose and by end?&lt;/h1&gt;
+&lt;h2&gt;What do you mean by general purpose and by end?&lt;/h2&gt;
 
 &lt;p&gt;First up, a bit of clarification. By &lt;em&gt;general purpose OS&lt;/em&gt; I&amp;#39;m referring
 to what most people use for server workloads today - be it RHEL or variants
@@ -39,7 +39,7 @@ By &lt;em&gt;end&lt;/em&gt; I don&amp;#39;t literally mean they go away or stop 
 hypothosis is that, slowly to begin with then more quickly, they cease
 to be the default we reach for when launching new services.&lt;/p&gt;
 
-&lt;h1&gt;The hypervisor of containers&lt;/h1&gt;
+&lt;h2&gt;The hypervisor of containers&lt;/h2&gt;
 
 &lt;p&gt;The first part of the talk included a discussion of what I&amp;#39;d referred to
 as &lt;em&gt;the hypervisor of containers&lt;/em&gt;, what today would more likely be
@@ -50,7 +50,7 @@ would be premature (OpenShift 3 shipped predominantly as a Kubernetes
 distribution). I&amp;#39;ll come back to why this is a threat to your beloved
 Debian servers shortly.&lt;/p&gt;
 
-&lt;h1&gt;The race to PID1&lt;/h1&gt;
+&lt;h2&gt;The race to PID1&lt;/h2&gt;
 
 &lt;p&gt;For anyone who has run Docker you&amp;#39;ll likely have wrestled with the
 question of where does the role of the host process supervisor (probably systemd)
@@ -64,7 +64,7 @@ is inevitable. Note that this isn&amp;#39;t specific to Docker either. In-scope
 for &lt;a href=&quot;https://github.com/kubernetes-incubator/cri-o&quot;&gt;cri-o&lt;/a&gt; is &lt;em&gt;Container
 process lifecycle management&lt;/em&gt;.&lt;/p&gt;
 
-&lt;h1&gt;Containers as the unit of software&lt;/h1&gt;
+&lt;h2&gt;Containers as the unit of software&lt;/h2&gt;
 
 &lt;p&gt;Hidden behind my hypothosis, which mainly went unsaid, was
 that containers are becoming the unit of software. By which I mean
@@ -78,7 +78,7 @@ be underestimated. At least at the host level you&amp;#39;re likely to need lots
 of near-identical hosts, all simply advertising their capabilities to
 the container scheduler.&lt;/p&gt;
 
-&lt;h1&gt;Operating system as implementation detail&lt;/h1&gt;
+&lt;h2&gt;Operating system as implementation detail&lt;/h2&gt;
 
 &lt;p&gt;What we&amp;#39;re witnessing in the market is the development of vertically integrated
 stacks.&lt;/p&gt;
@@ -114,7 +114,7 @@ everywhere is a sisyphean task. Their is also the commercial angle at
 play here, and the advantage of being able to support a single validated
 product to everyone.&lt;/p&gt;
 
-&lt;h1&gt;Implications&lt;/h1&gt;
+&lt;h2&gt;Implications&lt;/h2&gt;
 
 &lt;p&gt;There are lots of implications to this move, and it&amp;#39;s going to be
 interesting to see how it plays out with both early adopters and

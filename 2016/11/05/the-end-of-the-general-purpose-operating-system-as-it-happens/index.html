@@ -79,7 +79,7 @@ was written only a few months after I joined Puppet. With a bunch
 more time working for a software vendor there are some bits I missed in
 my original discussion.</p>
 
-<h1>What do you mean by general purpose and by end?</h1>
+<h2>What do you mean by general purpose and by end?</h2>
 
 <p>First up, a bit of clarification. By <em>general purpose OS</em> I&#39;m referring
 to what most people use for server workloads today - be it RHEL or variants
@@ -89,7 +89,7 @@ By <em>end</em> I don&#39;t literally mean they go away or stop being useful. My
 hypothosis is that, slowly to begin with then more quickly, they cease
 to be the default we reach for when launching new services.</p>
 
-<h1>The hypervisor of containers</h1>
+<h2>The hypervisor of containers</h2>
 
 <p>The first part of the talk included a discussion of what I&#39;d referred to
 as <em>the hypervisor of containers</em>, what today would more likely be
@@ -100,7 +100,7 @@ would be premature (OpenShift 3 shipped predominantly as a Kubernetes
 distribution). I&#39;ll come back to why this is a threat to your beloved
 Debian servers shortly.</p>
 
-<h1>The race to PID1</h1>
+<h2>The race to PID1</h2>
 
 <p>For anyone who has run Docker you&#39;ll likely have wrestled with the
 question of where does the role of the host process supervisor (probably systemd)
@@ -114,7 +114,7 @@ is inevitable. Note that this isn&#39;t specific to Docker either. In-scope
 for <a href="https://github.com/kubernetes-incubator/cri-o">cri-o</a> is <em>Container
 process lifecycle management</em>.</p>
 
-<h1>Containers as the unit of software</h1>
+<h2>Containers as the unit of software</h2>
 
 <p>Hidden behind my hypothosis, which mainly went unsaid, was
 that containers are becoming the unit of software. By which I mean
@@ -128,7 +128,7 @@ be underestimated. At least at the host level you&#39;re likely to need lots
 of near-identical hosts, all simply advertising their capabilities to
 the container scheduler.</p>
 
-<h1>Operating system as implementation detail</h1>
+<h2>Operating system as implementation detail</h2>
 
 <p>What we&#39;re witnessing in the market is the development of vertically integrated
 stacks.</p>
@@ -164,7 +164,7 @@ everywhere is a sisyphean task. Their is also the commercial angle at
 play here, and the advantage of being able to support a single validated
 product to everyone.</p>
 
-<h1>Implications</h1>
+<h2>Implications</h2>
 
 <p>There are lots of implications to this move, and it&#39;s going to be
 interesting to see how it plays out with both early adopters and
