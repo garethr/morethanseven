@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      The End of the General Purpose Operating System &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">The End of the General Purpose Operating System</h1>
+  <span class="post-date">05 Nov 2016</span>
+  <p>As interesting chat on Twitter today reminded me that not everyone is
+probably aware that we&#39;re seeing a concerted attempt to dislodge the
+general purpose operating system from our servers.</p>
+
+<p>I gave a talk about some of this <a href="https://speakerdeck.com/garethr/the-end-of-the-general-purpose-operating-system">nearly two years
+ago</a>
+and I though a blog post looking at what I got right, what I got wrong
+and what&#39;s actually happening would be of interest to folks. The talk
+was written only a few months after I joined Puppet. With a bunch
+more time working for a software vendor there are some bits I missed in
+my original discussion.</p>
+
+<h1>What do you mean by general purpose and by end?</h1>
+
+<p>First up, a bit of clarification. By <em>general purpose OS</em> I&#39;m referring
+to what most people use for server workloads today - be it RHEL or variants
+like CentOS or Fedora, or Debian and derivatives like Ubuntu. We&#39;ll
+include Arch, the various BSD and opensolaris flavours and Windows too.
+By <em>end</em> I don&#39;t literally mean they go away or stop being useful. My
+hypothosis is that, slowly to begin with then more quickly, they cease
+to be the default we reach for when launching new services.</p>
+
+<h1>The hypervisor of containers</h1>
+
+<p>The first part of the talk included a discussion of what I&#39;d referred to
+as <em>the hypervisor of containers</em>, what today would more likely be
+referred to as a CaaS, or containers as a service. I even speculated
+that VMWare would have to ship something in this space (See vSphere Integrated
+Containers and the work on Photon OS) and that counting out OpenShift
+would be premature (OpenShift 3 shipped predominantly as a Kubernetes
+distribution). I&#39;ll come back to why this is a threat to your beloved
+Debian servers shortly.</p>
+
+<h1>The race to PID1</h1>
+
+<p>For anyone who has run Docker you&#39;ll likely have wrestled with the
+question of where does the role of the host process supervisor (probably systemd)
+start and the container process supervisor (the Docker engine) end? Do
+you have to interact directly with both of them?</p>
+
+<p>Now imagine if <em>all</em> of the software on your servers was run in containers.
+Why do I need two process supervisors now with 100% overlap? The obvious
+answer is you don&#39;t, which is why the fight between Docker and systemd
+is inevitable. Note that this isn&#39;t specific to Docker either. In-scope
+for <a href="https://github.com/kubernetes-incubator/cri-o">cri-o</a> is <em>Container
+process lifecycle management</em>.</p>
+
+<h1>Containers as the unit of software</h1>
+
+<p>Hidden behind my hypothosis, which mainly went unsaid, was
+that containers are becoming the unit of software. By which I mean
+the software we build or buy will increasingly be distributed as
+containers and run as containers. The container will carry with it
+enough metadata for the runtime to determine what resources are
+required to run it.</p>
+
+<p>The number of simplying assumption that come from this shared contract should not
+be underestimated. At least at the host level you&#39;re likely to need lots
+of near-identical hosts, all simply advertising their capabilities to
+the container scheduler.</p>
+
+<h1>Operating system as implementation detail</h1>
+
+<p>What we&#39;re witnessing in the market is the development of vertically integrated
+stacks.</p>
+
+<ul>
+<li>Docker for Mac/Windows/AWS/Azure ships with it&#39;s own operating
+system, an Alpine Linux derivative <a href="http://lucjuggery.com/blog/?p=753">nicknamed Moby</a>, which is not intended for direct management by end users.</li>
+<li>Tectonic from CoreOS is a Kubernetes distribution which runs atop a
+cluster of managed CoreOS hosts. Most of the operating system is
+managed with frequent atomic rolling updates.</li>
+<li>OpenShift Enterprise from RedHat is another Kubernetes derivative,
+this time running atop Atomic host.</li>
+<li>Pivotal CloudFoundry <a href="https://twitter.com/jambay/status/794904634502496257">ships with the IaaS, host OS, kernel, file
+system, container OS all tested
+together</a></li>
+</ul>
+
+<p>In all of these cases the operating system is an implementation detail
+of the higher level software. It&#39;s not intended to be directly managed,
+or at least managed to the same degree as the general purpose OS you&#39;re
+running today.</p>
+
+<p>This is how the end comes for the majority of your general purpose
+operating system running servers. The machines running containers will
+be running something more single purpose, and more and more of the
+software you&#39;re running will be running in containers.</p>
+
+<p>The reason why you&#39;ll do this, rather than compose everything yourself, is
+compatability. Whether it&#39;s kernel versions, file system drivers,
+operating system variants or a hundred variations that make your OS
+build different from mine. Building and testing software that runs
+everywhere is a sisyphean task. Their is also the commercial angle at
+play here, and the advantage of being able to support a single validated
+product to everyone.</p>
+
+<h1>Implications</h1>
+
+<p>There are lots of implications to this move, and it&#39;s going to be
+interesting to see how it plays out with both early adopters and
+enterprise customers alike.</p>
+
+<ul>
+<li>What does this mean for corporate operating system policies?</li>
+<li>How do standard agent-based monitoring systems work in a world of
+closed vertical stacks?</li>
+<li>Will we see this pattern for other types of service in the AWS Marketplace,
+where instance launched are inaccessible but automatically updating?</li>
+<li>How does such fast moving software work in environments with rigid
+change control processes or audit requirements?</li>
+<li>Many large organisations will end up running more than one of these
+types of system, how best to manage such heterogenous environments?</li>
+<li>Will we see push back from some parties? In particular the open source
+community who may see this mainly serving the needs of vendors?</li>
+<li>Does the end of the general purpose OS lead to greater specialism
+amongst systems administrators?</li>
+</ul>
+
+<p>I&#39;d love to chat about any of this with other folks who have given it
+some thought. It&#39;s interesting watching grand changes play out across
+the industry and picking up on patterns that are likely obvious in
+hindsight. And if you like this sort of thing let me know and I&#39;ll try
+and find time for more speculation.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/10/07/infrakit-hello-world/">
+            InfraKit Hello World
+            <small>07 Oct 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/07/05/everyone-is-not-a-software-company/">
+            Everyone is Not a Software Company
+            <small>05 Jul 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/12/27/operations-more-than-systems-administration/">
+            Operations is more than just Systems Administration
+            <small>27 Dec 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

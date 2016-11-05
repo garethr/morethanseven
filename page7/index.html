@@ -68,6 +68,19 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2013/02/17/going-fast-in-government/">
+        Going fast in government
+      </a>
+    </h1>
+
+    <span class="post-date">17 Feb 2013</span>
+
+    <p>About a month ago I had the good fortune of speaking at the <a href="http://www.meetup.com/London-Web-Performance-Group/">London Web Performance</a> meetup. This was one of the first talks I&#8217;ve done about our work at The Government Digital Service since the luanch of <span class="caps">GOV</span>.UK back in October. The topic was all about moving quickly in a large organisation (The UK Civil Service is about 450,000 people so I think it counts) and featured just a hand full of technical and organisational tricks we used.</p>
+<script async class="speakerdeck-embed" data-id="bc48ed2042c20130b322123138156909" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2013/01/13/django-and-rails-presentation-from-qcon/">
         Django and Rails presentation from QCon
       </a>
@@ -163,43 +176,6 @@ rake repo:build             # Build the repository</code></pre>
     <span class="post-date">21 Oct 2012</span>
 
     <p>Last week we shipped <a href="https://www.gov.uk"><span class="caps">GOV</span>.UK</a>. Over the last year we&#8217;ve built a team to build a website. Now we&#8217;re busy building a culture too. I&#8217;ve got so much that needs writing up about everything we&#8217;ve been up to. Hopefully I&#8217;ll make a start in the next week or so.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/08/19/Tale-of-a-grok-pattern/">
-        Tale Of A Grok Pattern
-      </a>
-    </h1>
-
-    <span class="post-date">19 Aug 2012</span>
-
-    <p>I&#8217;m all of a sudden adding lots more code to GitHub. Here&#8217;s the latest project, <a href="https://github.com/garethr/logstash-patterns">grok patterns for logstash</a>. At the moment this repo only contains one new pattern but I&#8217;m hoping to add more, and maybe even for others to add more too.</p>
-<p>First, a bit of background. <a href="http://logstash.net/">Logstash</a> is the excellent, open source, log agregation and processing framework. It takes inputs from various configurable places, processes them with filters and then outputs the results. So maybe you&#8217;ll take inputs from various application log files and output then into an elastic search index for easy searching, or output the same inputs to graphite and statsd to get graphs of rates. One of the host powerful filters in logstash is the <a href="http://logstash.net/docs/1.0.17/filters/grok">grok filter</a>. It takes a grok pattern and parses out information contained in the text into fields that can be more easily used by outputs. This post serves hopefully as both an explanation of why and an example of how you might do that.</p>
-<h2>The problem</h2>
-<p>Rails logs are horrible, that is until you install the excellent <a href="https://github.com/roidrage/lograge">lograge</a> output formatter. That gives you lines like:</p>
-<pre>GET /jobs/833552.json format=json action=jobs#show status=200 duration=58.33 view=40.43 db=15.26</pre>
-<p>This contains loads of useful information that&#8217;s easily parsable by a developer. We have the <span class="caps">HTTP</span> status code, the rails controller and information about response time too. A grok filter lets us teach logstash about that information too. The working grok filter for filtering this line looks like this:</p>
-<h2>The solution</h2>
-<pre>LOGRAGE %{WORD:method}%{SPACE}%{DATA}%{SPACE}action=%{WORD:controller}#%{WORD:action}%{SPACE}status=%{INT:status}%{SPACE}duration=%{NUMBER:duration}%{SPACE}view=%{NUMBER:view}(%{SPACE}db=%{NUMBER:db})?%{GREEDYDATA}</pre>
-<p>That was worked out pretty much with a bit of trial and error and use of the logstash java binary, using stdin and stdout inputs and outputs. It works but getting their wasn&#8217;t that much funand proving it works outside a running logstash setup was tricky. Enter rspec and the grok implementation in pure Ruby. The project above contains an Rspec matcher for use when testing grok filters for logstash. I&#8217;ll probably extract that into a gem at some point but you&#8217;ll get the idea. Now we can write tests like these:</p>
-<pre>the lograge grok pattern
-  with a standard lograge log line
-    should have the correct http method value
-    should have the correct value for the request duration
-    should have the correct value for the request view time
-    should have the correct controller and action
-    should have the correct value for db time
-  without the db time
-    should have the correct value for the request view time
-  with a post request
-    should have the correct http method value
-
-Finished in 0.01472 seconds
-7 examples, 0 failures
-</pre>
-<p>The <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/lograge_spec.rb">tests themselves</a> are just basic Rspec with most of the work done in the <a href="https://github.com/garethr/logstash-patterns/blob/master/spec/spec_helper.rb">custom matcher</a>. This not only means I can be a bit more confident that my grok pattern works, it also provides a much nicer framework for writing more patterns for other log formats. Parsing rules like this are one area where test driven development is a huge boon in my experience. And with tests comes continuous integration, in this case via <a href="http://travis-ci.org/#!/garethr/logstash-patterns">Travis</a>.</p>
-<p>I&#8217;ll hopefully find myself writing more patterns and tests for them, and if anyone wants to send pull requests and to start collecting working grok patterns together so much the better.</p>
   </div>
   
 </div>

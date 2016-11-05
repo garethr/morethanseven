@@ -68,6 +68,57 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/18/simple-python-jabber-bot/">
+        A Simple Python Jabber Bot
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jan 2009</span>
+
+    <p>I&#8217;ve been knocking together various little instant messaging bots recently, partly as a way to play around with <span class="caps">XMPP</span>. As well as using the low level <a href="http://xmpppy.sourceforge.net/">xmppy</a> and <a href="http://code.google.com/p/xmpp4r-simple/">XMPP4R-Simple</a> libraries I&#8217;ve been having lots of fun with the <a href="http://thpinfo.com/2007/python-jabberbot/">JabberBot</a> framework.</p>
+<p>Jabberbot lets you write simple bots incredibly quickly, using simple conventions to determine what commands the bot exposes. It&#8217;s easier to explain with a simple example. The following bot lets you send the command <em>time</em> to it and returns the current time on the server on which the bot is running. The magic is in the name of the method <em>bot_time_. Any methods that start bot</em> are automatically exposed as commands for the bot to accept.</p>
+<p>You&#8217;ll need an xmpp server for the bot to connect to but you could always just register an additional google account and use it over gtalk if you wanted to. Personally I&#8217;m running <a href="http://www.ejabberd.im">ejabberd</a> on a local Ubuntu VM as well for testing.</p>
+<pre>from jabberbot import JabberBot
+import datetime
+class SystemInfoJabberBot(JabberBot):
+    def bot_time( self, mess, args):
+        """Displays current server time"""
+        return str(datetime.datetime.now())
+username = 'my-jabberid@jabberserver.example.org'
+password = 'my-password'
+bot = SystemInfoJabberBot(username,password)
+bot.serve_forever()</pre>
+<p>The JabberBot site has a few more examples as well with fancier features. At the recent Last.fm hackday I spent a bit of time knocking together a bot which talks to the Last.fm <span class="caps">API</span> (using the <a href="http://code.google.com/p/pylast/">PyLast</a> library for the <span class="caps">API</span> backwards and forwards.) I did this mainly as a demonstration of how simple it can be to create a useful command line interface to your <span class="caps">API</span> using an instant messaging client.</p>
+<p>The code for <a href="http://github.com/garethr/lastbot/tree/master">LastBot</a> is on GitHub. It has a few limitations and doesn&#8217;t intent to cover anywhere near all the <span class="caps">API</span>. When up and running you should be able to talk to it with your IM client. Simply send the user specified in the settings file a message like so:</p>
+<pre>search {query}</pre>
+<p>So if you wanted to search for “astley” you would type:</p>
+<pre>search astley</pre>
+<p>Which would probably give you:</p>
+<pre>you probably mean Never Gonna Give You Up by Rick Astley
+http://www.last.fm/music/Rick_Astley/_/Never_Gonna_Give_You_Up
+Richard Paul Astley (born February 6, 1966) is an English dance-pop singer,
+songwriter and musician. He was born in Newton-le-Willows, St Helens,
+Lancashire, England. Astley currently resides in Richmond, Surrey with his 
+Danish girlfriend, Lene Bausager, and their daughter, Emilie. In 1985, Astley 
+was playing the club circuit as a singer with a soul band named FBI, when he 
+was seen by the record producer Pete Waterman and persuaded to come to London 
+to work at the PWL recording studio.</pre>
+<p>If the first result that comes back isn’t the one you wanted you can ask for the next result by simply sending next in another message. You can use prev as well to come back through the set.</p>
+<pre>next</pre>
+<p>You can always send it a call for help at any time which should return the instructions to you via an IM message.</p>
+<pre>help</pre>
+<p>Which should return something like:</p>
+<pre>Personal LastFM search bot. Useful for looking for tracks you can't 
+remember the full name of. Or for findind out who sung a track.
+search: do a search for tracks
+prev: get details about the previous track in the list
+next: get details about the next track in the list</pre>
+<p>More instructions, and the code behind the bot, can be found in the <a href="http://github.com/garethr/lastbot/tree/master"><span class="caps">README</span></a>.</p>
+<p>As developers we spend a lot of time using command line interfaces &#8211; mainly for speed and because you can cram a lot of functionality into a small amount of screen real estate. We&#8217;re increasingly spending time debugging <span class="caps">API</span> calls as well and exposing your <span class="caps">API</span> calls for use by instant messaging clients has the potential to make development easier. Think of the Python interactive shell or of <span class="caps">IRB</span>, but for APIs.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/15/are-xmpp-and-offline-processing-coming-google-app/">
         Are XMPP and offline processing coming to Google App Engine?
       </a>
@@ -136,28 +187,6 @@
 <p>On my local machine I&#8217;m a big fan of the command line for all sorts of simple, and sometimes complex, tasks.  If applications expose their APIs via an <span class="caps">XMPP</span> bot then you basically have a ready made command line interface to online services via your IM client of choice. Combined with a solution to the public webhook problem mentioned above and you can hopefully see why I find <span class="caps">XMPP</span> pretty interesting.</p>
 <p>I&#8217;ve been playing with writing <span class="caps">XMPP</span> bots recently, both at our internal hackday and at the recent <a href="http://github.com/garethr/lastbot/tree/master">Last.fm event</a>. Their are various libraries and code examples lying around the internet that make getting started easy enough. With services like <a href="http://imified.com/">Imified</a> getting setup last year I&#8217;d imagine it will get easier still this year.</p>
 <p>As for what I&#8217;m going to be up to along these lines, we&#8217;ll have to wait and see. I have a few pet projects that I&#8217;d like to get off the ground which might be good test beds for this sort of thing. Apart from that I&#8217;d like to write some <em>getting started</em> style tutorials on some of the technologies involved or maybe a full blown article on the theory if I can find somewhere to publish it. A barcamp presentation or two might also fall off the back if I do get the time to play around a little more. But that&#8217;s just me. If you&#8217;re building, or planning on developing, an <span class="caps">API</span> for a product at the moment I&#8217;d suggest having a look at these two areas. They might turn out to just be potential extensions to what you had planned. Or they might turn out to be just the right approach to the problems you&#8217;ll face getting people to use your <span class="caps">API</span>.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/12/28/local-continuous-integration-integrity/">
-        Local Continuous Integration with Integrity
-      </a>
-    </h1>
-
-    <span class="post-date">28 Dec 2008</span>
-
-    <p><a href="http://integrityapp.com/">Integrity</a> is ace. I&#8217;m a huge fan of working under the ever watchful eye of a <a href="http://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> server. I&#8217;m also becoming more and more of a fan of Git, and <a href="http://github.com">GitHub</a>, for my <a href="http://github.com/garethr">personal projects</a>. At work we run <a href="http://cruisecontrol.sourceforge.net/">CruiseControl</a> and it does it&#8217;s job well, but locally I only use it for larger projects. It comes with a little overhead and if I&#8217;m just hacking on the train I rarely check on it&#8217;s status.</p>
-<p>Integrity is an unashamedly lightweight and straightforward continuous integration server written in Ruby. It comes with Git integration as well as a nifty notifications framework. There are already notification plugins available for jabber, <span class="caps">IRC</span> and email. If I get time and inclination I&#8217;d love to hack together a webhooks plugin too. It&#8217;s a simple app to get up and running with and you can always <a href="http://github.com/foca/integrity/tree/master">browse the code</a> if something isn&#8217;t clear. All in all it&#8217;s perfect for my type of smaller project.</p>
-<p>So, with a local <em>CI</em> server up and running you&#8217;re left with one problem; having to click the _Manual Build&quot; button whenever you want a build. Now Integrity comes with a mechanism to allow pushes to GitHub to trigger a build. But this only works when you have an internet connection and are using GitHub and are pushing frequently. Personally I often make lots of local commits and then push at a later date. Also not all of my projects are on GitHub for various reasons.</p>
-<p>Well it turns out that all the build button does is sent an empty HTTPpost request to a <span class="caps">URL</span> of the following format:</p>
-<pre>http://{integrity-url}:8910/{project-name}/builds</pre>
-<p>That means with a little bit of Git magic we can have our integration server run a new build whenever we commit our code. All we need to do is write a very simple post-commit git hook script. I&#8217;ve written the script in Python but you could write it in anything. This script is from a real project so adjust the server address and path as needed.</p>
-<pre>#! /usr/bin/env python
-import httplib
-conn = httplib.HTTPConnection("localhost:8910")
-conn.request("POST", "/appengine-books/builds")</pre>
-<p>All you need to do is drop this script in your .git/hooks folder as <em>post-commit</em>. Make sure you set the executable bit with <em>chmod +x</em> as well, otherwise you&#8217;ll be wondering why it&#8217;s not working and probably blaming me.</p>
   </div>
   
 </div>

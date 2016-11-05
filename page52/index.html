@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/08/30/newcastle-geekvenues/">
+        Newcastle Geekvenues
+      </a>
+    </h1>
+
+    <span class="post-date">30 Aug 2007</span>
+
+    <p>More interesting Newcastle centric news, although this time partly releveant to everyone else &#8211; well, as long as you live in Oxford, Brighton, Leeds or Manchester that this.</p>
+<p><a href="http://notes.natbat.net/">Natalie Downe</a> has spent some of her copious spare time (having left the agency way of life and gone all <a href="http://notes.natbat.net/2007/08/19/freelance/">freelance</a> too) cooking up <a href="http://geekvenues.com/">Geekvenues</a>. It&#8217;s an attempt to map (using Google Maps) any and all geek related venues around the UK. Local meetup places perhaps, regular venues, or just geek friendly pubs with wifi.</p>
+<p>I&#8217;ve been adding some venues for Newcastle and they can be found over at <a href="http://newcastle.geekvenues.com/">newcastle.geekvenues.com/</a>. If anyone knows of any other ones let me know. And if anyone is thinking &#8220;I want it to cover my neck of the woods&#8221; then get in touch with Nat, ideally with a link to a <span class="caps">KML</span> file of locations. I&#8217;m looking at <a href="http://www.azcazandco.com">Alan</a> and <a href="http://sneeu.com/blog/">John</a> from Edinburgh in particular here.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/08/28/opencoffee-newcastle/">
         OpenCoffee Newcastle
       </a>
@@ -144,23 +158,6 @@
 
 <pre><code>curl -X 'POST' -d "message" http://morethanseven.net/presents/nabaztag/mouth</code></pre>
 <p>Their&#8217;s a litte documentation in the source. I&#8217;ll add more methods, more documentation and maybe make an <span class="caps">API</span> anyone with a Nabaztag can use by authenticating either as I need it or if people actually want it. Let me know what you think (via the rabbit obviously!)</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/07/15/ruby-on-rails-on-nokia-n800/">
-        Ruby on Rails on Nokia N800
-      </a>
-    </h1>
-
-    <span class="post-date">15 Jul 2007</span>
-
-    <p>My latest job has allowed me to get back into playing with <a href="http://rubyonrails.com">Rails</a>, something I&#8217;ve been meaning to do for a year or so. Having got everything up to date and installed on my virtual server and on my laptop I couldn&#8217;t resist seeing if I could get it going on my <a href="http://www.nseries.com/products/n800">N800</a>.</p>
-<p>The reasons for this are mainly that the idea of a wireless web server in my pocket is pretty intriguing. Think about it. If you&#8217;re at an event with Wi-Fi you can just point people to an IP address and hey presto they have access to your details, or a set of photos, or whatever you want to show them. I&#8217;ve also got nginx installed, but I&#8217;m not as yet that up on running python or <span class="caps">PHP</span> behind it on the N800. So, no need to carry around the laptop. OK, maybe it&#8217;s just me and all this going to web conferences? We&#8217;ll have to see if I actually knock up anything useful for the next conference and see. Saving that I&#8217;ve been travelling quite a bit recently and it&#8217;s handy when reading a Rails book to be able to try out the examples.</p>
-<p>Anyway, it turns out that you can indeed <a href="http://flickr.com/photos/kwe/484269853/">install Ruby and Rails on the N800</a>, although their isn&#8217;t much information around and non of it worked exactly as stated for me &#8211; hence this post.</p>
-<p>I followed along with a <a href="http://www.digitalknk.com/2007/05/27/howto-ruby-on-rails-on-your-nokia-n800/">pretty good tutorial</a>, although I already had Red Pill Mode, XTerm and <span class="caps">SSH</span> installed. Ruby is also now available in the <a href="https://garage.maemo.org/projects/ruby185/">Garage</a>.</p>
-<p>The crux of the post is that you can find the required packages, in particular for Gem, <a href="http://pierre.droids-corp.org/maemo/">here</a>. But unfortunately that is were the problems start. I ran into exactly the same problem as described in the comments in the above post, on <a href="http://railsgrunt.com/2007/5/14/installing-ruby-on-rails-on-the-n800">this blog post</a> and on this <a href="http://www.internettablettalk.com/">Internet Tablet Talk</a> <a href="http://www.internettablettalk.com/forums/showthread.php?t=5442&amp;page=2">forum thread</a>. Specifically, Gem hanging, crashing or returning a segmentation fault in the yaml.rb file on line 133.</p>
-<p>The problem appears to be (this is me guessing here) with gem and the N800 being able download all the info for Gem to update it&#8217;s package list. The solution, or rather a suitable workaround, is to download the individual gems yourself to the local file system or a memory card and then install them from there. You can get all the Rails gems <a href="http://pierre.droids-corp.org/maemo/gems/">here</a>. A quick script/server later and I had the familiar Rails welcome screen on port 3000. This should in theory work for oher gems as well. You can either download them directly or use Gem on a local machine and them move the files across via bluetooth or <span class="caps">USB</span>.</p>
   </div>
   
 </div>

@@ -68,6 +68,48 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/11/28/Sinatra-on-glassfish-example/">
+        Sinatra On Glassfish Example
+      </a>
+    </h1>
+
+    <span class="post-date">28 Nov 2010</span>
+
+    <p>I magically turned into a Java developer last week for a bit when I had to do some integration with a <span class="caps">SOAP</span> based <span class="caps">API</span> that really really wanted me to write Java on client as well. That led me down the route of having a good look at Jruby (which I&#8217;ve used before, mainly for testing using celerity) and in particular how easy it was to use native Java classes in Jruby (very, very easy as it turns out).</p>
+<p>All that meant I&#8217;ll probably end up writing a nice Jruby application in the not too distant future, and not knowing too much about running such a thing in a production environment I thought I&#8217;d take a quick look. I went with Glassfish as the application server for no other reason that it took my fancy. I&#8217;d definately be interested in hearing about any positive or negative experiences people may have with it or other similar servers. My quick look turned into running a tiny Sinatra application.</p>
+<p>First install the required gems for our little experiment. You&#8217;ll obviously need jruby which is sort of the point, I&#8217;d recommend using <span class="caps">RVM</span> for that.</p>
+<pre><code>gem install sinatra warbler</pre><p></code></p>
+<p>Now create a sinatra app. OK, it could be any Ruby rack based application but I like Sinatra. First we need a rackup file.</p>
+<pre><code># config.ru
+require 'init'
+
+set :run, false
+set :environment, :production
+
+run Sinatra::Application</pre><p></code></p>
+<p>Now for our application itself.</p>
+<pre><code># init.rb
+require 'rubygems'
+require 'sinatra'
+get '/' do
+  "Hello World!"
+end</pre><p></code></p>
+<p>Warble is the gem we&#8217;re going to use to create a <span class="caps">WAR</span> file, which is basically an all in one bundle of our application and it&#8217;s dependencies which we can deploy to a java application server.</p>
+<pre><code># config/warble.rb
+Warbler::Config.new do |config|
+  config.dirs = %w(config)
+  config.includes = FileList["init.rb"]
+  config.gems += ["sinatra"]
+  config.gems -= ["rails"]
+  config.gem_dependencies = true
+end</pre><p></code></p>
+<p>Now we&#8217;re ready to generate our <span class="caps">WAR</span> file.</p>
+<pre><code>warble</pre><p></code></p>
+<p>This should create a file called sample.war or similar. Then just deploy that to your application server and away you go. I got this working very easily with Glassfish which seemed to be the recommended tool for such things. Installing Glassfish was time consuming but <a href="http://www.nabisoft.com/tutorials/glassfish/installing-glassfish-301-on-ubuntu">well documented here</a>. Uploading to Glassfish was done via the web interface for the moment. I just selected a Ruby project from the deployment drop down and uploaded the war file.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/11/21/Devops-weekly/">
         Devops Weekly
       </a>
@@ -214,22 +256,6 @@ vagrant up</pre>
 <p>Now to run all that just issue the following command:</p>
 <pre>sudo chef-solo -c config/solo.rb -j config/node.json</pre>
 <p>This should output various messages to the console about what chef is doing and, when it&#8217;s finished, you should find curl has been installed. Try and add another line to the recipe for another package (or even a gem) and rerun the chef-solo command. Now go read the docs for all the other cool things you can do.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/09/13/Working-for-freeagent/">
-        Working For Freeagent
-      </a>
-    </h1>
-
-    <span class="post-date">13 Sep 2010</span>
-
-    <p>So, I&#8217;ve just accepted a new job at <a href="http://freeagentcentral.com">FreeAgent</a>, the rather snappy online small business accounting startup. I&#8217;ll be starting in about a month, when I get back from devopsdays in Hamburg.</p>
-<p>I&#8217;m joining a pretty well knit group of designers and developers working on a pretty well loved piece of software. I&#8217;ve known Roan (one of the directors) for years, ever since the first Highland Fling conference I think. And the rest of the team seem a good mix of technical smarts and professionalism. Hopefully I can live up to their already high standards.</p>
-<p>I&#8217;m looking forward to jumping into a decent sized Ruby project and getting properly reacquainted with Rails as well. I&#8217;ve spent most of the previous few years in the Python world so that should be a nice challenge. I&#8217;m constantly impressed with the number of high quality tools written in Ruby andRails 3 looks a genuinely nice piece of software. Hopefully with a bit more idiomatic ruby under my belt, more time on my hands and some new real world problems to solve I&#8217;ll increase my open source contributions and get back to writing again as well. I&#8217;ll likely be spending most of my time on those good developer staples new feature development, supporting existing code and scaling systems. I&#8217;ll also be involved in some operations stuff if I get chance, introducing software I&#8217;m a huge fan of and automating everything I can get my hands on.</p>
-<p>The rest of the team are based up in Edinburgh but I&#8217;ll be working from home most of the time. I&#8217;m quite looking forward to working from Cambridge after having lived here for a few years. I&#8217;ll also get to see various friends in Edinburgh that I don&#8217;t get chance to meet up with very often and still have time to make it to London for the odd event or get together. I&#8217;ll likely be looking into coworking spaces or desk shares in and around Cambridge so if anyone has any recommendations.</p>
-<p>Given this weeks pubstandards is apparently all about weddings, birthdays and new jobs (and I have all 3 within a month) it would be rude not to go along for at least one drink. If you&#8217;re around London I might see you there.</p>
   </div>
   
 </div>

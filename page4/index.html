@@ -68,6 +68,66 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/04/25/consul/">
+        Consul, DNS and Dnsmasq
+      </a>
+    </h1>
+
+    <span class="post-date">25 Apr 2014</span>
+
+    <p>While at <a href="http://craft-conf.com/2014">Craft</a> I decided to have a quick look at
+<a href="http://www.consul.io/">Consul</a>, a new service discovery framework with
+a few intersting features. One of the main selling points is a DNS
+interface with a nice API. The <a href="http://www.consul.io/intro/index.html">Introduction</a>
+shows how to use this via the dig command line tool, but how do you use
+a custom internal DNS server without modifying all your applications?
+One answer to this question is
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a>.</p>
+
+<p>I&#39;m not explaining Consul here, the above mentioned introduction does a
+good job of stepping through the setup. The following assumes you have
+installed and started consul.</p>
+
+<h2>Installation and configuration</h2>
+
+<p>I&#39;m running these examples on an Ubuntu 14.04 machine, but dnsmasq
+should be available and packaged for lots of different operating
+systems.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get install dnsmasq
+</code></pre></div>
+<p>Once installed we can create a very simple configuration.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;server=/consul/127.0.0.1#8600&quot;</span> &gt; /etc/dnsmasq.d/10-consul
+</code></pre></div>
+<p>All we&#39;re doing here is specifying that DNS requests for consul services
+are to be dealt with by the DNS server at 127.0.0.1 on port 8600. Unless
+you&#39;ve changed the consul defaults this should work.</p>
+
+<p>Just in case you prefer Puppet their is already a handy
+<a href="https://github.com/saz/puppet-dnsmasq">dnsmasq</a> module. The resulting
+puppet code then looks like this.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="k">include</span> <span class="na">dnsmasq</span>
+<span class="na">dnsmasq</span><span class="p">::</span><span class="na">conf</span> <span class="p">{</span> <span class="s">&#39;consul&#39;</span><span class="p">:</span>
+  <span class="na">ensure</span>  <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">content</span> <span class="o">=&gt;</span> <span class="s">&#39;server=/consul/127.0.0.1#8600&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Usage</h2>
+
+<p>The examples from the main documentation specify a custom DNS server for
+dig like so:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">dig @127.0.0.1 -p <span class="m">8600</span> web.service.consul
+</code></pre></div>
+<p>With Dnsmasq installed and configured as above you should just be able
+to do the following:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">dig web.service.consul
+</code></pre></div>
+<p>And now any of your existing applications will be able to use your
+consul instance for service discovery via DNS.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/03/15/testing-vagrant-runs-with-cucumber/">
         Testing Vagrant runs with Cucumber
       </a>
@@ -449,104 +509,6 @@ might want to test.</p>
 <p>I&#39;m hoping to find some more time to make this even better, providing
 more information about untouched resources, adding some configuration
 options and hopefully to integrate with the <a href="https://coveralls.io/docs/api">Coveralls API</a>.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/01/12/shell-provisioner-for-test-kitchen/">
-        Shell provisioner for Test Kitchen
-      </a>
-    </h1>
-
-    <span class="post-date">12 Jan 2014</span>
-
-    <p>As of a few weeks ago <a href="http://kitchen.ci/">Test Kitchen</a> has a <a href="https://github.com/test-kitchen/test-kitchen/blob/master/lib/kitchen/provisioner/shell.rb">shell provisioner</a> as well as the original Chef provisioners. This opens up all sorts of interesting testing potential.</p>
-
-<p>If you&#39;ve not already seen Test Kitchen, probably because you&#39;re not using Chef, it&#39;s a tool for integration testing infrastructure code. Configured by a simple YAML file it will setup a matrix of virtual machines, using Virtualbox, AWS, OpenStack and more, run some setup code (normally applying Chef recipes) and then run a test suite (with support for Bats, ShUnit2, Rspec and Serverspec). It&#39;s all very pluggable. With the addition of the shell provisioner it&#39;s useful to just about anyone. To try and prove that here&#39;s a hello world style example.</p>
-
-<h2>Dependencies</h2>
-
-<p>First we need to install Test Kitchen. We&#39;ll use vagrant and virtualbox for our example too so we need a few extra dependencies. I&#39;m going to assume you have bundler installed, if not you may be able to do so with <code>gem install bundler</code> but as the number of ways of setting a ruby environment up is greater than the number of people on the planet I&#39;ll have to defer to instructions elsewhere for getting that far.</p>
-
-<p>First create a file called <code>Gemfile</code> with the following contents:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
-
-<span class="n">gem</span> <span class="s2">&quot;test-kitchen&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://github.com/test-kitchen/test-kitchen.git&quot;</span>
-<span class="n">gem</span> <span class="s2">&quot;kitchen-vagrant&quot;</span>
-<span class="n">gem</span> <span class="s2">&quot;vagrant-wrapper&quot;</span>
-</code></pre></div>
-<p>Then run:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bundle install
-</code></pre></div>
-<p>This should install the above software. Note that the shell provisioner is not yet in an official release so where installing direct from GitHub for the moment.</p>
-
-<h2>Configuration</h2>
-
-<p>Next we&#39;ll tell Test Kitchen what we want to do. As much for demonstration purposes I&#39;m going to grab one of the Puppetlabs boxes. This is just plain <a href="http://vagrantup.com">Vagrant</a> so feel free to substitude the <code>box</code> and <code>box_url</code> for alternatives you already have installed locally. Otherwise the first run will take a little longer as it downloads a large file.</p>
-
-<p>Pull all of the following in a file called `.kitchen.yml&#39;.</p>
-<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
-<span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">vagrant</span>
-
-<span class="l-Scalar-Plain">provisioner</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">shell</span>
-
-<span class="l-Scalar-Plain">platforms</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
-    <span class="l-Scalar-Plain">driver_config</span><span class="p-Indicator">:</span>
-      <span class="l-Scalar-Plain">box</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">puppet-precise64</span>
-      <span class="l-Scalar-Plain">box_url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box</span>
-
-<span class="l-Scalar-Plain">suites</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">default</span>
-</code></pre></div>
-<p>The shell provisioner is going to look for a file called <code>bootstrap.sh</code> by default. You can overide this but we&#39;ll leave it for the moment. Our bootstrap script is going to do something very simple, install the ntp package. But the important part is it could do anything; run Salt, run Ansible, run Puppet, execute any arbitrary code we choose. In this case our script is completely self contained but if it needed some additional files we could put them in a directory called <code>data</code> and they would be copied to the newly created virtual machine under <code>/tmp/kitchen</code>.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
-
-apt-get install ntp -y
-</code></pre></div>
-<h2>Tests</h2>
-
-<p>The last step is to write a test. I&#39;m suddently finding lots of excuses to use <a href="http://serverspec.org/">Serverspec</a> so we&#39;ll use that, but if you prefer you can use pretty much anything. The following file should be saved as  <code>test/integration/default/serverspec/ntp_spec.rb</code>. Note the <code>default</code> in the path which matches our suite above in the <code>.kitchen.yml</code> file. Test Kitchen allows for multiple suites all with separate tests based on a strong set of file path conventions.</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;serverspec&#39;</span>
-
-<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">Exec</span>
-<span class="kp">include</span> <span class="no">Serverspec</span><span class="o">::</span><span class="no">Helper</span><span class="o">::</span><span class="no">DetectOS</span>
-
-<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
-  <span class="n">c</span><span class="o">.</span><span class="n">before</span> <span class="ss">:all</span> <span class="k">do</span>
-    <span class="n">c</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/sbin:/usr/sbin&#39;</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
-  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
-<span class="k">end</span>
-
-<span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">&#39;ntp&#39;</span><span class="p">)</span> <span class="k">do</span>
-  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
-  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
-<span class="k">end</span>
-</code></pre></div>
-<h2>Running the tests</h2>
-
-<p>With all of that in place we&#39;re ready to run our tests.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bundle exec kitchen test
-</code></pre></div>
-<p>This should:</p>
-
-<ul>
-<li>download the virtual machine image if you don&#39;t already have it locally</li>
-<li>create a new virtual machine based on the image</li>
-<li>run the bootstrap.sh script</li>
-<li>run our serverspec test suite</li>
-</ul>
-
-<p>The real power comes from doing this iteratively as you work on code, probably code more complex than a simple one-line bash script. You can also test across multiple virtual machines at a time, for instance different operating systems or different machine roles. The <code>kitchen</code> command line tool provides lots of help too, with the ability to login to machines, verify that specific combinations of platform and suite are working and print lots of diagnotic information to aid development.</p>
-
-<p>Hopefully this will make it into a release soon, and we&#39;ll see more involved examples using higher level tools and more documentation. But even now I&#39;d be looking at Test Kitchen for any infrastructure testing you might be doing.</p>
 
   </div>
   

@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/02/24/thinking-digital/">
+        Thinking Digital
+      </a>
+    </h1>
+
+    <span class="post-date">24 Feb 2008</span>
+
+    <p>I&#8217;m starting to get excited about <a href="http://thinkingdigital.co.uk">Thinking Digital</a>. But first a bit of back-story.</p>
+<p>I started out making the trip to <a href="http://atmedia2005.co.uk/">@media 2005</a> and since then have been a regular attendee of more conferences than I can shake a stick at. Lets say I caught the conference bug. But most of those have been within the web standards community niche and more recently I&#8217;ve been looking further afield for conference kicks, party due to the eclectic nature of <a href="http://barcamp.org">BarCamp</a> style events. Anyone in that positions inevitably takes a fancy to going along to <a href="http://www.ted.com/"><span class="caps">TED</span></a>. The <em>only</em> problem is the fact it&#8217;s already booked up until 2010, costs $6,000 just to for a standard membership and is invite only.</p>
+<p>This year the folks over at <a href="http://codeworks.net">Codeworks</a>, which is a regional body set up to help us North East digital folk develop an industry, are organising their very own full size conference. The <a href="http://thinkandadrink.com">Think and a Drink</a> events have been running for a number of years and I&#8217;ve spoken a few times on web related bits and pieces. But these are purposely local events mainly for members and tend to crop up at the rate of once a month. <a href="http://thinkingdigital.co.uk">Thinking Digital</a> is a full size, 400 person, conference being held in Newcastle between the 21st and 23rd of May this year covering a similar set of wide ranging themes to <span class="caps">TED</span>; technology, design, mobile plus a bit of philosophy and futurism thrown in for good measure.</p>
+<p>Now this is good for a few reasons. Only one of which is I can see the venue out of my apartment window. Costing only Â£475 and being in the UK would be a couple of other reasons to get excited. As an aside; I&#8217;m helping out as a board member along with the likes of <a href="http://www.cubicgarden.com/">Ian Forrester</a> but I&#8217;d gladly pay my way if I wasn&#8217;t.</p>
+<p>The real reason for the excitement though is the calibre of some of the speakers. Ray Kurzweil, Greg Dyke, Dan Lyons (a.k.a. Fake Steve Jobs), Matt Locke, Aubrey De Grey and Tara Hunt to name a few I&#8217;m particularly interested in. And remember folks, this is in Newcastle. Which for the few Londoners reading is a couple of hours North of you. On a train with free wifi even.</p>
+<p>Now this might not be a web conference but I&#8217;m pretty interested in the take of the likes of Ray Kurzweil on the web and what will happen in the near future. I&#8217;m also interested in the types of people who will make the trip &#8211; which is really the reason for this post. As everyone knows, one of the best parts of any conference is the chance to chat with like-minded (and not so like-minded) folks. So, who fancies coming along?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/02/21/sorry-but-the-flickr-api-isnt-rest/">
         Sorry, but the Flickr API isn&#39;t REST
       </a>
@@ -203,63 +220,6 @@ echo displaylist($statuses);
 <p>Lots of this is front-end best practice, some coming from the <span class="caps">YAHOO</span>! <a href="http://developer.yahoo.com/performance/">exceptional performance</a> work. It&#8217;s something <a href="http://24ways.org/2007/minification-a-christmas-diet">I&#8217;ve touched on before</a> too. Can anyone else think of other things you&#8217;d like to see when you&#8217;re working away crafting markup and <span class="caps">CSS</span>? Once you have all these tests running you could display them in widgets, gadgets, twitter, firefox extensions, large displays, mobile devices, the works.</p>
 <p>Now that sounds like an awful lot of stuff for one person (or even for one application) but I have something else in mind. If <em>inursite</em> allowed you to hook up external webservices which accept a <span class="caps">URL</span> as an argument, along with any service specific parameters, and return true or false then, in theory, anyone could add their own custom checks to it. This becomes particularly useful for larger teams than are likely to have internal quality tools already. On top of all that I&#8217;d probably pay for a service like this that let me run it on demand (rather than once per day) &#8211; or maybe even better, pay for a downloadable version (a.l.a. <a href="http://haveamint.com">Mint</a>) I can install locally.</p>
 <p>As you can probably tell, I think the general idea of continuous integration for front end web developer is one for which time has come. It&#8217;s simply part of our discipline growing up and becoming more professional. Whether Ryan looks to extend his fantastic simple service in this direction or not I hope something will come along that does all this and more. I might even work on it myself &#8211; but then I always say that!</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/30/simple-deployment-with-svn-and-phing/">
-        Simple deployment with SVN and Phing
-      </a>
-    </h1>
-
-    <span class="post-date">30 Jan 2008</span>
-
-    <p>Another approach to deploying web apps is to use <a href="http://phing.info/">Phing</a>. Phing is at heart a <span class="caps">PHP</span> clone of Ant,  another common build and deployment tool. The main advantage of using Phing, at least if you&#8217;re already using <span class="caps">PHP</span>, is close integration with other <span class="caps">PHP</span> specific tools (PHPDocumentor, PHPLint and PHPUnit to name a few) and ease of install.</p>
-<p>Speaking to installation Phing has it&#8217;s own <span class="caps">PEAR</span> channel. I still think <span class="caps">PEAR</span> is great in so many different ways &#8211; it always makes me frown when I see people cussing at <span class="caps">PEAR</span> (especiallly the installer). You can install Phing as follows.</p>
-<pre><code>pear channel-discover pear.phing.info
-pear install phing/phing</code></pre>
-<p>The <a href="http://phing.info/docs/guide/current/">Phing documentation</a> is nothing if not comprehensive. Unfortunately, unless you are pretty familiar with Ant or you&#8217;re trying to do something complex (and willing to invest the time) the chances are you&#8217;ll be a little lost. More and simpler examples for common problems would be useful for those beginners.</p>
-<p>I might publish a few little recipes down the line or even a full commented production recipe but for the moment lets start simple. The following build script is designed to be run on your remote web server and relies on a subversion repository (hopefully you&#8217;re using source control, if not that&#8217;s another post I&#8217;m afraid). It simply exports the specified repository to the specified export directory on the server. Note that you need to set your own <span class="caps">SVN</span> details and replace the capitalised properly values. The following should be saved as <em>build.xml</em> on your web server, outside the web root.</p>
-<pre><code>&lt;?xml version="1.0"?&gt;
-&lt;project name="build" default="main"&gt;
-  
-  &lt;property name="exportdir"  value="WEB_ROOT" /&gt;
-  &lt;property name="svnpath" value="YOUR_SVNPATH" /&gt;
-  &lt;property name="username" value="YOUR_SVN_USERNAME" /&gt;
-  &lt;property name="password" value="YOUR_SVN_PASSWORD" /&gt;
-  &lt;property name="repo" value="YOUR_SVN_REPO" /&gt;
-        
-  &lt;target name="main" depends="svnexport"/&gt;
-  
-  &lt;target name="svnexport"&gt;
-    &lt;svnexport
-       svnpath="${svnpath}"
-       username="${username}"
-       password="${password}"
-       nocache="true"
-       repositoryurl="${repo}"
-       todir="${exportdir}"/&gt;
-  &lt;/target&gt;
-&lt;/project&gt;</code></pre>
-<p>Let&#8217;s break some of that down. Property definitions allow you to specify variables for use in your build script. In this example we only have one task specified so maybe we don&#8217;t need the extra abstraction but the moment we start reusing scripts or adding more tasks it&#8217;s a good idea.</p>
-<pre><code>&lt;property name="exportdir"  value="./web" /&gt;</code></pre>
-<p>The other major point of interest is the task itself. Here we make use of the properties we have already specified to run a subversion export. The <em>svnexport</em> task is build in to Phing.</p>
-<pre><code>&lt;target name="svnexport"&gt;
-  &lt;svnexport
-     svnpath="${svnpath}"
-     username="${username}"
-     password="${password}"
-     nocache="true"
-     repositoryurl="${repo}"
-     todir="${exportdir}"/&gt;
-&lt;/target&gt;</code></pre>
-<p>Also of note is the setting of a default task, <em>main</em>, as a property of the project element and specifying that the main task depends on another task, <em>svnexport</em>. Again, we could avoid that at this stage but the moment we add another few tasks then we&#8217;ll want more control over execution order.</p>
-<p>Phing should be run from the directory containing the build script. You can run the command without any arguments, in which case the default task will be run (in our case <em>main</em>) or you can pass an argument to specify a specific task. For our simple build script  the two following commands do the same thing:</p>
-<pre><code>phing</code></pre>
-
-<pre><code>phing svnexport</code></pre>
-<p>Given the above build script simple runs a subversion export command you might be wondering what use it is. The answer is not much at this stage. You <em>do</em> get a simple build script which can be stored in your source control system and used by the whole team. The real advantage is where you might go from here. If everyone in your team deploys in the same way (ie. using the build script) then anyone can add extra tasks and everyone gets the benefit. Simple example might be generating code documentation, running Unit tests (and not running the export if the tests fail) and creating a zip file of the deployed source for backup purposes.</p>
-<p>Build scripts can get complicated quickly, but if you start out small and add tasks as you need and understand them, you should be able to raise the quality of your application and avoid easy to make mistakes.</p>
   </div>
   
 </div>

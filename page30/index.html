@@ -68,6 +68,66 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/03/21/hacker-posts/">
+        Hacker Posts
+      </a>
+    </h1>
+
+    <span class="post-date">21 Mar 2009</span>
+
+    <p>I&#8217;ve been playing again with App Engine, and going back to an on/off pet project that I&#8217;ve build variations of for a while.</p>
+<p><a href="http://hackerposts.appspot.com"><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cgwLEgVJbWFnZRihHww" alt="Hacker Posts"/></a></p>
+<p>It&#8217;s basically a pretty straightforward aggregation platform, taking content from a number of feeds and creating relationships between the items. It&#8217;s mainly an experiment in creating a decent size site on App Engine &#8211; it can be surprising how many urls you can get out of a good corpus of data:</p>
+<ul>
+	<li>400 items, each with a unique url</li>
+	<li>each item has a variable number of tags generated, at the moment that amounts to about 1000 unique urls</li>
+	<li>each month and year of content gets a url so that&#8217;s another 4 or so</li>
+	<li>each day for which we have items we also get a url, so that&#8217;s another 90 or so</li>
+</ul>
+<p>So starting off with 1500 or so pages isn&#8217;t bad. The site also grows over time as new items are posted or I add more feeds. Everything else I&#8217;ve done with App Engine has been more <a href="http://imified-demo.appspot.com/">application</a> <a href="http://image-host.appspot.com/">focused</a> so seeing how a content site performs is interesting in and of itself.</p>
+<p>The data in question I used for this first experiment was the feeds I could find from the <a href="http://news.ycombinator.com/leaders">top posters on Hacker News</a>. Hence the name <a href="http://hackerposts.appspot.com">Hacker Posts</a>. That left me with 35 feeds:</p>
+<ul>
+	<li>http://www.matasano.com/log/feed/</li>
+	<li>http://feeds2.feedburner.com/ThinkGene</li>
+	<li>http://www.mechanicalrobotfish.com/rss.xml</li>
+	<li>http://feeds.feedburner.com/Cloudknow</li>
+	<li>http://mark.nirv.net/rss</li>
+	<li>http://feeds.feedburner.com/seldomlogical</li>
+	<li>http://feeds.feedburner.com/mattmaroon/AAcm</li>
+	<li>http://www.swombat.com/rss.xml</li>
+	<li>http://feeds.feedburner.com/woobius</li>
+	<li>http://feeds2.feedburner.com/danieltenner</li>
+	<li>http://www.nilkanth.com/feed/</li>
+	<li>http://feeds.feedburner.com/NewCartographer</li>
+	<li>http://inthebox.webmin.com/feed</li>
+	<li>http://www.maximise.dk/blog/xml/rss.xml</li>
+	<li>http://www.pchristensen.com/blog/feed/</li>
+	<li>http://280north.com/blog/feed/</li>
+	<li>http://tlrobinson.net/blog/feed/</li>
+	<li>http://www.WhatToFix.com/atom.xml</li>
+	<li>http://alexkrupp.typepad.com/sensemaking/atom.xml</li>
+	<li>http://feeds.feedburner.com/yegg</li>
+	<li>http://scotchi.net/feed/atom/</li>
+	<li>http://paulbuchheit.blogspot.com/feeds/posts/default</li>
+	<li>http://www.owenbyrne.com/feed/</li>
+	<li>http://blog.jrock.us/feeds/articles/atom</li>
+	<li>http://www.kalzumeus.com/feed/</li>
+	<li>http://feeds.feedburner.com/gojomo</li>
+	<li>http://davidpiccione.com/blog/feed/</li>
+	<li>http://blog.blinker.net/feed/</li>
+	<li>http://dambalah.com/feed/</li>
+	<li>http://dustincurtis.com/rss.xml</li>
+	<li>http://blog.jodoro.com/feeds/posts/default</li>
+	<li>http://arantaday.com/blog/feed/</li>
+	<li>http://www.allanjosephbatac.com/blog/feed</li>
+	<li>http://feeds.feedburner.com/offbytwo</li>
+	<li>http://feeds.feedburner.com/FoundersBlog-Cluttermecom</li>
+</ul>
+<p>I have a couple of other communities or events that I&#8217;d like to do the same thing around, as well as a few features I want to add to the underlying software. The nice thing with App Engine is rolling new instances out is as simple as running a command.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/03/19/webapp-custom-filters/">
         Webapp custom filters
       </a>
@@ -176,18 +236,6 @@ QUEUE_VENDOR_SECRET = 'SECRET'</pre>
 <p>Django tends to recommend building <a href="http://www.b-list.org/weblog/2007/mar/27/reusable-django-apps/">Reusable Apps</a> and we have sites like <a href="http://djangoplugables.com/">Django Pluggables</a> to catalog what&#8217;s available. You then grab a few of these applications from the web or write your own, add them run them all together as part of a single application. <a href="http://pinaxproject.com/">Pinax</a> is probabaly the poster child for this approach. The  0.5.1 release for instance appears to have 41 individual reusable apps, many written by other people and projects.</p>
 <p>The Rails community tends to <a href="http://gilesbowkett.blogspot.com/2007/08/activeresource-rails-scalability.html">talk more about RESTful service orientated architectures</a>, with things like <a href="http://api.rubyonrails.org/classes/ActiveResource/Base.html">ActiveResource</a> making this sort of thing easier. So rather than your manageable chunks being within your application they&#8217;re separate instances in their own right.</p>
 <p>I&#8217;d be interested in hearing from more people about their experiences, in particular if you&#8217;ve gone against the grain so to speak.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/13/app-engine-remote-api-calls/">
-        App Engine Remote API calls
-      </a>
-    </h1>
-
-    <span class="post-date">13 Mar 2009</span>
-
-    <p>Not sure how I missed this but apparently App Engine (as of 1.1.9) supports <a href="http://code.google.com/appengine/articles/remote_api.html">remote access to your live data store</a>. This means you can create administration applications more easily by running them locally, rather than within the limitations of the live platform. You can even run a local python prompt with access to your live datastore which is pretty neat.</p>
   </div>
   
 </div>

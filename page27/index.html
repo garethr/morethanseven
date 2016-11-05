@@ -68,6 +68,21 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/06/11/message-queues-cambridge-geek-night/">
+        Message Queues at Cambridge Geek Night
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jun 2009</span>
+
+    <p>Last night was the first Cambridge Geek Night and saw 35 people or so fill a room above a pub to listen to a few short talks and converse with fellow geeks. I had the pleasure of giving the first talk, a short introduction to using message queues for web developers.</p>
+<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=messagequeues-090611064000-phpapp01&stripped_title=message-queues-for-web-applications" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=messagequeues-090611064000-phpapp01&stripped_title=message-queues-for-web-applications" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I got lots of good questions from interested people and by the sounds of things it had the desired effect &#8211; for people unfamiliar with using a message queue to go out and have a play with some of the cool software available to solve your problems.</p>
+<p>Overall the night was definitely a success. Suitably geeky conversations. A chance to meet new people as well as old friends. Good job <a href="http://www.thatcanadiangirl.co.uk/">Vero</a> and <a href="http://blog.fatbusinessman.com/">David</a> for organising the event and here&#8217;s to the next one.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/06/10/how-decide-your-next-programming-language/">
         How to Decide on Your Next Programming Language
       </a>
@@ -154,45 +169,6 @@ if __name__ == "__main__":
     )    
     verify_urls(urls, application)</pre>
 <p>Let me know if you use it as at the moment this is <em>works for me</em> ware, although it&#8217;s reasonably well tested and commented.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/05/28/another-glue-python-framework-mnml/">
-        Another Glue Python Framework - MNML
-      </a>
-    </h1>
-
-    <span class="post-date">28 May 2009</span>
-
-    <p>Although still a big fan of Django, but for some problems I&#8217;m finding more and more cases where I prefer less code and more freedom. My biggest issue for some types of problems being Django&#8217;s assumption that you&#8217;ll be using a relational database, or a database at all. Django wasn&#8217;t the reason I started using webapp for App Engine stuff, but in doing so I found that webapp often did all that I needed.</p>
-<p>So when I small, non appengine project cropped up I started looking at the <a href="http://wiki.python.org/moin/WebFrameworks">different options available</a> and played with a few of them.</p>
-<ul>
-	<li>I played with Pylons but again got lost in code. I&#8217;ll probably play with Pylons more in the future and for bigger, team based, projects it looks a good mix of component parts and shared conventions.</li>
-	<li>Web.py &#8211; I&#8217;d used web.py before I started with Django (I even wrote a very <a href="http://morethanseven.net/2007/01/03/webphp/">basic <span class="caps">PHP</span> clone</a>) and although I still like somethings about it, it felt like more code than was required for what I wanted.</li>
-	<li><a href="http://github.com/breily/juno/tree/master">Juno</a> is similar in design to Sinatra but again it wasn&#8217;t really what I was after this time. I prefer separating my routing from my code and I&#8217;m not sure I like that it comes with it&#8217;s own templating engine.</li>
-	<li><a href="http://github.com/JaredKuolt/newf/tree/master">Newf</a> was more like it. Basically a hugely stripped down <span class="caps">WSGI</span> framework which provides the very basic building blocks. Something to build on perhaps?</li>
-	<li><a href="http://github.com/bradleywright/mnml/tree/master"><span class="caps">MNML</span></a> (by an ex-colleague <a href="http://intranation.com/">Brad Wright</a>) is build atop Newf adding a few more features and cleaning up some of the interfaces. My only problems here were that I prefer regex based routes and wanted individual methods for each <span class="caps">HTTP</span> verb. The former was a specific design decision Brad had made in order to be able to reverse routes, the later was on the todo list.</li>
-</ul>
-<p>So, I set <a href="http://github.com/garethr/mnml/tree/master">about forking <span class="caps">MNML</span> to create my own branch</a>. I added extra comments as I was making my way through the code, wrote a few tests to checks thinks worked and allowed for pluggable routing mechanisms. <span class="caps">MNML</span> applications look a bit like the following:</p>
-<pre>from mnml import RegexBasedApplication, RequestHandler, HttpResponse, development_server
-class HelloWorld(RequestHandler):
-    def GET(self):
-        return HttpResponse("&lt;h1&gt;Hello World&lt;/h1&gt;")
-routes = (
-    (r'^/$', HelloWorld),
-)
-application = RegexBasedApplication(routes)
-if __name__ == '__main__':
-    development_server(application)</pre>
-<p>If you want to use the token based routing you would substitute in something like the following:</p>
-<pre>routes = (
-    ('/', Foo),
-    ('/myview/:stuff/', Bar)
-)
-application = TokenBasedApplication(routes)</pre>
-<p>The best bit is that it&#8217;s only about 350 lines of code, a great deal of which is accounted for by comments. It&#8217;s also really quite fast &#8211; especially using something like spawning to run the <span class="caps">WSGI</span> application. The other thing I like is the ease with which you can add <span class="caps">WSGI</span> middleware into the mix.</p>
-<p>So, if you have a small scale problem where simple and fast beats everything else then have a look and let me know what you think. It will take less time to read the code and tests than it will be read the introductory chapter on whichever larger framework you choose to look at.</p>
   </div>
   
 </div>

@@ -68,6 +68,142 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2016/11/05/the-end-of-the-general-purpose-operating-system-as-it-happens/">
+        The End of the General Purpose Operating System
+      </a>
+    </h1>
+
+    <span class="post-date">05 Nov 2016</span>
+
+    <p>As interesting chat on Twitter today reminded me that not everyone is
+probably aware that we&#39;re seeing a concerted attempt to dislodge the
+general purpose operating system from our servers.</p>
+
+<p>I gave a talk about some of this <a href="https://speakerdeck.com/garethr/the-end-of-the-general-purpose-operating-system">nearly two years
+ago</a>
+and I though a blog post looking at what I got right, what I got wrong
+and what&#39;s actually happening would be of interest to folks. The talk
+was written only a few months after I joined Puppet. With a bunch
+more time working for a software vendor there are some bits I missed in
+my original discussion.</p>
+
+<h1>What do you mean by general purpose and by end?</h1>
+
+<p>First up, a bit of clarification. By <em>general purpose OS</em> I&#39;m referring
+to what most people use for server workloads today - be it RHEL or variants
+like CentOS or Fedora, or Debian and derivatives like Ubuntu. We&#39;ll
+include Arch, the various BSD and opensolaris flavours and Windows too.
+By <em>end</em> I don&#39;t literally mean they go away or stop being useful. My
+hypothosis is that, slowly to begin with then more quickly, they cease
+to be the default we reach for when launching new services.</p>
+
+<h1>The hypervisor of containers</h1>
+
+<p>The first part of the talk included a discussion of what I&#39;d referred to
+as <em>the hypervisor of containers</em>, what today would more likely be
+referred to as a CaaS, or containers as a service. I even speculated
+that VMWare would have to ship something in this space (See vSphere Integrated
+Containers and the work on Photon OS) and that counting out OpenShift
+would be premature (OpenShift 3 shipped predominantly as a Kubernetes
+distribution). I&#39;ll come back to why this is a threat to your beloved
+Debian servers shortly.</p>
+
+<h1>The race to PID1</h1>
+
+<p>For anyone who has run Docker you&#39;ll likely have wrestled with the
+question of where does the role of the host process supervisor (probably systemd)
+start and the container process supervisor (the Docker engine) end? Do
+you have to interact directly with both of them?</p>
+
+<p>Now imagine if <em>all</em> of the software on your servers was run in containers.
+Why do I need two process supervisors now with 100% overlap? The obvious
+answer is you don&#39;t, which is why the fight between Docker and systemd
+is inevitable. Note that this isn&#39;t specific to Docker either. In-scope
+for <a href="https://github.com/kubernetes-incubator/cri-o">cri-o</a> is <em>Container
+process lifecycle management</em>.</p>
+
+<h1>Containers as the unit of software</h1>
+
+<p>Hidden behind my hypothosis, which mainly went unsaid, was
+that containers are becoming the unit of software. By which I mean
+the software we build or buy will increasingly be distributed as
+containers and run as containers. The container will carry with it
+enough metadata for the runtime to determine what resources are
+required to run it.</p>
+
+<p>The number of simplying assumption that come from this shared contract should not
+be underestimated. At least at the host level you&#39;re likely to need lots
+of near-identical hosts, all simply advertising their capabilities to
+the container scheduler.</p>
+
+<h1>Operating system as implementation detail</h1>
+
+<p>What we&#39;re witnessing in the market is the development of vertically integrated
+stacks.</p>
+
+<ul>
+<li>Docker for Mac/Windows/AWS/Azure ships with it&#39;s own operating
+system, an Alpine Linux derivative <a href="http://lucjuggery.com/blog/?p=753">nicknamed Moby</a>, which is not intended for direct management by end users.</li>
+<li>Tectonic from CoreOS is a Kubernetes distribution which runs atop a
+cluster of managed CoreOS hosts. Most of the operating system is
+managed with frequent atomic rolling updates.</li>
+<li>OpenShift Enterprise from RedHat is another Kubernetes derivative,
+this time running atop Atomic host.</li>
+<li>Pivotal CloudFoundry <a href="https://twitter.com/jambay/status/794904634502496257">ships with the IaaS, host OS, kernel, file
+system, container OS all tested
+together</a></li>
+</ul>
+
+<p>In all of these cases the operating system is an implementation detail
+of the higher level software. It&#39;s not intended to be directly managed,
+or at least managed to the same degree as the general purpose OS you&#39;re
+running today.</p>
+
+<p>This is how the end comes for the majority of your general purpose
+operating system running servers. The machines running containers will
+be running something more single purpose, and more and more of the
+software you&#39;re running will be running in containers.</p>
+
+<p>The reason why you&#39;ll do this, rather than compose everything yourself, is
+compatability. Whether it&#39;s kernel versions, file system drivers,
+operating system variants or a hundred variations that make your OS
+build different from mine. Building and testing software that runs
+everywhere is a sisyphean task. Their is also the commercial angle at
+play here, and the advantage of being able to support a single validated
+product to everyone.</p>
+
+<h1>Implications</h1>
+
+<p>There are lots of implications to this move, and it&#39;s going to be
+interesting to see how it plays out with both early adopters and
+enterprise customers alike.</p>
+
+<ul>
+<li>What does this mean for corporate operating system policies?</li>
+<li>How do standard agent-based monitoring systems work in a world of
+closed vertical stacks?</li>
+<li>Will we see this pattern for other types of service in the AWS Marketplace,
+where instance launched are inaccessible but automatically updating?</li>
+<li>How does such fast moving software work in environments with rigid
+change control processes or audit requirements?</li>
+<li>Many large organisations will end up running more than one of these
+types of system, how best to manage such heterogenous environments?</li>
+<li>Will we see push back from some parties? In particular the open source
+community who may see this mainly serving the needs of vendors?</li>
+<li>Does the end of the general purpose OS lead to greater specialism
+amongst systems administrators?</li>
+</ul>
+
+<p>I&#39;d love to chat about any of this with other folks who have given it
+some thought. It&#39;s interesting watching grand changes play out across
+the industry and picking up on patterns that are likely obvious in
+hindsight. And if you like this sort of thing let me know and I&#39;ll try
+and find time for more speculation.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2016/10/07/infrakit-hello-world/">
         InfraKit Hello World
       </a>
@@ -75,24 +211,14 @@
 
     <span class="post-date">07 Oct 2016</span>
 
-    <p>Docker just shipped <a href="https://github.com/docker/infrakit">InfraKit</a> a few days ago at LinuxCon
-and, while at the Docker Distributed Systems Summit, I wanted to see if I could get a hello world
-example up and running. The documentation is lacking at the moment, epecially around how to tie the
-different components like instances and flavors together.</p>
+    <p>Docker just shipped <a href="https://github.com/docker/infrakit">InfraKit</a> a few days ago at LinuxCon and, while at the Docker Distributed Systems Summit, I wanted to see if I could get a hello world example up and running. The documentation is lacking at the moment, epecially around how to tie the different components like instances and flavors together.</p>
 
-<p>The following example isn&#39;t going to do anything particularly useful, but it&#39;s hopefully simple
-enough to help anyone else trying to get started. I&#39;m assuming you&#39;ve checked out and built the
-binaries as described in the <a href="https://github.com/docker/infrakit#building">README</a>.</p>
+<p>The following example isn&#39;t going to do anything particularly useful, but it&#39;s hopefully simple enough to help anyone else trying to get started. I&#39;m assuming you&#39;ve checked out and built the binaries as described in the <a href="https://github.com/docker/infrakit#building">README</a>.</p>
 
-<p>First create a directory. We&#39;re going to be using InfraKit to manage local files in that directory 
-as part of the demo.</p>
+<p>First create a directory. We&#39;re going to be using InfraKit to manage local files in that directory as part of the demo.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">mkdir test
 </code></pre></div>
-<p>Now create an InfraKit configuration file. We&#39;re going to use the <code>file</code> instance plugin to manage
-files in out directory. This means everything works on the local machine, rather than trying to 
-launch real infrastructure in AWS or similar. InfraKit also requires a <code>flavor</code> plugin. I&#39;m using
-<code>vanilla</code> here just to meet the requirement for a flavor plugin, but it&#39;s not going to actually do
-anything in this demo. It might be useful to write a noop flavor plugin or similar.</p>
+<p>Now create an InfraKit configuration file. We&#39;re going to use the <code>file</code> instance plugin to manage files in out directory. This means everything works on the local machine, rather than trying to launch real infrastructure in AWS or similar. InfraKit also requires a <code>flavor</code> plugin. I&#39;m using <code>vanilla</code> here just to meet the requirement for a flavor plugin, but it&#39;s not going to actually do anything in this demo. It might be useful to write a noop flavor plugin or similar.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">cat garethr.json
 </code></pre></div><div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;garethr&quot;</span><span class="p">,</span>
@@ -111,8 +237,7 @@ anything in this demo. It might be useful to write a noop flavor plugin or simil
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>InfraKit is based on running separate plugins. Each plugin runs as a separate process and provides
-a filesystem socket in <code>/run/infrakit/plugins</code>. First start up the <code>file</code> plugin:</p>
+<p>InfraKit is based on running separate plugins. Each plugin runs as a separate process and provides a filesystem socket in /run/infrakit/plugins. First start up the file plugin:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/file --dir=./test
 INFO[0000] Starting plugin
 INFO[0000] Listening on: unix:///run/infrakit/plugins/instance-file.sock
@@ -124,8 +249,7 @@ INFO[0000] Starting plugin
 INFO[0000] Listening on: unix:///run/infrakit/plugins/flavor-vanilla.sock
 INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/flavor-vanilla.sock err= &lt;nil&gt;
 </code></pre></div>
-<p>An finally run the group plugin. I&#39;m passing <code>--log=5</code> to enable more verbose outout so it&#39;s easier to see
-what&#39;s going on with the group.</p>
+<p>An finally run the group plugin. I&#39;m passing <code>--log=5</code> to enable more verbose outout so it&#39;s easier to see what&#39;s going on with the group.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/group --log=5
 INFO[0000] Starting discovery
 DEBU[0000] Opening: /run/infrakit/plugins
@@ -139,20 +263,17 @@ INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/group.sock err= &
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/cli group --name group watch garethr.json
 watching garethr
 </code></pre></div>
-<p>Have a look in the <code>test</code> directory. You should see a single file has been created.</p>
+<p>Have a look in the test directory. You should see a single file has been created.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ls test
 instance-1475833380
 </code></pre></div>
 <p>Let&#39;s delete that file and see what happens:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">rm test/* 
+<div class="highlight"><pre><code class="language-text" data-lang="text">rm test/*
 </code></pre></div>
-<p>Hopefully InfraKit will spot the instance (a file in this case) no longer exists and recreate it. You should
-see something like the following in the logs:</p>
+<p>Hopefully InfraKit will spot the instance (a file in this case) no longer exists and recreate it. You should see something like the following in the logs:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">INFO[0612] Created instance instance-1475833820 with tags map[infrakit.config_sha:B2MsacXz8V_ztsjAzu3tu3zivlw= infrakit.group:garethr]
 </code></pre></div>
-<p>This is obviously a less-than-useful example but hopefully provides a
-good hello world example for anyone trying to run InfraKit in it&#39;s
-current early stage.</p>
+<p>This is obviously a less-than-useful example but hopefully provides a good hello world example for anyone trying to run InfraKit in it&#39;s current early stage.</p>
 
   </div>
   
@@ -542,41 +663,6 @@ store data over time for later analysis</li>
 <p>The module also acts as a reasonable example of a simple Puppet type and provider.
 If you&#39;re interested in extending Puppet for your own services this is hopefully a
 good place to start understanding the API.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/09/20/security-implications-of-unikernels/">
-        Some Security Implication of Unikernels
-      </a>
-    </h1>
-
-    <span class="post-date">20 Sep 2015</span>
-
-    <p>I was attending the first <a href="http://gotocon.com/goto-london-2015/">GOTO London conference</a> last week, in particlar the <a href="https://www.ruggedsoftware.org/">Rugged</a> Track. One of the topics of conversation that came up was unikernels, and their potential for improving the state of software security. Unikernels are pretty new outside research groups, I’m just lucky enough to live and work in Cambridge where some of that research is happening. The security advantages of unikernels are one of the things that attracted me in the first place. I thought it might be interesting to jot a few of those down for other people interested in security and the future of infrastructure.</p>
-
-<p>As with my <a href="http://www.morethanseven.net/2015/08/21/operating-unikernel-challenges/">last post</a>, it’s worth having a basic understand of Unikernels. I’d recommend reading <a href="http://queue.acm.org/detail.cfm?id=2566628">Unikernels - the rise of the virtual library operating system</a>.</p>
-
-<h2>Hypervisor</h2>
-
-<p>Every unikernel is provided the isolation guarantees from a hypervisor. Not only are these guarantees reasonably well understood, they tend to make use of hardware features too. It’s interesting to note that recent container runtime work is heading in this direction too, with ptojects like <a href="https://clearlinux.org/features/clear-containers">Clear Containers from Intel</a>, <a href="https://blogs.vmware.com/cloudnative/introducing-project-bonneville/">Bonneville from VMware</a> and the <a href="https://coreos.com/blog/rkt-0.8-with-new-vm-support/">new stage1 in rkt</a>.</p>
-
-<h2>No User Space</h2>
-
-<p>With a typical server OS we have kernel space and user space. Part of the idea here is to ensure the underlying machine doesn’t crash, whatever horrible things people do in user space. But this means <em>you can do horrible things</em>. The unikernel model is similar to the Erlang philosophy of <em>let it crash</em>. You only have kernel space, you entire application resides in it. Most things out of the ordinary are going to crash the kernel. This makes the sort of exploratory testing useful in exploit development harder.</p>
-
-<h2>Really Immutable Infrastructure</h2>
-
-<p>People often talk about immutable infrastructure. I’d wager there is more talk than reality however. When you push, people are often not using read-only file systems and retain the capability to login to machines to make ad-hoc changes. What they mean by immutable is that they only change machines at deploy time. This ignores both the fact they have the technical capability to change them anytime, and that an attacker could change them outside that deployment cycle. With unikernel systems there is often just the compiled kernel, you can’t just change files on disk. The defaults force an immutable way of working.</p>
-
-<h2>Clean Slate TLS</h2>
-
-<p>As a typical developer or operator you’ve probably learned more than you wanted to know about the OpenSSL source code. It’s not well understood and not likely to be so anytime soon and has some pretty spectacular bugs like <a href="http://heartbleed.com/">Heartbleed</a>. The <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> is laudable and will improve things but it’s still a problematic codebase. Functional programming is often regarded as an easier way of writing understandable code. Types are a good thing, especially when it comes to security systems. So a pure <a href="https://mirage.io/blog/introducing-ocaml-tls">OCaml TLS</a> implementation as used by <a href="https://mirage.io/">MirageOS</a> makes sense on lots of levels. Yes this is quite an undertaking, but the <a href="http://amirchaudhry.com/bitcoin-pinata/">bitcoin pinata</a> tests show promise.</p>
-
-<h2>Formal Proofs</h2>
-
-<p>Knowing whether an application really does exactly what you want it to do (and no more) is a hard problem to solve. Unit tests and other form of automated testing help, but are still reliant on people to both write and design the tests. A formal proof system can provide much stronger guarentees of correctness, it’s an approach used in some cases for missing-critical components of <a href="http://cacm.acm.org/magazines/2015/4/184701-how-amazon-web-services-uses-formal-methods/fulltext">Amazon’s AWS</a>. MirageOS is implemented in OCaml. One of the most popular OCaml programmes is <a href="https://coq.inria.fr/">Coq</a>, which just so happens to be a formal proof management system. I’ve not seen many examples yet of this approach, probably due to the effort involved, but the capability is there for building formally specified unikernels. I’d wager a similar thing is possible with Haskell and <a href="https://github.com/GaloisInc/HaLVM">HalVM</a>. Making that easier to do for typical developers could open up much more secure development practices for certain usecases.</p>
 
   </div>
   

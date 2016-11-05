@@ -68,6 +68,41 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2015/09/20/security-implications-of-unikernels/">
+        Some Security Implication of Unikernels
+      </a>
+    </h1>
+
+    <span class="post-date">20 Sep 2015</span>
+
+    <p>I was attending the first <a href="http://gotocon.com/goto-london-2015/">GOTO London conference</a> last week, in particlar the <a href="https://www.ruggedsoftware.org/">Rugged</a> Track. One of the topics of conversation that came up was unikernels, and their potential for improving the state of software security. Unikernels are pretty new outside research groups, I’m just lucky enough to live and work in Cambridge where some of that research is happening. The security advantages of unikernels are one of the things that attracted me in the first place. I thought it might be interesting to jot a few of those down for other people interested in security and the future of infrastructure.</p>
+
+<p>As with my <a href="http://www.morethanseven.net/2015/08/21/operating-unikernel-challenges/">last post</a>, it’s worth having a basic understand of Unikernels. I’d recommend reading <a href="http://queue.acm.org/detail.cfm?id=2566628">Unikernels - the rise of the virtual library operating system</a>.</p>
+
+<h2>Hypervisor</h2>
+
+<p>Every unikernel is provided the isolation guarantees from a hypervisor. Not only are these guarantees reasonably well understood, they tend to make use of hardware features too. It’s interesting to note that recent container runtime work is heading in this direction too, with ptojects like <a href="https://clearlinux.org/features/clear-containers">Clear Containers from Intel</a>, <a href="https://blogs.vmware.com/cloudnative/introducing-project-bonneville/">Bonneville from VMware</a> and the <a href="https://coreos.com/blog/rkt-0.8-with-new-vm-support/">new stage1 in rkt</a>.</p>
+
+<h2>No User Space</h2>
+
+<p>With a typical server OS we have kernel space and user space. Part of the idea here is to ensure the underlying machine doesn’t crash, whatever horrible things people do in user space. But this means <em>you can do horrible things</em>. The unikernel model is similar to the Erlang philosophy of <em>let it crash</em>. You only have kernel space, you entire application resides in it. Most things out of the ordinary are going to crash the kernel. This makes the sort of exploratory testing useful in exploit development harder.</p>
+
+<h2>Really Immutable Infrastructure</h2>
+
+<p>People often talk about immutable infrastructure. I’d wager there is more talk than reality however. When you push, people are often not using read-only file systems and retain the capability to login to machines to make ad-hoc changes. What they mean by immutable is that they only change machines at deploy time. This ignores both the fact they have the technical capability to change them anytime, and that an attacker could change them outside that deployment cycle. With unikernel systems there is often just the compiled kernel, you can’t just change files on disk. The defaults force an immutable way of working.</p>
+
+<h2>Clean Slate TLS</h2>
+
+<p>As a typical developer or operator you’ve probably learned more than you wanted to know about the OpenSSL source code. It’s not well understood and not likely to be so anytime soon and has some pretty spectacular bugs like <a href="http://heartbleed.com/">Heartbleed</a>. The <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> is laudable and will improve things but it’s still a problematic codebase. Functional programming is often regarded as an easier way of writing understandable code. Types are a good thing, especially when it comes to security systems. So a pure <a href="https://mirage.io/blog/introducing-ocaml-tls">OCaml TLS</a> implementation as used by <a href="https://mirage.io/">MirageOS</a> makes sense on lots of levels. Yes this is quite an undertaking, but the <a href="http://amirchaudhry.com/bitcoin-pinata/">bitcoin pinata</a> tests show promise.</p>
+
+<h2>Formal Proofs</h2>
+
+<p>Knowing whether an application really does exactly what you want it to do (and no more) is a hard problem to solve. Unit tests and other form of automated testing help, but are still reliant on people to both write and design the tests. A formal proof system can provide much stronger guarentees of correctness, it’s an approach used in some cases for missing-critical components of <a href="http://cacm.acm.org/magazines/2015/4/184701-how-amazon-web-services-uses-formal-methods/fulltext">Amazon’s AWS</a>. MirageOS is implemented in OCaml. One of the most popular OCaml programmes is <a href="https://coq.inria.fr/">Coq</a>, which just so happens to be a formal proof management system. I’ve not seen many examples yet of this approach, probably due to the effort involved, but the capability is there for building formally specified unikernels. I’d wager a similar thing is possible with Haskell and <a href="https://github.com/GaloisInc/HaLVM">HalVM</a>. Making that easier to do for typical developers could open up much more secure development practices for certain usecases.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2015/08/21/operating-unikernel-challenges/">
         A Discussion of The Operational Challenges With Unikernels
       </a>
@@ -421,7 +456,8 @@ used <a href="http://kitchen.ci/">Test Kitchen</a> and
 virtual machines (one for each supported operating system), applying the
 Puppet manifest and then making some assertions:</p>
 
-<p>true<script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script></p>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script></p>
 
 <p>The above is simply checking whether certain packages are installed, the
 PPA is setup correctly and whether <code>mirage</code> and <code>opam</code> can be executed
@@ -434,7 +470,8 @@ resulting software allows us to build MirageOS unikernels. For this I
 used <a href="https://github.com/sstephenson/bats">Bats</a> running in the same
 Test Kitchen setup.</p>
 
-<p>true<script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script></p>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script></p>
 
 <p>The above configures and builds a simple HTTP server unikernel, and then
 checks that when run it returns the expected response on the correct
@@ -451,44 +488,6 @@ infrastructure testing (quick mention of
 <a href="http://infrataster.net/">Infrataster</a> too) is really quite powerful and
 approachable. I&#39;d love to see more software ship with a user-facing test
 suite for people to verify their installation works.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/01/02/automating-windows-development-environments/">
-        Automating windows development environments
-      </a>
-    </h1>
-
-    <span class="post-date">02 Jan 2015</span>
-
-    <p>My job at Puppet Labs has given me an excuse to take a closer look at
-the advancements in Windows automation, in particular <a href="https://chocolatey.org/">Chocolatey</a>
-and <a href="http://boxstarter.org/">BoxStarter</a>. The following is very much a work
-in progress but it&#39;s hopefully useful for a few things:</p>
-
-<ul>
-<li>If like me you&#39;ve mainly been doing non-Windows development for a
-while it&#39;s interesting to see what is possible</li>
-<li>If you&#39;re starting out with infrastructure development on Windows the
-following could be a good starting place</li>
-<li>if you&#39;re an experienced Windows pro then you can let me know of any
-improvements</li>
-</ul>
-
-<p>All that&#39;s needed is to run the following from a CMD or Powershell
-prompt on a new Windows machine (you can also visit the URL in Internet
-Explorer if you prefer).</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">START http://boxstarter.org/package/nr/url?https://gist.githubusercontent.com/garethr/a1838aa68355a0766de4/raw/d92b41ee9dcad68c079d24c64bac7d1d27cf37c7/garethr.ps1
-</code></pre></div>
-<p>This launches BoxStarter, which executes the following code:</p>
-
-<p>true<script src="https://gist.github.com/a1838aa68355a0766de4.js"> </script></p>
-
-<p>This takes a while as it runs Windows update and repeatedly reboots the
-machine. But once completed you&#39;ll have the listed software installed
-and configured on a newly up-to-date Windows machine.</p>
 
   </div>
   

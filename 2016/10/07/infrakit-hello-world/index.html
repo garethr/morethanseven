@@ -67,24 +67,14 @@
       <div class="post">
   <h1 class="post-title">InfraKit Hello World</h1>
   <span class="post-date">07 Oct 2016</span>
-  <p>Docker just shipped <a href="https://github.com/docker/infrakit">InfraKit</a> a few days ago at LinuxCon
-and, while at the Docker Distributed Systems Summit, I wanted to see if I could get a hello world
-example up and running. The documentation is lacking at the moment, epecially around how to tie the
-different components like instances and flavors together.</p>
+  <p>Docker just shipped <a href="https://github.com/docker/infrakit">InfraKit</a> a few days ago at LinuxCon and, while at the Docker Distributed Systems Summit, I wanted to see if I could get a hello world example up and running. The documentation is lacking at the moment, epecially around how to tie the different components like instances and flavors together.</p>
 
-<p>The following example isn&#39;t going to do anything particularly useful, but it&#39;s hopefully simple
-enough to help anyone else trying to get started. I&#39;m assuming you&#39;ve checked out and built the
-binaries as described in the <a href="https://github.com/docker/infrakit#building">README</a>.</p>
+<p>The following example isn&#39;t going to do anything particularly useful, but it&#39;s hopefully simple enough to help anyone else trying to get started. I&#39;m assuming you&#39;ve checked out and built the binaries as described in the <a href="https://github.com/docker/infrakit#building">README</a>.</p>
 
-<p>First create a directory. We&#39;re going to be using InfraKit to manage local files in that directory 
-as part of the demo.</p>
+<p>First create a directory. We&#39;re going to be using InfraKit to manage local files in that directory as part of the demo.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">mkdir test
 </code></pre></div>
-<p>Now create an InfraKit configuration file. We&#39;re going to use the <code>file</code> instance plugin to manage
-files in out directory. This means everything works on the local machine, rather than trying to 
-launch real infrastructure in AWS or similar. InfraKit also requires a <code>flavor</code> plugin. I&#39;m using
-<code>vanilla</code> here just to meet the requirement for a flavor plugin, but it&#39;s not going to actually do
-anything in this demo. It might be useful to write a noop flavor plugin or similar.</p>
+<p>Now create an InfraKit configuration file. We&#39;re going to use the <code>file</code> instance plugin to manage files in out directory. This means everything works on the local machine, rather than trying to launch real infrastructure in AWS or similar. InfraKit also requires a <code>flavor</code> plugin. I&#39;m using <code>vanilla</code> here just to meet the requirement for a flavor plugin, but it&#39;s not going to actually do anything in this demo. It might be useful to write a noop flavor plugin or similar.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">cat garethr.json
 </code></pre></div><div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;garethr&quot;</span><span class="p">,</span>
@@ -103,8 +93,7 @@ anything in this demo. It might be useful to write a noop flavor plugin or simil
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>InfraKit is based on running separate plugins. Each plugin runs as a separate process and provides
-a filesystem socket in <code>/run/infrakit/plugins</code>. First start up the <code>file</code> plugin:</p>
+<p>InfraKit is based on running separate plugins. Each plugin runs as a separate process and provides a filesystem socket in /run/infrakit/plugins. First start up the file plugin:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/file --dir=./test
 INFO[0000] Starting plugin
 INFO[0000] Listening on: unix:///run/infrakit/plugins/instance-file.sock
@@ -116,8 +105,7 @@ INFO[0000] Starting plugin
 INFO[0000] Listening on: unix:///run/infrakit/plugins/flavor-vanilla.sock
 INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/flavor-vanilla.sock err= &lt;nil&gt;
 </code></pre></div>
-<p>An finally run the group plugin. I&#39;m passing <code>--log=5</code> to enable more verbose outout so it&#39;s easier to see
-what&#39;s going on with the group.</p>
+<p>An finally run the group plugin. I&#39;m passing <code>--log=5</code> to enable more verbose outout so it&#39;s easier to see what&#39;s going on with the group.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/group --log=5
 INFO[0000] Starting discovery
 DEBU[0000] Opening: /run/infrakit/plugins
@@ -131,26 +119,32 @@ INFO[0000] listener protocol= unix addr= /run/infrakit/plugins/group.sock err= &
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ./infrakit/cli group --name group watch garethr.json
 watching garethr
 </code></pre></div>
-<p>Have a look in the <code>test</code> directory. You should see a single file has been created.</p>
+<p>Have a look in the test directory. You should see a single file has been created.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ ls test
 instance-1475833380
 </code></pre></div>
 <p>Let&#39;s delete that file and see what happens:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">rm test/* 
+<div class="highlight"><pre><code class="language-text" data-lang="text">rm test/*
 </code></pre></div>
-<p>Hopefully InfraKit will spot the instance (a file in this case) no longer exists and recreate it. You should
-see something like the following in the logs:</p>
+<p>Hopefully InfraKit will spot the instance (a file in this case) no longer exists and recreate it. You should see something like the following in the logs:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">INFO[0612] Created instance instance-1475833820 with tags map[infrakit.config_sha:B2MsacXz8V_ztsjAzu3tu3zivlw= infrakit.group:garethr]
 </code></pre></div>
-<p>This is obviously a less-than-useful example but hopefully provides a
-good hello world example for anyone trying to run InfraKit in it&#39;s
-current early stage.</p>
+<p>This is obviously a less-than-useful example but hopefully provides a good hello world example for anyone trying to run InfraKit in it&#39;s current early stage.</p>
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/11/05/the-end-of-the-general-purpose-operating-system-as-it-happens/">
+            The End of the General Purpose Operating System
+            <small>05 Nov 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -166,15 +160,6 @@ current early stage.</p>
           <a href="/2015/12/27/operations-more-than-systems-administration/">
             Operations is more than just Systems Administration
             <small>27 Dec 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2015/12/04/provisioning-droplets-with-puppet/">
-            Provisioning droplets with Puppet
-            <small>04 Dec 2015</small>
           </a>
         </h3>
       </li>

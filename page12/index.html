@@ -68,6 +68,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/07/24/Jenkins-build-pipeline-example/">
+        Jenkins Build Pipeline Example
+      </a>
+    </h1>
+
+    <span class="post-date">24 Jul 2011</span>
+
+    <p>The idea of a build pipeline for web application deployment appears to have picked up lots of interest from the excellent <a href="http://continuousdelivery.com/">Continuous Delivery</a> book. Inspired by that, some nice folks have build an excellent plugin for Jenkins unsurprisingly called the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Pipeline+Plugin">Build Pipeline Plugin</a>. Here&#8217;s a quick example of how I&#8217;m using it for one of my projects*.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRihmQIM" alt="Build pipeline example in Jenkins"/></p>
+<p>The pipeline is really just a visualisation of up and downstream builds in Jenkins given a starting point, plus the ability to setup manual steps rather than just the default build after ones. That means the steps are completely up to you and your project. In this case I&#8217;m using:</p>
+<ol>
+	<li>Build &#8211; downloads the latest code and any dependencies. You could also create a system package here if you like. If successful triggers&#8230;</li>
+	<li>Staging deploy &#8211; In this case I&#8217;m using capistrano, but it could easily have been rsync, fabric or triggering a chef or puppet run. If successful triggers&#8230;</li>
+	<li>Staging test &#8211; This is a simple automated test suite that checks that the site on staging is correct. The tests are bundled with the code, so are pulled down as part of the build step. If the tests pass&#8230;</li>
+	<li>Staging approval &#8211; This is one of the clever parts of the plugin. This jenkins job actually does nothing except log it&#8217;s successful activation. It&#8217;s only run when I press the Trigger button on the pipeline view. This acts as a nice manual gate for a once over check on staging.</li>
+	<li>Production deploy &#8211; using the same artifact as deployed to staging this job triggers the deploy to the production site again via capistrano</li>
+</ol>
+<p>I&#8217;m triggering builds on each commit too via a webhook. But I can also kick off a build by clicking the button the pipeline view if I need to.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRi5kQIM" alt="Pipeline example showing build in progress"/></p>
+<p>Note that I&#8217;m only allowing the last build to be deployed given only that one can be checked on staging. Again this is configuration specific to my usage, the plugins lets you operate a number of different ways. There are a number of tweaks I want to make to this, mainly around experimenting with parameterized builds to pass useful information downstream and even allow parrallel execution. For the moment I have the <em>Block build when upstream project is building</em> flag checked on the deploy.</p>
+&nbsp;* Yes, this is a one page site. With a 5 step build process in Jenkins including a small suite of functional tests and a staging environment. This is what we call overengineering.
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/07/07/Varnish-at-refresh-cambridge/">
         Varnish At Refresh Cambridge
       </a>
@@ -281,25 +306,6 @@ LOGGING = {
 | /14/                             | GET    | 200    | 9430  | 0.14    | 0.28    | 0.21  | 0.0700037118541  |
 +----------------------------------+--------+--------+-------+---------+---------+-------+------------------+
 </pre>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/06/04/Getting-http-headers-right/">
-        Debugging HTTP Headers with RedBot
-      </a>
-    </h1>
-
-    <span class="post-date">04 Jun 2011</span>
-
-    <p>I&#8217;ve been using the <a href="http://www.vagrantbox.es">Vagrantbox.es</a> site as a bit of a playground recently and I&#8217;ve been meaning to blog about some of the overengineering I&#8217;ve been doing. Here&#8217;s a smaller starter.</p>
-<p>Getting the headers returned by your web server correct is both easy to do and easy to forget about. Unless you go actively looking for headers with curl or similar you&#8217;ll probably miss them, and even then will you spot an incorrect header by eye? <a href="http://redbot.org">RedBot</a> is an excellent online tool that not only shows you the headers but makes recommendations about what might be missing, invalid or things you haven&#8217;t considered.</p>
-<p>For instance the <a href="http://redbot.org/?uri=http%3A%2F%2Fwww.vagrantbox.es">RedBot results for vagrantbox.es</a> look like this:</p>
-<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjJ4gEM" alt="Debugging information from Redbot"/></p>
-<p>Or at least they do now after a few tweaks to my nginx configuration. In particular I&#8217;ve added</p>
-<pre>add_header Vary Accept-Encoding;</pre>
-<p>I&#8217;d assumed that enabling gzip compression with gzip_vary would have set this automatically and never checked. The way RedBot provides a checklist of recommendations is very handy.</p>
-<p>As well as checking the page itself you can also check all the assets associated with a page by adding a query string argument. For instance here is the <a href="http://redbot.org/?descend=True&amp;uri=http://www.vagrantbox.es">assets view for Vagrantbox.es</a>. RedBot also provides a <a href="http://redbot.org/?id=o5GXZe&amp;descend=True&amp;format=har"><span class="caps">JSON</span> encoded version of the result</a> which might be useful in a CI system. If you&#8217;d rather run your own instance of the software you can, the code can be found on github at <a href="http://mnot.github.com/redbot/">mnot.github.com/redbot/</a>. It currently doesn&#8217;t work with <span class="caps">HTTPS</span> resources but that&#8217;s about the only thing I&#8217;d like to see added.</p>
   </div>
   
 </div>
