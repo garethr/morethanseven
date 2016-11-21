@@ -4,7 +4,7 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2016-11-21T17:19:21+00:00</updated>
+ <updated>2016-11-21T17:26:24+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
@@ -48,7 +48,7 @@ above leverage the huge efforts that go into the Linux kernel and into
 other projects like systemd (CoreOS) or Alpine (Docker&amp;#39;s Moby) for
 instance.&lt;/p&gt;
 
-&lt;h2&gt;Enter Unikernells&lt;/h2&gt;
+&lt;h2&gt;Enter Unikernels&lt;/h2&gt;
 
 &lt;p&gt;But where do Unikernels fit into this narrative? I&amp;#39;d argue that they
 represent the fulfilment of this democratization. If building and
