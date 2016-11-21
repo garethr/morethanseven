@@ -68,6 +68,18 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/02/11/djugl-february/">
+        DJUGL February
+      </a>
+    </h1>
+
+    <span class="post-date">11 Feb 2010</span>
+
+    <p>The next Django User Group London is in two weeks time. You can register over on <a href="http://londonpython.eventwax.com/djugl-february">Eventwax</a>. So far we have <a href="http://intranation.com">Brad</a> talking with more speakers to be announced shortly. Hope to see a few people there.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/02/01/rise-house-team/">
         The rise of the in-house team?
       </a>
@@ -140,28 +152,6 @@
 </blockquote>
 <p>I&#8217;m not a big fan of making a point of dividing frontend and backend work. You nearly always end up with javascript dominated horribleness (because we only had a front end person available) or a so called content management system that means all sites have to look the same except for the colour palette. So I&#8217;m hoping lots of cross over stuff happens and interesting conversations abound.</p>
 <p>Oh, and if you&#8217;re wondering what I&#8217;ll be speaking about it&#8217;s probably going to be something about all the cool tools you could and should be using when building or looking after web applications. I&#8217;ll probably be doing my best to convince people to look outside the comfort of the <span class="caps">LAMP</span> or C#/<span class="caps">MSSQL</span> stacks and realise the future for lots of web developers might just be more devops.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/11/28/dreque/">
-        Dreque
-      </a>
-    </h1>
-
-    <span class="post-date">28 Nov 2009</span>
-
-    <p>I&#8217;ve just found <a href="http://github.com/samuel/dreque">Dreque</a> from <a href="http://samuelks.com/">Samuel Stauffer</a> on GitHub. It&#8217;s yet another take on the whole messaging things which is definitely seeing a lot of activity at the back end of this year. It&#8217;s using <a href="http://code.google.com/p/redis/">Redis</a> on the backend and looks really rather nice:</p>
-<p>Submitting jobs:</p>
-<pre><code>from dreque import Dreque
-def some_job(argument):
-    pass
-dreque = Dreque("127.0.0.1")
-dreque.enqueue("queue", some_job, argument="foo")</code></pre>
-<p>Worker:</p>
-<pre><code>from dreque import DrequeWorker
-worker = DrequeWorker(["queue"], "127.0.0.1")
-worker.work()</code></pre>
   </div>
   
 </div>

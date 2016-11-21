@@ -68,6 +68,28 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2012/01/06/Talking-to-jenkins-from-campfire-with-hubot/">
+        Talking To Jenkins From Campfire With Hubot
+      </a>
+    </h1>
+
+    <span class="post-date">06 Jan 2012</span>
+
+    <p>In what turned out to be a productive holiday hacking with languages I&#8217;d not used before, I got round to writing some coffeescript on node.js. This was more to do with scratching a personal itch that pure experimentation. I had a play with <a href="https://github.com/github/janky">Janky</a> (Github&#8217;s Jenkins/Hubot mashup) but found it a little opinionated on the Jenkins side, but the campfire integration is excellent. Looking at the Jenkins commands in <a href="https://github.com/github/hubot-scripts/">hubot-scripts</a> though I found those even more opinionated.</p>
+<p>The magic of open source though is you can just fix things, then ask nice people if they like what you&#8217;ve done. I set about writing a few more general commands and lo, the&#8217;ve been quickly <a href="https://github.com/github/hubot-scripts/pull/23840h">merged upstream</a>.</p>
+<p>These add:</p>
+<ul>
+	<li>A command to list all your Jenkins jobs and the current state</li>
+	<li>A command to trigger a normal build</li>
+	<li>A command to trigger a build with a list of parameters</li>
+</ul>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRipwAIM" alt="campfire window showing jenkins tasks"/></p>
+<p>This was made much easier by first looking at the previous Jenkins commands, and then looking at other scripts in the hubot-scripts repository. The best way of learning a new language/framework is still on the shoulders of others.</p>
+<p>I&#8217;ve got a few other good ideas for Jenkins related commands. I want to add a filter command to the jobs list, both by name and by current state. For longer running jobs I also want to report whether a build is currently running. And then maybe get information about a specific job, like the last few runs or similar. Any other requests or ideas most welcome.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/12/31/Ec2-tasks-for-fabric/">
         EC2 Tasks For Fabric
       </a>
@@ -205,21 +227,6 @@ Puppet has the concept of an external node classifier which can be used to solve
 <p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjyqAIM"/></p>
 <p>Combine all this together and it&#8217;s simple to have a per project continuous integration build running a test suite, kicking off a standard set of downsteam jobs for deploying to a test environment (by passing th relevant parameters), running some basic smoke tests and allowing someone to click a button to deploy to production. Or going the whole continuous deployment, I trust my test suite route, and deploying automatically. All within Jenkins. Getting this working requires a bit of planning. You want all of your projects to be deployed the same way but you probably want this to be the case anyway.</p>
 <p>Providing flexible push button builds/deploys and reducing the number of nearly identical jobs in Jenkins are just two advantages to using parameterized builds. Most of the tricks come from thinking about Jenkins as much more than a continuous integration tool and more of an automation framework &#8211; I know at least one large organisation who have pretty much replaced cron for many tasks with Jenkins for instance. Running tests automatically, and in a central environment as close to production as possible, is important. But it&#8217;s just a sanity check if you&#8217;re doing everything right already. Centralising activity on a build pipeline requires you to be doing all that anyway, but in my opinion gives way more useful and rapid feedback about the state of the code your team is writing.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/11/02/Exposing-puppet-and-facter-information-on-the-web/">
-        Exposing Puppet And Facter Information On The Web
-      </a>
-    </h1>
-
-    <span class="post-date">02 Nov 2011</span>
-
-    <p>I don&#8217;t appear to have been in a writing mood recently but I&#8217;ve been getting back into hacking on a couple of pet projects. The first fruits of this coding (mainly backwards and forwards on the train) I&#8217;ve just made available to anyone interested.</p>
-<p><a href="https://github.com/garethr/web-puppet">Web Facter</a> is a gem which takes the output from <a href="https://github.com/puppetlabs/facter">Facter</a> and exposes this as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. In theory you could run this on a configurable port on each of your machines and have a <span class="caps">URL</span> you can hit to get information on uptime, networking setup, hostnames or anything else exposed by Facter. It comes with a simple built-in web server and optional http basic authentication if you&#8217;re not going to do this via a proxy. The <span class="caps">JSON</span> display should be both human and machine readable, and I have a few ideas for projects which needed this information.</p>
-<p>The other project is very similar, and even has a similar name, <a href="https://github.com/garethr/web-facter">Web Puppet</a>. You can run this on your puppet master and it exposes the node information (currently including the facts and tags) again as <span class="caps">JSON</span> over <span class="caps">HTTP</span>. I&#8217;m still working on this to make it a little more usable. At the moment it just shows you all nodes and all information, if you&#8217;re working with a larger cluster this isn&#8217;t really sensible. Recent versions of Puppet do have an <a href="http://docs.puppetlabs.com/guides/rest_api.html"><span class="caps">HTTP</span> based <span class="caps">API</span></a> but it requires some hoops to be jumped through and I&#8217;m not quite sure from the docs it lets me do what I want (I have a specific usecase, of which more soon all being well).</p>
-<p>Both projects have had me reading the source code of Puppet and Facter, which for the most part has been enjoyable and informative. Puppet in particular has some great comments lying around :) Both of the above projects are available as gems for anyone else to play around with and build on, but my main aim is a little more high level. All being well I&#8217;ll have a couple of projects built atop these APIs shortly.</p>
   </div>
   
 </div>

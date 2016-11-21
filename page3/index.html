@@ -68,6 +68,89 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2015/05/09/acceptance-testing-mirageos/">
+        Acceptance testing MirageOS installs
+      </a>
+    </h1>
+
+    <span class="post-date">09 May 2015</span>
+
+    <p>I&#39;m pretty interested in <a href="http://openmirage.org/">MirageOS</a> at the
+moment. Partly because I find the idea behind unikernels interesting and
+partly because I keep bumping into the nice folks <a href="http://www.cl.cam.ac.uk/projects/ocamllabs/">OCaml
+Labs</a> in Cambridge.</p>
+
+<p>In order to write and build your MirageOS unikernel application you need
+an OCaml development environment. Although this is
+<a href="http://openmirage.org/wiki/install">documented</a> I wanted something a
+little more repeatable. I also found and reported a few bugs in the
+documentation which got me thinking about acceptance testing. I&#39;m not
+(yet) an OCaml programmer, but infrastructure automation and testing I
+can do.</p>
+
+<h2>Into Puppet</h2>
+
+<p>I started out writing a Puppet module to install and manage everything,
+which is now available on
+<a href="https://github.com/garethr/garethr-mirageos">GitHub</a> and on the
+<a href="https://forge.puppetlabs.com/garethr/mirageos">Forge</a>.</p>
+
+<p>This lets you do something like the following, and have a fully working
+MirageOS setup on Ubuntu 12.04 or 14.04.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="k">class</span> <span class="p">{</span> <span class="s">&#39;mirageos&#39;</span><span class="p">:</span>
+  <span class="k">user</span>      <span class="o">=&gt;</span> <span class="s">&#39;vagrant&#39;</span><span class="p">,</span>
+  <span class="na">opam_root</span> <span class="o">=&gt;</span> <span class="s">&#39;/home/vagrant/.opam&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Given time, inclination or pull requests I&#39;ll add support for other
+operating systems in the future.</p>
+
+<h2>But how do you know it works?</h2>
+
+<p>The module has a small unit test suite, but it&#39;s nice to know test the
+actual running of Puppet and installation of the software. For this I&#39;ve
+used <a href="http://kitchen.ci/">Test Kitchen</a> and
+<a href="http://serverspec.org/">ServerSpec</a>. This allows for spinning up 2
+virtual machines (one for each supported operating system), applying the
+Puppet manifest and then making some assertions:</p>
+
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script></p>
+
+<p>The above is simply checking whether certain packages are installed, the
+PPA is setup correctly and whether <code>mirage</code> and <code>opam</code> can be executed
+cleanly.</p>
+
+<h2>Can it produce a working unikernel?</h2>
+
+<p>The above tells us whether the installation worked, but not whether the
+resulting software allows us to build MirageOS unikernels. For this I
+used <a href="https://github.com/sstephenson/bats">Bats</a> running in the same
+Test Kitchen setup.</p>
+
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script></p>
+
+<p>The above configures and builds a simple HTTP server unikernel, and then
+checks that when run it returns the expected response on the correct
+port.</p>
+
+<h2>Conclusion</h2>
+
+<p>I like the separation of concerns above. I can use the Puppet code
+without the test code, or even swap the Puppet code out for a shell
+script if I wanted. I could also run the serverspec tests anywhere I
+want to check state, which is the reason for separating those tests from
+the one&#39;s building and running a unikernel. Overall the tool chain for ad-hoc
+infrastructure testing (quick mention of
+<a href="http://infrataster.net/">Infrataster</a> too) is really quite powerful and
+approachable. I&#39;d love to see more software ship with a user-facing test
+suite for people to verify their installation works.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2015/01/02/automating-windows-development-environments/">
         Automating windows development environments
       </a>
@@ -339,67 +422,6 @@ country, as well as people straight from university, choosing to work
 for government. Not just for some abstract and personal reason (though
 that&#39;s fine too), but because it&#39;s a a genuinely interesting place to
 work. That one&#39;s on us.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
-        Using OWASP ZAP from the command line
-      </a>
-    </h1>
-
-    <span class="post-date">23 Jun 2014</span>
-
-    <p>I&#39;m a big fan of <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP ZAP</a> or
-the Zed Attack Proxy. It&#39;s suprisingly user friendly and nicely pulls of
-it&#39;s aim of being useful to developers as well as more hardcore penetration testers.</p>
-
-<p>One of the features I&#39;m particularly fond of is the aforementioned
-proxy. Basically it can act as a transparent HTTP proxy, recording the
-traffic, and then analyse that to conduct various active security tests;
-looking for XSS issues or directory traversal vulnerabilities for
-instance. The simplest way of seeding the ZAP with something to analyse is using
-the simple inbuilt spider.</p>
-
-<p>So far, so good. Unfortunately ZAP isn&#39;t designed to be used from the
-command line. It&#39;s either a thick client, or it&#39;s a proxy with a simple
-API. Enter <a href="https://github.com/garethr/zapr">Zapr</a>.</p>
-
-<p>Zapr is a pretty simple wrapper around the ZAP API (using the
-<a href="https://github.com/vpereira/owasp_zap">owasp_zap</a> library under the
-hood). All it does is:</p>
-
-<ul>
-<li>Launch the proxy in headless mode</li>
-<li>Trigger the spider</li>
-<li>Launch various attacks against the collected URLs</li>
-<li>Print out the results</li>
-</ul>
-
-<p>This is fairly limited, in that a spider isn&#39;t going to work
-particularly well for a mor interactive application, but it&#39;s a farily good
-starting point. I may add different seed methods in the future (or would
-happily accept pull requests). Usage wise it&#39;s as simple as:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">zapr --summary http://localhost:3000/
-</code></pre></div>
-<p>That will print you out something like the following, assuming it finds
-an issue.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">+-----------------------------------+----------+----------------------------------------+
-| Alert                             | Risk     | URL                                    |
-+-----------------------------------+----------+----------------------------------------+
-| Cross Site Scripting (Reflected)  | High     |http://localhost:3000/forgot_password   |
-+-----------------------------------+----------+----------------------------------------+
-</code></pre></div>
-<p>The above alert is taken from a <a href="https://github.com/garethr/zapr-example">simple example</a>,
-using the <a href="https://github.com/OWASP/railsgoat">RailsGoat</a> vulnerable web
-application as a scape goat. You can see the resulting output from
-<a href="https://travis-ci.org/garethr/zapr-example">Travis running the tests</a>.</p>
-
-<p>Zapr is a bit of a proof of concept so it&#39;s not particularly robust or
-well tested. Depending on usage and interest I may tidy it up and extend
-it, or I may leave it as a useful experiment and try and finally get ZAP
-support into <a href="http://gauntlt.org">Gauntlt</a>, only time will tell.</p>
 
   </div>
   

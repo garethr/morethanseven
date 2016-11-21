@@ -68,6 +68,20 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/04/24/Devops-at-barcamp-cambridge/">
+        Devops At Barcamp Cambridge
+      </a>
+    </h1>
+
+    <span class="post-date">24 Apr 2010</span>
+
+    <p>I&#8217;m at barcamp cambridge this weekend and decided to do a short talk on devops. It&#8217;s still a term that not too many people have come across and something that lots of people building websites should think about.</p>
+<p><object width="425" height="355"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=devops-100424081210-phpapp02&stripped_title=devops-3839400" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=devops-100424081210-phpapp02&stripped_title=devops-3839400" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
+<p>I put the slides together this morning so much of it will be familiar to people who have been reading the same blog posts as me over the last year or so. For anyone else either just finding out about the whole world of operations or old hand sysadmins finding likeminded people hopefully the slides will be useful.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/04/19/Dibi-twitter-aggregator/">
         DIBI Twitter Aggregator
       </a>
@@ -172,39 +186,6 @@ hive --service hwi
 
     <p>I&#8217;m a huge fan of virtualenv for Python. It&#8217;s a simple tool that lets you have an isolated python environment into which you can install libraries via setup tools. It makes experimenting with different versions of code easier and avoids lots of problems with hard to find bugs caused by unknown third party conflicts.</p>
 <p><a href="http://github.com/nkryptic/sandbox">Sandbox</a> aims to do exactly the same for Ruby. It isolates your gem installation from the system libraries and providesa script to activate the named environment. The GitHub repo has been around since 2008, yet only has 37 followers. I&#8217;m not sure whether that is because another more popular and feature rich solution exists or because Ruby people haven&#8217;t yet found this technique useful. For me finding tools that work the same way as those I already like in other languages makes me happy.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/03/19/Static-generator-for-web-services/">
-        Static Generator For Web Services
-      </a>
-    </h1>
-
-    <span class="post-date">19 Mar 2010</span>
-
-    <p>My latest <em>on a train</em> project is <a href="http://github.com/garethr/Dumper">Dumper</a>, a static generator for web services. I&#8217;m a huge fan of <a href="http://nanoc.stoneship.org/">Nanoc</a> and tools like <a href="http://github.com/mojombo/jekyl">Jekyl</a> for building websites. But I spend at least as much time building small webservicds. I wanted something super simple that would let me expose data I had access to as a read only web service.</p>
-<p>At the moment that means using a mysql database, specifying a <span class="caps">SQL</span> query and running a python script. Hey presto you have lots and lots of <span class="caps">XML</span> and <span class="caps">JSON</span> files representing your data. Dumper provides hooks for you to customise the ourput or even overide the database layer. It should be possible if you were so inclined to replace the mysql backend with another database, or other type of data store. Hopefully some of these might end up in my branch at a later date.</p>
-<p>At a basic level all you need is a config file which looks a little like:</p>
-<% syntax_colorize :ini, type=:coderay do %>
-[Dumper]
-path: people
-index: id
-backend: mysql
-
-[Database]
-sql: SELECT id, name FROM people
-host: localhost
-username: root
-password:
-database: dumper
-<% end %>
-<p>And then run a command line application against that file:</p>
-<% syntax_colorize :bash, type=:coderay do %>
-dumper -c people.ini dump
-<% end %>
-<p>The application supports a number of flags for specifying where you want the files to be generated, what your config file is called and to clean up any generated files if you want to try again. The output will let you know which files have been updated, which deleted and which added too. If you&#8217;d rather have a single file but with all your records in then that&#8217;s easy too &#8211; just add something to the config file.</p>
-<p>It&#8217;s somewhat early days for Dumper, and I&#8217;ve not seen anything similar so their are definately some rough edges that could do with some work. All of that will really come down to how much use it gets. I&#8217;d appreciate any feedback from anyone with a similar itch to scratch too.</p>
   </div>
   
 </div>

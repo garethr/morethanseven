@@ -68,6 +68,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/01/20/django-testing-presentation-djugl/">
+        Django Testing Presentation at DJUGL
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jan 2009</span>
+
+    <p>The second <a href="http://upcoming.yahoo.com/event/1463406" title="DJUGL">Django User Group</a> meeting was last night and was a great success as far as I could tell. Our boardroom at work was chock full of budding Django developers and interested parties &#8211; 70 people or so in all. Good work by Rob to get everything back on track at the start of the year and the next event is already planned for the back end of February so I hear. More news soon on the <a href="http://groups.google.com/group/django-london">mailing list</a> hopefully.</p>
+<p>Rather unfortunately <a href="http://simonwillison.net">Simon</a> had to pull out at the last minute and I stepped in to do a quick 20 minutes or so talk on writing tests for your Django applications.</p>
+<div style="width:425px;text-align:left" id="__ss_933741"><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=testingdjangoapps-1232444197115958-3&rel=0&stripped_title=testing-django-applications-presentation" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=testingdjangoapps-1232444197115958-3&rel=0&stripped_title=testing-django-applications-presentation" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></div>
+<p>I was rather surprised that only about a third of the people coming along were using Django in some work related capacity, and when I asked who was writing tests for their code a few more hands went down. Very few of the people <em>not</em> using Django at work are writing tests which is unfortunate (and contrasts rather interestingly with my experiences of the Ruby community).</p>
+<p>For a presentation done in less than a day while at work I felt it went OK. testing is a hard sell at the best of times and trying to talk to both those without experience of writing tests and at the same time trying to get in a few of the more interesting things we&#8217;ve done at work was maybe a bit of an ask.</p>
+<p>It not being a blog post round here these days unless I include a link to GitHub I did mention a small project last night in the talk &#8211; <a href="http://github.com/garethr/django-test-extensions/">Django Test Extensions</a>. It&#8217;s more just a collection of useful common testing code: additional assertions, custom test runners, etc. Thanks to <a href="http://agileweb.org/">Ross</a> for the last minute patch with a couple of bug fixes as well.</p>
+<p>The other two presentations went great. Andrew talking about the South migrations system and Aral talking about real world Google App Engine were both up my street of things I&#8217;m interested in. We have video of all the talks as well so hopefully that will make it out into the wild at some point once it&#8217;s been edited.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/01/18/simple-python-jabber-bot/">
         A Simple Python Jabber Bot
       </a>
@@ -166,27 +184,6 @@ next: get details about the next track in the list</pre>
 </blockquote>
 <p>As well as these three I&#8217;ll be keeping my eye out for any news about Xtech, The Highland Fling and any other new upcoming conferences. If you know of anything else leave a comment. I didn&#8217;t find out about <a href="http://www.thinkvisibility.com/">Think Visibility</a> until it had sold out but I like the idea of smaller, specialised events.</p>
 <p>Overall it already looks like being a good year for conference goers in the UK. I&#8217;ll be on the lookout for barcamp style events as well but I do like a good formal conference as well. Hopefully see a few people at some of these events?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/01/02/apis-2009-xmpp-and-webhooks/">
-        APIs in 2009 - XMPP and WebHooks
-      </a>
-    </h1>
-
-    <span class="post-date">02 Jan 2009</span>
-
-    <p>Everyone has to have a post with a year in the title at the start of the year so I thought I better write something. Rather than one of those personal retrospective emails I thought I&#8217;d go for something different &#8211; a look at what I&#8217;d like to see in APIs in the coming year.</p>
-<h2>Webhooks</h2>
-<p>I&#8217;m pretty interested in the idea of applications exposing <a href="http://webhooks.pbwiki.com/">Webhooks</a> at the moment. It&#8217;s a pretty simple idea. As a user of a service you can register your own <span class="caps">HTTP</span> end points to receive information whenever events occur in the service.  Both <a href="http://wiki.shopify.com/WebHook">Shopify</a> and <a href="http://github.com/guides/post-receive-hooks">GiHub</a> have pretty nifty hooks for extending their capabilities for instance. When someone pushes code to a git repository you could send a ping to trigger a process to update the documentation for example.</p>
-<p>With the rise of hosted application development environments like <a href="http://code.google.com/appengine/">AppEngine</a> writing small, nearly throwaway, apps to subscribe to these hooks could become incredibly powerful. It&#8217;s a lot like how unix programmers think, by piping lots of small applications together to get to the expected end result. It&#8217;s not a replacement for the more standard read/write <span class="caps">API</span>, but it&#8217;s a potential solution to the need to constantly poll that <span class="caps">API</span> for some types of applications.</p>
-<p>The idea of public webhooks would be hugely powerful, but would also likely be a scalability nightmare. Imagine if Flickr exposed a hook that you could subscribe to whenever anyone added a public photo. Or Twitter added a hook for when anyone tweeted. These sorts of hooks would quickly be swamped with subscribers. The number of <span class="caps">HTTP</span> requests being sent by a service like Flickr under these circumstances would be <em>rather large</em> to say the least. Which is where another technology that&#8217;s designed for this sort of problem becomes useful.</p>
-<h2><span class="caps">XMPP</span> Interfaces</h2>
-<p><a href="http://xmpp.org/"><span class="caps">XMPP</span></a> or the Extensible Messaging and Presence Protocol has been around for a while, although originally under the name Jabber. It&#8217;s predominantly being used at the moment as a instant messaging protocol, but in reality it&#8217;s far more general purpose than that. Or rather, IM is generally considered to be between two or more people. But their is no reason that either or all the participants in an <span class="caps">XMPP</span> session can&#8217;t be programs.</p>
-<p>On my local machine I&#8217;m a big fan of the command line for all sorts of simple, and sometimes complex, tasks.  If applications expose their APIs via an <span class="caps">XMPP</span> bot then you basically have a ready made command line interface to online services via your IM client of choice. Combined with a solution to the public webhook problem mentioned above and you can hopefully see why I find <span class="caps">XMPP</span> pretty interesting.</p>
-<p>I&#8217;ve been playing with writing <span class="caps">XMPP</span> bots recently, both at our internal hackday and at the recent <a href="http://github.com/garethr/lastbot/tree/master">Last.fm event</a>. Their are various libraries and code examples lying around the internet that make getting started easy enough. With services like <a href="http://imified.com/">Imified</a> getting setup last year I&#8217;d imagine it will get easier still this year.</p>
-<p>As for what I&#8217;m going to be up to along these lines, we&#8217;ll have to wait and see. I have a few pet projects that I&#8217;d like to get off the ground which might be good test beds for this sort of thing. Apart from that I&#8217;d like to write some <em>getting started</em> style tutorials on some of the technologies involved or maybe a full blown article on the theory if I can find somewhere to publish it. A barcamp presentation or two might also fall off the back if I do get the time to play around a little more. But that&#8217;s just me. If you&#8217;re building, or planning on developing, an <span class="caps">API</span> for a product at the moment I&#8217;d suggest having a look at these two areas. They might turn out to just be potential extensions to what you had planned. Or they might turn out to be just the right approach to the problems you&#8217;ll face getting people to use your <span class="caps">API</span>.</p>
   </div>
   
 </div>

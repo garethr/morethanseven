@@ -68,6 +68,107 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2015/12/04/provisioning-droplets-with-puppet/">
+        Provisioning droplets with Puppet
+      </a>
+    </h1>
+
+    <span class="post-date">04 Dec 2015</span>
+
+    <p>I love <a href="https://www.digitalocean.com/">DigitalOcean</a> for quickly spinning
+up machines. I also like managing my infrastructure using Puppet. Enter the
+<a href="https://forge.puppetlabs.com/garethr/digitalocean">garethr-digitalocean</a> module.
+This currently provides a single Puppet type; <code>droplet</code>.</p>
+
+<p>Lets show a quick example of that, by launching two droplets, called
+test-digitalocean and test-digitalocean-1.</p>
+<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">droplet</span> <span class="p">{</span> <span class="p">[</span><span class="s">&#39;test-digitalocean&#39;</span><span class="p">,</span> <span class="s">&#39;test-digitalocean-1&#39;</span><span class="p">]:</span>
+  <span class="na">ensure</span> <span class="o">=&gt;</span> <span class="k">present</span><span class="p">,</span>
+  <span class="na">region</span> <span class="o">=&gt;</span> <span class="s">&#39;lon1&#39;</span><span class="p">,</span>
+  <span class="na">size</span>   <span class="o">=&gt;</span> <span class="s">&#39;512mb&#39;</span><span class="p">,</span>
+  <span class="na">image</span>  <span class="o">=&gt;</span> <span class="mi">14169855</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>With the above manifest saved as <code>droplets.pp</code> we can run it with:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ puppet apply --test droplets,pp
+</code></pre></div>
+<p>This will ensure those two droplets exist in that region, and have that
+size. If they don&#39;t exist it will launch droplets using the specified image.
+This means we can run the same command again, and rather that create
+more instances it will simply report that we currently have those
+droplets already.</p>
+
+<h2>Querying resources</h2>
+
+<p>Puppet also comes with <code>puppet resource</code>, a handy way of querying the
+state of a given resource or type. Running the following will list all
+of your droplets, whether you created them using Puppet or not.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ puppet resource droplet
+droplet { &#39;test-digitalocean&#39;:
+  ensure              =&gt; &#39;present&#39;,
+  backups             =&gt; &#39;false&#39;,
+  image               =&gt; &#39;14169855&#39;,
+  image_slug          =&gt; &#39;ubuntu-15-10-x64&#39;,
+  ipv6                =&gt; &#39;true&#39;,
+  price_monthly       =&gt; &#39;10.0&#39;,
+  private_address     =&gt; &#39;10.131.98.186&#39;,
+  private_networking  =&gt; &#39;true&#39;,
+  public_address      =&gt; &#39;178.62.25.100&#39;,
+  public_address_ipv6 =&gt; &#39;2A03:B0C0:0001:00D0:0000:0000:0090:B001&#39;,
+  region              =&gt; &#39;lon1&#39;,
+  size                =&gt; &#39;1gb&#39;,
+}
+</code></pre></div>
+<h2>Mutating resources</h2>
+
+<p>The type also supports mutating droplets, for instance changing the
+size of a droplet if you change the model in Puppet. The API client
+doesn&#39;t support all possible changes, but you can disable backups, enable
+IPv6 and switch on private networking as needed. Here&#39;s a quick sample
+of the output showing this in action.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Info: Loading facts
+Notice: Compiled catalog for gareths-macbook.local in environment production in 0.43 seconds
+Info: Applying configuration version &#39;1449225401&#39;
+Info: Checking if droplet test-digitalocean exists
+Info: Powering off droplet test-digitalocean
+Info: Resizing droplet test-digitalocean
+Info: Powering up droplet test-digitalocean
+Notice: /Stage[main]/Main/Droplet[test-digitalocean]/size: size changed &#39;1gb&#39; to &#39;512mb&#39;
+Error: Disabling IPv6 for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/ipv6: change from true to false failed: Disabling IPv6 for test-digitalocean is not supported
+Error: Disabling private networking for test-digitalocean is not supported
+Error: /Stage[main]/Main/Droplet[test-digitalocean]/private_networking: change from true to false failed: Disabling private networking for test-digitalocean is not supported
+Info: Checking if droplet test-digitalocean-1 exists
+Info: Created new droplet called test-digitalocean-1
+Notice: /Stage[main]/Main/Droplet[test-digitalocean-1]/ensure: created
+Info: Class[Main]: Unscheduling all events on Class[Main]
+Notice: Applied catalog in 60.61 seconds
+</code></pre></div>
+<h2>But why?</h2>
+
+<p>Describing your infrastructure at this level in code has several advantages:</p>
+
+<ul>
+<li>Having a shared model of your infrastructure in code allows for a discussion
+around that model</li>
+<li>You can be convident in the model because of the idempotent nature of running
+the code</li>
+<li>The use of code for this model allows for activities like code review, change
+control based on pull requests, unit testing, user created abstrations and more</li>
+<li>The use of Puppet means you can use it as above as a command line interface, or
+run it every period of time to enfore and report on the state of you infrastructure</li>
+<li>Puppet ecosystem tools like PuppetDB, Puppet Board or Puppet Enterprise mean you can
+store data over time for later analysis</li>
+</ul>
+
+<p>The module also acts as a reasonable example of a simple Puppet type and provider.
+If you&#39;re interested in extending Puppet for your own services this is hopefully a
+good place to start understanding the API.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2015/09/20/security-implications-of-unikernels/">
         Some Security Implication of Unikernels
       </a>
@@ -405,89 +506,6 @@ everyone.</li>
 <li><a href="http://www.amazon.co.uk/Black-Code-Ronald-J-Deibert/dp/0771025351">Black Code</a> - Ronald J. Deibert - the story of the Citizen Lab
 and it&#39;s front line cyber researchers</li>
 </ul>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/05/09/acceptance-testing-mirageos/">
-        Acceptance testing MirageOS installs
-      </a>
-    </h1>
-
-    <span class="post-date">09 May 2015</span>
-
-    <p>I&#39;m pretty interested in <a href="http://openmirage.org/">MirageOS</a> at the
-moment. Partly because I find the idea behind unikernels interesting and
-partly because I keep bumping into the nice folks <a href="http://www.cl.cam.ac.uk/projects/ocamllabs/">OCaml
-Labs</a> in Cambridge.</p>
-
-<p>In order to write and build your MirageOS unikernel application you need
-an OCaml development environment. Although this is
-<a href="http://openmirage.org/wiki/install">documented</a> I wanted something a
-little more repeatable. I also found and reported a few bugs in the
-documentation which got me thinking about acceptance testing. I&#39;m not
-(yet) an OCaml programmer, but infrastructure automation and testing I
-can do.</p>
-
-<h2>Into Puppet</h2>
-
-<p>I started out writing a Puppet module to install and manage everything,
-which is now available on
-<a href="https://github.com/garethr/garethr-mirageos">GitHub</a> and on the
-<a href="https://forge.puppetlabs.com/garethr/mirageos">Forge</a>.</p>
-
-<p>This lets you do something like the following, and have a fully working
-MirageOS setup on Ubuntu 12.04 or 14.04.</p>
-<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="k">class</span> <span class="p">{</span> <span class="s">&#39;mirageos&#39;</span><span class="p">:</span>
-  <span class="k">user</span>      <span class="o">=&gt;</span> <span class="s">&#39;vagrant&#39;</span><span class="p">,</span>
-  <span class="na">opam_root</span> <span class="o">=&gt;</span> <span class="s">&#39;/home/vagrant/.opam&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Given time, inclination or pull requests I&#39;ll add support for other
-operating systems in the future.</p>
-
-<h2>But how do you know it works?</h2>
-
-<p>The module has a small unit test suite, but it&#39;s nice to know test the
-actual running of Puppet and installation of the software. For this I&#39;ve
-used <a href="http://kitchen.ci/">Test Kitchen</a> and
-<a href="http://serverspec.org/">ServerSpec</a>. This allows for spinning up 2
-virtual machines (one for each supported operating system), applying the
-Puppet manifest and then making some assertions:</p>
-
-<p><noscript><pre>400: Invalid request
-</pre></noscript><script src="https://gist.github.com/a8d090b5d7f7a190f7d9.js"> </script></p>
-
-<p>The above is simply checking whether certain packages are installed, the
-PPA is setup correctly and whether <code>mirage</code> and <code>opam</code> can be executed
-cleanly.</p>
-
-<h2>Can it produce a working unikernel?</h2>
-
-<p>The above tells us whether the installation worked, but not whether the
-resulting software allows us to build MirageOS unikernels. For this I
-used <a href="https://github.com/sstephenson/bats">Bats</a> running in the same
-Test Kitchen setup.</p>
-
-<p><noscript><pre>400: Invalid request
-</pre></noscript><script src="https://gist.github.com/191c4c0676b471f9b986.js"> </script></p>
-
-<p>The above configures and builds a simple HTTP server unikernel, and then
-checks that when run it returns the expected response on the correct
-port.</p>
-
-<h2>Conclusion</h2>
-
-<p>I like the separation of concerns above. I can use the Puppet code
-without the test code, or even swap the Puppet code out for a shell
-script if I wanted. I could also run the serverspec tests anywhere I
-want to check state, which is the reason for separating those tests from
-the one&#39;s building and running a unikernel. Overall the tool chain for ad-hoc
-infrastructure testing (quick mention of
-<a href="http://infrataster.net/">Infrataster</a> too) is really quite powerful and
-approachable. I&#39;d love to see more software ship with a user-facing test
-suite for people to verify their installation works.</p>
 
   </div>
   

@@ -68,6 +68,34 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/02/10/append-slashes-urls-django/">
+        Append slashes to URLs in Django
+      </a>
+    </h1>
+
+    <span class="post-date">10 Feb 2009</span>
+
+    <p>Quick Django pop quiz. Can anyone spot the deliberate mistake in the following url definition? We&#8217;re trying to define a view called log_viewer and instructing a specific url pattern to render it.</p>
+<pre>urlpatterns = patterns('',
+    (r'^log/?$', log_viewer),
+)</pre>
+<p>In this case our regex matches /log or /log/ using the /? optional pattern. This is because even if we only link to one format we know people will probably visit both, either by entering the <span class="caps">URL</span> manually or by linking from an external source.</p>
+<p>As far as <span class="caps">HTTP</span> is concerned though /log and /log/ are separate URLs, even if they display the same content. The main reason this matters for public facing websites is that our friendly search engine spiders are likely to index both separately, leading to splitting the page rank as well as accusations of duplicate content which might see further erosion of rankings.</p>
+<p>The solution is generally to issue a 301 redirect from one format to the other. This tells search engines and people alike that the canonical location for the requested content is elsewhere. You could specify the redirect manually, but this is going to get irritating quickly once you have a few more definitions.</p>
+<pre>urlpatterns = patterns('',
+    (r'^log$', redirect_to, {'url': '/log/'}),
+    (r'^log/$', log_viewer),
+)</pre>
+<p>Handily Django provides a mechanism to do exactly what we want to do by setting <a href="http://docs.djangoproject.com/en/dev/ref/settings/#append-slash">APPEND_SLASH</a> to True in your settings file. Even better it&#8217;s switched on by default. So if you don&#8217;t know much about the intricacies of <span class="caps">HTTP</span> you still get the correct behavior. That is unless you specify your <span class="caps">URL</span> patterns in the format above.</p>
+<p>You see APPEND_SLASH only works if the <span class="caps">URL</span> doesn&#8217;t match a specified pattern. If no pattern match is found it appends a trailing slash and checks for a match again. Because the above pattern matches the pattern without the trailing slash (/log) the desired behavior is never triggered, and the view is rendered at both URLs. So although we want to catch /log and /log/ on the front end, our urls.py definition should actually be:</p>
+<pre>urlpatterns = patterns('',
+    (r'^log/$', log_viewer),
+)</pre>
+<p>Django has lots of useful bits of magic for doing the right thing, but unless you know what they <em>actually</em> do you either end up recreating functionality yourself, or find features don&#8217;t work in quite the way you thought. It&#8217;s a good argument for keeping frameworks small whenever possible, and for developers to at least know their way around the code of their respective framework.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/02/07/xmpp-and-offline-processing-coming-google-app-engi/">
         XMPP and offline processing coming to Google App Engine
       </a>
@@ -134,18 +162,6 @@ pdb.set_trace()</pre>
 <p>I&#8217;ve been playing with App Engine quite extensively of late. I really appreciate the <span class="caps">SDK</span> and the limited, but well designed and thought out APIs and testing stubs. At the moment I&#8217;m happy with where it&#8217;s at. It&#8217;s obviously early days but in my mind all I really want are APIs for offline processing, some sort of message queuing facility, <span class="caps">XMPP</span> support and a payment model for raising the limitations. And several of those are already slated for the near future.</p>
 <p>If anyone wants to host their own version you can grab the code from <a href="http://github.com/garethr/appengine-image-host/tree/master">GtHub</a>. You&#8217;ll need your own App Engine account and your own snappy name but that&#8217;s all. If you really don&#8217;t want to do that, have a good reason to needing image hosting and ask nicely I might add more people to my version as well.</p>
 <p>Their are a few bugs I&#8217;m going to fix when I get a moment,  a few documented limitations I know about and I&#8217;m still fleshing out the test suite to cover all the functionality. But all in all a worthwhile few hours spent hacking. I&#8217;ll probably get round to writing up some pointers for testing App Engine code as well as their are a host of gotchas and the only real documentation at present is comments in the code.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/02/02/pep-374/">
-        PEP 374
-      </a>
-    </h1>
-
-    <span class="post-date">02 Feb 2009</span>
-
-    <p>The Python core developers are currently <a href="http://www.python.org/dev/peps/pep-0374/">discussing whether to move away from <span class="caps">SVN</span> to a distributed version control system</a>. It&#8217;s a worthwhile read for anyone involved in this sort of decision in any capacity. It features hands on examples of each of the contenders (Bazaar, Git and Mercurial), some interesting observations about all of them as well as  some benchmarks against a mature codebase. Lots of conversations keep cropping up on Twitter about why bother switching to Git or other distributed systems &#8211; this is a good place to start whether you use Python or not.</p>
   </div>
   
 </div>

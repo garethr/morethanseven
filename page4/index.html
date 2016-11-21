@@ -68,6 +68,67 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2014/06/23/using-owasp-zap-from-the-command-line/">
+        Using OWASP ZAP from the command line
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jun 2014</span>
+
+    <p>I&#39;m a big fan of <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP ZAP</a> or
+the Zed Attack Proxy. It&#39;s suprisingly user friendly and nicely pulls of
+it&#39;s aim of being useful to developers as well as more hardcore penetration testers.</p>
+
+<p>One of the features I&#39;m particularly fond of is the aforementioned
+proxy. Basically it can act as a transparent HTTP proxy, recording the
+traffic, and then analyse that to conduct various active security tests;
+looking for XSS issues or directory traversal vulnerabilities for
+instance. The simplest way of seeding the ZAP with something to analyse is using
+the simple inbuilt spider.</p>
+
+<p>So far, so good. Unfortunately ZAP isn&#39;t designed to be used from the
+command line. It&#39;s either a thick client, or it&#39;s a proxy with a simple
+API. Enter <a href="https://github.com/garethr/zapr">Zapr</a>.</p>
+
+<p>Zapr is a pretty simple wrapper around the ZAP API (using the
+<a href="https://github.com/vpereira/owasp_zap">owasp_zap</a> library under the
+hood). All it does is:</p>
+
+<ul>
+<li>Launch the proxy in headless mode</li>
+<li>Trigger the spider</li>
+<li>Launch various attacks against the collected URLs</li>
+<li>Print out the results</li>
+</ul>
+
+<p>This is fairly limited, in that a spider isn&#39;t going to work
+particularly well for a mor interactive application, but it&#39;s a farily good
+starting point. I may add different seed methods in the future (or would
+happily accept pull requests). Usage wise it&#39;s as simple as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">zapr --summary http://localhost:3000/
+</code></pre></div>
+<p>That will print you out something like the following, assuming it finds
+an issue.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">+-----------------------------------+----------+----------------------------------------+
+| Alert                             | Risk     | URL                                    |
++-----------------------------------+----------+----------------------------------------+
+| Cross Site Scripting (Reflected)  | High     |http://localhost:3000/forgot_password   |
++-----------------------------------+----------+----------------------------------------+
+</code></pre></div>
+<p>The above alert is taken from a <a href="https://github.com/garethr/zapr-example">simple example</a>,
+using the <a href="https://github.com/OWASP/railsgoat">RailsGoat</a> vulnerable web
+application as a scape goat. You can see the resulting output from
+<a href="https://travis-ci.org/garethr/zapr-example">Travis running the tests</a>.</p>
+
+<p>Zapr is a bit of a proof of concept so it&#39;s not particularly robust or
+well tested. Depending on usage and interest I may tidy it up and extend
+it, or I may leave it as a useful experiment and try and finally get ZAP
+support into <a href="http://gauntlt.org">Gauntlt</a>, only time will tell.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2014/04/25/consul/">
         Consul, DNS and Dnsmasq
       </a>
@@ -428,87 +489,6 @@ running.</p>
 <p>Probably. Although I started the repo a few other people have
 contributed code or made improvements already. Just sent a pull request
 or open an issue.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/01/25/code-coverage-for-puppet-modules/">
-        Code coverage for Puppet modules
-      </a>
-    </h1>
-
-    <span class="post-date">25 Jan 2014</span>
-
-    <p>One of my favourite topics for a while now has been <em>infrastructure as
-code</em>. Part of that involves introducing well understood programming
-techniques to infrastructure - from test driven design, to refactoring
-and version control. One tool I&#39;m fond of (even with it&#39;s potential to
-be misused) is <a href="http://en.wikipedia.org/wiki/Code_coverage">code coverage</a>. I&#39;d been meaning
-to go code spelunking to see if this could be done for testing Puppet
-modules. </p>
-
-<p>The functionality is now in <a href="https://github.com/rodjek/rspec-puppet#producing-coverage-reports">master for rspec-puppet</a>
-and so anyone feeling brave can use it now, or if you must wait for the
-2.0.0 release. The actual implementation is inspired by the same functionality in
-<a href="https://github.com/sethvargo/chefspec#reporting">ChefSpec</a>
-written by <a href="https://sethvargo.com/">Seth Vargo</a>. Lots of the how came
-from here, and the usage is very similar.</p>
-
-<h2>How to use it?</h2>
-
-<p>First add (or hopefully change) your Gemfile line item for rspec-puppet
-to the following:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s2">&quot;rspec-puppet&quot;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/rodjek/rspec-puppet.git&#39;</span>
-</code></pre></div>
-<p>Then all you need to do is include the following line anywhere in a
-spec.rb file in your spec directory.</p>
-<div class="highlight"><pre><code class="language-puppet" data-lang="puppet"><span class="na">at_exit</span> <span class="p">{</span> <span class="na">RSpec</span><span class="p">::</span><span class="na">Puppet</span><span class="p">::</span><span class="na">Coverage</span><span class="err">.</span><span class="na">report</span><span class="o">!</span> <span class="p">}</span>
-</code></pre></div>
-<h2>What do I get?</h2>
-
-<p>Here&#39;s an <a href="https://github.com/garethr/garethr-nginx">example module</a>,
-including a file called
-<a href="https://github.com/garethr/garethr-nginx/blob/master/spec/classes/coverage_spec.rb">coverage_spec.rb</a>.
-When running the test suite with <code>rake spec</code> you now get coverage
-details like so:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Total resources:   24
-Touched resources: 8
-Resource coverage: 33.33%
-
-Untouched resources:
-  Class[Nginx]
-  File[preferences.d]
-  Anchor[apt::update]
-  Class[Apt::Params]
-  File[sources.list]
-  Exec[Required packages: &#39;debian-keyring debian-archive-keyring&#39; for nginx]
-  Anchor[apt::source::nginx]
-  Class[Apt::Update]
-  File[configure-apt-proxy]
-  Apt::Key[Add key: 7BD9BF62 from Apt::Source nginx]
-  Anchor[apt::key/Add key: 7BD9BF62 from Apt::Source nginx]
-  Anchor[apt::key 7BD9BF62 present]
-  File[nginx.list]
-  Exec[apt_update]
-  File[sources.list.d]
-  Exec[e407f76c6e349fc397947a4a49260a9320196cb1]
-</code></pre></div>
-<p>Here&#39;s the output on <a href="https://travis-ci.org/garethr/garethr-nginx/jobs/17597307#L105">Travis CI</a> as
-well for a recent build.</p>
-
-<h2>Why is this useful?</h2>
-
-<p>I&#39;ve already found coverage useful when writing tests for a few of my
-puppet modules. The information about the total number of resouces is
-interesting (and potentially an indicator of complexity) but the list of
-untouched resources is the main useful part. These represent both
-information about what your module is doing, and potential things you
-might want to test.</p>
-
-<p>I&#39;m hoping to find some more time to make this even better, providing
-more information about untouched resources, adding some configuration
-options and hopefully to integrate with the <a href="https://coveralls.io/docs/api">Coveralls API</a>.</p>
 
   </div>
   

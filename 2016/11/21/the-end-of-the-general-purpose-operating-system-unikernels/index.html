@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Unikernels and The End of the General Purpose Operating System &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Unikernels and The End of the General Purpose Operating System</h1>
+  <span class="post-date">21 Nov 2016</span>
+  <p>The <a href="http://www.morethanseven.net/2016/11/05/the-end-of-the-general-purpose-operating-system-as-it-happens/">previous
+post</a>
+went into why I think the days of the general purpose operating system
+(for servers) are numbered. But one interesting area I didn&#39;t comment
+on (but did talk about in the talk of the same name) was Unikernels.</p>
+
+<h2>It&#39;s all about cost</h2>
+
+<p>One of the topics I didn&#39;t really touch on in discussing the end of the
+generally purpose operating system was cost. Historically,
+maintaining a general purpose operating system has been a costly
+endeavour, something only the largest companies or communities could
+sustain by themselves. Think Red Hat, Oracle, Microsoft, Sun, IBM,
+Debian, etc. The result of that is the assumption when building software
+that you should target one or more of a small number of operating systems.
+In doing so you&#39;re ceding some ground, and likely some revenue, to another
+vendor. You&#39;re also stuck with any underlying limitations of that OS as
+well as its release cadence. And invariably you&#39;re also stuck with the
+multiplying support cost of supporting your software on multiple versions of
+that OS over time.</p>
+
+<p>I would posit that up until relatively recently the cost of that support
+burden was hugely outweighted by the cost of maintaining an actual operating
+system. But that&#39;s now changing, as I outlined in the previous post. Now a
+small or medium sized software company (be it CoreOS, Rancher, Docker,
+Pivotal, etc.) can build and maintain it&#39;s own operating system as well.
+This is very much about the rising level of abstraction - all of the
+above leverage the huge efforts that go into the Linux kernel and into
+other projects like systemd (CoreOS) or Alpine (Docker&#39;s Moby) for
+instance.</p>
+
+<h2>Enter Unikernells</h2>
+
+<p>But where do Unikernels fit into this narrative? I&#39;d argue that they
+represent the fulfilment of this democratization. If building and
+maintaining a traditional OS is only possible for the largest of
+companies, and building and maintaining a more special-purpose OS (say
+for running containers, or a storage device) is cost-effective for medium
+sized softare companies, then Unikernels will allow anyone to build their
+own single-purpose operating systems.</p>
+
+<p>There are other technical reasons for (and against) Unikernels as an
+approach but most focus on the technical. I think the economic side is
+worth some consideration too. And not just the typical development and
+support costs, but the ability to own the end-to-end unit of software
+has lots of benefits, and Unikernels may make those benefits available
+to everyone, including small organisations and individuals.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/11/05/the-end-of-the-general-purpose-operating-system-as-it-happens/">
+            The End of the General Purpose Operating System
+            <small>05 Nov 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/10/07/infrakit-hello-world/">
+            InfraKit Hello World
+            <small>07 Oct 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/07/05/everyone-is-not-a-software-company/">
+            Everyone is Not a Software Company
+            <small>05 Jul 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

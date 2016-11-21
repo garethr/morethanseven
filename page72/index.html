@@ -68,6 +68,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2006/01/22/a-foundation-to-build-javascript-on/">
+        A Foundation to Build Javascript On
+      </a>
+    </h1>
+
+    <span class="post-date">22 Jan 2006</span>
+
+    <p>Like probably quite a few others I&#8217;m doing more Javascript of late, both professionally and at play. It&#8217;s not just the whole buzz around it, all the way back to <a href="http://adactio.com">Jeremy</a> <a href="http://adactio.com/atmedia2005/">using Javascript for Good not Evil</a> but I moved away from doing backend development when I moved jobs, Javascript is most definately in my client side job remit.</p>
+ <p>As an <a href="http://morethanseven.net/books">avid reader</a> I&#8217;ve got hold of  a few <a href="http://domscripting.com/book/">good quality</a> <a href="http://www.sitepoint.com/books/dhtml1/">Javascript books</a> that have come along and was on the lookout for more when I came upon <a href="http://www.apress.com/book/bookDisplay.html?bID=10042">Foundations of <span class="caps">AJAX</span></a> from <a href="http://www.apress.com/">Apress&#8217;s</a> black and yellow experts voice series. I haven&#8217;t read enough to give a full conclusion but I&#8217;ve been impressed with other books in the series and it looks promising so far. A few chapters did stand out (I jumped in and read them first) that had little to do with <span class="caps">AJAX</span>, concentrating instead on setting up a proper Javascript development environment.</p>
+ <p>I&#8217;m not a fan of bloated IDEs so the lack of one for Javascript doesn&#8217;t bother me as much as it does some. However debugging by browser is a pain for simple scripts, never mind larger applications. Firefox&#8217;s Javascript Console is mighty handy here, as is the <span class="caps">DOM</span> inspector and the <a href="http://jennifermadden.com/scripts/ViewRenderedSource.html">view rendered source</a> extension. There is also the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=2f465be0-94fd-4569-b3c4-dffdf19ccd99&#38;DisplayLang=en">Windows Script Debugger</a> but I personally haven&#8217;t had much luck with that as yet.</p>
+ <p>Projects should have documentation and code should have comments. But it&#8217;s time consuming (honestly). Automatic generation of docs from source comments both makes you comment more efficiently and comprehensively <em>and</em> saves time. Everyone&#8217;s happy, at least as long as they are using the <a href="http://jsdoc.sourceforge.net/">JSDoc</a> perl application to do just that. Anyone familiar with Java will have come across JDoc and the name isn&#8217;t the only similarity. It&#8217;s now installed and ready to be used next time I write any Javascript.</p>
+ <p>Another area of interest recently has been application design, analysis and methodology, so I&#8217;d come across the idea of <a href="http://www.agiledata.org/essays/tdd.html">test driven development</a> before and experimented briefly &#8211; but not with Javascript. The idea is that you write tests that can be run automatically on your finished code before you write the code, it makes you <em>design</em> more which cant be a bad think. Anyway, Javascript has <a href="http://www.edwardh.com/jsunit/">JSUnit</a>, a nice unit testing framework. Again, installed and ready to give it a whirl.</p>
+ <p>Hopefully this brief list will prove useful to anyone else making more use of Javascript recently and looking to be more productive. Anyone else with any other useful tools do post a comment, or is their a mythical application that you just wish existed to help you with your Javascript woes?</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2006/01/17/music-and-web-standards-sitting-in-a-tree/">
         Music and Web Standards sitting in a tree
       </a>
@@ -151,41 +168,6 @@
  <p>The place is already starting to hot up and I&#8217;d guess that will only get worse (or better?) over the next few days. I&#8217;m glad to get in early this time. Last year proved useful (at least to me) in keeping up with the aftershow goings on with 150 posts from 52 feeds &#8211; but  I only got it together a week or so after the event, thanks mainly to <a href="http://kurafire.net">Faruk</a> for compiling the initial list of posts.</p>
  <p>Any bugs or suggestions let me know. Also if anyone has a good name (feed agregator is pretty mechanical) then please do tell. I&#8217;ve added a few of the requested features from previous editions and it&#8217;s now possible to quickly suggest new feeds and to search through all the posts.</p>
  <p>Anyway &#8211; Hope to see people in June. My predictions of a year of real world activity to mirror our enlightened online existence are coming to fruitition already.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2006/01/02/commented-on-follow-up/">
-        @Commented-on Follow up
-      </a>
-    </h1>
-
-    <span class="post-date">02 Jan 2006</span>
-
-    <p>Since the <a href="http://morethanseven.net/posts/commented-on">brief discussion</a> based around <a href="http://www.ben-ward.co.uk">ben&#8217;s</a> original idea for using <a href="http://del.icio.us">del.icio.us</a> to track comments you have made on other blogs I&#8217;ve been having a play.</p>
- <p>The main issue that people saw was simplicity, which I see falling under two headings:</p>
-<ul>
- <li>Ideally it should just happen. If you comment somewhere (and opt in, obviously) you browser or online service should keep a track and give you access to this data. This would require changes to existing blogs and in particular the common software like <a href="http://www.textpattern.com">textpattern</a> or <a href="http://wordpress.org">the other one</a></li>
-  <li>Saving that for later, a simple one click service which does not get in the way and achieves the same thing should be suitable.</li>
-</ul>
- <p>It&#8217;s the later that I&#8217;ve been playing with and thought I&#8217;d present here in it&#8217;s early stages. The plan is as follows:</p>
-<ul>
- <li>A <a href="http://en.wikipedia.org/wiki/Bookmarklet">bookmarklet</a> collects the data from the page (title and url) and sends it to an intermediary page, rather than del.icio.us.</li>
-  <li>The intermediary page prompts for a username and password (<span class="caps">HTTP</span> authentication) and adds the post to del.icio.us automatically.</li>
-  <li>The page is then either closed or redirected back to the page from whence the request came.</li>
-</ul>
- <h3>The bookmarklet</h3>
- <p>The bookmarklet section is simple enought modifications of the existing del.icio.us bookmarklets. See the download at the end of this post for details.</p>
- <h3>Intermediary</h3>
- <p>The intermediary page uses <span class="caps">HTTP</span> authentication to ask for a del.icio.us username and password (note that I&#8217;m not storing these at all, or for that matter at present checking if they are correct.) This needs only happen the first time you use the page if you use your browser to store the details or once per browser session otherwise.</p>
- <p>The page then makes a request to the <a href="http://del.icio.us/help/api/">del.icio.us <span class="caps">API</span></a> using the lovely <span class="caps">PHP</span> library from <a href="http://dietrich.ganx4.com/delicious/">dietrich.ganx4.com/delicious/</a></p>
- <h3>Return</h3>
- <p>On a failed request the page reports that an error has occured (I&#8217;ll expand on this with more pertinent error messages as time permits.)</p>
- <p>On success however we have two options, depending on the bookmarklet used. The default is to close the page down, with an alternative beiong to redirect back to the refering page. We do however run into a slight problem here with Firefox. Our favourite browser will only allow windows to be closed via javascript if they where opening by a script (<span class="caps">NOT</span> including our bookmarket). Internet Explorer has a similar set up where it prompts the user for an action, although a <a href="http://www.guyfromchennai.com/?p=18">simple fudge</a> get&#8217;s us around that one. At the moment therefore the close window bookmarklet is of limited usage for Firefox users.</p>
- <h3>Future</h3>
- <p>This could quite easily be expanded for use on a blog as the requests are simple <span class="caps">HTTP</span> requests with query string parameters. However the security implications of giving out your username and password would likely limit this approach. I&#8217;m going to look into the sending of bookmarks to others that ben mentioned and see if that can be used here &#8211; as hopefully that may only require you to give out your username. A service like <a href="http://www.gravatar.com/">gravatar</a> could then be used to do lookups between email addresses and del.icio.us usernames and away we go.</p>
- <p>Any thoughts, comments or suggestions welcome. And feel free to try out the bookmarklets. I&#8217;ve included a handy download below including a quick readme and the bookmarklets.</p>
- <p><a href="http://morethanseven.net/commented-on/commented-on.zip">download @Commented-on pack</a></p>
   </div>
   
 </div>

@@ -68,6 +68,33 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2007/12/08/insert-dojo-and-yui-bookmarklets/">
+        Insert Dojo and YUI bookmarklets
+      </a>
+    </h1>
+
+    <span class="post-date">08 Dec 2007</span>
+
+    <p>I&#8217;ve talked about <a href="http://morethanseven.net/posts/debug-web-pages-with-jquery-and-jash/">having fun with jQuery</a> using <a href="http://www.billyreisinger.com/jash/">Jash</a> and Firebug before after seeing <a href="http://simonwillison.net">Simon</a> throw the Google homepage around at barcamp. I&#8217;m no more a one javascript framework person than a one programming language person and recently I&#8217;ve seen cool things I want to play with in lots of the main contenders.</p>
+<p>I&#8217;ve put together a couple of bookmarklets which load <a href="http://developer.yahoo.com/yui/"><span class="caps">YUI</span></a> or <a href="http://dojotoolkit.org/">Dojo</a> from their respective content delivery networks and insert them into your current browser context. You can then play around with them in Jash or Firebug or any other Javascript console.</p>
+<p>Dojo is particularly interesting here due to it&#8217;s cunning loading mechanism for additional parts of the framework. Basically you can gain access to the entire (huge) framework simply by using the bookmarklet and then dynamically loading the rest via the command line.</p>
+<p><a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert Dojo</a></p>
+<pre><code>javascript:void(function(){
+ var%20s=document.createElement('script');
+ s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';
+ document.getElementsByTagName('head')[0].appendChild(s);
+}())</code></pre>
+<p><a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert <span class="caps">YUI</span></a></p>
+<pre><code>javascript:void(function(){
+ var%20s=document.createElement('script');
+ s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';
+ document.getElementsByTagName('head')[0].appendChild(s);
+}())</code></pre>
+<p>The code simply inserts a script element into the page which loads the relevant framework. I&#8217;ve shown the code on multiple lines for the sake of the example, but your bookmarklet should be on one line. Alternatively you can drag the <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://yui.yahooapis.com/2.4.0/build/yahoo-dom-event/yahoo-dom-event.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert <span class="caps">YUI</span></a> or <a href="javascript:void(function(){var%20s=document.createElement('script');s.src='http://o.aolcdn.com/dojo/1.0.0/dojo/dojo.xd.js';document.getElementsByTagName('head')[0].appendChild(s);}())">Insert Dojo</a> links to your bookmark bar.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2007/12/03/debug-web-pages-with-jquery-and-jash/">
         Debug web pages with Jquery and Jash
       </a>
@@ -156,27 +183,6 @@ print 'Archived ' + str(tweets) + ' of ' + username + \
 <p>A few other thinks to throw into the pot. <a href="http://www.amazon.co.uk/Beyond-Java-Bruce-Tate/dp/0596100949">Beyond Java</a> is an interesting read &#8211; summing up with a call for more fragmentation and for small nimble languages to be used where it makes sense. Oh, and I think <a href="http://tommorris.org/blog/">Tom</a> is busy learning Java as well. Mmmmm.</p>
 <p>Some good coverage around of <a href="http://ben-ward.co.uk/journal/ajaxising/">both</a> <a href="http://www.blackphoebe.com/msjen/2007/11/london-day-6-future.html#more">conferences</a> and I know my first impression was basically <em>this way lies madness</em>. But it would have been more interesting had their been a few more Java people around to argue with.</p>
 <p>Note that I&#8217;m not advocating a Google like disregard for the web here. Markup really matters, I happen to disagree with <a href="http://crockford.com/">Douglas</a> and think <span class="caps">CSS</span> rocks and I love writing Javascript. But should we just learn Java anyhow and try to subvert some of the existing tools to be more web like?</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2007/11/17/joost-developer-day/">
-        Joost Developer Day
-      </a>
-    </h1>
-
-    <span class="post-date">17 Nov 2007</span>
-
-    <p>I spent yesterday afternoon over with <a href="http://joost.com">Joost</a> in London as part of their UK developer day. The event was mainly for them to show off their new widget platform and to get some input from prospective developers about what they would like to see next. About 20 people or so came along from the <span class="caps">BBC</span>, Ebay and a couple of london agencies, with me and <a href="http://tommorris.org/">Tom</a> loitering around the edges. The afternoon was split into a series of short talks from people on the team. What follows is some of the interesting bits.</p>
-<p>Joost describe themselves as <em>The Best of the Internet and best of TV</em>, if you haven&#8217;t seen it yet it&#8217;s basically TV running on the Mozilla platform. All in all pretty impressive. <a href="http://danbri.org">Dan Brickley</a> had a different slant, seeing Joost as Web 2.0 +/- 1 <em>Built and extended with modern web technology, modern web attitude</em>. The idea of taking an unashamedly desktop piece of software and learning lessons from the web is pretty interesting.</p>
-<p>The <a href="http://dev.joost.com">Joost development site</a> is now public, although not linked to from the main site as yet. Their is some documentation of the various APIs but we can expect more in the future, including some videos from the developer days in a development channel.</p>
-<p>The main emphasis for developers at this moment was on overlays and widgets (<em>little bundles of web technology</em>) which integrate with the Joost client. We got a sneak peak (and a chat with some of the developers) of the first commercial Joost widget for Coca Cola &#8211; <a href="http://cokebubbles.com">Coke Bubbles</a> and <a href="http://www.ilrt.bris.ac.uk/~ecemm/">Libby Miller</a> and <a href="http://jibbering.com">Jim Ley</a> showed off a few of the default widgets.</p>
-<p>The most interesting bits from my point of view were to do with the technology. Joost has an interesting advantage as a platform being a single, dedicated client. No more cross browser testing here. They also keep  pretty close to trunk for Mozilla, which gives them quite a bit of CSS3 support too. You can also try out other new technologies not available in too many browsers yet: <span class="caps">SVG</span>, <span class="caps">RDF</span>, Canvas and E4X for example. This was the second time in a few days I&#8217;d seen <span class="caps">SVG</span> pushed as cool, the first being at Future of Mobile which I&#8217;ll jot down some thoughts on later.</p>
-<p>What was interesting was that the people along from the development team came from a W3C background rather than say an product development or design companies. Joost makes extensive use of Semantic Web technologies under the hood and exposes quite a bit of RDFa if you go looking for it. It also follows along with various other web-like ideas, unique URLs for channels and programmes, including the ability to pass these parameters for instance to deep link into a video at a current time. The widget platform as well is starting to align with standards work going on at the W3C &#8211; we saw a quick demo of a widget build for the Opera browser which worked seamlessly with Joost too. The development team are now working on dealing with signed widgets, local storage APIs, interwidget communication, as well as usable, clear privacy models. All pretty interesting.</p>
-<p>Some of the event was hampered by a shoddy internet connection but the general mood was relaxed and friendly and no one seemed to mind too much. The beer probably helped. I did chuckle when a senior alternative marketing guy from Coke described as <em>Insane</em> the typical agency setup though (rich guy in Notting Hill &#8594; account manager &#8594; project manager &#8594; developers).</p>
-<p>Their will be a Coke sponsored widget competition announced after the rest of the developer days (in Amsterdam and New York) with the title of <em>International widgets champion of Joost</em> up for grabs along with some cash and <em>a t-shirt</em>.</p>
-<p>My only real complaint was probably the low level mutterings about Javascript! Audience members and Joost developers alike made a couple of digs during the course of the day. Javascript rocks, people. Oh well, I&#8217;m back in London for <a href="http://vivabit.com/atmediaAjax">@media Ajax</a> where I don&#8217;t think I&#8217;ll have that problem.</p>
-<p>If any of this sounds interesting (or you just want to watch more TV) I&#8217;d recommend having a look through the <a href="http://dev.joost.com">development site</a>, jumping on the joost-dev freenode <span class="caps">IRC</span> channel, signing up to the <a href="http://groups.google.com/group/joost-dev">mailing list</a> or reading the <a href="http://blogs.joost.com/dev">development teams blog</a>.</p>
   </div>
   
 </div>

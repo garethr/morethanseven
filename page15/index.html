@@ -68,6 +68,56 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/03/20/A-continuous-deployment-example-setup/">
+        A Continuous Deployment Example Setup
+      </a>
+    </h1>
+
+    <span class="post-date">20 Mar 2011</span>
+
+    <p>One of the reasons behind getting around to building <a href="http://www.vagrantbox.es">Vagrantbox.es</a> recently was I was giving a talk to a group of startups on <a href="http://thedifferenceengine.eu/">The Difference Engine</a> programme and I wanted to have an example project to demonstrate various things. I wanted to demonstrate everything from sensible version control habbits, configuration management, basic orcestration and most importantly a solid deployment process. I&#8217;ve decided to write up what I&#8217;m doing for deployment because I think it&#8217;s pretty nice, and for all the talk about Continuous Deployment I haven&#8217;t seen many examples of code and configuration to make it happen.</p>
+<p>Most of what I&#8217;ll cover is pretty easy to map to whatever technologies your using. For this project I&#8217;d gone for Git, Django, Gunicorn, Nginx, Fabric, Mysql and Jenkins and I&#8217;m deploying to Ubuntu running on <a href="http://www.brightbox.co.uk/">Brightbox Cloud</a>. Apart from the Jenkins instance in the middle you could follow the instructions and swap things out easily.</p>
+<h2>Jenkins</h2>
+<p>First up lets install <a href="http://jenkins-ci.org/">Jenkins</a>. I setup a separate cloud instance just to run the Continuous Integration server. I find this approach easier to manage but you could always run this locally if you prefer. The Jenkins folk provide very up to date <a href="http://pkg.jenkins-ci.org/debian/">packages for Debian</a> so I chose to use those.</p>
+<h3>Plugins</h3>
+<p>Jenkins provides a huge number of optional plugins which enable various additional features. Plugins are installed via the web interface at /pluginManager. I&#8217;ve installed:</p>
+<ul>
+	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Cobertura+Plugin">Jenkins Cobertura Plugin</a></li>
+	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Jenkins <span class="caps">GIT</span> plugin</a></li>
+	<li><a href="http://wiki.jenkins-ci.org/display/JENKINS/Github+Plugin">GitHub plugin</a></li>
+	<li><a href="http://wiki.hudson-ci.org/display/HUDSON/Green+Balls">Green Balls</a></li>
+	<li><a href="http://wiki.hudson-ci.org/display/HUDSON/Violations">Hudson Violations plugin</a></li>
+</ul>
+<p>Only the Git plugin is really required for what I&#8217;m doing with deployment. Cobertura and Violations are code quality metrics tools that I use to record output from pylint and code coverage for my test suite.</p>
+<h2>The Source</h2>
+<p>My finished project was already on GitHub in a private repository. I&#8217;m using a requirements.txt file to record python dependencies so I can use pip to install them automatically and I&#8217;m using Virtualenv to sandbox this installation. I&#8217;m also using South to manage my database schema changes. I won&#8217;t go into that here as it&#8217;s pretty Python specific, Rails for instance has Active Record migrations, <span class="caps">RVM</span> and Bundler which do pretty much the same job. <span class="caps">PHP</span> has <span class="caps">PEAR</span> and some of the frameworks offer a migration tool.</p>
+<p>I then created two projects in Jenkins:</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiRywEM" alt="Jenkins dashboard"/></p>
+<h3>Project 1: Vagrantboxes</h3>
+<p>This is the main build of my master branch in Git. As well as setting up the Git repo as shown below I&#8217;ve set a polling schedule to */5 * * * * (that&#8217;s every 5 minutes) and also set Trigger builds remotely so I can have a task in my fabfile which triggers a build immediately.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRjh2gEM" alt="Git config for Jenkins"/></p>
+<p>I then have two build steps, both of which execute shell commands. The first installs any new requirements via pip:</p>
+<pre>bash -l -c "source bin/activate; pip install -r requirements.txt"</pre>
+<p>The second runs my test suite and generates the <span class="caps">XML</span> output required to show the test results in Jenkins:</p>
+<pre>bash -l -c "source bin/activate; cd vagrantboxes/configs/common; python manage.py jenkins boxes"</pre>
+<p>I&#8217;m using the rather handy <a href="https://github.com/kmmbvnr/django-jenkins">Django Jenkins</a> application for this.</p>
+<p>So far so good. This gives us a project that, when we push some changes to GitHub, will pull those changes down to the CI server and run our test suite, giving us feedback as to whether the tests pass or fail.</p>
+<p>Now for the trick, in Post-build Actions tick Build other projects and specify the name of another project that we&#8217;ll setup next. Mine is called Vagrantboxes-deploy.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRirwwEM" alt="Post build action in Jenkins"/></p>
+<h3>Project 2: Vagrantboxes-deploy</h3>
+<p>This project is triggered only when the previous project runs successfully. And all it&#8217;s going to do is run the deployment script on the project we just built. The setup for this project is very simply, it has one build step which just executes the following:</p>
+<pre>bash -l -c "cd /var/lib/jenkins/jobs/Vagrantboxes/workspace; source bin/activate; fab appserver deploy"</pre>
+<p>The specifics of the Fabric script here aren&#8217;t that important but I&#8217;m doing something not too disimilar to <a href="http://morethanseven.net/2009/07/27/fabric-django-git-apache-mod_wsgi-virtualenv-and-p.html">what I described here</a>.</p>
+<p>The reason I&#8217;ve setup a separate project for these is so I can, if I choose, trigger a deployment separately to the full build, and also so I can very easily disable deployments even if the main build is still running.</p>
+<h2>Conclusions</h2>
+<p>With this setup whenever I push code to master it triggers a build. If the test suite passes it runs the deployment script and pushes out the code to the live web servers. This suites me and this project but you might find it easier to start by pushing all successfull builds out to a staging environment. And maybe then moving on to having a new project which is only triggered manually for deploying to production.</p>
+<p><img src="http://image-host.appspot.com/i/img?id=agppbWFnZS1ob3N0cg0LEgVJbWFnZRiqwwEM" alt="project view in Jenkins"/></p>
+<p>This setup has other advantages too. The Jenkins dashboard becomes a handy tool for recording deployment events. You can easily setup emails or IM messages or Campfire posts to alert other team members whenever a deployment happens. And it really really makes sure your delployment scripts work without hand holding.</p>
+<p>This is a simple project that I&#8217;m working on on my own, but in a team environment you&#8217;d likely have a more complex branching strategy and more Jenkins projects. You might also introduce some gateways for manual testing but the starting point is the same. Jenkins makes archiving successful build artifacts relatively easy as well, this setup has a few race condition possibilities that you can fix by building artifacts from successful builds. Jenkins also supports building from different branches and having different branches trigger different projects, all handy if you want to grow this kind of setup.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/03/12/Site-for-vagrant-base-boxes/">
         Site For Vagrant Base Boxes
       </a>
@@ -219,100 +269,6 @@ sudo virtualenv --no-site-packages /usr/local/environment</pre>
 <pre>#!/bin/sh
 cp /home/stage/myapplication /var/www/apps/</pre>
 <p>The running checkinstall against that (or a more complex build file using capistrano or ant or fabric) you can create a package containing your application code and install it into the specified place.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/01/16/Why-developers-should-care-about-system-packages/">
-        Why Developers Should Care About System Packages
-      </a>
-    </h1>
-
-    <span class="post-date">16 Jan 2011</span>
-
-    <p>First a bit of background. I&#8217;m a software developer (lately in Ruby and a tiny bit of Java, previously in Python, C# and <span class="caps">PHP</span>; yes I got around a bit), but have spent enough time looking after production hardware (mainly debian, solaris and recently a bit of <span class="caps">RHEL</span>) to have a feel for sysadmin work. I even have friends who are systems administrators. I mainly use a shiny apple laptop for my development work, but I actually execute all the code on Linux virtual machines. The aim of this post is to bridge a divide, not start a flame war about specific tools.</p>
-<p>I&#8217;m writing this partly to address <a href="http://twitter.com/CoffeeScript/status/18867889742282752">a tweet I made</a> that in hindsight needed more than 140 characters. Actually a number of my recent tweets have been on the same theme so I should be more helpful. What I&#8217;m seeing recently is an increase in the ways I&#8217;m being asked to install software and for me at least that&#8217;s annoying.</p>
-<ol>
-	<li>Several projects will ask you to do something like <em>curl http://bit.ly/installsh | sh</em> which downloads a shell script and executes it.</li>
-	<li>Some will insist I have git installed</li>
-	<li>A new framework might come with it&#8217;s own package manager</li>
-</ol>
-<p>I&#8217;m a polyglot programmer (so I shouldn&#8217;t care about #3) that uses git for everything (scratch #2) and who writes little bash scripts to make my life easier (exactly like #1). So I understand exactly how and why these solutions appear fine. And for certain circumstances they are, in particular for local development on a machine owned and maintained by one person. But on a production machine and even on my clean and tidy virtual machines none of these cut it for me in most cases.</p>
-<p>Most developers I know have only a passing awareness of packaging so I&#8217;m going to have an aside to introduce some cool tricks. I think this is one place where sysadmins go wrong, they assume developers understand their job and that they know the various tools intimately.</p>
-<h2>System Package Tips</h2>
-<p>I&#8217;m going to show examples using the debian tools so these apply to debian and ubuntu distros. <span class="caps">RPM</span> and the Yum tool have similar commands too, I just happen to know debs better.</p>
-<h3>List all installed packages</h3>
-<p>This one is a bit obvious, it&#8217;s probably going to be available in anyones home grown package management system. But if you&#8217;re installing software via hand using git or a shell script then you can&#8217;t even ask the machine what is installed.</p>
-<pre>dpkg -l</pre>
-<h3>List files from package</h3>
-<p>I love this one. Have you ever installed a package and wondered where the config files are? You can soft of guess based on your understanding of the OS file system layout but this command is handy.</p>
-<pre>dpkg -L lynx
-/.
-/usr
-/usr/share
-/usr/share/doc
-/usr/share/doc/lynx
-/usr/share/doc/lynx/copyright
-/usr/share/doc/lynx/changelog.gz
-/usr/share/doc/lynx/changelog.Debian.gz</pre>
-<h3>Where did that file come from?</h3>
-<p>Have a file on disk that you&#8217;re not sure where it came from? Ask the system package manager. The more everything is installed from packages the more useful this becomes.</p>
-<pre>dpkg -S /bin/netstat</pre>
-<h3>Unmet dependencies</h3>
-<p>At the heart of a good package system is the ability to map dependencies and to have unmet dependencies installed as needed. Having tools to query that tree is useful in various places.</p>
-<pre>apt-cache unmet</pre>
-<p>Will give you output a little like the followning:</p>
-<pre>Package libdataobjects-sqlite3-ruby1.9.1 version 0.10.1.1-1 has an unmet dep:
- Depends: libdataobjects-ruby1.9</pre>
-<h3>What needs upgrading?</h3>
-<p>The apticron tool can alert you to packages that are now out of date. It&#8217;s easy to set it up to email you each day for each host and tell you about packages that need upgrading. Remember that the reason one of these might have an update could be a documented security bug and it becomes even more important to know about it quickly.</p>
-<pre>apticron report [Fri, 19 Jan 2007 18:42:01 -0800]
-========================================================================
-
-apticron has detected that some packages need upgrading on: 
-
-	faustus.example.com
-	[ 1.2.3.4 ]
-
-The following packages are currently pending an upgrade:
-
-	xfree86-common 4.3.0.dfsg.1-14sarge3
-	libice6 4.3.0.dfsg.1-14sarge3
-	libsm6 4.3.0.dfsg.1-14sarge3
-	xlibs-data 4.3.0.dfsg.1-14sarge3
-	libx11-6 4.3.0.dfsg.1-14sarge3
-	libxext6 4.3.0.dfsg.1-14sarge3
-	libxpm4 4.3.0.dfsg.1-14sarge3</pre>
-<p>I&#8217;m really not an expert on using debs but even I find these tools useful, and you don&#8217;t get the same capabilities when you use anything else.</p>
-<h2>Good and bad examples</h2>
-<p>Still here? Good. I&#8217;m going to pick on a few pieces of software to give examples of what I mean. All of this software I actively use and think is brilliant earth shattering stuff, I&#8217;m not dissing the software so if any fanboys reading can kindly not attack me please, I&#8217;m one of you.</p>
-<h3>RabbitMQ (Erlang)</h3>
-<p>The nice folk building the <a href="http://www.rabbitmq.com/">RabbitMQ</a> message queue provide downloads of the <a href="http://www.rabbitmq.com/server.html">source code as well as various system packages</a>. Knowing that some people will want to use the latest and greatest version of the application they also host the latest deboan packages in their <a href="http://www.rabbitmq.com/debian.html">own package repo with details on their site</a>.</p>
-<h3>Chef (Ruby)</h3>
-<p>The <a href="http://wiki.opscode.com/display/chef/Home">Chef configuration management system</a> also provides multiple methods to install their software. For people already using, happy and familiar with it they provide everything as a ruby gem. If you prefer <a href="http://wiki.opscode.com/display/chef/Installation">system packages they have those too</a>. They also provide their <a href="http://wiki.opscode.com/display/chef/Package+Installation+on+Debian+and+Ubuntu">own deb repo</a> for people to grab the latest software.</p>
-<h3>Cloudera Hadoop (Java)</h3>
-<p>Before I found the Cloudera Hadoop packages I remember having great fun <a href="http://morethanseven.net/2009/10/18/problems-installing-hadoop-and-dumbo-ubuntu.html">manually applying patches</a> to get everything working. Cloudera do exactly the same as the above two developers, namely <a href="https://docs.cloudera.com/display/DOC/Hadoop+Installation+%28CDH3%29">host their owns debs</a>.</p>
-<h3><span class="caps">RVM</span></h3>
-<p><a href="http://rvm.beginrescueend.com/"><span class="caps">RVM</span></a> is a fantastic way of managing multiple ruby versions and multiple isolated sets of gems. But it&#8217;s also probably the first place I saw the install from remote shell script approach.</p>
-<pre>bash &lt; &lt;( curl http://rvm.beginrescueend.com/releases/rvm-install-head )</pre>
-<p>I like to do the same things on my development machine as I do in production, and the main problem I have with <span class="caps">RVM</span> is that it&#8217;s so useful I want it everywhere. I&#8217;d prefer if the system wide install had some sort of option to install the rubies from packages rather than compile everything on the machine (meaning you need a full set of compile tools installed everywhere), or that we can automate the creation of the packages using rvm.</p>
-<h3>Solr</h3>
-<p>You&#8217;ll probably find packages for the <a href="http://lucene.apache.org/solr/">Solr search server</a> in recent distros. It&#8217;s hugely popular predominantly because it&#8217;s a fantasic piece of software. But everytime I have a look at the system packages I can&#8217;t quite get them to work, or they are out of date. I now know my way around Solr setup relatively well and just end up creating my own packages and I&#8217;ve spoken to other folk who have done the same. The <a href="http://lucene.apache.org/solr/tutorial.html">Solr documentation</a> recommends downloading a zip file to get started and I can&#8217;t see any mention of the packages. My guess is the packages aren&#8217;t maintained as part of the core development which is a quick way to get them out of sync with current progress.</p>
-<h2>Enough beating up on my fellow developers</h2>
-<p>System packages aren&#8217;t blameless, I think the culture often seen in debian of splitting the developer from the package maintainer is part of the problem. This manifests in various ways, all negative:</p>
-<ul>
-	<li>Out of date packages. The biggest complaint from developers about system packages is nearly always that they are out of date. Maintainers should more readily release packaging scripts (ideally back to the project) so people can easily roll their own.</li>
-	<li>The documentation around packaging is either fantastic or terrible, depending on what you want to do and who you are. It turns out making your own packages (using something like <a href="http://checkinstall.izto.org/">checkinstall</a>) is actually quite easy.</li>
-	<li>The official debian docs I think focus on the role of package maintainer, rather than trying to push that downstream to the developers. That doesn&#8217;t make them bad, it just means we need documentation aimed at a developer just getting started with packaging their software.</li>
-	<li>Developers hosting their own package repository and asking people to point at that is also quite easy. The projects I praised above all do it nicely. But simple attractive documentation is hard to come by.</li>
-</ul>
-<h2>What to do</h2>
-<p>First up lets talk more about the distribution and installation of software. And lets do that in the spirit of making things better for everyone involved. The ongoing spat between Ruby and Debian people is just counterproductive. <a href="http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/">This</a> would be a good article if it didn&#8217;t lead with:</p>
-<blockquote>
-<p>This system (apt-get) is out-dated and leads to major headaches. Avoid it for Ruby-related packages. We do Ruby, we know what’s best. Trust us.</p>
-</blockquote>
-<p>We need better documentation aimed at developers. I&#8217;m going to try and write some brief tutorials soon (otherwise I&#8217;d feel like this rant was just me complaining) but I&#8217;m not an expert. I&#8217;ll hapily help <a href="http://devopsweekly.com">promote</a> or collate good material as well. Maybe it already exists and I just can&#8217;t find it?</p>
-<p>I&#8217;m a git user and a big <a href="http://github.com">GitHub</a> fan, but one of the features of Launchpad I really like is the <a href="https://help.launchpad.net/Packaging/PPA">Personal Package Archive</a>. This lets you upload source code and have it automatically built into a package. This is specific to Ubuntu but that&#8217;s understandable given Launchpad is also operated by Canonical. What I&#8217;d like is the same feature in GitHub but that allowed building debs and RPMs for different architectures. Alternatively a webhook based third party that could do the same would be awesome (anyone fancy building one? I might pitch in). The only real advantage of it being GitHub would be it would make packages immediately cool, which hopefully you all now realise that they are.</p>
   </div>
   
 </div>
