@@ -4,7 +4,7 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2016-11-23T14:36:54+00:00</updated>
+ <updated>2016-11-23T18:30:31+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
@@ -65,7 +65,7 @@ niche audience.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;OpenShift from Red Hat&lt;/li&gt;
 &lt;li&gt;Tectonic from CoreOS&lt;/li&gt;
-&lt;li&gt;Kismatic from Aprenda&lt;/li&gt;
+&lt;li&gt;Kismatic from Apprenda&lt;/li&gt;
 &lt;li&gt;Rancher&lt;/li&gt;
 &lt;li&gt;Canonical Distribution of Kubernetes&lt;/li&gt;
 &lt;li&gt;GKE from Google&lt;/li&gt;
@@ -75,7 +75,7 @@ niche audience.&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Note that Canonical are already using the term &lt;em&gt;distribution&lt;/em&gt; in the
-name. I&amp;#39;ve seen it used in passing in CoreOS, OpenShift and Aprenda
+name. I&amp;#39;ve seen it used in passing in CoreOS, OpenShift and Apprenda
 press materials too.&lt;/p&gt;
 
 &lt;h2&gt;What can we expect from Kubernetes distributions?&lt;/h2&gt;
@@ -143,7 +143,7 @@ provider with the unique selling point?&lt;/p&gt;
 
 &lt;p&gt;An observation at the moment is that all the current Kubernetes
 distributions I&amp;#39;m aware of are vendor-owned. Whether Open Source or not,
-they are driven by a single vendor (CoreOS, Red Hat, Aprenda, etc.)
+they are driven by a single vendor (CoreOS, Red Hat, Apprenda, etc.)
 It&amp;#39;s interesting to see whether, in the current climate, we see a
 genuinely free and open source Kubernetes distribution emerge, similar
 to the role Debian plays in the Linux distribution world.&lt;/p&gt;
