@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      The coming of the Kubernetes distributions &middot; More than seven
+    
+  </title>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-435455-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+   <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=morethansevennet" id="_carbonads_js"></script>
+
+   <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          More than seven
+        </a>
+      </h1>
+      <p class="lead">Writing about code. Occasional other topics. Made by <a href="https://twitter.com/garethr">@garethr</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">The coming of the Kubernetes distributions</h1>
+  <span class="post-date">23 Nov 2016</span>
+  <p>Very few people today start using Linux by downloading the linux kernel
+and starting from scratch. Most people start with a Linux distribution;
+for instance Debian, Ubuntu or CentOS. These distributions provide some
+opinions, some central infrastructure, a brand, strong versioning for
+the entire ecosystem and a bunch of other things. I posit that we&#39;ll see
+the same pattern emerge with Kubernetes.</p>
+
+<h2>What even is Kubernetes?</h2>
+
+<p>I&#39;ve seen Kubernetes described as all of the following:</p>
+
+<ul>
+<li>An operating system for your datacenter</li>
+<li>The distributed systems toolkit</li>
+<li>The Linux kernel for distributed systems</li>
+</ul>
+
+<p>I think all of these descriptions point to the developers intent that
+Kubernetes is something to build upon, rather than a simple out-of-the-box
+experience. It&#39;s predominantly about building agreement on the
+primitives/APIs of distributed systems.</p>
+
+<h2>A name for a thing</h2>
+
+<p>I&#39;ve not seen much discussion of this in general yet, I think because
+it&#39;s early days and many of the people looking at Kubernetes today are
+either developers or early adopter types. These people have been
+&quot;downloading the kernel and starting from scratch&quot;, even until recently
+most likely running from source downloaded directly from GitHub. If the
+Kubernetes ecosystem is to grow then that&#39;s not how more mainstream IT
+will adopt Kubernetes.</p>
+
+<p>The reason for discussing this now is that I think a name is useful.
+That way we can talk about Kubernetes (singular, the software) separate
+from distrubutions of Kubernetes (many of them, from different vendors
+and communities). I&#39;d be happy to see a different name, but I think
+distribution probably fits best.</p>
+
+<h2>Any evidence?</h2>
+
+<p>Absolutely. A range of software vendors are providing what I&#39;m calling
+Kubernetes distributions. Here is a sample, I&#39;m sure there are and will
+be more. I&#39;m also sure over time some will disappear or maintain only a
+niche audience.</p>
+
+<ul>
+<li>OpenShift from Red Hat</li>
+<li>Tectonic from CoreOS</li>
+<li>Kismatic from Aprenda</li>
+<li>Rancher</li>
+<li>Canonical Distribution of Kubernetes</li>
+<li>GKE from Google</li>
+<li>Azure Container Service from Microsoft</li>
+<li>Photon Platform from VMware</li>
+<li>Navops from Univa</li>
+</ul>
+
+<p>Note that Canonical are already using the term <em>distribution</em> in the
+name. I&#39;ve seen it used in passing in CoreOS, OpenShift and Aprenda
+press materials too.</p>
+
+<h2>What can we expect from Kubernetes distributions?</h2>
+
+<p>Running with the analogy that Kubernetes is &quot;an operating system for
+your datacenter&quot; and that we&#39;ll have a range of competing Kubernetes
+distributions, what else can we expect over the next few years?</p>
+
+<h3>Package repostitories (aka. app stores)</h3>
+
+<p>One of the things provided by the traditional Linux distributions has
+been a central package repository. Most of the packages you&#39;re
+installing from <code>apt</code> or <code>yum</code> are coming from that currated set of
+available packages. Not to mention community efforts like EPEL. We
+already have two package concepts within the Kubernetes ecosystem -
+container images (often from Docker Hub today, or from internal
+repositories) and Charts, part of the Helm package management tool
+(now a CNCF project).</p>
+
+<p>In the short term expect the shared public Charts repository and Docker
+Hub to dominate. But over time different vendors will launch there own
+repositories. Partly this will be about building a trusted ecosystem,
+partly about limiting permutations for support and testing, and partly
+about control. The prize here is to be &quot;the enterprise app store&quot; and
+no vendor in this space isn&#39;t going to at least try to own that as part
+of their platform.</p>
+
+<h3>Kubernetes standards and compliance</h3>
+
+<p>In an environment with many distributors of core software, it&#39;s
+common for people to emphasise portability. As vendors extend their
+distribution (to provide higher level, but potentially proprietary
+features) this can become muddier. Some level of certification is
+often the answer. See CloudFoundry or OpenStack for recent examples.
+Kubernetes is already part of the CNCF, part of the Linux Foundation.
+I&#39;d expect to see the works standards and certification eventiually
+float around, but my guess is not in the short term.</p>
+
+<h3>A fight over who is the most open</h3>
+
+<p>Much of the container conversation recently has centered around a
+<em>weaponisation</em> of <em>open</em>. I think as the different distributions try and
+take the community with them at the same time as trying to scale sales this
+will continue. This will be an irritation and is probably best avoided.</p>
+
+<h3>Pressure for AWS to offer Kubernetes as a service</h3>
+
+<p>I would presume AWS has a very good idea of how many people are actually
+using Kubernetes on it&#39;s platform. I think as that grows, and as other
+vendors efforts mature, they will come under pressure to offer the
+Kubernetes API as a service. I&#39;m still split on whether that will
+actually happen but that&#39;s a longer blog post about economics.</p>
+
+<h3>Differentiating features</h3>
+
+<p>Ultimately vendors will try and differentiate themselves in this new
+market. To begin with the majority of business will be targetting the
+container-curious and mainly talking up the benefits of containers and
+Kubernetes. But some potentialy customers are going to insist of
+comparing Kubernetes distributions and winning there is going to be about
+clear differentiation. Do you want to be the budget offering or the
+provider with the unique selling point?</p>
+
+<h2>Interesting questions</h2>
+
+<p>An observation at the moment is that all the current Kubernetes
+distributions I&#39;m aware of are vendor-owned. Whether Open Source or not,
+they are driven by a single vendor (CoreOS, Red Hat, Aprenda, etc.)
+It&#39;s interesting to see whether, in the current climate, we see a
+genuinely free and open source Kubernetes distribution emerge, similar
+to the role Debian plays in the Linux distribution world.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/11/21/the-end-of-the-general-purpose-operating-system-unikernels/">
+            Unikernels and The End of the General Purpose Operating System
+            <small>21 Nov 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/11/05/the-end-of-the-general-purpose-operating-system-as-it-happens/">
+            The End of the General Purpose Operating System
+            <small>05 Nov 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/10/07/infrakit-hello-world/">
+            InfraKit Hello World
+            <small>07 Oct 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

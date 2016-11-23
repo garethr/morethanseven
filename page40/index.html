@@ -68,6 +68,24 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/10/11/google-app-engine-pyunit-test-runner/">
+        Google App Engine PyUnit Test Runner
+      </a>
+    </h1>
+
+    <span class="post-date">11 Oct 2008</span>
+
+    <p>I&#8217;m starting to play around with using <a href="http://code.google.com/appengine/">App Engine</a> again for small projects. It&#8217;s great for simple, somewhat throwaway apps as long as you don&#8217;t need anything too fancy. Actually all I want really is long running processes but I digress.</p>
+<p>I&#8217;m increasingly writing test suites as well for even small projects and was missing the convenience of the Django test runner for running them against App Engine code. So I&#8217;ve spent a little time writing a simple test running script to use for non-Django Python projects. I&#8217;ve posted it over on the <a href="http://appengine-cookbook.appspot.com/recipe/app-engine-test-runner/">App Engine Cookbook</a> for anyone else who might want to do the same.</p>
+<p>I ended up writing something myself as I couldn&#8217;t find anything else which quite met my needs, so it&#8217;s the typical programmers itch code and as such is provided as <em>works for me</em> software. The other approaches out their didn&#8217;t quite meet my needs but might be useful to know about if you want to start testing your apps.</p>
+<ul>
+	<li><a href="http://code.google.com/p/nose-gae/">Nose <span class="caps">GAE</span></a> uses the nose testing framework which I&#8217;m less familiar with.</li>
+	<li><a href="http://code.google.com/p/gaeunit/"><span class="caps">GAE</span> Unit</a> uses PyUnit but presents it&#8217;s results in a browser rather than on the command line.</li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/10/05/jabber-erlang-debugging-things-im-playing-with-at/">
         Jabber, Erlang, Debugging. Things I'm playing with at the moment
       </a>
@@ -220,18 +238,6 @@ admin.site.register(Article, ArticleAdmin)</pre>
 	</tr>
 </table>
 <p>As you can see you can customise the default admin views a great deal even without creating your own templates and defining custom admin views. The best part is still that as well as being useful for demonstrations and prototypes these interfaces are useful on a live production site. Quite an achievement I think.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/09/16/openmicroblogging/">
-        openmicroblogging
-      </a>
-    </h1>
-
-    <span class="post-date">16 Sep 2008</span>
-
-    <p><a href="http://openmicroblogging.org/">Open Microblogging</a> looks pretty interesting. An open standard built upon other <a href="http://oauth.net/">open standards</a> for the purpose of passing information between micro blogging services like Twitter or Facebook.</p>
   </div>
   
 </div>

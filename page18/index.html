@@ -68,6 +68,81 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2010/11/04/Why-you-should-be-using-virtualisation/">
+        Why You Should Be Using Virtualisation
+      </a>
+    </h1>
+
+    <span class="post-date">04 Nov 2010</span>
+
+    <p>My main development machine for a while has been an apple laptop. From looking around at conferences, offices and usergroups I know I&#8217;m not alone. But I don&#8217;t really <em>run</em> code on my mac very often, certainly not for work. I might edit the code on my mac but I execute it running in a virtualised Linux environment matching (as close as possible) the production environment it&#8217;s going to end up in. This blog post is an attempt to explain why this is a good idea to the majority of people who develop on a mac (or a windows machine) and deploy to something else. This isn&#8217;t language specific either. You might be working on small <span class="caps">PHP</span> web sites or huge Python applications, you&#8217;ll still one day run into the same issues.</p>
+<h2>Why is virtualisation a good idea?</h2>
+<p>Bugs happen, but catching them early, way before they even hit your shared source code repository makes them much less of an issue. Catching bugs only after a live release, when they affect customers and cost someone money is bad. And if your release is a long period of time after the work was done then fixing them is harder to boot. These are just some of the reasons we&#8217;re all fond of unit testing and continuous integration.</p>
+<p>But if you&#8217;re running those tests against code executing on different hardware, on a different operating system, with different low level libraries or a different web server version or a different database server then you are not going to catch all the problems. If you take this to an extreme then you can only get rid of all of these problems by giving each developer a full production stack of their very own. This is obviously impossibly expensive for anything past the most trivial setup. But eliminating even some of these issues makes it more likely you&#8217;ll catch bugs early and less likely you&#8217;ll have a bug on your hands that you can&#8217;t recreate locally. So we&#8217;ll aim for production like rather than a 100% copy.</p>
+<p>Here&#8217;s a real example, a case insensitive file system. Grab a terminal prompt on your mac and type the following in an empty directory. Then do the same on a typical linux machine. All we&#8217;re doing is using touch to create a file.</p>
+<pre>touch Test
+touch test
+ls
+</pre>
+<p>On you&#8217;re mac you&#8217;ll probably see:</p>
+<pre>Test</pre>
+<p>On your linux box you&#8217;re more likely to get:</p>
+<pre>Test
+test</pre>
+<p>What? The mac treated Test and test as meaning the same thing. It wont let you have a file called test and one called Test in the same place. It&#8217;s case insensitive. But the linux machine didn&#8217;t have this problem. Now imagine we&#8217;re not dealing with empty files called test but either files you&#8217;re running code is creating at run time (a file cache maybe or a user uploaded file) or even more interestingly your source code files. Lets say you have git on a linux box in the corner of the office and someone checks in two files from a linux machine called Pages_controller.rb and pages_controller.rb. What happens when you get these to you&#8217;re mac? I haven&#8217;t actually tried this but it&#8217;s not going to end well. And imagine debugging this sort of issue? If you think this is all hypothetical I know about this little quirk exactly because I saw someone trying to fix a bug related to it.</p>
+<p>What if the bug was because you had one version of lib_xml on your local development machine and a different one on production. Up to that point you might not even know what libxml was or how it got on your shiny apple laptop.</p>
+<p>How many people can genuinely say they have never had a bug they could recreate on live and not on their development machine? Same code, different behaviour. Load and data often play a part in bugs like this as well but these can be isolated and tests created in at least some cases. Being pragmatic what we&#8217;re aiming for isn&#8217;t to eliminate all differences, it&#8217;s to get rid of those that are easy to eliminate.</p>
+<h2>How can I do this?</h2>
+<p>Virtualisation tools used to be cumbersome and expensive and generally not aimed at consumers. I&#8217;ve used both VMWare Fusion and VirtualBox on my mac and even compared to a few years ago these tools are increasingly easy to use. And VirtualBox is free and open source too. On top of that we now have tools like vagrant which I&#8217;ll give a quick example of here.</p>
+<p><a href="http://vagrantup.com">Vagrant</a> for those that haven&#8217;t come across it yet describes itself thus:</p>
+<blockquote>
+<p>Vagrant uses Oracle’s VirtualBox to build configurable, lightweight, and portable virtual machines dynamically</p>
+</blockquote>
+<p>What it really is is a tool for quickly and painlessly building virtual machines based on sensible default configurations, and then providing programatic hooks for more advanced configuration. For instance you&#8217;ll have a configuration file to describe which ports you want forwarded and you can use Chef to install packages when the VM first boots. Once you have it installed it&#8217;s as easy as this to use</p>
+<pre>vagrant box add lucid32 http://files.vagrantup.com/lucid32.box
+vagrant init lucid32
+vagrant up</pre>
+<p>The first line downloads a 32bit Ubuntu disk image but you&#8217;ll only need to do that once. You&#8217;ll find lots of images for different distros too. The next two lines create and then boot a new headless virtual machine. That&#8217;s it.</p>
+<pre>vagrant ssh</pre>
+<p>Will let you jump straight into a ssh session with the new machine, for an idea of what else it can do here&#8217;s the help output:</p>
+<pre>Tasks:
+  vagrant box                        # Commands to manage system boxes
+  vagrant destroy                    # Destroy the environment, deleting the create...
+  vagrant halt                       # Halt the running VMs in the environment
+  vagrant help [TASK]                # Describe available tasks or one specific task
+  vagrant init [box_name] [box_url]  # Initializes the current folder for Vagrant u...
+  vagrant package                    # Package a Vagrant environment for distribution
+  vagrant provision                  # Rerun the provisioning scripts on a running VM
+  vagrant reload                     # Reload the environment, halting it then rest...
+  vagrant resume                     # Resume a suspended Vagrant environment.
+  vagrant ssh                        # SSH into the currently running Vagrant envir...
+  vagrant ssh_config                 # outputs .ssh/config valid syntax for connect...
+  vagrant status                     # Shows the status of the current Vagrant envi...
+  vagrant suspend                    # Suspend a running Vagrant environment.
+  vagrant up                         # Creates the Vagrant environment
+  vagrant version                    # Prints the Vagrant version information</pre>
+<p>I&#8217;ll leave it their as this post is more of a rant than a tutorial, but I might write more about using vagrant later. But in the meantime read the web site for a pretty simple walkthrough. And don&#8217;t be put off by the fact it&#8217;s written in Ruby or that the example shows a Rails app, this is a great tool whatever language you&#8217;re going to be using on the virtual machine.</p>
+<h2>Arguments against</h2>
+<p>I see too few developers doing this for it to just be about a lack of awareness. Lots of developers not doing this might be running local virtual machines for cross browser testing for instance. Here&#8217;s a few complaints I&#8217;ve heard and what I think the answer is.</p>
+<h3>Speed</h3>
+<p>If something is slow and you don&#8217;t have as much <span class="caps">RAM</span> as you can get into your machine then do that before complaining about anything. Running a few extra operating systems inside your main operating system is obviously going to be intensive so don&#8217;t scrimp on your tools. Also the defaults when setting up new virtual machines in VirtualBox or VMWare Fusion at least are quite minimal. Try increasing the ammount of <span class="caps">RAM</span> you let them use or give them access to more processes. I can genuinely say I&#8217;ve had a problem with this once and the real solution was changing the code, not throwing away all the advantages of virtualisation. If you&#8217;re doing some crazy real time video processing thing then your mileage will vary, but then you probably want a faster machine anyway.</p>
+<h3>Lower level that you&#8217;re used to</h3>
+<blockquote>
+<p>As a <span class="caps">PHP</span>/Ruby/Python developer why should I have to care about Apache? I just write code!</p>
+</blockquote>
+<p>This argument just bugs me, but I do know part of that is me. I need to know how all the bits work and fit together and I accept not everyone does, or indeed needs to understand everything. But someone on your team probably wants to know this stuff and importantly be able to tell others how they should do things. It&#8217;s pretty common for developers to setup a development environment for a pure frontend developer or a designer so they can make changes and commit <span class="caps">CSS</span> or new templates. This is no different. Most designers don&#8217;t need to know about the software environment in detail, it&#8217;s easier for them to defer to a domain expert. If a developer just wants to write code then they too should defer to someone who does know about the lower level when it comes to their development environment too.</p>
+<h3>Something else to setup</h3>
+<p>This argument has some merit. We&#8217;re all busy and downing tools to setup something for you and your team is time consuming. And I think until pretty recently the time taken and the knowledge needed was a genuine barrier. Personally I&#8217;ve tended to have few problems, but then I&#8217;m familiar enough with Linux administration to avoid some common pitfalls. But problems with setting up port forwarding or shared folders can be pretty irritating when you want to work on a pressing bug or shiny new feature. But with tools like vagrant providing a simple interface to do this I think this is hopefully a thing of the past.</p>
+<h3>Developers workstations should be personal</h3>
+<p>I agree up to a point here. Discussions of standardising individual developer tools turn into holy flame wars over whether everyone should use some <span class="caps">IDE</span>, Vim or Emacs (answer: Vim). This is pointless. File managers, utilities, test editors, terminal styles, host operating system. All of these and more should be up to the individual developers. But in the same way you generally don&#8217;t allow individual developers to use a new language no one knows without at least some discussion, why would this be different for the web server or operating system on which you&#8217;ll be running that code in production. Most of the time it&#8217;s not that developers make a consious decision to use a different version either. It&#8217;s more likely that they will take the path of least resistance and follow a tutorial or just use a package manager. It&#8217;s more likely if you ask the question &#8220;what specific version of Apache are you using on your development machine&#8221; they won&#8217;t know the answer.</p>
+<h2>Conclusions</h2>
+<p>I&#8217;ve not even gone into some of the other advantages of virtualisation here. Being able to snapshot your environment at any point and roll back an entire virtual machine like you do your code is hugely handy. As is the ability to create virtual machines that you can share with other members of your team. No more do new employees have to spend the first week installing dependencies and just getting code running.</p>
+<p>I&#8217;m certainly not the only person doing this and it&#8217;s not a new idea. But it&#8217;s never been easier or cheaper. And with an increasing move towards virtualisation or cloud computing production environments it&#8217;s even easier to share good practices with your friendly systems administrators.</p>
+<p>I&#8217;ve renabled comments on this blog after something of a break and I&#8217;d love to hear what people think, positive and negative.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2010/10/30/Chef-hello-world/">
         Chef Hello World
       </a>
@@ -146,38 +221,6 @@
     <p>I&#8217;m getting married rather soon so time has been somewhat short (in a good way) for just hacking on stuff, but I&#8217;ve finally found a little bit of time to play with something I&#8217;ve been mulling over for a while. Namely a continuous deployment workflow using the integrity continous integration server.</p>
 <p>I&#8217;m hoping to have an incredibly simple but fully operation example available at some point &#8211; mainly to act as a good discussion point. For now here&#8217;s my current pre-receive hook.</p>
 <script src="http://gist.github.com/471711.js?file=pre-receive"></script>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2010/06/29/Python-what-to-use/">
-        Python: What To Use?
-      </a>
-    </h1>
-
-    <span class="post-date">29 Jun 2010</span>
-
-    <p>My friend <a href="http://jamieonsoftware.com">Jamie Rumbelow</a> has started a new project and decided to use Python. He asked a great question over on <a href="http://stackoverflow.com/questions/3143115/architecting-from-scratch-in-python-what-to-use">Stack Overflow</a> which basically came down to <em>what should I use for my first proper Python web application project</em>. After a quick prompting on twitter I decided to have a go. I&#8217;ve cross posted my anwser below more because it took as long as a typical blog post to write.</p>
-<h2>Frameworks</h2>
-<p>OK, so I&#8217;m a little biased here as I currently make extensive use of Django and organise the Django User Group in London so bear that in mind when reading the following.</p>
-<p>Start with Django because it&#8217;s a great gateway drug. Lots of documentation and literature, a very active community of people to talk to and lots of example code around the web.</p>
-<p>That&#8217;s a completely non-technical reason. Pylons is probably purer in terms of Python philosophy (being much more a collection of discrete bits and pieces) but lots of the technical stuff is personal preference, at least until you get into Python more. Compare the very active Django tag on Stack Overflow with that of pylons or turbogears though and I&#8217;d argue getting started is simply easier with Django irrespective of anything to do with code.</p>
-<p>Personally I default to Django, but find that an increasing amount of time I actually opt for writing using simpler micro frameworks (think Sinatra rather than Rails). Lots of things to choose from (<a href="http://fewagainstmany.com/blog/python-micro-frameworks-are-all-the-rage">good list here</a>). I tend to use <span class="caps">MNML</span> (because I wrote parts of it and it&#8217;s tiny) but others are actively developed. I tend to do this for small, stupid web services which are then strung together with a Django project in the middle serving people.</p>
-<p>Worth noting here is appengine. You have to work within it&#8217;s limitations and it&#8217;s not designed for everything but it&#8217;s a great way to just play with Python and get something up and working quickly. It makes a great testbed for learning and experimentation.</p>
-<h2>Mongo/<span class="caps">ORM</span></h2>
-<p>On the MongoDB front you&#8217;ll likely want to look at the <a href="http://api.mongodb.org/python/">basic python mongo library</a> first to see if it has everything you need. If you really do want something a little more <span class="caps">ORM</span> like then <a href="http://hmarr.com/mongoengine/">mongoengine</a> might be what you&#8217;re looking for. A bunch of folks are also working on making Django specifically integrate more seamlessly with nosql backends. Some of that is for future Django releases, but <a href="http://www.allbuttonspressed.com/projects/django-nonrel">django-norel</a> has code now.</p>
-<p>For relational data <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> is good if you want something standalone. Django&#8217;s <span class="caps">ORM</span> is also excellent if you&#8217;re using Django.</p>
-<h2><span class="caps">API</span></h2>
-<p>The most official Oauth library is <a href="http://github.com/simplegeo/python-oauth2">python-oauth2</a>, which handily has a Django example as part of it&#8217;s docs.</p>
-<p><a href="http://bitbucket.org/jespern/django-piston/wiki/Home">Piston</a> is a Django app which provides lots of tools for building APIs. It has the advantage of being pretty active and well maintained and in production all over the place. Other projects exist too, including <a href="http://zacharyvoase.github.com/dagny/">Dagny</a> which is an early attempt to create something akin to RESTful resources in Rails.</p>
-<p>In reality any Python framework (or even just raw <span class="caps">WSGI</span> code) should be reasonably good for this sort of task.</p>
-<h2>Testing</h2>
-<p>Python has unittest as part of it&#8217;s standard library, and unittest2 is in python 2.7 (but <a href="http://pypi.python.org/pypi/unittest2/0.1.4">backported to previous versions too</a>). Some people also like <a href="http://code.google.com/p/python-nose/">Nose</a>, which is an alternative test runner with some additional features. <a href="http://twill.idyll.org/">Twill</a> is also nice, it&#8217;s a &#8220;a simple scripting language for Web browsing&#8221;, so handy for some functional testing. <a href="http://github.com/rlisagor/freshen">Freshen</a> is a port of cucumber to Python. I haven&#8217;t yet gotten round to using this in anger, but a quick look now suggests it&#8217;s much better than when I last looked.</p>
-<p>I actually also use Ruby for high level testing of Python apps and apis because I love the combination of celerity and cucumber. But I&#8217;m weird and get funny looks from other Python people for this.</p>
-<h2>Message Queues</h2>
-<p>For a message queue, whatever language I&#8217;m using, I now always use RabbitMQ. I&#8217;ve had some success with stompserver in the past but Rabbit is awesome. Don&#8217;t worry that it&#8217;s not itself written in Python, neither is PostgresSQL, Nginx or MongoDB &#8211; all for good reason. What you care about are the libraries available. What you&#8217;re looking for here is <a href="http://barryp.org/software/py-amqplib/">py-amqplib</a> which is a low level library for talking amqp (the protocol for talking to rabbit as well as other message queues). I&#8217;ve also used <a href="http://github.com/ask/carrot/">Carrot</a>, which is easier to get started with and provides a nicer <span class="caps">API</span>. Think bunny in Ruby if you&#8217;re familiar with that.</p>
-<h2>Environment</h2>
-<p>Whatever bits and pieces you decide to use from the Python ecosystem I&#8217;d recommend getting to who <a href="http://clemesha.org/blog/2009/jul/05/modern-python-hacker-tools-virtualenv-fabric-pip/">pip and virtualenv</a> &#8211; note that fabric is also cool, but not essential and these docs are out of date on that tool). Think about using Ruby without gem, bundler or rvm and you&#8217;ll be in the right direction.</p>
   </div>
   
 </div>

@@ -68,6 +68,158 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2015/12/27/operations-more-than-systems-administration/">
+        Operations is more than just Systems Administration
+      </a>
+    </h1>
+
+    <span class="post-date">27 Dec 2015</span>
+
+    <p>I think one of the patterns of the last few years has been the
+democratization of systems administration, especially for web
+applications. Whether that&#39;s Heroku or Docker, or Chef or Puppet, more
+and more traditional developers are doing work that would have been
+<em>somebody else&#39;s problem</em> only a few years ago. But running in parallel
+to that thread is another less positive trend, that of conflating
+operations with <em>just</em> systems administation. The story seems to go that
+now we know Ansible (or some other tool) we just need developers to run
+the show.</p>
+
+<p>In this post I&#39;m going to try and introduce some of the other
+operational disciplines, especially for developers who maybe have come
+to operations via the above resurgence in infrastructure tooling over
+the past few years.</p>
+
+<p>Note that this post has a slight bias towards more <em>normal</em>
+organisations. That is to say if you&#39;re in a 5 person software startup
+you probably don&#39;t have operational problems to worry too much about
+yet. I&#39;m also not playing down the practice of systems administration,
+most experienced sysadmins I know are also quite rounded operations pros
+as well.</p>
+
+<h2>Service Management</h2>
+
+<p>If you&#39;ve worked in operations, or in many large organisations you&#39;ll have
+come across the term Service Management. This tends to be linked to
+various service management frameworks; like ITIL or MOF (Microsoft
+Operations Framework). The framework will describe, often in great
+detail, activities and processes for things like incident response,
+configuration management, change management, capacity planning and more.</p>
+
+<p>While I was at <a href="https://gds.blog.gov.uk/">The Government</a> I wrote what I
+think is a reasonable introduction to <a href="https://www.gov.uk/service-manual/operations/service-management.html">Service 
+Management</a>
+albeit from a specific point-of-view. This was based on my experience of
+trying, and likely sometimes failing, to encourage teams to think about
+how the products they we&#39;re working on would be run. Each of the topics
+touched on in the overview is worthy of it&#39;s own stack of books, but I
+will repeat the ITIL service list here as (whatever you might think of
+the framework or a specific implementation) I&#39;d found it a useful starting
+point for conversations - in particular stressing the breadth of
+topics under service management.</p>
+
+<h4>Service Strategy</h4>
+
+<ul>
+<li>IT service management</li>
+<li>Service portfolio management</li>
+<li>Financial management for IT services</li>
+<li>Demand management</li>
+<li>Business relationship management</li>
+</ul>
+
+<h3>Service Design</h3>
+
+<ul>
+<li>Design coordination</li>
+<li>Service Catalogue management</li>
+<li>Service level management</li>
+<li>Availability management</li>
+<li>Capacity Management</li>
+<li>IT service continuity management</li>
+<li>Information security management system</li>
+<li>Supplier management</li>
+</ul>
+
+<h3>Service Transition</h3>
+
+<ul>
+<li>Transition planning and support</li>
+<li>Change management</li>
+<li>Service asset and configuration management</li>
+<li>Release and deployment management</li>
+<li>Service validation and testing</li>
+<li>Change evaluation</li>
+<li>Knowledge management</li>
+</ul>
+
+<h3>Service Operation</h3>
+
+<ul>
+<li>Event management</li>
+<li>Incident management</li>
+<li>Request fulfillment</li>
+<li>Problem management</li>
+<li>Identity management</li>
+<li>Continual Service Improvement</li>
+</ul>
+
+<p>For each of the above points, whether you are using ITIL or not, it&#39;s
+useful to have a conversation. Some of these areas do provide ample
+opportunity for automation and for using tooling to minimise the effort
+required. But much of this is about designing <em>how</em> you are going to
+operate a service throughout it&#39;s lifetime.</p>
+
+<h2>Operations user stories</h2>
+
+<p>One of the other things I published while at The Government was a set of
+<a href="https://www.gov.uk/service-manual/operations/web-operations-stories.html">user stories for a web operations 
+team</a>.
+These grew out of work on launching GOV.UK and have had input from
+various past colleagues. In hindsight I&#39;d probably do somethings
+here differently, the stories assume a certain context which isn&#39;t explicitly
+spelled out for instance. But they have a couple of things going for them in that
+they demonstrate how traditional operations activities can be planned out as part
+of a more developer-friendly planning approach, and also they are public and
+have been tested by more than a single team.</p>
+
+<h2>Not everything is a programming problem</h2>
+
+<p>The main point I think is that not everything can be turned into a
+programming problem to solve. Automation has it&#39;s place, and many manual
+processes and practices can benefit from automation. But the wide range
+of activities involved in running a non-trivial and often non-ideal
+system in production tend to mean making trade-offs and prioritization
+decisions frequently. This is where softer skills like arguing for
+funding or additional head count, or building a business case for
+further work, come into play. Operations management is much more than
+systems administration.</p>
+
+<h2>Further reading</h2>
+
+<p>This is little more than a plea for people to think more about
+operations, separate to the more technical aspects of systems
+administration. If you&#39;re interested in learning more however I would
+recommend some good reading material:</p>
+
+<ul>
+<li><a href="http://www.itpi.org/the-visible-ops-handbook-review.html">Visible Ops
+Handbook</a> -
+still an excellent and pragmatic introduction to many of the topics
+noted above.</li>
+<li><a href="http://shop.oreilly.com/product/0636920033080.do">Designig Delivery</a> -
+a bang up-to-date tome covering a range of service design topics.</li>
+<li><a href="http://www.basicsm.com/bsm-basic-service-management-book">Basic Service
+Management</a> -
+a 50 page starter book covering the fundamentals of service
+management as generally discussed in more detail elsewhere. A great
+starting point.</li>
+</ul>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2015/12/04/provisioning-droplets-with-puppet/">
         Provisioning droplets with Puppet
       </a>
@@ -411,101 +563,6 @@ patterns worth adopting for most module developers I think.</p>
 
 <p>If anyone has any suggestions for extra tools, or changes to the
 skeleton itself, let me know.</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/05/19/information-security-reading-list/">
-        Information Security Reading List
-      </a>
-    </h1>
-
-    <span class="post-date">19 May 2015</span>
-
-    <p>I read quite a bit (probably a book a week or so) and one of the topics
-I&#39;ve been reading on for a while is information security. In a recent
-conversation someone asked for some book suggestions, so I thought I&#39;d
-write that up in a blog post rather than an email.</p>
-
-<p>Most of this list isn&#39;t particularly technical. It&#39;s not a developers
-list of software engineering tomes. If you&#39;re a developer or operator
-then I&#39;d recommend reading some of the more policy or journalistic
-pieces as well for context. And if you&#39;re just interested in the topic
-but nor particularly technical I&#39;d skip the security engineering
-suggestions.</p>
-
-<p>Note that I make no claims about this being a particularly balanced
-list, it&#39;s biased towards what I find interesting to read. Hopefully
-you&#39;ll find it interesting too.</p>
-
-<h2>Journalism</h2>
-
-<p>Understanding why Information Security is important tends to require
-some context. The following books provide that, with detailed real-world
-stories of criminal and government activities.</p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/The-Dark-Net-Jamie-Bartlett/dp/0434023159">The Dark Net</a> - Jamie Bartlett - an excellent personal tale of
-investigating the hidden side of the internet.</li>
-<li><a href="http://www.amazon.co.uk/Spam-Nation-Organized-Cybercrime-Epidemic-ebook/dp/B00L5QGBL0">Spam Nation</a> - Brian Krebs - everything you wanted to know about how
-and why Spam works.</li>
-<li><a href="http://www.amazon.co.uk/Countdown-Zero-Day-Stuxnet-Digital/dp/077043617X">Countdown to Zero Day</a> - Kim Zetter - a detailed and fast paced
-description of the Stuxnet attack, and it&#39;s implications.</li>
-<li><a href="http://www.amazon.co.uk/Future-Crimes-Everything-Connected-Vulnerable/dp/0385539002">Future Crimes</a> - Marc Goodman - a focus on the criminal
-possibilities of the modern internet and the internet of things.</li>
-<li><a href="http://www.amazon.co.uk/Worm-The-First-Digital-World/dp/1611855845">Worm</a> - Mark Bowden - similar to the excellent tale of Stuxnet
-above, this is the story of Conficker and how it was discovered</li>
-</ul>
-
-<h1>Policy and context</h1>
-
-<p>These books are focused more on government policy and nation state
-threats, and the debate about the rules of war and the internet.</p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/Cyber-War-Threat-National-Security/dp/0061962244">Cyber War</a> - Richard Clarke - probably the best description of what
-cyber war is and isn&#39;t, and some of the geopolitical problems
-emerging.</li>
-<li><a href="http://www.amazon.co.uk/Cyber-War-Will-Take-Place/dp/1849042802">Cyber War Will Not Take Place</a> - Thomas Rid - a good counter to the
-above book, with lots more detailed discussion of policy and definition.</li>
-<li><a href="http://www.amazon.co.uk/Inside-Cyber-Warfare-Mapping-Underworld/dp/1449310044">Inside Cyber Warfare</a> - Jeffrey Carr - really just a run through of
-current threats, especially organised crime.</li>
-</ul>
-
-<h1>Security engineering</h1>
-
-<ul>
-<li><a href="http://www.cl.cam.ac.uk/%7Erja14/book.html">Security Engineering</a> - Ross Anderson - highly technical and quite
-epic, but definitely the best security engineering book around.</li>
-<li><a href="http://www.amazon.co.uk/Threat-Modeling-Designing-Adam-Shostack/dp/1118809998">Threat Modelling</a> - Adam Shostack - details descriptions of how and
-why to conduct threat moddelling, with lots of examples.</li>
-<li><a href="http://www.amazon.co.uk/Data-Driven-Security-Visualization-Dashboards/dp/1118793722">Data Driven Security</a> - Jay Jacobs and Bob Rudis - nice examples,
-including code samples, of applying data and statistics tools and
-practices to security problems.</li>
-<li><a href="http://www.amazon.co.uk/Cloud-Security-Privacy-Enterprise-Perspective/dp/0596802765">Cloud Security and Privacy</a> - Tim Mather, Subra Kumaraswamy, Shahed
-Latif - a good book to read for anyone working in AWS, Azure or similar.
-Good discussion of concerns and compliance approaches in third party
-environments.</li>
-<li><a href="http://www.amazon.co.uk/The-Tangled-Web-Securing-Applications/dp/1593273886">The Tangled Web</a> - Michal Zalewski - everything you ever wanted to
-know about the browser security model</li>
-<li><a href="http://www.amazon.co.uk/Silence-Wire-Passive-Reconnaissance-Indirect/dp/1593270461">Silence on the Wire</a> - Michal Zalewski - described as a field guide
-to passive reconnaissance and indirect attacks. Good for starting to
-think about non-obvious security threats</li>
-</ul>
-
-<h1>On my reading list</h1>
-
-<p>I&#39;ve not read these books yet so can&#39;t recommend them as such, but they
-both look good additions to the list above.</p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/Data-Goliath-Bruce-Schneier/dp/0393244814">Data and Goliath</a> - Bruce Schneier - a look at the large scale data
-collection programmes of governments and their implications for
-everyone.</li>
-<li><a href="http://www.amazon.co.uk/Black-Code-Ronald-J-Deibert/dp/0771025351">Black Code</a> - Ronald J. Deibert - the story of the Citizen Lab
-and it&#39;s front line cyber researchers</li>
-</ul>
 
   </div>
   

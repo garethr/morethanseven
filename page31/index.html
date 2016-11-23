@@ -68,6 +68,48 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2009/03/14/xmpp-and-queues-app-engine-jaiku-not-quite-yet/">
+        XMPP and Queues in App Engine via Jaiku? Not quite yet
+      </a>
+    </h1>
+
+    <span class="post-date">14 Mar 2009</span>
+
+    <p>So <a href="http://code.google.com/p/jaikuengine">JauikuEngine</a>, the open source, App Engine based, version of Jaiku is now available for everyone to look at. I <a href="http://twitter.com/garethr/status/1321372099">found the repo a couple of days ago</a> but it was restricted to project members. The main reason I want to hunt through the code is to have a look at what I&#8217;m guessing will be API&#8217;s available in a soon to be released version of App Engine &#8211; with specific interest in anything to do with <span class="caps">XMPP</span>, queues and offline processing.</p>
+<p>Well it looks like I&#8217;m out of luck for the moment at least. In the <a href="http://code.google.com/p/jaikuengine/source/browse/trunk/settings.py">settings file</a> I found the following two snippets though:</p>
+<pre>#
+# XMPP / IM
+#
+# Enabling IM will require a bit more than just making this True, please
+# read the docs at http://code.google.com/p/jaikuengine/wiki/im_support
+IM_ENABLED = False
+# This is the id (JID) of the IM bot that you will use to communicate with
+# users of the IM interface
+IM_BOT = 'root@example.com'
+# Turn on test mode for IM
+IM_TEST_ONLY = False
+# JIDs to allow when testing live XMPP so you don't spam all your users
+IM_TEST_JIDS = []</pre>
+<p>And another for queues:</p>
+<pre>#
+# Task Queue
+#
+# Enabling the queue will allow you to process posts with larger numbers
+# of followers but will require you to set up a cron job that will continuously
+# ping a special url to make sure the queue gets processed
+QUEUE_ENABLED = True
+# The secret to use for your cron job that processes your queue
+QUEUE_VENDOR_SECRET = 'SECRET'</pre>
+<p>The only problem appears to be that the page referenced, <a href="http://code.google.com/p/jaikuengine/wiki/im_support">code.google.com/p/jaikuengine/wiki/im_support</a>, currently says:</p>
+<blockquote>
+<p><acronym title="termie"><span class="caps">TODO</span></acronym>: describe how to get IM working with Jaiku Engine</p>
+</blockquote>
+<p>So <a href="http://twitter.com/termie">termie</a>, or anyone else on the inside, I&#8217;d love to know how to get this up and running?</p>
+<p>I&#8217;ll be having a better look through the code when I get a chance. This was just the first thing I jumped on before heading out the door. I love Open Source.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2009/03/13/does-rails-encourage-soa-better-than-django/">
         Services Vs Applications: Does Rails Encourage SOA Better Than Django?
       </a>
@@ -130,21 +172,6 @@
 	<li><a href="http://clearleft.com">clearleft.com</a> &#8211; 0.48</li>
 	<li><a href="http://alistapart.com/">alistapart.com</a> &#8211; 0.44</li>
 </ul>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2009/03/04/app-engine-python-developers/">
-        App Engine for Python Developers
-      </a>
-    </h1>
-
-    <span class="post-date">04 Mar 2009</span>
-
-    <p>I gave a short presentation about App Engine last night at the <a href="http://campug.org.uk/">Cambridge Python User Group</a> and as always it&#8217;s available on <a href="http://slideshare.net">Slideshare</a>.</p>
-<p><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=appengine-090304031400-phpapp02&stripped_title=app-engine-for-python-developers" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=appengine-090304031400-phpapp02&stripped_title=app-engine-for-python-developers" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></p>
-<p>I find App Engine a great way of just writing (Python) code and putting it online quickly, and the presentation was aimed at being something of a fanboy ode. During questions afterwards we talked about some of the limitations and cases where App Engine isn&#8217;t as well suited, and at least a few people were heading off planning on having a play.</p>
-<p>The event was good fun and I picked up a few Python related tips and tricks from the other presentations and general conversation. Thanks for everyone who organised and attended the event and to <a href="http://www.realvnc.com/">RealVNC</a> for hosting the talks.</p>
   </div>
   
 </div>

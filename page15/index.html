@@ -68,6 +68,31 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2011/03/26/Devops-isnt-a-methodology/">
+        Devops Isn't A Methodology
+      </a>
+    </h1>
+
+    <span class="post-date">26 Mar 2011</span>
+
+    <p>I was reading <a href="http://teddziuba.com/2011/03/devops-scam.html">Devops is a poorly executed scam</a> and just couldn&#8217;t resist a reply. Not because of the entertaining title, but because I both agree and disagree quite strongly with parts of the post. Read it first if you haven&#8217;t already. And yes I know I&#8217;m feeding the internet.</p>
+<p>I&#8217;m going to pick parts of the post out and then comment. Hopefully I&#8217;m not quoting these in any way out of context.</p>
+<h2>&#8220;It&#8217;s got the potential to make a handful of people a lot of money in the same way that Agile did, but nobody is really executing on.&#8221;</h2>
+<p>People are pretty aware of this fact I think, but watch what happens when people post on the mailing lists or turn up at community events with a purely marketing hat on. They just get no traction and even damage their product brand amongst the early adopters. The fact the term is starting to get used in job adverts and marketing materials isn&#8217;t really being driven by the people talking about what devops might or might not be. I think the main reason for this is that most of the people I talk to in person or online are actually pretty happy with their jobs and generally work inside companies rather than as independent consultants. They have often reached an age where they want to improve within a given field but would like a wider network than their current colleagues to discuss things with.</p>
+<h2>&#8220;How do you implement Devops?&#8221;</h2>
+<p>I don&#8217;t think you do. The comparisons with Agile are interesting from a community point of view but Scrum is a methodology. To me at least devops isn&#8217;t, it&#8217;s just a banner or tag under which interesting conversations are happening. The argument that &#8220;You should be doing this anyway. Not earth shattering.&#8221; is a good thing. You&#8217;d be suprised by how many people don&#8217;t do all the things they should be doing, especially in small and young companies. And one of the reasons for that is no one bothered writing a list of these things down anywhere and then discussing them. I&#8217;m not saying this huge list exists or even whether it should, but the discussion is happening.</p>
+<h2>&#8220;The underlying problem, however, is that dev and ops have different goals&#8221;</h2>
+<p>This is spot on. I think this maybe does get missed in talk that focuses more on tools but not in the wider discussion happening about business improvements. Devops quite litterally brings those two things together. You&#8217;ll always have individual goals but where you have separate operations and development teams they should have the same fundamental goals.</p>
+<h2>&#8220;Developers develop in the same environment production runs in If you deploy to Linux, you develop on Linux. No more of this coding on your Macbook Pro and deploying to Ubuntu: that is why you can&#8217;t have nice things.&#8221;</h2>
+<p>Yes, yes and yes again. I&#8217;m definitely from the developer side of the tracks and I&#8217;m constantly telling people this and it&#8217;s definitely something I don&#8217;t see enough people doing. What I&#8217;d love is for all the operations people to state this to their development team and most importantly to help them set that up. Just saying <em>work like me or I won&#8217;t let you near the production machines</em> is just being obstructive. Educating and helping with tooling helps build those bridges and trust. And with trust comes the access the developers want. And less stupid bugs and less deployment issues with differing package dependencies.</p>
+<h2>&#8220;None of this amounts to a methodology, as the Devops people would have you believe.&#8221;</h2>
+<p>Still unsure which Devops people are saying it&#8217;s a bonefide methodology. I see the word used sometimes but generally in passing and not I don&#8217;t think meant how you mean here. And I don&#8217;t think I&#8217;ve heard people speak about it in person. &#8220;Scrum methodology&#8221; returns more than 113,000 results in Google. &#8220;Devops methodology&#8221; returns about 150, some of which 404 and half of which are agregators pointing at the other half.</p>
+<h2>&#8220;The Devops movement smells of a scam in the making&#8221;</h2>
+<p>Some company or other is definitely going to be scammed into paying over the odds for a consultant because they used the word Devops in the sales pitch. That will have next to nothing to do with what I&#8217;d see as the Devops movement and everything to do with human nature (and sales people).</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2011/03/20/A-continuous-deployment-example-setup/">
         A Continuous Deployment Example Setup
       </a>
@@ -221,54 +246,6 @@
 <p>@garethr basically has this subject completely covered. He&#8217;s even advocating the correct editor. excellent #fosdem talk</p>
 </blockquote>
 <p>All in all another good event, I have notes about some of the other talks I went along to that I&#8217;ll try write up soon.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2011/01/29/Using-checkinstall-with-virtualenv-for-python-deployments/">
-        Using Checkinstall With Virtualenv For Python Deployments
-      </a>
-    </h1>
-
-    <span class="post-date">29 Jan 2011</span>
-
-    <p>Michael Brunton-Spall wrote last week about some <a href="http://www.brunton-spall.co.uk/post/2011/01/26/packaging-and-deploying-python-web-apps/">frustrations with packagings and deploying Python web applications</a>. Although his experience was with Python, the problems he describes are the same for Ruby and <span class="caps">PHP</span> and a whole host of languages. The following example uses Python, but works equally as well for anything else.</p>
-<p>Michael has three simple rules for his servers:</p>
-<ol>
-	<li>they cannot access the internet</li>
-	<li>they cannot access internal services that are for development</li>
-	<li>they cannot have compilers / utilities on them</li>
-</ol>
-<p>I won&#8217;t go into all the reasons for doing this (you can read the blog post linked to above) but these are pretty sensible security precautions.</p>
-<p>My approach to this problem would be to use your friendly system packages and using a handy tool called <a href="http://www.asic-linux.com.mx/~izto/checkinstall/">Checkinstall</a> to create a deb or rpm. I&#8217;m going to use as an example the <a href="http://wiki.secondlife.com/wiki/Eventlet">Eventlet</a> library. This is available in PyPi and one of it&#8217;s dependencies (Greenlets) provides a C extension. The same approach would work for an entire Python web application too. I&#8217;m as ever using the apt package management tool but this should work with yum as well.</p>
-<p>The first step is to build the package on a build machine. This should be a machine or virtual machine running the same operating system as your production web servers. You might build these packages manually or as part of a continuous integration system. On this machine we&#8217;ll need the compilers and development tools:</p>
-<pre>sudo apt-get install build-essential python-dev python-setuptools checkinstall
-sudo easy_install virtualenv</pre>
-<p>We&#8217;ll also create a virtualenv into which we&#8217;ll be installing our packages:</p>
-<pre>sudo virtualenv --no-site-packages /usr/local/environment
-source /usr/local/environment/bin/activate</pre>
-<p>Now, instead of just calling easy_install to install the package, we prefix it with checkinstall.</p>
-<pre>sudo checkinstall /usr/local/environment/bin/easy_install eventlet</pre>
-<p>This will prompt for various meta data about the package you want to create, including the name and version of the package. If you&#8217;re using this method in the real world you&#8217;ll want to decide on a versioning and naming scheme for your packages to avoid clashes with system provided packages. You can also set many of these options from the command line rather than having to manually fill them in each time.</p>
-<p>Once everything has been filled in successfully this should run through, installing eventlet and greenlets and eventually creating a deb or rpm package depending on what platform you&#8217;re running on. You should see something like:</p>
-<pre>Done. The new package has been installed and saved to
-
- /home/vagrant/eventlet-gareth_20110129-1_i386.deb
-
- You can remove it from your system anytime using: 
-
-      dpkg -r eventlet-gareth</pre>
-<p>Now lets grab that package and take it to one of our front end web servers via a controlled deployment process. That front end web server needs the virtualenv creating but nothing else. So:</p>
-<pre>sudo apt-get install python-virtualenv
-sudo virtualenv --no-site-packages /usr/local/environment</pre>
-<p>(Now you might be thinking that installing the python-virtualenv package in this way breaks rule 1 above. And you&#8217;d be right in most cases, but I&#8217;m guessing Michael&#8217;s systems team have a local package repo for authorised packages, or alternatively you could download the package to the build machine and push it to the production environment.)</p>
-<p>Now install the package we created earlier.</p>
-<pre>sudo dpkg -i eventlet-gareth_20110129-1_i386.deb</pre>
-<p>That should throw all the required files into the virtualenv environment we created. No compilers. No calls to internal or external systems. Just move some precompiled binaries and text files to predefined places on disk.</p>
-<p>I used a PyPi package as an example. Checkinstall could have been pointed at a custom build file written especially for your own application, one that moves files and folders to where they are needed. Say something that looks like this:</p>
-<pre>#!/bin/sh
-cp /home/stage/myapplication /var/www/apps/</pre>
-<p>The running checkinstall against that (or a more complex build file using capistrano or ant or fabric) you can create a package containing your application code and install it into the specified place.</p>
   </div>
   
 </div>

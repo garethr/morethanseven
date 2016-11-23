@@ -68,6 +68,56 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2008/02/13/example-of-the-yahoo-live-api/">
+        Example of the Yahoo Live Api
+      </a>
+    </h1>
+
+    <span class="post-date">13 Feb 2008</span>
+
+    <p><a href="http://live.yahoo.com/">Yahoo! Live</a> launched recently along with a nice <a href="http://developer.yahoo.com/ylive/rest_api/">RESTful <span class="caps">API</span></a>. I&#8217;ve spoken before about the beauty of <span class="caps">REST</span> being in lowering the barrier to hacking and when I wanted a quick feature for Live it was simplicity itself to put together.</p>
+<p>A few friends are using it far too much it seems, <a href="http://ben-ward.co.uk/">Ben</a> has 7.6 hours and <a href="http://simonjobling.com">Si</a> has already clocked up 15 hours. But for the most part I keep missing their no-doubt highly entertaining antics. One thing that Live misses I feel is a favourite users or previously viewed channels list. Basically I want to see which of my friends who use the service are broadcasting right now. Something like:</p>
+<p><a href="http://morethanseven.net/presents/yahoolive/"><img src="http://img.skitch.com/20080213-q7ntrbip3rhwbkdbykuwt4an5.render.png" alt="Yahoo! Live Online"/></a></p>
+<p>The <span class="caps">API</span> request we&#8217;re interested in is the <a href="http://developer.yahoo.com/ylive/rest_api/channel.html">/channel/<span class="caps">PERMALINK</span></a> method. This lets us get information about whether the user is broadcasting at the moment.</p>
+<pre><code>&lt;?php
+$api = 'http://api.live.yahoo.com/api/v1/channel';
+$friends = array(
+  'garethr',
+  'benward',
+  'sijobling'
+);
+$statuses = array();
+foreach ($friends as $friend) { 
+  $response = simplexml_load_file($api . '/' . $friend);
+  $name = $response-&gt;name; 
+  if ($response-&gt;broadcast) {
+    $status = 'live';
+  } else {
+    $status = 'offline';
+  }
+  $statuses["$name"] = $status;
+}
+function displaylist($array) {
+  $output = '';
+  if (count($array) &gt;= 0) {
+    $output .= '&lt;ul&gt;';
+    foreach ($array as $key =&gt; $value) {
+      $output .= "&lt;li class=\"$value\"&gt;";
+      $output .= "&lt;a href=\"http://live.yahoo.com/$key\"&gt;";
+      $output .= "$key&lt;/a&gt;";
+      $output .= "&lt;span&gt;$value&lt;/span&gt;&lt;/li&gt;";
+    }
+    $output .= '&lt;/ul&gt;';
+  }
+  return $output;
+}
+echo displaylist($statuses);
+?&gt;</code></pre>
+<p>I&#8217;ll add a few more people to <a href="http://morethanseven.net/presents/yahoolive/">my list</a> when I discover other people using the service. If you have an account leave a comment. I&#8217;ve added a touch of javascript as well so as to avoid having to reload the page manually. This way I can loiter on my little aggregator until someone I know starts broadcasting and head over to Live for whatever Si has been spending 15 hours doing.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2008/02/04/continuous-integration-for-front-end-developers/">
         Continuous Integration for Front End Developers
       </a>
@@ -215,30 +265,6 @@ pear install phing/phing</code></pre>
 </blockquote>
 <p>What this is describing is how things work now. It&#8217;s also how I want to work &#8211; using progressive enhancement to make my websites better when people have browsers that support them. I&#8217;ll be adding the relevant <em>edge</em> headers to my sites by default as I get a moment to tinker.</p>
 <p>In my view this should allow the web to move forward faster with newer features hitting IE sooner, leaving a ghetto populated by IE users who don&#8217;t upgrade quickly and designers and developers who don&#8217;t want to be professional about their craft (or tools that aim for the lowest common denominator). Yes, I&#8217;ll need to add a header to all of my sites in the future but in return I get the latest version of IE that lets me test all previous versions of IE.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2008/01/19/a-few-interesting-upcoming-events/">
-        A few interesting upcoming events
-      </a>
-    </h1>
-
-    <span class="post-date">19 Jan 2008</span>
-
-    <p>After a break over Christmas the web world is back in full swing with a few upcoming events.</p>
-<p><a href="http://barcamp.org/BarCampScotland2008">BarCamp Scotland</a> &#8211; <em>February 2nd</em>.</p>
-<p>I only just found out about this one but it looks like a few people from Refresh Newcastle and Refresh Edinburgh are going to make it along. The short notice does mean I have to think of something to talk about sharpish though.</p>
-<p><a href="http://www.thinkandadrink.com/">Think and a Drink</a> &#8211; <em>February 7th</em></p>
-<p>Bit of shameless self promotion here. I&#8217;m speaking at the monthly <a href="http://www.codeworks.net/">Codeworks</a> get together on something to do with the Web. Also speaking is <a href="http://blog.whatfettle.com/">Paul Downey</a> from BT and another regular BarCamp attendee. If you&#8217;re around Newcastle try and get along (it&#8217;s a membership event but let me know if you want to go along and I&#8217;ll speak with the organisers).</p>
-<p><a href="http://semanticcamp.tommorris.org/">Semantic Camp</a> &#8211; <em>February 16th &#8211; 17th</em></p>
-<p>A whole BarCamp style event brought to you by <a href="http://tommorris.org">tommorris</a>. This looks likely to be particularly interesting event I think.</p>
-<p><a href="http://futureofwebdesign.com/">Future of Web Design</a> &#8211; <em>April 17th &#8211; 18th</em></p>
-<p><em>The Future of&#8230;</em> rolls into town again, this time with a focus on web design. I&#8217;d be tempted to go along to this solely for the Photoshop tennis doubles match with <a href="http://stuffandnonsense.co.uk/">Andy Clarke</a> commentating. The rest of the content looks pretty good to.</p>
-<p><a href="http://thinkingdigital.co.uk">Thinking Digital</a> &#8211; <em>May 21st &#8211; 23rd</em></p>
-<p>Another event I&#8217;m involved in, this time on the board along with <a href="http://www.cubicgarden.com">Ian Forrester</a> from The <span class="caps">BBC</span> and Mike Butcher from <a href="http://uk.techcrunch.com">Techcrunch</a>. This one is a little different to most of the events I go along to &#8211; being less web centric and more about all sorts of interesting ideas. With the likes of <a href="http://horsepigcow.com/">Tara Hunt</a>, Sean Phelan (<a href="http://www.multimap.com/">MultiMap</a>), <a href="http://www.test.org.uk/">Matt Locke</a> and <a href="http://fakesteve.blogspot.com/">Dan Lyons</a> (a.k.a. Fake Steve Jobs) speaking it should be good fun. Oh, and did I mention it&#8217;s in Newcastle?</p>
-<p>And look, only two of those are in London!</p>
-<p>It&#8217;s already looking like 2008 will be even more jam packed than last year. I also have a sneaking feeling that their will be lots more events <em>Up North</em> this year than last. It will be interesting to see how this works out. Will more people come along that might not have travelled down to London? Will the event happy northerners still go to London as well? Will anyone from London travel north of Watford? Time will tell.</p>
   </div>
   
 </div>

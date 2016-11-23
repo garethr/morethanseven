@@ -68,6 +68,54 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2012/12/03/on-the-forge/">
+        On the forge
+      </a>
+    </h1>
+
+    <span class="post-date">03 Dec 2012</span>
+
+    <p>I&#8217;ve been spending a bit of time recently pushing a few Puppet modules to the <a href="http://forge.puppetlabs.com">Forge</a>. This is Puppetlabs attempt to make a central repository of reusable puppet modules. I started doing it as a bit of an experiment, to find out what I liked and what worked and I decided to writeup a few opinions.</p>
+<p>So far I&#8217;ve shipped the following modules:</p>
+<ul>
+	<li><a href="http://forge.puppetlabs.com/garethr/riemann">Riemann</a></li>
+	<li><a href="http://forge.puppetlabs.com/garethr/graphite">Graphite</a></li>
+	<li><a href="http://forge.puppetlabs.com/garethr/logstash">Logstash</a></li>
+	<li><a href="http://forge.puppetlabs.com/garethr/freight">Freight</a></li>
+</ul>
+<p>Quite a few of these started as forks of other modules but have evolved quite a bit towards being more reusable.</p>
+<p>I&#8217;ve also started sending pull requests for modules that basically do what I want but don&#8217;t always play well with others.</p>
+<ul>
+	<li><a href="https://github.com/thomasvandoren/puppet-redis/pull/10">Redis</a></li>
+</ul>
+<h2>Improved tools</h2>
+<p>It turns out the experience is mainly a pleasurable one, partly down to the much improved tooling around Puppet. Specifically I&#8217;m making extensive use of:</p>
+<ul>
+	<li><a href="http://rspec-puppet.com/">Rspec Puppet</a> &#8211; for writing tests for module behavious</li>
+	<li><a href="https://github.com/rodjek/librarian-puppet">Librarian Puppet</a> &#8211; dependency management for modules</li>
+	<li><a href="https://github.com/puppetlabs/puppetlabs_spec_helper">Puppet spec helper</a> &#8211; conventions and helpers for testing modules</li>
+	<li><a href="https://travis-ci.org/">Travis CI</a> &#8211; easy continuous integration for module code</li>
+	<li><a href="http://vagrantup.com/">Vagrant</a> &#8211; manage virtual machines, useful for smoke testing on different distributions</li>
+</ul>
+<p>Lots of those tools make testing Puppet modules both easier and useful. Here&#8217;s an example of one of the above modules being tested. Note that it&#8217;s run across Ruby 1.8.7, 1.9.2 and 1.9.3 and Puppet versions 2.7.17, 2.7.18 and 3.0.1 for a total of 9 builds. Handily the Redis module mentioned also had a test suite. The pull request includes changes to that, and Travis <a href="https://travis-ci.org/thomasvandoren/puppet-redis/builds/3462513">automatically tested the pull request</a> for the modules author.</p>
+<h2>Antipatterns</h2>
+<p>Using modules from the Forge really forces you to think about reusability. The pull request mentioned above for the Redis module for instance replaced an explicit mention of the build-essential package with the &#8220;puppetlabs/gcc&#8221;: class from the Forge. This makes the module less self contained, but without that change the module is incompatible with any other module that also uses that common package. I also went back and replaced explicit references to wget and build-essential in my Riemann module.</p>
+<p>As a rule of thumb. For a specific module only include resources that are unique to the software the module manages. Anything else should be in another module with a dependency in the Modulefile.</p>
+<p>This can feel a little much when you&#8217;re replacing a simple Package resource with a whole new module but it has two advantages I care about. As well as the ability to use the module with other third party modules more easily it also makes it more likely that the module will work cross platform.</p>
+<h2>What&#8217;s missing?</h2>
+<p>I&#8217;d like to see a few things improved when it comes to the Forge.</p>
+<ul>
+	<li>I&#8217;d like to be able to publish a new version of a module without having to use the web interface. The current workflow involves running a build command, then uploading the generated artifact via a web form after logging in.</li>
+	<li>I&#8217;d like to see best practice module development guides front and centre on the Forge. Lots of modules won&#8217;t work with other modules and I think that&#8217;s fixable.</li>
+	<li>Integration with puppet-lint would be nice, giving some indication of whether the authors care about the Puppet styleguide.</li>
+	<li><del>A command line search interface would be useful</del>. And <a href="http://docs.puppetlabs.com/man/module.html">turns out to exist</a>. Thanks <a href="http://twitter.com/a1cy">@a1cy</a> for the heads up.</li>
+	<li>The Forge tracks number of downloads, but as a publisher I don&#8217;t know how often my modules have been downloaded.</li>
+	<li>And finally I&#8217;d like to see more people using it.</li>
+</ul>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2012/10/21/shipping/">
         Shipping
       </a>
@@ -146,23 +194,6 @@ Finished in 0.01472 seconds
 <p>I threw a flat version of the site up on <a href="https://github.com/garethr/vagrantboxes-heroku">GitHub</a>, served it using Nginx on <a href="http://www.heroku.com/">Heroku</a> and added a quick <em>Fork me on GitHub</em> badge to the top. Suggest a box moved from being a web form to a pull request. It&#8217;s fair to say I did this pretty quickly and made a good few typos on the way. But within a couple of weeks I&#8217;ve had 8 pull requests either fixing my bugs, removing dead boxes and adding new ones.</p>
 <p>What I&#8217;m going to take from this is, if you&#8217;re building a community project that&#8217;s aimed at developers, then throw the content on GitHub. In my case I have the entire site on there too but I think that&#8217;s secondary. Pull requests are much better than any content management system or workflow you&#8217;re likely to build, and even more importantly the time to implement something drops hugely.</p>
 <p>With all the spare time I don&#8217;t have I&#8217;ll be thinking about a content management model using GitHub for content, pull requests for workflow and post commit hooks for loading that content into a site or service somewhere.</p>
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2012/06/05/Static-sites-with-nginx-on-heroku/">
-        Static Sites With Nginx On Heroku
-      </a>
-    </h1>
-
-    <span class="post-date">05 Jun 2012</span>
-
-    <p>I have a few static sites on Heroku but in one case in particular I already had quite an involved nginx configuration &#8211; mainly 410s for some previous content and a series of redirects from older versions of the site. The common way of having static sites on Heroku appears to be to use a simple Rack middleware, but that would have meant reimplementing lots of boring redirect logic.</p>
-<p>Heroku <a href="https://devcenter.heroku.com/articles/buildpacks">buildpacks</a> are great. The newer cedar stack is no longer tied to a particular language or framework, instead all of the discovery and knowledge about particular software is put into a buildpack. As well as the Heroku provided list it&#8217;s possible to write you&#8217;re own. Or in this case use one someone has <a href="https://github.com/essh/heroku-buildpack-nginx">created earlier</a>.</p>
-<p>I&#8217;ve just moved <a href="http://www.vagrantbox.es/">Vagrantbox.es</a> over to Heroku due to the closure of a previous service. In doing that, instead of the simple database backed app, I&#8217;ve simply thrown all the content onto <a href="https://github.com/garethr/vagrantboxes-heroku">GitHub</a>. This means anyone can fork the content and send pull requests. Hopefully this should mean I pay a bit more attention to suggestions and new boxes.</p>
-<p>The repository is a nice simple example of using the mentioned Heroku Nginx buildpack too. You just run the following command to create a new Heroku application.</p>
-<pre>heroku create --stack cedar --buildpack http://github.com/essh/heroku-buildpack-nginx.git</pre>
-<p>And then in typical Heroku fashion use a git remote to deploy changes and updates. The repository is split into a <em>www</em> folder with the site content and a <em>conf</em> folder with the nginx configuration. The only clever parts involve the use of an <span class="caps">ERB</span> template for the nginx configuration file so we can pickup the correct port. We also use 1 worker process and don&#8217;t automatically daemonize the process &#8211; Heroku deals with this itself.</p>
   </div>
   
 </div>
