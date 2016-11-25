@@ -4,7 +4,7 @@
  <title>More than seven</title>
  <link href="http://www.morethanseven.net/atom.xml" rel="self"/>
  <link href="http://www.morethanseven.net/"/>
- <updated>2016-11-23T18:30:31+00:00</updated>
+ <updated>2016-11-25T09:32:46+00:00</updated>
  <id>http://www.morethanseven.net</id>
  <author>
    <name>Gareth Rushgrove</name>
@@ -84,7 +84,7 @@ press materials too.&lt;/p&gt;
 your datacenter&amp;quot; and that we&amp;#39;ll have a range of competing Kubernetes
 distributions, what else can we expect over the next few years?&lt;/p&gt;
 
-&lt;h3&gt;Package repostitories (aka. app stores)&lt;/h3&gt;
+&lt;h3&gt;Package repositories (aka. app stores)&lt;/h3&gt;
 
 &lt;p&gt;One of the things provided by the traditional Linux distributions has
 been a central package repository. Most of the packages you&amp;#39;re
@@ -111,7 +111,7 @@ distribution (to provide higher level, but potentially proprietary
 features) this can become muddier. Some level of certification is
 often the answer. See CloudFoundry or OpenStack for recent examples.
 Kubernetes is already part of the CNCF, part of the Linux Foundation.
-I&amp;#39;d expect to see the works standards and certification eventiually
+I&amp;#39;d expect to see the works standards and certification eventually
 float around, but my guess is not in the short term.&lt;/p&gt;
 
 &lt;h3&gt;A fight over who is the most open&lt;/h3&gt;
@@ -134,7 +134,7 @@ actually happen but that&amp;#39;s a longer blog post about economics.&lt;/p&gt;
 &lt;p&gt;Ultimately vendors will try and differentiate themselves in this new
 market. To begin with the majority of business will be targetting the
 container-curious and mainly talking up the benefits of containers and
-Kubernetes. But some potentialy customers are going to insist of
+Kubernetes. But some potentialy customers are going to insist on
 comparing Kubernetes distributions and winning there is going to be about
 clear differentiation. Do you want to be the budget offering or the
 provider with the unique selling point?&lt;/p&gt;
